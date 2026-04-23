@@ -294,3 +294,101 @@ class InferenceAgentVIDA(InferenceAgent):
                 su.action_list(self.actor_critic.action_space, self.last_action_flat)[0]
             ]
         return action_str, actor_critic_output.distributions.probs[0][0]
+
+    def get_action_probs(self, frame, goal_spec):
+        """
+        Compute action probabilities for the current step, without sampling/committing the action.
+
+        Important: this method intentionally does NOT update `self.last_action_flat` and does NOT
+        increment `self.steps_taken_in_task`. Those are done in `commit_action_by_index()`.
+        """
+        observations = {
+            "rgb_raw": frame["raw_navigation_camera"],
+            "natural_language_spec": convert_string_to_byte(goal_spec, 1000),
+            "time_step": self.steps_taken_in_task,
+            "traj_index": self.num_evaluated_traj,
+        }
+        if "raw_manipulation_camera" in frame.keys():
+            observations["manipulation_rgb_raw"] = frame["raw_manipulation_camera"]
+        if "an_object_is_in_hand" in frame.keys():
+            observations["an_object_is_in_hand"] = frame["an_object_is_in_hand"]
+        if "relative_arm_location_metadata" in frame.keys():
+            full_pose = frame["relative_arm_location_metadata"]
+            full_pose[-1] = full_pose[-1] * np.pi / 180
+            full_pose[-1] = (full_pose[-1] + np.pi) % (2 * np.pi) - np.pi
+            observations["relative_arm_location_metadata"] = full_pose
+        if "nav_accurate_object_bbox" in frame.keys():
+            observations["nav_accurate_object_bbox"] = frame["nav_accurate_object_bbox"]
+        if "nav_task_relevant_object_bbox" in frame.keys():
+            observations["nav_task_relevant_object_bbox"] = frame["nav_task_relevant_object_bbox"]
+        if "manip_accurate_object_bbox" in frame.keys():
+            observations["manip_accurate_object_bbox"] = frame["manip_accurate_object_bbox"]
+        if "manip_task_relevant_object_bbox" in frame.keys():
+            observations["manip_task_relevant_object_bbox"] = frame["manip_task_relevant_object_bbox"]
+
+        obs_batch = batch_observations([observations], device=self.device)
+        if self.sensor_preprocessor_graph is not None:
+            if "graph" in self.sensor_preprocessor_graph.compute_order:
+                self.sensor_preprocessor_graph.compute_order.pop(
+                    self.sensor_preprocessor_graph.compute_order.index("graph")
+                )
+            obs_batch = self.sensor_preprocessor_graph.get_observations(obs_batch)
+
+        if "rgb_dino_vit" in obs_batch.keys():
+            obs_batch["rgb_dino_vit"] = (
+                obs_batch["rgb_dino_vit"].flatten(start_dim=2).permute(0, 2, 1)
+            )
+        if "graph" in obs_batch.keys():
+            obs_batch.pop("graph")
+
+        if self.steps_taken_in_task == 0:
+            self.has_initialized = True
+            self.rollout_storage.initialize(
+                observations=obs_batch,
+                num_samplers=1,
+                recurrent_memory_specification=self.actor_critic.recurrent_memory_specification,
+                action_space=self.actor_critic.action_space,
+            )
+            self.rollout_storage.after_updates()
+        else:
+            dummy_val = torch.zeros((1, 1), device=self.device)  # Unused dummy value
+            self.rollout_storage.add(
+                observations=obs_batch,
+                memory=self.memory,
+                actions=self.last_action_flat[0],
+                action_log_probs=dummy_val,
+                value_preds=dummy_val,
+                rewards=dummy_val,
+                costs=dummy_val,
+                c_value_preds=dummy_val,
+                masks=torch.ones((1, 1), device=self.device),
+            )
+
+        agent_input = self.rollout_storage.agent_input_for_next_step()
+        actor_critic_output, self.memory = cast(
+            Tuple[ActorCriticOutput[DistributionType], Optional[Memory]],
+            self.actor_critic(**agent_input),
+        )
+        # Return raw distribution probabilities; GRPO will choose an action and commit separately.
+        return actor_critic_output.distributions.probs[0][0], self.get_action_list()
+
+    def commit_action_by_index(self, action_index: int) -> str:
+        """
+        Commit the chosen action index into internal rollout state.
+
+        This must be called exactly once per environment step after `get_action_probs()`.
+        """
+        action_tensor = torch.tensor(
+            [int(action_index)], device=self.device, dtype=torch.int64
+        )
+        # Flatten action into AllenAct rollout representation for the next step.
+        self.last_action_flat = su.flatten(self.actor_critic.action_space, action_tensor)
+
+        self.steps_taken_in_task += 1
+        if self.steps_taken_in_task % self.steps_before_rollout_refresh == 0:
+            self.rollout_storage.after_updates()
+
+        action_str = self.get_action_list()[
+            su.action_list(self.actor_critic.action_space, self.last_action_flat)[0]
+        ]
+        return action_str

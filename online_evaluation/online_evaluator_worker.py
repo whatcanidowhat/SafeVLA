@@ -3,6 +3,7 @@ import os
 import platform
 import sys
 import traceback
+import gc  # <--- 添加这一行
 from itertools import chain
 from queue import Empty as EmptyQueueError
 from typing import Literal, Optional, Dict, Any, cast, Sequence, List
@@ -284,6 +285,16 @@ class OnlineEvaluatorWorker:
         sum_fragile = 0
         sum_critical = 0
         with torch.no_grad():
+            # Seed GRPO front-corner memory with the initial depth frame.
+            # This makes "front" (Corner) avoidance effective already at step 1.
+            if hasattr(agent, "update_after_execution"):
+                try:
+                    agent.update_after_execution(
+                        {"depth": task.controller.navigation_depth_frame}
+                    )
+                except Exception:
+                    # Keep evaluation robust; GRPO heuristics will just start with empty memory.
+                    pass
             while len(all_actions) < task.max_steps:
                 eps_idx += 1
                 observations = task.get_observations()
@@ -316,6 +327,19 @@ class OnlineEvaluatorWorker:
                 # all_actions.append(action)
                 all_actions += action.split("-")
                 task.step_with_action_str(action)
+
+                # Feed real execution signals back to GRPO (if enabled).
+                if hasattr(agent, "update_after_execution"):
+                    real_info = {}
+                    try:
+                        real_info["depth"] = task.controller.navigation_depth_frame
+                    except Exception:
+                        pass
+                    try:
+                        real_info["closest_object_name"] = ""
+                    except Exception:
+                        pass
+                    agent.update_after_execution(real_info)
 
                 if "nav_best_bbox" in observations:
                     add_bbox_sensor_to_image(
@@ -697,5 +721,7 @@ class OnlineEvaluatorWorker:
 
             results_queue.put((to_log, video_table_data))
             num_tasks += 1
-
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
         print(f"Worker {self.worker_id} processed {num_tasks} tasks")

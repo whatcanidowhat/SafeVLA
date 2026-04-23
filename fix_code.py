@@ -1,4 +1,7 @@
-import multiprocessing as mp
+import os
+
+# 这是完整的、包含 GRPO 逻辑的 online_evaluator.py 代码
+file_content = r'''import multiprocessing as mp
 import os
 import platform
 import random
@@ -30,8 +33,10 @@ from utils.data_utils import LazyJsonDataset, load_dataset_from_path, DatasetDic
 # === [GRPO MODIFY START] 导入 GRPO Agent ===
 try:
     from online_evaluation.grpo_predictive_inference import GRPOPredictiveAgent
-except ImportError:
-    print("Warning: Could not import GRPOPredictiveAgent. GRPO logic will fail if enabled.")
+    print("[GRPO] Successfully imported GRPOPredictiveAgent")
+except ImportError as e:
+    print(f"[GRPO] Warning: Could not import GRPOPredictiveAgent: {e}")
+    GRPOPredictiveAgent = None
 # === [GRPO MODIFY END] ===
 
 mp = (
@@ -66,60 +71,43 @@ def time_limit(seconds):
 
 # === [GRPO MODIFY START] 定义代理类以支持多进程 Pickling ===
 class GRPOAgentProxy:
-    """GRPO 代理类：拦截动作请求并转发给预测推理器"""
-    def __init__(self, base_agent, **kwargs):
-        self.base_agent = base_agent
-        
-        # 初始化 GRPO Agent
-        if GRPOPredictiveAgent and self.base_agent:
-            print(f"[GRPO Proxy] Wrapping Agent with GRPO Inference (N=8)...")
-            self.grpo_agent = GRPOPredictiveAgent(base_policy=self.base_agent, num_samples=8)
+    """
+    这是一个代理类，用于在 Worker 进程中动态包装原始 Agent。
+    它使得我们不需要修改 Worker 代码就能注入 GRPO 逻辑。
+    """
+    def __init__(self, **kwargs):
+        # 1. 从 kwargs 中提取原始的 Agent 类（由 evaluate 方法注入）
+        if '__original_agent_class' in kwargs:
+            real_cls = kwargs.pop('__original_agent_class')
+            print(f"[GRPO Proxy] Initializing Base Policy: {real_cls.__name__}")
+            
+            # 2. 实例化原始 Agent (Base Policy)
+            self.base_agent = real_cls(**kwargs)
+            
+            # 3. 用 GRPOPredictiveAgent 包装它
+            if GRPOPredictiveAgent:
+                print(f"[GRPO Proxy] Enabling GRPO Predictive Inference (Samples=8)")
+                self.grpo_agent = GRPOPredictiveAgent(base_policy=self.base_agent, num_samples=8)
+            else:
+                print("[GRPO Proxy] GRPO Agent not available, falling back to base agent.")
+                self.grpo_agent = None
         else:
-            print("[GRPO Proxy] Warning: GRPO Agent not loaded, falling back to base policy.")
+            # Fallback
+            print("[GRPO Proxy] Error: __original_agent_class not found in kwargs!")
+            self.base_agent = None
             self.grpo_agent = None
 
-    @classmethod
-    def build_agent(cls, **kwargs):
-        # 1. 提取原始 Agent 类
-        real_cls = kwargs.pop('__original_agent_class', None)
-        
-        if real_cls is None:
-            print("[GRPO Proxy] Error: __original_agent_class missing in build_agent kwargs")
-            return None
-
-        # 2. 使用原始类的 build_agent 方法创建实例
-        if hasattr(real_cls, 'build_agent'):
-            base_agent = real_cls.build_agent(**kwargs)
-        else:
-            base_agent = real_cls(**kwargs)
-
-        # 3. 返回包装后的 Proxy 实例
-        return cls(base_agent=base_agent)
-
-    def get_action(self, frame, goal_spec):
-        """
-        Override worker's expected interface: (frame, goal_spec) -> (action_str, probs).
-        """
+    def act(self, *args, **kwargs):
+        # 拦截动作选择，使用 GRPO 的推理逻辑
         if self.grpo_agent:
-            return self.grpo_agent.act(frame, goal_spec)
-        return self.base_agent.get_action(frame, goal_spec)
-
-    def update_after_execution(self, real_info):
-        if self.grpo_agent:
-            return self.grpo_agent.update_after_execution(real_info)
-
-    def reset(self):
-        # Reset both the underlying agent rollout state and GRPO safety memory.
-        if hasattr(self.base_agent, "reset"):
-            self.base_agent.reset()
-        if self.grpo_agent:
-            self.grpo_agent.reset()
+            return self.grpo_agent.act(*args, **kwargs)
+        if self.base_agent:
+            return self.base_agent.act(*args, **kwargs)
+        return None
 
     def __getattr__(self, name):
+        # 将所有其他调用（如 .eval(), .load_state_dict()）转发给原始 Agent
         return getattr(self.base_agent, name)
-
-
-
 # === [GRPO MODIFY END] ===
 
 
@@ -161,7 +149,7 @@ class MetricAggregator:
 
 
 def merge_current_metric_to_metric_aggregate_dict(
-        metric_aggregate_dict, current_metric_value_dict
+    metric_aggregate_dict, current_metric_value_dict
 ):
     for k, v in current_metric_value_dict.items():
         if k not in metric_aggregate_dict:
@@ -170,15 +158,13 @@ def merge_current_metric_to_metric_aggregate_dict(
 
 
 def log_results(
-        wandb,
-        all_workers_results,
-        task_type,
-        upload_per_task=True,
-        upload_video=True,
-        upload_per_synset=True,
+    wandb,
+    all_workers_results,
+    task_type,
+    upload_per_task=True,
+    upload_video=True,
+    upload_per_synset=True,
 ):
-    # task_path points out the episode's origin (i.e., which task, episode id, streaming id)
-
     table = None
 
     total_metric_aggregators_dict = {}
@@ -218,7 +204,7 @@ def log_results(
             o.split("/")[2]
             for o in total_metric_aggregators_dict.keys()
             if o.startswith("extra/")
-               and len(o.split("/")) == 3  # one for extra one for object one for metric
+            and len(o.split("/")) == 3
         ]
     )
     if len(all_objects) > 0:
@@ -232,7 +218,6 @@ def log_results(
                 key = f"extra/{o}/{col}"
                 if key in total_metric_aggregators_dict:
                     row += [total_metric_aggregators_dict[key].aggregate()]
-                    # Assume at least `eps_len` or `success` are available for all episodes, and include all tasks
                     size = max(size, total_metric_aggregators_dict[key].size())
                 else:
                     row += [-1]
@@ -263,30 +248,30 @@ def log_results(
 
 class OnlineEvaluatorManager:
     def __init__(
-            self,
-            dataset_path="/data/datasets",
-            dataset_type="object_nav_v0.3",
-            max_eps_len=-1,
-            eval_set_size=None,
-            eval_subset="val",
-            shuffle=True,
-            seed=123,
-            gpu_devices=None,
-            outdir="/data/results/online_evaluation/OnlineEval-default",
-            exist_ok=True,
-            table_size=200,
-            list_of_tasks=None,
-            input_sensors=("raw_navigation_camera", "raw_manipulation_camera"),
-            skip_done=False,
-            house_set="procthor",
-            num_workers=1,
-            preset_wandb=None,
-            benchmark_revision="chores-small",
-            det_type=None,
-            extra_tag="",
-            prob_randomize_lighting=0,
-            prob_randomize_materials=0,
-            prob_randomize_colors=0,
+        self,
+        dataset_path="/data/datasets",
+        dataset_type="object_nav_v0.3",
+        max_eps_len=-1,
+        eval_set_size=None,
+        eval_subset="val",
+        shuffle=True,
+        seed=123,
+        gpu_devices=None,
+        outdir="/data/results/online_evaluation/OnlineEval-default",
+        exist_ok=True,
+        table_size=200,
+        list_of_tasks=None,
+        input_sensors=("raw_navigation_camera", "raw_manipulation_camera"),
+        skip_done=False,
+        house_set="procthor",
+        num_workers=1,
+        preset_wandb=None,
+        benchmark_revision="chores-small",
+        det_type=None,
+        extra_tag="",
+        prob_randomize_lighting=0,
+        prob_randomize_materials=0,
+        prob_randomize_colors=0,
     ):
         self.benchmark_revision = benchmark_revision
 
@@ -340,7 +325,7 @@ class OnlineEvaluatorManager:
         self.num_tasks_in_queue = 0
 
     def load_minival_eval_samples(
-            self, list_of_tasks
+        self, list_of_tasks
     ) -> Dict[str, List[NormalizedEvalSample]]:
         all_task_samples = {}
         # Make a dictionary of tasks to list of samples
@@ -351,9 +336,9 @@ class OnlineEvaluatorManager:
         return all_task_samples
 
     def _load_dataset_from_local_path(
-            self,
-            local_path: str,
-            task_types: Optional[List[str]] = None,
+        self,
+        local_path: str,
+        task_types: Optional[List[str]] = None,
     ):
         if not os.path.exists(local_path):
             raise FileNotFoundError(f"Local path does not exist: {local_path}")
@@ -404,7 +389,7 @@ class OnlineEvaluatorManager:
         return DatasetDict(**data)
 
     def load_minival_eval_samples_per_task(
-            self, task_type: str, use_local_path: Optional[str] = None
+        self, task_type: str, use_local_path: Optional[str] = None
     ) -> List[NormalizedEvalSample]:
 
         if use_local_path is not None:
@@ -433,7 +418,7 @@ class OnlineEvaluatorManager:
         return [normalized_samples[i] for i in sample_ids]
 
     def load_full_eval_samples(
-            self, task_type: str
+        self, task_type: str
     ) -> Dict[str, List[NormalizedEvalSample]]:
         data_dir = os.path.join(self.dataset_path, self.dataset_type)
         with open("test.txt", "w") as f:
@@ -510,7 +495,7 @@ class OnlineEvaluatorManager:
                         value = str(tuple(value))
 
                     distribution_dict[key][value] = (
-                            distribution_dict[key].get(value, 0) + 1
+                        distribution_dict[key].get(value, 0) + 1
                     )
 
         if distribution_dict == {}:
@@ -547,8 +532,8 @@ class OnlineEvaluatorManager:
     def log_benchmark_stat(self):
         for task_type, samples in self.eval_samples.items():
             assert (
-                    map_hard_easy_objectnavtype_to_objectnavtype(task_type)
-                    in REGISTERED_TASKS
+                map_hard_easy_objectnavtype_to_objectnavtype(task_type)
+                in REGISTERED_TASKS
             ), f"Task type {task_type} not registered"
             self.log_data_stat(
                 task_type=task_type, samples=self.eval_samples[task_type]
@@ -566,7 +551,7 @@ class OnlineEvaluatorManager:
         if agent_input is None:
             agent_input = {}
         agent_input['__original_agent_class'] = agent_class
-
+        
         # 将使用的 Agent 类替换为我们的代理类
         target_agent_class = GRPOAgentProxy
         # === [GRPO MODIFY END] ===
@@ -631,11 +616,11 @@ class OnlineEvaluatorManager:
             print(f"Starting worker in main process")
 
             worker_to_gpu = {0: self.gpu_devices[0]}
-
+            
             # === [GRPO MODIFY START] 使用 target_agent_class ===
             start_worker(
                 self.workers[0],
-                target_agent_class,  # 这里使用了被替换后的代理类
+                target_agent_class, 
                 agent_input,
                 device=worker_to_gpu[0],
                 tasks_queue=tasks_queue,
@@ -647,13 +632,13 @@ class OnlineEvaluatorManager:
         else:
             for worker_id in self.workers:
                 print(f"Starting worker {worker_id}")
-
+                
                 # === [GRPO MODIFY START] 使用 target_agent_class ===
                 proc = mp.Process(
                     target=start_worker,
                     args=(
                         self.workers[worker_id],
-                        target_agent_class,  # 这里使用了被替换后的代理类
+                        target_agent_class, 
                         agent_input,
                         worker_to_gpu[worker_id],
                         tasks_queue,
@@ -722,7 +707,7 @@ class OnlineEvaluatorManager:
                 uncounted_finished = new_found_results
             else:
                 speed = (total_finished - uncounted_finished) / (
-                        current_time - start_time
+                    current_time - start_time
                 )
                 ETA = (total_tasks - total_finished) / (speed + 1e-8)
                 print(f"Rate {speed:.3f} tasks/s, ETA {ETA / 3600:.3f}hours")
@@ -752,9 +737,9 @@ class OnlineEvaluatorManager:
                 print(f"No process alive. Terminating")
                 break
             elif (
-                    num_alive == 1
-                    and len(dead_proc_inds) == 0
-                    and results_queue.qsize() == 0
+                num_alive == 1
+                and len(dead_proc_inds) == 0
+                and results_queue.qsize() == 0
             ):
                 print(f"1 process alive but no results in queue. Terminating")
                 break
@@ -762,7 +747,7 @@ class OnlineEvaluatorManager:
                 print(f"{num_alive} alive eval workers")
 
             if (
-                    new_found_results > 0 or len(dead_proc_inds) > 0
+                new_found_results > 0 or len(dead_proc_inds) > 0
             ) and LOG_INTERMEDIATE_RESULTS:
                 self.log_from_task_type_lists(
                     task_type_to_results_list,
@@ -781,12 +766,12 @@ class OnlineEvaluatorManager:
         self.log_from_task_type_lists(task_type_to_results_list, upload=True)
 
     def log_from_task_type_lists(
-            self,
-            task_type_to_results_list,
-            upload=True,
-            upload_per_task=None,
-            upload_video=None,
-            upload_per_synset=None,
+        self,
+        task_type_to_results_list,
+        upload=True,
+        upload_per_task=None,
+        upload_video=None,
+        upload_per_synset=None,
     ):
         all_tasks_aggregated_results = {}
         table_metrics = self.wandb.Table(
@@ -814,7 +799,8 @@ class OnlineEvaluatorManager:
                     int(result[0]["metrics"]["success"]),
                 )
         # self.wandb.log({"plan1": table_plan1})
-        self.wandb.log({f"metrics": table_metrics})
+        if self.wandb:
+            self.wandb.log({f"metrics": table_metrics})
 
         for task_type, task_type_results in task_type_to_results_list.items():
             all_tasks_aggregated_results[task_type] = log_results(
@@ -844,7 +830,11 @@ class OnlineEvaluatorManager:
             if "extra/" not in m and "for_video_table/" not in m
         ]
         columns = ["task_type"] + ["extra_tag"] + metrics_to_log
-        aggrgeated_result_metrics_table = self.wandb.Table(columns=columns)
+        if self.wandb:
+            aggrgeated_result_metrics_table = self.wandb.Table(columns=columns)
+        else:
+            aggrgeated_result_metrics_table = None
+            
         total_results = 0
         for task_type, results in all_tasks_aggregated_results.items():
             total_results += len(results)
@@ -864,13 +854,23 @@ class OnlineEvaluatorManager:
                     this_row.append(-1)
                     print("missing metric", col, "for task", task_type)
 
-            aggrgeated_result_metrics_table.add_data(*this_row)
+            if aggrgeated_result_metrics_table:
+                aggrgeated_result_metrics_table.add_data(*this_row)
 
-        print("\nAggregated results")
-        print(aggrgeated_result_metrics_table.get_dataframe())
+        if aggrgeated_result_metrics_table:
+            print("\nAggregated results")
+            print(aggrgeated_result_metrics_table.get_dataframe())
 
-        if upload:
+        if upload and self.wandb:
             self.wandb.log({f"FullAggregatedResults": aggrgeated_result_metrics_table})
             print(
                 f"Uploading results from {total_results} tasks out of {self.num_tasks_in_queue} emitted."
             )
+'''
+
+# 将内容写入到实际文件中
+target_path = 'online_evaluation/online_evaluator.py'
+with open(target_path, 'w', encoding='utf-8') as f:
+    f.write(file_content)
+
+print(f"Successfully fixed {target_path}")

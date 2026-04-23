@@ -1,0 +1,121 @@
+.
+├── architecture
+│   ├── agent.py
+│   ├── allenact_preprocessors
+│   │   ├── dino_preprocessors.py
+│   │   ├── __init__.py
+│   │   └── siglip_preprocessors.py
+│   ├── __init__.py
+│   └── models
+│       ├── allenact_transformer_models
+│       ├── __init__.py
+│       └── transformer_models
+├── Arial.ttf
+├── assets
+│   ├── safevideo_1.gif
+│   ├── safevideo_2.gif
+│   ├── safevideo_3.gif
+│   ├── safevideo_4.gif
+│   ├── structure.png
+│   ├── unsafevideo_1.gif
+│   ├── unsafevideo_2.gif
+│   ├── unsafevideo_3.gif
+│   └── unsafevideo_4.gif
+├── benchmark
+│   ├── fetchtype_val.jsonl.gz
+│   ├── objectnavtype_val.jsonl.gz
+│   └── pickuptype_val.jsonl.gz
+├── environment
+│   ├── __init__.py
+│   ├── manipulation_sensors.py
+│   ├── navigation_sensors.py
+│   ├── spoc_objects.py
+│   ├── stretch_controller.py
+│   ├── stretch_state.py
+│   └── vision_sensors.py
+├── LICENSE
+├── online_evaluation
+│   ├── __init__.py
+│   ├── local_logging_utils.py
+│   ├── max_episode_configs.py
+│   ├── online_evaluation_types_and_utils.py
+│   ├── online_evaluator.py
+│   └── online_evaluator_worker.py
+├── project_structure.txt
+├── README.md
+├── requirements.txt
+├── scripts
+│   ├── download_aligned_ckpt.py
+│   ├── download_baseline_ckpt.py
+│   ├── download_objaverse_houses.py
+│   ├── download_training_data.py
+│   ├── eval.sh
+│   ├── install.sh
+│   ├── run_docker.sh
+│   └── train.sh
+├── tasks
+│   ├── abstract_task.py
+│   ├── abstract_task_sampler.py
+│   ├── fetch_task.py
+│   ├── __init__.py
+│   ├── multi_task_eval_sampler.py
+│   ├── object_nav_task.py
+│   ├── pickup_task.py
+│   └── task_specs.py
+├── training
+│   ├── __init__.py
+│   ├── offline
+│   │   ├── chores_dataset.py
+│   │   ├── dataset_mixtures.py
+│   │   ├── __init__.py
+│   │   ├── train_pl.py
+│   │   └── train_utils.py
+│   └── online
+│       ├── allenact_trainer.py
+│       ├── base.py
+│       ├── chores_dataset.py
+│       ├── dataset_mixtures.py
+│       ├── dinov2_vits_tsfm_base.py
+│       ├── __init__.py
+│       ├── loss
+│       ├── online_eval.py
+│       ├── reward
+│       └── third_party_models
+└── utils
+    ├── bbox_utils.py
+    ├── constants
+    │   ├── __init__.py
+    │   ├── objaverse_data_dirs.py
+    │   ├── object_constants.py
+    │   ├── stretch_initialization_utils.py
+    │   └── template_verbs.py
+    ├── data_generation_utils
+    │   ├── exception_utils.py
+    │   ├── __init__.py
+    │   ├── loc_grid_conversion.py
+    │   ├── mp4_utils.py
+    │   └── navigation_utils.py
+    ├── data_utils.py
+    ├── debug_utils.py
+    ├── detic_utils.py
+    ├── distance_calculation_utils.py
+    ├── __init__.py
+    ├── local_logging.py
+    ├── loss_functions.py
+    ├── nn_utils.py
+    ├── objaverse_annotation.py
+    ├── sel_utils.py
+    ├── sensor_constant_utils.py
+    ├── string_utils.py
+    ├── synset_to_best_lemma.json
+    ├── synset_utils.py
+    ├── task_datagen_utils.py
+    ├── task_sampler_utils.py
+    ├── task_spec_to_instruction.py
+    ├── task_type_mapping_utils.py
+    ├── transformation_util.py
+    ├── type_utils.py
+    ├── visualization_utils.py
+    └── wandb_logging.py
+
+21 directories, 98 files

@@ -80,7 +80,7 @@ def task_sampler_args_builder(
 
     # create task_spec sampler
     if mode == "train":
-        house_index_to_task_specs = defaultdict(lambda: [])
+        house_index_to_task_specs = defaultdict(list)
         for task_spec in selected_task_specs:
             house_index_to_task_specs[task_spec["house_index"]].append(task_spec)
 

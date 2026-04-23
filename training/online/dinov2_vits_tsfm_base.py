@@ -309,7 +309,7 @@ class DinoV2ViTSTSFMBase(BaseConfig):
 
         batch_steps_0 = int(200000)
         batch_steps_1 = int(800000)
-        batch_steps_2 = int(1e9) - batch_steps_1 - batch_steps_0
+        batch_steps_2 = int(15000000) - batch_steps_1 - batch_steps_0
 
         NewPPOConfig = dict(
             clip_param=0.1,
