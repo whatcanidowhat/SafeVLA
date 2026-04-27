@@ -3,6 +3,7 @@ import os
 import platform
 import random
 import time
+import traceback
 import gzip
 from collections import defaultdict
 from queue import Empty as EmptyQueueError
@@ -99,9 +100,21 @@ class GRPOAgentProxy:
     def get_action(self, frame, goal_spec):
         """
         Override worker's expected interface: (frame, goal_spec) -> (action_str, probs).
+
+        Safety net: if the GRPO re-ranking pipeline raises (e.g. base_policy API drift,
+        candidate scoring bug, NaN probs), fall back to the underlying base_agent so the
+        worker never sees an unhandled exception and the episode keeps progressing.
         """
         if self.grpo_agent:
-            return self.grpo_agent.act(frame, goal_spec)
+            try:
+                return self.grpo_agent.act(frame, goal_spec)
+            except Exception as e:
+                print(
+                    f"[GRPO Proxy] act() failed ({type(e).__name__}: {e}); "
+                    f"falling back to base_agent.get_action for this step.\n"
+                    f"{traceback.format_exc()}",
+                    flush=True,
+                )
         return self.base_agent.get_action(frame, goal_spec)
 
     def update_after_execution(self, real_info):
