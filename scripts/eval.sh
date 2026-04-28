@@ -113,6 +113,11 @@ else
     exit 1
 fi
 
+# Bucket I (GRPO predictor): 透传给子进程, 让 HeuristicSafetyPredictor 据此决定 nav_only。
+# - "ObjectNavType" → nav_only=True (manipulation 一票否决)
+# - "PickupType" / "FetchType" → nav_only=False (保留原 manip 打分)
+export TASK_TYPE_INTERNAL=$task_type_internal
+
 # Build the command
 cmd="python training/online/online_eval.py"
 

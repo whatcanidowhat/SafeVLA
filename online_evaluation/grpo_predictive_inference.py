@@ -1,11 +1,18 @@
+import logging
+import os
+
 import torch
 import numpy as np
 from collections import Counter
 
 
+logger = logging.getLogger("grpo_predictive")
+
+
 # =============================================================================
 # 1. 辅助模块：均衡预测器 (物理 + 语义同等高压) / 刷榜版奖励曲线
 #    CRITICAL_DISTANCE=0.25, 风险一票否决, 极简干预原则
+# success=0.864，cost=0.98
 # =============================================================================
 
 # 与 utils/type_utils.THORActions 对齐的短 token (无 LONG_ACTION_NAME / ACTION_DICT 时即为它们)。
@@ -14,6 +21,28 @@ _MOVE_BACK_TOKENS = {"b", "move_back", "MoveBack"}
 _ROTATE_LEFT_TOKENS = {"l", "ls", "rotate_left", "rotate_left_small", "RotateLeft", "RotateLeftSmall"}
 _ROTATE_RIGHT_TOKENS = {"r", "rs", "rotate_right", "rotate_right_small", "RotateRight", "RotateRightSmall"}
 _PICKUP_TOKENS = {"p", "pickup", "Pickup"}
+
+# Bucket I — ObjectNav 模式下需要被一票否决的"机械臂操作族" (短 token + 长名 + 驼峰三套全收)。
+_MANIPULATION_TOKENS = {
+    # pickup / dropoff
+    "p", "pickup", "Pickup",
+    "d", "dropoff", "Dropoff",
+    # move_arm_up / down / out / in (含 _small 变体)
+    "yp", "move_arm_up", "MoveArmUp",
+    "yps", "move_arm_up_small", "MoveArmUpSmall",
+    "ym", "move_arm_down", "MoveArmDown",
+    "yms", "move_arm_down_small", "MoveArmDownSmall",
+    "zp", "move_arm_out", "MoveArmOut",
+    "zps", "move_arm_out_small", "MoveArmOutSmall",
+    "zm", "move_arm_in", "MoveArmIn",
+    "zms", "move_arm_in_small", "MoveArmInSmall",
+    # wrist
+    "wp", "wrist_open", "WristOpen",
+    "wm", "wrist_close", "WristClose",
+}
+
+# 唯一合法终止动作 (THORActions.done = "end"); 不把 sub_done 加进来 —— sub_done 不会终止 episode。
+_DONE_TOKENS = {"end", "done", "Done"}
 
 
 def _is_token(action_str, token_set):
@@ -73,11 +102,57 @@ def _extract_depth_mean(arr):
 
 
 class HeuristicSafetyPredictor:
+    # 类级 flag: 避免每个 episode 都重复打印 init 横幅 (一个 worker 进程只打一次)。
+    _LOGGED_INIT = False
+
     def __init__(self):
         self.CRITICAL_DISTANCE = 0.25  # 刷榜版: 对物理撞墙的高敏锐度
         self.memory = SpatialMemory()
         self.danger_keywords = ["stove", "burner", "knife", "fork", "fire"]
         self.fragile_keywords = ["vase", "glass", "laptop", "monitor", "television", "bottle", "bowl", "mug"]
+
+        # ---- Bucket I: ObjectNav 模式开关 (由 eval.sh 通过 TASK_TYPE_INTERNAL 注入) ----
+        task_type_env = os.getenv("TASK_TYPE_INTERNAL", "").strip()
+        self.task_type_env = task_type_env
+        normalized = task_type_env.lower()
+        # 同时接受用户参数形式 ("objectnav") 与内部形式 ("ObjectNavType" / "ObjectNavRoom" / 等),
+        # 以及 RoomNav / RoomVisit 这种纯导航任务。PickupType / FetchType 不命中 → nav_only=False, 行为不变。
+        self.nav_only = (
+            "objectnav" in normalized
+            or normalized in ("roomnav", "roomvisit")
+        )
+
+        # 节流日志: 每个 predictor 实例 (= 每个 episode) 仅前 N 次拦截以 WARNING 级别打印,
+        # 之后每隔 INTERCEPT_LOG_EVERY 次 heartbeat 一次, 其余走 DEBUG。
+        self._intercept_count = 0
+        self._INTERCEPT_LOG_FIRST_N = 3
+        self._INTERCEPT_LOG_EVERY = 50
+
+        if not HeuristicSafetyPredictor._LOGGED_INIT:
+            if self.nav_only:
+                logger.info(
+                    "Predictor initialized in nav_only mode. Manipulation actions will be penalized. "
+                    "(TASK_TYPE_INTERNAL=%r, manip tokens suppressed → progress=-1.0)",
+                    task_type_env,
+                )
+                # logging 没配置时的兜底, 确保 init 一定可见。
+                print(
+                    f"[GRPO] Predictor initialized in nav_only mode "
+                    f"(TASK_TYPE_INTERNAL={task_type_env!r}). Manipulation actions will be penalized.",
+                    flush=True,
+                )
+            else:
+                logger.info(
+                    "Predictor initialized in standard mode "
+                    "(TASK_TYPE_INTERNAL=%r → nav_only=False, manipulation NOT penalized).",
+                    task_type_env or "<unset>",
+                )
+                print(
+                    f"[GRPO] Predictor initialized standard mode "
+                    f"(TASK_TYPE_INTERNAL={task_type_env or '<unset>'!r}, nav_only=False).",
+                    flush=True,
+                )
+            HeuristicSafetyPredictor._LOGGED_INIT = True
 
     def update_state(self, real_info, last_action_str):
         """每步执行完后由 update_after_execution 调用; real_info 可能是 worker 发的原始
@@ -111,6 +186,31 @@ class HeuristicSafetyPredictor:
         is_move_ahead = _is_token(action_str, _MOVE_AHEAD_TOKENS)
         is_move_back = _is_token(action_str, _MOVE_BACK_TOKENS)
         is_pickup = _is_token(action_str, _PICKUP_TOKENS)
+        is_manipulation = _is_token(action_str, _MANIPULATION_TOKENS)
+        is_done = _is_token(action_str, _DONE_TOKENS)
+
+        # ---- Bucket I: ObjectNav 模式下, 机械臂操作族一票否决, 提前返回 ----
+        if self.nav_only and is_manipulation:
+            self._intercept_count += 1
+            c = self._intercept_count
+            log_msg = (
+                f"[GRPO/nav_only] Intercepted manipulation action {action_str!r} "
+                f"in objectnav mode. Forced reward to -1.0 "
+                f"(intercept #{c} this episode)."
+            )
+            if c <= self._INTERCEPT_LOG_FIRST_N:
+                logger.warning(log_msg)
+            elif c % self._INTERCEPT_LOG_EVERY == 0:
+                logger.warning(log_msg + " [heartbeat]")
+            else:
+                logger.debug(log_msg)
+            # 不进入 risk_scores (避免把 Corner/Blind 等 0 风险误推到非 0); 直接走强负 progress。
+            return risk_scores, -1.0, "Manipulation suppressed in nav_only mode."
+
+        # 唯一合法终止动作: 给一个微小正分, 让 base policy 给到 'end' 任何非零概率时
+        # 都比 0 分的旋转 / -1.0 的 manipulation 更优, 鼓励到位即终止。
+        if is_done:
+            return risk_scores, 0.05, None
 
         is_danger = any(k in closest_obj for k in self.danger_keywords)
         is_fragile = any(k in closest_obj for k in self.fragile_keywords)

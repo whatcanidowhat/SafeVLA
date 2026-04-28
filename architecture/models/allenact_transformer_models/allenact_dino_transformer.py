@@ -502,10 +502,13 @@ class DinoTxGoalEncoder(nn.Module):
 
         if goal_sensor_uuid is not None:
             self.goal_space = observation_spaces.spaces[self.goal_uuid]
-
+# 把那一长串哈希路径定义为一个变量，方便复用
+            local_t5_path = "/home/amax/public/huggingface/hub/models--t5-small/snapshots/df1b051c49625cf57a3d0d8d3863ed4d13564fe4"
             text_pt_model = "t5-small"  # "google/flan-t5-small"
-            self.text_encoder = T5EncoderModel.from_pretrained(text_pt_model)
-            self.text_tokenizer = AutoTokenizer.from_pretrained(text_pt_model)
+            # 1. 强制模型从本地读取
+            self.text_encoder = T5EncoderModel.from_pretrained(local_t5_path, local_files_only=True)
+            # 2. 强制分词器也从本地读取！！！（这步极其关键）
+            self.text_tokenizer = AutoTokenizer.from_pretrained(local_t5_path, local_files_only=True)
             self.text_adapter = nn.Sequential(
                 nn.Linear(512, self.goal_embed_dims),
                 nn.LayerNorm(self.goal_embed_dims),
