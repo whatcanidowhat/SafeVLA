@@ -322,6 +322,91 @@ class OnlineEvaluatorWorker:
                 all_frames.append(curr_frame)
                 action, probs = agent.get_action(observations, goal)
 
+                # === [Premature Termination Guard] BEGIN ===
+                # 物理屏障 + Logits 重排，仅在「模型 end」且「原生失败」时拦截。
+                # 注意 1: probs 的索引顺序由 actor_critic.action_space 决定,
+                #        唯一可信对齐源是 agent.get_action_list() (本函数 L276 的 action_list).
+                #        绝不要用 task.action_names 做 idx -> str 映射 —— 在 ACTION_DICT
+                #        被注入或两边定义不一致时, 长度可能相同但索引错位.
+                # 注意 2: strict_success=False 是当前默认值, 显式写出是为了锁住语义 ——
+                #        若上游改成 True (中心可见性更严), Guard 会过度干预合法 end.
+                # 注意 3: 拦截后 agent 内部 last_action_flat 仍记录 end_idx, 与环境实际
+                #        执行的 RotateRight 有 1-step 失配. 视觉是主导信号, 可接受.
+                if action in ("end", "done"):
+                    try:
+                        native_done_ok = bool(
+                            task.successful_if_done(strict_success=False)
+                        )
+                    except Exception as _exc:
+                        native_done_ok = True
+                        print(
+                            f"[PT-Guard] step={eps_idx} successful_if_done() raised "
+                            f"{type(_exc).__name__}: {_exc}; treating as legal end.",
+                            flush=True,
+                        )
+
+                    if not native_done_ok:
+                        original_action = action
+                        rewritten_action = None
+                        rewrite_reason = "fallback"
+
+                        try:
+                            if probs is not None and hasattr(probs, "clone"):
+                                masked = probs.detach().clone().float().view(-1)
+                                if masked.shape[0] != len(action_list):
+                                    rewrite_reason = (
+                                        f"size_mismatch(probs={masked.shape[0]},"
+                                        f"action_list={len(action_list)})"
+                                    )
+                                else:
+                                    for _i, _a in enumerate(action_list):
+                                        if _a in ("end", "done", "sub_done"):
+                                            masked[_i] = 0.0
+                                    if masked.sum().item() > 1e-6:
+                                        top_idx = int(torch.argmax(masked).item())
+                                        cand = action_list[top_idx]
+                                        if cand not in ("end", "done", "sub_done"):
+                                            rewritten_action = cand
+                                            rewrite_reason = "logits_rerank_top2"
+                                    else:
+                                        rewrite_reason = "all_non_done_probs_zero"
+                            else:
+                                rewrite_reason = "probs_unavailable"
+                        except Exception as _exc:
+                            rewrite_reason = f"rerank_exc:{type(_exc).__name__}"
+                            print(
+                                f"[PT-Guard] step={eps_idx} logits re-rank failed "
+                                f"({type(_exc).__name__}: {_exc}); falling back.",
+                                flush=True,
+                            )
+
+                        if rewritten_action is None:
+                            rewritten_action = THORActions.rotate_right
+
+                        if rewritten_action not in getattr(task, "action_names", ()):
+                            print(
+                                f"[PT-Guard] step={eps_idx} chosen {rewritten_action!r} "
+                                f"not in task.action_names; hard fallback to RotateRight.",
+                                flush=True,
+                            )
+                            rewritten_action = THORActions.rotate_right
+                            rewrite_reason += "+task_action_names_guard"
+
+                        try:
+                            cur_dist = float(task.dist_to_target_func())
+                        except Exception:
+                            cur_dist = float("nan")
+                        print(
+                            f"[PT-Guard] step={eps_idx} "
+                            f"task={task.task_info.get('task_type', '?')} "
+                            f"intercepted={original_action!r} "
+                            f"(dist={cur_dist:.3f}m, reason={rewrite_reason}) "
+                            f"-> rewritten={rewritten_action!r}",
+                            flush=True,
+                        )
+                        action = rewritten_action
+                # === [Premature Termination Guard] END ===
+
                 if self.skip_done and action in ["end", "done"]:
                     action = "sub_done"
                 # all_actions.append(action)

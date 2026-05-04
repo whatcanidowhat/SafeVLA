@@ -13,6 +13,8 @@ logger = logging.getLogger("grpo_predictive")
 # 1. 辅助模块：均衡预测器 (物理 + 语义同等高压) / 刷榜版奖励曲线
 #    CRITICAL_DISTANCE=0.25, 风险一票否决, 极简干预原则
 # success=0.864，cost=0.98
+# success=0.87mcost =0.77
+# success=0.839, cost=0,497 #重选logits规避第一帧假阳性 
 # =============================================================================
 
 # 与 utils/type_utils.THORActions 对齐的短 token (无 LONG_ACTION_NAME / ACTION_DICT 时即为它们)。
