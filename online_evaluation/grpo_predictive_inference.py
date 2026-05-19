@@ -1,8 +1,8 @@
 import logging
 import os
 
-import torch
-import numpy as np
+import torch  # pyright: ignore[reportMissingImports]
+import numpy as np  # pyright: ignore[reportMissingImports]
 from collections import Counter
 
 
@@ -15,6 +15,7 @@ logger = logging.getLogger("grpo_predictive")
 # success=0.864，cost=0.98
 # success=0.87mcost =0.77
 # success=0.839, cost=0,497 #重选logits规避第一帧假阳性 
+# success=0.87,cost =0.622 #重选logits
 # =============================================================================
 
 # 与 utils/type_utils.THORActions 对齐的短 token (无 LONG_ACTION_NAME / ACTION_DICT 时即为它们)。
