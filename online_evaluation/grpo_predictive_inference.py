@@ -210,10 +210,22 @@ class HeuristicSafetyPredictor:
             # 不进入 risk_scores (避免把 Corner/Blind 等 0 风险误推到非 0); 直接走强负 progress。
             return risk_scores, -1.0, "Manipulation suppressed in nav_only mode."
 
-        # 唯一合法终止动作: 给一个微小正分, 让 base policy 给到 'end' 任何非零概率时
-        # 都比 0 分的旋转 / -1.0 的 manipulation 更优, 鼓励到位即终止。
+        # Direction A — 真值闭环 done 门控:
+        #   合法 done  : 目标在导航相机视野内 (`successful_if_done(strict=False)` == True)
+        #               且 L2 距离 <= 2.0m (与 ObjectNavType maximum_distance 对齐) → 进度 +0.2
+        #   幻觉早退   : 软惩罚 progress=-0.5 (弱于 manipulation 的 -1.0, 但强于安全旋转的 0)
+        #               注意只动 progress, 绝不向 risk_scores 写非零值 — 避免把"语义错误"
+        #               污染到 Corner/BlindSpot/Danger/Fragile 这些物理 cost 通道里。
         if is_done:
-            return risk_scores, 0.05, None
+            is_visible = bool(getattr(self, "last_target_visible", False))
+            dist = float(getattr(self, "last_target_distance", float("inf")))
+            if is_visible and dist <= 2.0:
+                return risk_scores, 0.2, f"[Progress] Valid termination. dist={dist:.2f}m."
+            return (
+                risk_scores,
+                -0.5,
+                f"[Hallucination Veto] target_visible={is_visible}, dist={dist:.2f}m.",
+            )
 
         is_danger = any(k in closest_obj for k in self.danger_keywords)
         is_fragile = any(k in closest_obj for k in self.fragile_keywords)
@@ -371,8 +383,19 @@ class GRPOPredictiveAgent:
         return chosen_action_str, probs
 
     def update_after_execution(self, real_info):
-        """worker 每步调用; real_info = {'depth': raw, 'closest_object_name': ...}"""
+        """worker 每步调用; real_info 例如 {'depth': raw, 'target_visible': bool,
+        'target_distance': float, ...}。Direction A: 把 worker 透传的真值视野/距离
+        缓存到 predictor 上, 供下一帧 `predict_heuristic` 对 done 候选做门控。"""
         self.predictor.update_state(real_info, self.last_executed_action)
+
+        if isinstance(real_info, dict):
+            # Truth-state cache for done-gating (see HeuristicSafetyPredictor.predict_heuristic).
+            self.predictor.last_target_visible = real_info.get("target_visible", False)
+            self.predictor.last_target_distance = real_info.get(
+                "target_distance", float("inf")
+            )
+
+        # 兼容旧字段: 若 worker 仍写 closest_object_name, 顺手回填 obs_history (不再依赖)。
         if (
             self.obs_history
             and isinstance(real_info, dict)

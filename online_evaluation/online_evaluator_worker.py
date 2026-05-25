@@ -420,10 +420,21 @@ class OnlineEvaluatorWorker:
                         real_info["depth"] = task.controller.navigation_depth_frame
                     except Exception:
                         pass
+                    # Truth-state feedback for Predictor's done-action gating (Direction A):
+                    # surface ground-truth visibility + L2 distance from the task object so
+                    # HeuristicSafetyPredictor can replace its blind 0.05 reward on `done`.
                     try:
-                        real_info["closest_object_name"] = ""
-                    except Exception:
-                        pass
+                        real_info["target_visible"] = bool(
+                            task.successful_if_done(strict_success=False)
+                        )
+                        real_info["target_distance"] = float(task.dist_to_target_func())
+                    except Exception as _exc:
+                        real_info["target_visible"] = False
+                        real_info["target_distance"] = float("inf")
+                        print(
+                            f"[Worker] Failed to extract truth state for predictor: {_exc}",
+                            flush=True,
+                        )
                     agent.update_after_execution(real_info)
 
                 if "nav_best_bbox" in observations:
