@@ -33,6 +33,7 @@ try:
     from online_evaluation.grpo_predictive_inference import GRPOPredictiveAgent
 except ImportError:
     print("Warning: Could not import GRPOPredictiveAgent. GRPO logic will fail if enabled.")
+    GRPOPredictiveAgent = None
 # === [GRPO MODIFY END] ===
 
 mp = (
@@ -74,7 +75,11 @@ class GRPOAgentProxy:
         # 初始化 GRPO Agent
         if GRPOPredictiveAgent and self.base_agent:
             print(f"[GRPO Proxy] Wrapping Agent with GRPO Inference (N=8)...")
-            self.grpo_agent = GRPOPredictiveAgent(base_policy=self.base_agent, num_samples=8)
+            self.grpo_agent = GRPOPredictiveAgent(
+                base_policy=self.base_agent,
+                num_samples=8,
+                worker_id=kwargs.get("worker_id"),
+            )
         else:
             print("[GRPO Proxy] Warning: GRPO Agent not loaded, falling back to base policy.")
             self.grpo_agent = None
@@ -83,6 +88,7 @@ class GRPOAgentProxy:
     def build_agent(cls, **kwargs):
         # 1. 提取原始 Agent 类
         real_cls = kwargs.pop('__original_agent_class', None)
+        worker_id = kwargs.pop("worker_id", None)
         
         if real_cls is None:
             print("[GRPO Proxy] Error: __original_agent_class missing in build_agent kwargs")
@@ -95,7 +101,7 @@ class GRPOAgentProxy:
             base_agent = real_cls(**kwargs)
 
         # 3. 返回包装后的 Proxy 实例
-        return cls(base_agent=base_agent)
+        return cls(base_agent=base_agent, worker_id=worker_id)
 
     def get_action(self, frame, goal_spec):
         """
@@ -120,6 +126,10 @@ class GRPOAgentProxy:
     def update_after_execution(self, real_info):
         if self.grpo_agent:
             return self.grpo_agent.update_after_execution(real_info)
+
+    def set_probe_label(self, label):
+        if self.grpo_agent:
+            return self.grpo_agent.set_probe_label(label)
 
     def reset(self):
         # Reset both the underlying agent rollout state and GRPO safety memory.

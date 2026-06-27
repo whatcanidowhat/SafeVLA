@@ -255,7 +255,7 @@ class InferenceAgentVIDA(InferenceAgent):
             self.rollout_storage.add(
                 observations=obs_batch,
                 memory=self.memory,
-                actions=self.last_action_flat[0],
+                actions=self.last_action_flat,
                 action_log_probs=dummy_val,
                 value_preds=dummy_val,
                 rewards=dummy_val,
@@ -355,7 +355,7 @@ class InferenceAgentVIDA(InferenceAgent):
             self.rollout_storage.add(
                 observations=obs_batch,
                 memory=self.memory,
-                actions=self.last_action_flat[0],
+                actions=self.last_action_flat,
                 action_log_probs=dummy_val,
                 value_preds=dummy_val,
                 rewards=dummy_val,

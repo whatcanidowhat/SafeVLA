@@ -5,6 +5,15 @@ import torch  # pyright: ignore[reportMissingImports]
 import numpy as np  # pyright: ignore[reportMissingImports]
 from collections import Counter
 
+# 探针模块 — 仅在 PROBE_ENABLE=1 时导入; 正常评测零开销。
+try:
+    from online_evaluation.probe_small_object import DecoderLayerHook, HiddenStateCollector
+    _PROBE_AVAILABLE = True
+    _PROBE_IMPORT_ERROR = None
+except ImportError as _exc:
+    _PROBE_AVAILABLE = False
+    _PROBE_IMPORT_ERROR = _exc
+
 
 logger = logging.getLogger("grpo_predictive")
 
@@ -273,7 +282,14 @@ class R1PredictiveRewardSystem:
 # =============================================================================
 
 class GRPOPredictiveAgent:
-    def __init__(self, base_policy, num_samples=8, max_refinement_steps=2, temperature=1.2):
+    def __init__(
+        self,
+        base_policy,
+        num_samples=8,
+        max_refinement_steps=2,
+        temperature=1.2,
+        worker_id=None,
+    ):
         # max_refinement_steps 仅为 API 兼容保留: 实际不做二次前向, 因为
         # base_policy.get_action_probs(...) 会推进 rollout_storage, 重复调用会污染状态。
         # 这恰好契合"极简干预原则": 不二次打扰模型。
@@ -288,13 +304,66 @@ class GRPOPredictiveAgent:
         self.last_executed_action = "None"
         self._depth_warning_printed = False
 
+        # ---- 线性探针采集器 (仅当 PROBE_ENABLE=1 时激活) ----
+        self._probe_enabled = _PROBE_AVAILABLE and os.getenv("PROBE_ENABLE", "0") == "1"
+        self._probe_hook = None
+        self._probe_collector = None
+        self._last_hs = None  # act() → update_after_execution() 的隐状态传递槽
+        self._pending_probe_label = None  # worker 在 act() 前写入的 pre-action truth
+        self._probe_out = None
+        self._worker_id = worker_id
+        if os.getenv("PROBE_ENABLE", "0") == "1" and not _PROBE_AVAILABLE:
+            print(
+                f"[GRPO][Probe] Requested but unavailable: {_PROBE_IMPORT_ERROR}. "
+                "Probe disabled.",
+                flush=True,
+            )
+        if self._probe_enabled:
+            try:
+                # actor_critic 是 allenact_dino_transformer 里的模型;
+                # 单 belief 下 self.decoder = LLAMATransformerDecoder(...)
+                decoder = base_policy.actor_critic.decoder
+                self._probe_hook = DecoderLayerHook(decoder)
+                self._probe_collector = HiddenStateCollector(max_samples=10000)
+                probe_out = self._build_probe_out_path(
+                    os.getenv("PROBE_OUT", "probe_data.pt")
+                )
+                self._probe_out = probe_out
+                print(
+                    f"[GRPO][Probe] Enabled. Decoder layers={len(decoder.layers)}, "
+                    f"dim={decoder.params.dim}. Output → {probe_out}",
+                    flush=True,
+                )
+            except AttributeError as e:
+                print(
+                    f"[GRPO][Probe] Failed to init hook ({e}). Probe disabled.",
+                    flush=True,
+                )
+                self._probe_enabled = False
+
         print(f"[GRPO] Initialized for SOTA: N={self.G}, Temp={self.temperature}", flush=True)
+
+    def _build_probe_out_path(self, base_path):
+        """Make probe output worker-specific to avoid concurrent .pt writes."""
+        if self._worker_id is None:
+            return base_path
+        root, ext = os.path.splitext(base_path)
+        ext = ext or ".pt"
+        return f"{root}_worker{self._worker_id}{ext}"
 
     def reset(self):
         self.predictor = HeuristicSafetyPredictor()
         self.reward_system = R1PredictiveRewardSystem()
         self.obs_history = []
         self.last_executed_action = "None"
+        self._last_hs = None
+        self._pending_probe_label = None
+        # _probe_collector 跨 episode 保留，持续累积样本；不在此处重置。
+
+    def set_probe_label(self, label):
+        """Store current-state truth labels before act(); consumed after hidden capture."""
+        if self._probe_enabled and isinstance(label, dict):
+            self._pending_probe_label = dict(label)
 
     def _get_current_metadata(self, observation):
         """从当前帧 (worker 传给 get_action 的 dict) 抽取 depth_mean / closest_object,
@@ -327,7 +396,12 @@ class GRPOPredictiveAgent:
         current_meta = self._get_current_metadata(frame)
 
         with torch.no_grad():
-            probs, action_list = self.policy.get_action_probs(frame, goal_spec)
+            if self._probe_enabled and self._probe_hook is not None:
+                with self._probe_hook:
+                    probs, action_list = self.policy.get_action_probs(frame, goal_spec)
+                self._last_hs = self._probe_hook.get_last_step()  # [L, D] or None
+            else:
+                probs, action_list = self.policy.get_action_probs(frame, goal_spec)
             probs = probs.float()
 
             if self.temperature != 1.0:
@@ -403,6 +477,26 @@ class GRPOPredictiveAgent:
         ):
             self.obs_history[-1]["closest_object"] = real_info["closest_object_name"]
 
+        # ---- 探针采集 (仅在 PROBE_ENABLE=1 时执行) ----
+        if self._probe_enabled and self._probe_collector is not None and self._last_hs is not None:
+            # Prefer pre-action labels from the worker. Falling back to real_info keeps the
+            # collector usable in old call sites, but the diagnostic run should set pre-action truth.
+            label = self._pending_probe_label or {
+                "is_close_and_visible": real_info.get("target_visible", False)
+                if isinstance(real_info, dict) else False,
+                "target_distance": real_info.get("target_distance", float("inf"))
+                if isinstance(real_info, dict) else float("inf"),
+            }
+            label["action_was_done"] = self.last_executed_action in _DONE_TOKENS
+            self._probe_collector.record(self._last_hs, label)
+            self._last_hs = None  # 消费后清空，防止重复记录
+            self._pending_probe_label = None
+
+            n = self._probe_collector.n_samples
+            if n > 0 and n % 1000 == 0 and self._probe_out is not None:
+                self._probe_collector.save(self._probe_out)
+                print(f"[GRPO][Probe] Auto-saved {n} samples → {self._probe_out}", flush=True)
+
 
 # =============================================================================
 # 3. 代理类 (实际生效的 Proxy 在 online_evaluator.py 中; 此处保留以便单独 import 测试)
@@ -417,16 +511,18 @@ class GRPOAgentProxy:
             num_samples=8,
             max_refinement_steps=2,
             temperature=temp,
+            worker_id=kwargs.get("worker_id"),
         )
 
     @classmethod
     def build_agent(cls, **kwargs):
         real_cls = kwargs.pop("__original_agent_class", None)
+        worker_id = kwargs.pop("worker_id", None)
         if real_cls is None:
             return None
         if hasattr(real_cls, "build_agent"):
-            return cls(base_agent=real_cls.build_agent(**kwargs), **kwargs)
-        return cls(base_agent=real_cls(**kwargs), **kwargs)
+            return cls(base_agent=real_cls.build_agent(**kwargs), worker_id=worker_id, **kwargs)
+        return cls(base_agent=real_cls(**kwargs), worker_id=worker_id, **kwargs)
 
     def get_action(self, frame, goal_spec):
         return self.grpo_agent.act(frame, goal_spec)
@@ -436,6 +532,9 @@ class GRPOAgentProxy:
 
     def update_after_execution(self, real_info, *args, **kwargs):
         self.grpo_agent.update_after_execution(real_info)
+
+    def set_probe_label(self, label):
+        self.grpo_agent.set_probe_label(label)
 
     def reset(self):
         if hasattr(self.base_agent, "reset"):

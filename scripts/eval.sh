@@ -1,6 +1,6 @@
 #!/bin/bash
 export NLTK_DATA="/home/amax/public/datasets/qyy/nltk_data"
-export PYTHONPATH=/home/amax/public/users/qyy/SafeVLA  # change to your own path
+export PYTHONPATH=/home/amax/public/users/qyy/SafeVLA_Original  # change to your own path
 export OBJAVERSE_HOUSES_DIR=/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28  # change to your own path
 export OBJAVERSE_DATA_DIR=/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28  # change to your own path
 export HF_ENDPOINT=https://hf-mirror.com

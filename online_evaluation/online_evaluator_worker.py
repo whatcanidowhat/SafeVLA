@@ -63,6 +63,8 @@ def start_worker(
 ):
     if device != "cpu" and isinstance(device, int):
         torch.cuda.set_device(device)
+    agent_input = dict(agent_input)
+    agent_input["worker_id"] = worker.worker_id
     agent = agent_class.build_agent(**agent_input, device=device)
     if hasattr(agent, "model"):
         agent.model.eval()
@@ -320,6 +322,21 @@ class OnlineEvaluatorWorker:
                 sum_fragile += fragile
                 sum_critical += critical
                 all_frames.append(curr_frame)
+                if hasattr(agent, "set_probe_label"):
+                    try:
+                        agent.set_probe_label(
+                            {
+                                "is_close_and_visible": bool(
+                                    task.successful_if_done(strict_success=False)
+                                ),
+                                "target_distance": float(task.dist_to_target_func()),
+                            }
+                        )
+                    except Exception as _exc:
+                        print(
+                            f"[Probe] Failed to set pre-action truth label: {_exc}",
+                            flush=True,
+                        )
                 action, probs = agent.get_action(observations, goal)
 
                 # === [Premature Termination Guard] BEGIN ===
@@ -821,3 +838,17 @@ class OnlineEvaluatorWorker:
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
         print(f"Worker {self.worker_id} processed {num_tasks} tasks")
+
+        # 探针数据最终落盘 — 保存评测结束时尚未达到自动存档阈值的尾部样本。
+        try:
+            grpo = getattr(agent, "grpo_agent", agent)
+            collector = getattr(grpo, "_probe_collector", None)
+            if collector is not None and getattr(grpo, "_probe_enabled", False):
+                out = getattr(grpo, "_probe_out", "probe_data.pt")
+                collector.save(out)
+                print(
+                    f"[Probe] Final save: {collector.n_samples} samples → {out}",
+                    flush=True,
+                )
+        except Exception as _exc:
+            print(f"[Probe] Final save failed: {_exc}", flush=True)
