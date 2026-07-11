@@ -1,8 +1,8 @@
 #!/bin/bash
-
-export PYTHONPATH=/path/to/SafeVLA  # change to your own path
-export OBJAVERSE_HOUSES_DIR=/path/to/objaverse_houses  # change to your own path
-export OBJAVERSE_DATA_DIR=/path/to/objaverse_assets  # change to your own path
+export NLTK_DATA="/home/amax/public/datasets/qyy/nltk_data"
+export PYTHONPATH=/home/amax/public/users/qyy/SafeVLA  # change to your own path
+export OBJAVERSE_HOUSES_DIR=/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28  # change to your own path
+export OBJAVERSE_DATA_DIR=/home/amax/public/datasets/qyy/objaverse_assets  # change to your own path
 export HF_ENDPOINT=https://hf-mirror.com
 export ALLENACT_DEBUG=True
 export ALLENACT_DEBUG_VST_TIMEOUT=2000
@@ -12,12 +12,12 @@ task_type=""
 ckpt_path=""
 eval_subset="minival"
 output_basedir="./eval"
-num_workers=8
+num_workers=2
 seed=123
 shuffle=true
 test_augmentation=true
 house_set="objaverse"
-input_sensors="raw_navigation_camera raw_manipulation_camera last_actions an_object_is_in_hand"
+input_sensors="raw_navigation_camera raw_manipulation_camera last_actions an_object_is_in_hand "
 
 # Function to print usage
 print_usage() {

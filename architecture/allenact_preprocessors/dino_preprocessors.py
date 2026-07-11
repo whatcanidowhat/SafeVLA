@@ -102,9 +102,29 @@ class DinoViTPreprocessor(Preprocessor):
     @property
     def vit(self) -> DinoViTEmbedder:
         if self._vit is None:
+            # 定义本地 DINOv2 源码的绝对路径
+            local_repo_path = "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main"
+
+            # 修改加载方式：指向本地路径，指定 source='local'，并关闭预训练自动下载检查
             self._vit = DinoViTEmbedder(
-                model=torch.hub.load("facebookresearch/dinov2", self.dino_model_type),
+                model=torch.hub.load(
+                    local_repo_path,
+                    self.dino_model_type,
+                    source='local',
+                    pretrained=False
+                ),
             ).to(self.device)
+
+            # 手动加载你之前准备好的本地权重文件（防止其再次尝试联网下载）
+            checkpoint_path = f"/home/amax/.cache/torch/hub/checkpoints/{self.dino_model_type}_pretrain.pth"
+            import os
+            if os.path.exists(checkpoint_path):
+                state_dict = torch.load(checkpoint_path, map_location="cpu")
+                self._vit.model.load_state_dict(state_dict)
+            else:
+                # 如果没有手动加载，torch.hub 在某些版本下仍可能尝试联网
+                print(f"Warning: Checkpoint not found at {checkpoint_path}, please ensure it is placed correctly.")
+
             for module in self._vit.modules():
                 if "BatchNorm" in type(module).__name__:
                     module.momentum = 0.0
