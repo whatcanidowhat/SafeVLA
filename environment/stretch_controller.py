@@ -215,6 +215,10 @@ class StretchController:
     @property
     def navigation_depth_frame(self):
         frame = self.controller.last_event.depth_frame
+        if frame is None:
+            raise RuntimeError(
+                "navigation_depth_frame is None; initialize with renderDepthImage=True"
+            )
         cutoff = round(frame.shape[1] * 6 / 396)
         return frame[:, cutoff:-cutoff]
 

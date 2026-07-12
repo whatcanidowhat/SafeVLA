@@ -1,3 +1,4 @@
+import copy
 import multiprocessing as mp
 import os
 import platform
@@ -15,6 +16,11 @@ from collections import Counter
 import json
 from datetime import datetime
 from architecture.agent import AbstractAgent
+from online_evaluation.shadow_predictor_logger import (
+    ShadowPredictorLogger,
+    default_shadow_logdir,
+    shadow_predictor_enabled,
+)
 from environment.manipulation_sensors import TargetObjectWasPickedUp
 from environment.navigation_sensors import (
     BestBboxSensorOnlineEval,
@@ -120,6 +126,13 @@ class OnlineEvaluatorWorker:
         self.prob_randomize_materials = prob_randomize_materials
         self.prob_randomize_colors = prob_randomize_colors
         self.seed = seed
+        self._shadow_logger: Optional[ShadowPredictorLogger] = None
+        if shadow_predictor_enabled():
+            self._shadow_logger = ShadowPredictorLogger(
+                outdir=default_shadow_logdir(outdir),
+                worker_id=worker_id,
+                enabled=True,
+            )
 
     def get_house(self, sample):
         house_idx = int(sample["house_id"])
@@ -235,6 +248,10 @@ class OnlineEvaluatorWorker:
                     else ai2thor.platform.CloudRendering
                 ),
             }
+            # B1 shadow needs depth frames; keep baseline SAVE_DEPTH=False unless
+            # shadow logging is explicitly enabled (does not mutate policy obs).
+            if shadow_predictor_enabled():
+                controller_args["renderDepthImage"] = True
             if sys.platform.lower() != "darwin" and self.gpu_device != "cpu":
                 gpu_id = self.gpu_device if isinstance(self.gpu_device, int) else 0
                 controller_args["x_display"] = f":{gpu_id}"
@@ -283,6 +300,28 @@ class OnlineEvaluatorWorker:
         sum_blind = 0
         sum_fragile = 0
         sum_critical = 0
+
+        eval_info = task.task_info.get("eval_info", {}) or {}
+        sample_id = (
+            task.task_info.get("sample_id")
+            or eval_info.get("sample_id")
+            or (
+                f"task={task.task_info.get('task_type', '?')},"
+                f"house={task.task_info.get('house_index', '?')},"
+                f"sub_house_id={eval_info.get('sub_house_id', '?')}"
+            )
+        )
+        shadow_logger = self._shadow_logger
+        if shadow_logger is not None:
+            shadow_logger.reset_episode(
+                {
+                    "sample_id": sample_id,
+                    "task_path": task_path,
+                    "goal": goal,
+                    "worker_id": worker_id,
+                }
+            )
+
         with torch.no_grad():
             while len(all_actions) < task.max_steps:
                 eps_idx += 1
@@ -298,6 +337,8 @@ class OnlineEvaluatorWorker:
                     ],
                     axis=1,
                 )
+                # Pre-existing metric accumulation uses previous-step last_action_*.
+                # Keep unchanged for B0 metric compatibility.
                 danger = task.last_action_danger
                 blind = task.last_action_blind
                 corner = task.last_action_corner
@@ -309,13 +350,98 @@ class OnlineEvaluatorWorker:
                 sum_fragile += fragile
                 sum_critical += critical
                 all_frames.append(curr_frame)
+
+                # Decision-time truth state for logging only (not fed to policy).
+                try:
+                    target_visible_pre = bool(
+                        task.successful_if_done(strict_success=False)
+                    )
+                    target_distance_pre = float(task.dist_to_target_func())
+                except Exception:
+                    target_visible_pre = False
+                    target_distance_pre = float("inf")
+
                 action, probs = agent.get_action(observations, goal)
+
+                # B1: post-decision shadow score on a shallow copy; depth never
+                # written into the policy observation dict.
+                shadow_pre = None
+                if shadow_logger is not None:
+                    shadow_obs = copy.copy(observations)
+                    try:
+                        depth_frame = task.controller.navigation_depth_frame
+                        if depth_frame is not None:
+                            shadow_obs["raw_navigation_depth"] = depth_frame
+                    except Exception as e:
+                        if not getattr(self, "_shadow_depth_err_printed", False):
+                            print(
+                                f"[Shadow][Warning] Failed to read navigation_depth_frame: {e}",
+                                flush=True,
+                            )
+                            self._shadow_depth_err_printed = True
+                    shadow_pre = shadow_logger.shadow_score(
+                        shadow_obs, goal, action_list, baseline_action=action
+                    )
+                    shadow_logger.set_last_action(action)
 
                 if self.skip_done and action in ["end", "done"]:
                     action = "sub_done"
                 # all_actions.append(action)
                 all_actions += action.split("-")
                 task.step_with_action_str(action)
+
+                # Same-step GT: incremental cost of the action just executed.
+                gt_corner = task.last_action_corner
+                gt_blind = task.last_action_blind
+                gt_danger = task.last_action_danger
+                gt_fragile = task.last_action_fragile
+                gt_critical = task.last_action_critical
+                gt_cost = (
+                    gt_corner + gt_blind + gt_danger + gt_fragile + gt_critical
+                )
+
+                if shadow_logger is not None and shadow_pre is not None:
+                    depth_mean = shadow_pre["meta"].get("depth_mean")
+                    shadow_logger.log_step(
+                        {
+                            "step": eps_idx,
+                            "sample_id": sample_id,
+                            "baseline_action": action,
+                            "depth_mean": depth_mean,
+                            "depth_valid": depth_mean is not None
+                            and float(depth_mean) < 9.0,
+                            "target_visible_pre": target_visible_pre,
+                            "target_distance_pre": target_distance_pre,
+                            "pred_risks": shadow_pre["risks"],
+                            "pred_progress": shadow_pre["progress"],
+                            "pred_reward": shadow_pre["reward"],
+                            "pred_msg": shadow_pre["msg"],
+                            "gt_corner": gt_corner,
+                            "gt_blind": gt_blind,
+                            "gt_danger": gt_danger,
+                            "gt_fragile": gt_fragile,
+                            "gt_critical": gt_critical,
+                            "gt_cost": gt_cost,
+                            "cumulative_corner": task.cumulative_corner,
+                            "cumulative_blind": task.cumulative_blind,
+                        }
+                    )
+                    real_info = {}
+                    try:
+                        real_info["depth"] = task.controller.navigation_depth_frame
+                    except Exception:
+                        pass
+                    try:
+                        real_info["target_visible"] = bool(
+                            task.successful_if_done(strict_success=False)
+                        )
+                        real_info["target_distance"] = float(
+                            task.dist_to_target_func()
+                        )
+                    except Exception:
+                        real_info["target_visible"] = False
+                        real_info["target_distance"] = float("inf")
+                    shadow_logger.update_after_execution(real_info)
 
                 if "nav_best_bbox" in observations:
                     add_bbox_sensor_to_image(
@@ -394,6 +520,27 @@ class OnlineEvaluatorWorker:
             sum_fragile,
             sum_critical,
         )
+
+        if shadow_logger is not None:
+            shadow_logger.flush_episode(
+                {
+                    "sample_id": sample_id,
+                    "task_path": task_path,
+                    "goal": goal,
+                    "success": bool(success),
+                    "eps_len": len(all_actions),
+                    "sum_cost": sum_danger
+                    + sum_corner
+                    + sum_blind
+                    + sum_fragile
+                    + sum_critical,
+                    "sum_corner": sum_corner,
+                    "sum_blind": sum_blind,
+                    "sum_danger": sum_danger,
+                    "sum_fragile": sum_fragile,
+                    "sum_critical": sum_critical,
+                }
+            )
 
         return dict(
             goal=task.task_info["natural_language_spec"],
