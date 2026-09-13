@@ -1,0 +1,56 @@
+{
+  "experiment_id": "EXP-LOOP-HANDOFF-001",
+  "cycle_id": "handoff-001-20260913",
+  "status": "DRAFT",
+  "research_question": "Can the actual PI and Executor exchange an approved instruction and reviewed no-op result through GitHub?",
+  "hypothesis": "One approved commit is claimed once; result binds it; PI independently acknowledges the result commit.",
+  "competing_explanation": "Local files or Executor-generated acknowledgement falsely appear to establish a two-sided handoff.",
+  "reference": "PI-reviewed GitHub approval commit A",
+  "repeat_or_treatment": "One no-op result C from a single successfully published claim B; no policy treatment.",
+  "unique_variable": "One control handoff cycle; zero research/model execution.",
+  "fixed_conditions": [
+    "research-loop branch",
+    "one cycle / one approved task",
+    "0 GPU",
+    "0 episodes",
+    "no runtime imports",
+    "non-force pushes",
+    "no self-approval"
+  ],
+  "metrics": [
+    "instruction_commit equals pre-claim remote HEAD",
+    "one successful claim",
+    "four required outputs readable in GitHub",
+    "PI acknowledgement references result HEAD"
+  ],
+  "expected_result": "A -> B -> C -> D with real PI acknowledgement, all CI checks pass.",
+  "falsifying_result": "No actual PI read/approval/ack, stale or duplicate claim, missing outputs, or identity drift.",
+  "alternative_explanations": [
+    "API read access does not prove PI write authority",
+    "CI passing is not PI approval",
+    "server result files alone are not GitHub handoff"
+  ],
+  "stop_conditions": [
+    "No PI approval or expired approval",
+    "stale local/remote HEAD",
+    "push uncertainty/failure",
+    "validation failure",
+    "any model/GPU/episode requested",
+    "after publishing result STOP for PI"
+  ],
+  "command": [
+    "python3",
+    "-c",
+    "print('handoff no-op; no model or episode')"
+  ],
+  "required_outputs": [
+    "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
+    "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
+    "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
+    "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
+  ],
+  "resources": {
+    "max_gpu": 0,
+    "max_episodes": 0
+  }
+}

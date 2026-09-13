@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "state_version": 1,
+  "cycle_id": "handoff-001-20260913",
+  "experiment_id": "EXP-LOOP-HANDOFF-001",
+  "status": "PI_REVIEW",
+  "next_actor": "PI",
+  "control_branch": "research-loop",
+  "execution_worktree": null,
+  "instruction_commit": null,
+  "reviewed_result_commit": null,
+  "claim_id": null,
+  "authorization": {
+    "status": "NOT_AUTHORIZED",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
+    "scope": "CONTROL_ONLY_NOOP",
+    "max_gpu": 0,
+    "max_episodes": 0
+  },
+  "required_outputs": [
+    "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
+    "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
+    "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
+    "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
+  ],
+  "updated_by": "CODEX_BOOTSTRAP",
+  "updated_at_utc": "2026-09-13T13:56:31.567358+00:00"
+}

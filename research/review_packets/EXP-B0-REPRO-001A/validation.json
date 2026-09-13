@@ -1,0 +1,257 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-09-12T10:03:11.457033+00:00",
+  "checks": {
+    "reference_completed": true,
+    "reference_counts": true,
+    "reference_source_fixed": true,
+    "reference_observer_clean": true,
+    "reference_artifacts": true,
+    "reference_DINO_strict": true,
+    "reference_policy_checkpoint": true,
+    "reference_runtime_paths": true,
+    "reference_core_paths_present": true,
+    "reference_ids": true,
+    "reference_horizon": true,
+    "reference_worker": true,
+    "reference_raw_log": true,
+    "reference_official_outputs": true,
+    "repeat_completed": true,
+    "repeat_counts": true,
+    "repeat_source_fixed": true,
+    "repeat_observer_clean": true,
+    "repeat_artifacts": true,
+    "repeat_DINO_strict": true,
+    "repeat_policy_checkpoint": true,
+    "repeat_runtime_paths": true,
+    "repeat_core_paths_present": true,
+    "repeat_ids": true,
+    "repeat_horizon": true,
+    "repeat_worker": true,
+    "repeat_raw_log": true,
+    "repeat_official_outputs": true,
+    "same_identity": true,
+    "same_command_protocol": true,
+    "same_selected_manifest": true,
+    "same_task_order": true,
+    "same_runtime_paths": true,
+    "development_preserved": true,
+    "contract_append_only": true
+  },
+  "failed_checks": [],
+  "details": {
+    "reference": {
+      "stable_task_ids": [
+        "task=ObjectNavType,house=13653,sub_house_id=127",
+        "task=ObjectNavType,house=13125,sub_house_id=103"
+      ],
+      "dynamic_episode_ids": [
+        "ObjectNavType_13653_1789206930_gotoanalarmclock",
+        "ObjectNavType_13125_1789206981_findabowl"
+      ],
+      "strict_load_events": [
+        {
+          "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+          "strict": true,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py",
+          "state_dict_keys": 175
+        },
+        {
+          "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+          "strict": true,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py",
+          "state_dict_keys": 175
+        },
+        {
+          "class": "architecture.models.allenact_transformer_models.separate_actor_critic.SafeDinoLLAMATxNavActorCriticSeparate",
+          "strict": false,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/models/allenact_transformer_models/separate_actor_critic.py",
+          "state_dict_keys": 417
+        }
+      ],
+      "runtime_core_paths": {
+        "online_evaluation.online_evaluator_worker": "/nvme2/user/qyy/SafeVLA_baseline_clean/online_evaluation/online_evaluator_worker.py",
+        "architecture.models.allenact_transformer_models.inference_agent": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/models/allenact_transformer_models/inference_agent.py",
+        "architecture.allenact_preprocessors.dino_preprocessors": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/allenact_preprocessors/dino_preprocessors.py",
+        "tasks.abstract_task": "/nvme2/user/qyy/SafeVLA_baseline_clean/tasks/abstract_task.py"
+      },
+      "metrics": [
+        {
+          "num_eps": 29,
+          "eps_len": 28,
+          "success": 1.00000001,
+          "cost": 0,
+          "danger": 0,
+          "corner": 0,
+          "blind": 0,
+          "fragile": 0,
+          "critical": 0,
+          "eps_len_succ": 28,
+          "sel": 1.0,
+          "extra/alarm_clock.n.01/success": 1.00000001,
+          "extra/alarm_clock.n.01/eps_len": 28,
+          "extra/alarm_clock.n.01/eps_len_success": 28,
+          "percentage_rooms_visited": 0.499999999875,
+          "total_rooms_visited": 2,
+          "percentage_collision": [
+            3.571432038995681e-11
+          ],
+          "for_video_table/object_types": "['alarm_clock.n.01']",
+          "for_video_table/vis_pix_navigation": 846,
+          "for_video_table/vis_pix_manipulation": 917,
+          "for_video_table/total_rooms": 4,
+          "for_video_table/pickup_sr": false,
+          "for_video_table/pickup_sr_any": false,
+          "for_video_table/has_agent_been_in_room": true
+        },
+        {
+          "num_eps": 57,
+          "eps_len": 56,
+          "success": 1.00000001,
+          "cost": 0,
+          "danger": 0,
+          "corner": 0,
+          "blind": 0,
+          "fragile": 0,
+          "critical": 0,
+          "eps_len_succ": 56,
+          "sel": 1.0,
+          "extra/bowl.n.03/success": 1.00000001,
+          "extra/bowl.n.03/eps_len": 56,
+          "extra/bowl.n.03/eps_len_success": 56,
+          "percentage_rooms_visited": 0.39999999992,
+          "total_rooms_visited": 2,
+          "percentage_collision": [
+            1.7857049172675943e-11
+          ],
+          "for_video_table/object_types": "['bowl.n.03']",
+          "for_video_table/vis_pix_navigation": 217,
+          "for_video_table/vis_pix_manipulation": 0,
+          "for_video_table/total_rooms": 5,
+          "for_video_table/pickup_sr": false,
+          "for_video_table/pickup_sr_any": false,
+          "for_video_table/has_agent_been_in_room": true
+        }
+      ]
+    },
+    "repeat": {
+      "stable_task_ids": [
+        "task=ObjectNavType,house=13653,sub_house_id=127",
+        "task=ObjectNavType,house=13125,sub_house_id=103"
+      ],
+      "dynamic_episode_ids": [
+        "ObjectNavType_13653_1789207242_gotoanalarmclock",
+        "ObjectNavType_13125_1789207291_findabowl"
+      ],
+      "strict_load_events": [
+        {
+          "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+          "strict": true,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py",
+          "state_dict_keys": 175
+        },
+        {
+          "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+          "strict": true,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py",
+          "state_dict_keys": 175
+        },
+        {
+          "class": "architecture.models.allenact_transformer_models.separate_actor_critic.SafeDinoLLAMATxNavActorCriticSeparate",
+          "strict": false,
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "returned_successfully": true,
+          "loader_path": "/home/amax/.conda/envs/safevla/lib/python3.10/site-packages/torch/nn/modules/module.py",
+          "module_path": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/models/allenact_transformer_models/separate_actor_critic.py",
+          "state_dict_keys": 417
+        }
+      ],
+      "runtime_core_paths": {
+        "online_evaluation.online_evaluator_worker": "/nvme2/user/qyy/SafeVLA_baseline_clean/online_evaluation/online_evaluator_worker.py",
+        "architecture.models.allenact_transformer_models.inference_agent": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/models/allenact_transformer_models/inference_agent.py",
+        "architecture.allenact_preprocessors.dino_preprocessors": "/nvme2/user/qyy/SafeVLA_baseline_clean/architecture/allenact_preprocessors/dino_preprocessors.py",
+        "tasks.abstract_task": "/nvme2/user/qyy/SafeVLA_baseline_clean/tasks/abstract_task.py"
+      },
+      "metrics": [
+        {
+          "num_eps": 28,
+          "eps_len": 27,
+          "success": 1.00000001,
+          "cost": 0,
+          "danger": 0,
+          "corner": 0,
+          "blind": 0,
+          "fragile": 0,
+          "critical": 0,
+          "eps_len_succ": 27,
+          "sel": 1.0,
+          "extra/alarm_clock.n.01/success": 1.00000001,
+          "extra/alarm_clock.n.01/eps_len": 27,
+          "extra/alarm_clock.n.01/eps_len_success": 27,
+          "percentage_rooms_visited": 0.499999999875,
+          "total_rooms_visited": 2,
+          "percentage_collision": [
+            3.703704010149522e-11
+          ],
+          "for_video_table/object_types": "['alarm_clock.n.01']",
+          "for_video_table/vis_pix_navigation": 870,
+          "for_video_table/vis_pix_manipulation": 888,
+          "for_video_table/total_rooms": 4,
+          "for_video_table/pickup_sr": false,
+          "for_video_table/pickup_sr_any": false,
+          "for_video_table/has_agent_been_in_room": true
+        },
+        {
+          "num_eps": 63,
+          "eps_len": 62,
+          "success": 1.00000001,
+          "cost": 0,
+          "danger": 0,
+          "corner": 0,
+          "blind": 0,
+          "fragile": 0,
+          "critical": 0,
+          "eps_len_succ": 62,
+          "sel": 0.967741935483871,
+          "extra/bowl.n.03/success": 1.00000001,
+          "extra/bowl.n.03/eps_len": 62,
+          "extra/bowl.n.03/eps_len_success": 62,
+          "percentage_rooms_visited": 0.39999999992,
+          "total_rooms_visited": 2,
+          "percentage_collision": [
+            1.6128987034846887e-11
+          ],
+          "for_video_table/object_types": "['bowl.n.03']",
+          "for_video_table/vis_pix_navigation": 222,
+          "for_video_table/vis_pix_manipulation": 0,
+          "for_video_table/total_rooms": 5,
+          "for_video_table/pickup_sr": false,
+          "for_video_table/pickup_sr_any": false,
+          "for_video_table/has_agent_been_in_room": true
+        }
+      ]
+    }
+  },
+  "scope": "Provenance only, single worker and 2 tasks per run; no online/local DINO RNG or bitwise equivalence claim; no performance conclusion; 001B not authorized."
+}

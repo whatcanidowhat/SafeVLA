@@ -1,0 +1,12 @@
+{
+  "checked_utc": "2026-09-12T08:55:28.678186+00:00",
+  "origin_sanitized": "https://github.com/whatcanidowhat/SafeVLA.git",
+  "upstream_sanitized": "https://github.com/PKU-Alignment/SafeVLA.git",
+  "reference_commit": "2aa82559d272b5f888e53433e258914057f15bed",
+  "commit_page": "https://github.com/PKU-Alignment/SafeVLA/commit/2aa82559d272b5f888e53433e258914057f15bed",
+  "reason": "Official repository README identifies its clone URL and paper; GitHub REST API independently confirms exact commit SHA and tree SHA in PKU-Alignment/SafeVLA. Local Git tree matches API. This is not an inference from common ancestry.",
+  "live_ls_remote": "SSH-side ls-remote did not respond promptly; interrupted. Do not claim latest upstream HEAD from this check.",
+  "server_api_confirmation": true,
+  "commit_page_fetch": "Web fetch unavailable; commit verification used successful GitHub REST API instead.",
+  "verified_tree": "c1ffb4585e4dd80e2078fedb6151d6563218bf6e"
+}

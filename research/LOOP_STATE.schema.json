@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/whatcanidowhat/SafeVLA/research-loop/LOOP_STATE.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "state_version", "cycle_id", "experiment_id", "status", "next_actor", "control_branch", "execution_worktree", "instruction_commit", "reviewed_result_commit", "authorization", "required_outputs", "updated_by", "updated_at_utc", "claim_id"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "state_version": {"type": "integer", "minimum": 1},
+    "cycle_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"},
+    "experiment_id": {"type": "string", "pattern": "^EXP-[A-Z0-9-]+$"},
+    "status": {"enum": ["PI_REVIEW", "APPROVED_FOR_CODEX", "CODEX_RUNNING", "AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"]},
+    "next_actor": {"enum": ["PI", "CODEX"]},
+    "control_branch": {"const": "research-loop"},
+    "execution_worktree": {"type": ["string", "null"], "pattern": "^/"},
+    "instruction_commit": {"$ref": "#/$defs/commit"},
+    "reviewed_result_commit": {"$ref": "#/$defs/commit"},
+    "claim_id": {"type": ["string", "null"], "pattern": "^[A-Za-z0-9_-]{8,100}$"},
+    "authorization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "approved_by", "approved_at_utc", "expires_at_utc", "scope", "max_gpu", "max_episodes"],
+      "properties": {
+        "status": {"enum": ["NOT_AUTHORIZED", "APPROVED"]},
+        "approved_by": {"type": ["string", "null"], "minLength": 1},
+        "approved_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "expires_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "scope": {"enum": ["CONTROL_ONLY_NOOP", "RESEARCH_EXPERIMENT"]},
+        "max_gpu": {"type": "integer", "minimum": 0},
+        "max_episodes": {"type": "integer", "minimum": 0}
+      }
+    },
+    "required_outputs": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string", "pattern": "^research/handoffs/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+$"}},
+    "updated_by": {"enum": ["PI", "CODEX", "CODEX_BOOTSTRAP"]},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {"commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}}
+}
