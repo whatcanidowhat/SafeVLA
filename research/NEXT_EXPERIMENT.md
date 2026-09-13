@@ -1,11 +1,11 @@
-# Next Experiment — PI approved
+# Next Experiment — PI review complete / closed handoff cycle
 
 Experiment ID: EXP-LOOP-HANDOFF-001
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX — CONTROL_ONLY_NOOP
+Status: DRAFT
+Authorization: NOT_AUTHORIZED
 Cycle ID: handoff-001-20260913
 
-当前没有已批准真实研究实验。001A已完成，不得重复；001B仍未授权。本实验仅验证 GitHub PI–Codex 交接链路，0 GPU、0 episode、不得 import SafeVLA runtime、不得启动 AI2-THOR。机器可读完整设计见NEXT_EXPERIMENT.json；执行授权以LOOP_STATE为准。
+该 handoff dry run 已完成并由 PI 独立读取结果 commit `0e9c3bceac3c9b4dbe9daed6d37307080c2d0b3e` 后回执。当前 DRAFT 仅表示关闭后的非执行归档状态，不得重新 claim 或重跑。任何后续实验都必须使用新的 cycle_id 并由 PI 重新设计、审查和批准。001A 已完成，不得重复；001B 仍未授权。
 
 Research Question: 实际PI与Executor是否能完成一次GitHub批准→claim→no-op结果→PI回执？
 Hypothesis: instruction_commit绑定批准HEAD，单次claim，四项结果完整，PI独立读取并回执。
@@ -20,4 +20,4 @@ Alternative Explanations: API可读不等于PI已阅读；CI成功不等于PI批
 Stop Conditions: 未批准/过期、stale/push不确定、校验失败、任何模型/episode调用；发布结果后STOP。
 Required Artifacts: RESULT_SUMMARY.md、RUN_MANIFEST.json、ARTIFACT_INDEX.json、REVIEW_NOTES.md；准确路径见LOOP_STATE。
 
-PI 已通过 GitHub 独立读取 LOOP_STATE、CURRENT_STATE、NEXT_EXPERIMENT、001A RESULT_SUMMARY、HANDOFF_PROTOCOL，并核验 bootstrap commit 与成功 CI。本轮批准仅限 EXP-LOOP-HANDOFF-001 控制面 no-op dry run。Codex 完成并发布 AWAITING_PI_REVIEW 后必须停止，等待 PI 独立回执；不得自行批准001B或任何真实研究实验。
+PI acknowledgement D 将 `reviewed_result_commit` 绑定到结果 commit C；当前状态回到 `PI_REVIEW / NOT_AUTHORIZED`。本周期已关闭，不授权001B或任何真实研究实验。
