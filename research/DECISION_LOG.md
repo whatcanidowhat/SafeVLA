@@ -83,3 +83,7 @@ authorization.status=APPROVED，既有完整性和状态转换检查不放宽。
 ## 2026-09-14 — PI复核CONTROL-PROTOCOL-FIX-001
 
 PI已通过GitHub独立读取并审查commit f2d477c1befb74acb5fc7f76b89ab6cd41e5e4c9、修复后的validator与成功CI。确认修复仅放宽PI_REVIEW且NOT_AUTHORIZED的分阶段设计写入；可执行状态仍要求Markdown/JSON均为APPROVED且authorization为APPROVED。原EXP-LOOP-HANDOFF-001的CONTROL_ONLY_NOOP授权在其既有时限和0 GPU/0 episode预算内继续有效；本记录不修改LOOP_STATE、不扩大任务范围、不授权001B。Codex如领取任务，instruction_commit必须绑定本PI复核记录所在的最新research-loop HEAD，且仅在该HEAD的CI成功后执行。
+
+## 2026-09-14 — EXP-LOOP-HANDOFF-001 Executor handoff
+
+Explicit PI/user resumption authorized only CONTROL_ONLY_NOOP at 0dba6b748f26a782a595edeb53f02083850631cb. Approval CI and claim 16748eab9993b568faf2e78213df29a6ebb31d81 CI succeeded before one print-only no-op (exit0). Publish AWAITING_PI_REVIEW / next_actor=PI with instruction_commit and claim_id unchanged, then STOP. PI acknowledgement remains pending; no full-loop completion claim, baseline change, second experiment or 001B. Evidence: research/handoffs/handoff-001-20260913/.

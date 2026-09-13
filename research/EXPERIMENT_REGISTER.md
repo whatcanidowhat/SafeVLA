@@ -60,3 +60,7 @@ Required artifacts和完整command、源/权重哈希、episode结果分别保�
 | EXP-LOOP-HANDOFF-001 | DRAFT / PI_REVIEW / NOT_AUTHORIZED | 未执行；预算0GPU/0episode | PI |
 
 本轮bootstrap是控制面建设，不是EXP-LOOP-HANDOFF-001执行；测试使用EXP-TEST合成fixture。
+
+## Latest execution — EXP-LOOP-HANDOFF-001 / 2026-09-14
+
+Status: Executor NOOP_COMPLETED / AWAITING_PI_REVIEW; PI receipt PENDING. Prior DRAFT/NOT_AUTHORIZED entry is historical and superseded. One print-only command, exit0, GPU0, episodes0. Instruction 0dba6b748f26a782a595edeb53f02083850631cb; claim 16748eab9993b568faf2e78213df29a6ebb31d81; claim_id 20aeabe36980458098074f196ec55343. All four handoff outputs are under research/handoffs/handoff-001-20260913/. No retry, no new experiment, no 001B.

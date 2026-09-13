@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-13（Asia/Shanghai）
-Mode: EXP-B0-REPRO-001A = COMPLETED / provenance PASS / awaiting PI review. 不得重复运行。001B NOT_AUTHORIZED。当前唯一待评审草案是EXP-LOOP-HANDOFF-001，LOOP_STATE=PI_REVIEW，next_actor=PI。
+Mode: EXP-LOOP-HANDOFF-001 Executor no-op completed / AWAITING_PI_REVIEW; next_actor=PI. 001A remains completed; 001B NOT_AUTHORIZED.
 
 ## Verified Facts
 
@@ -56,3 +56,7 @@ DINO在线/本地loader等价不再是阻塞点；001A不证明full-200性能或
 ## Control-plane bootstrap — latest scope
 
 用户批准本轮建设并commit/push research-loop控制面；这覆盖此前仅对控制文件的no-commit限制，不授权任何实验。原开发与candidate worktree保持原样。GitHub评审包位于research/review_packets/EXP-B0-REPRO-001A/。当前没有获批真实研究实验，也没有获批handoff dry run。
+
+## Latest handoff execution — 2026-09-14
+
+One authorized print-only no-op exited 0 after approval and claim CI success. 0 GPU / 0 episode. Result packet: research/handoffs/handoff-001-20260913/. Instruction 0dba6b748f26a782a595edeb53f02083850631cb; claim 16748eab9993b568faf2e78213df29a6ebb31d81; claim_id 20aeabe36980458098074f196ec55343. PI result acknowledgement is PENDING; no second experiment is authorized. Historical bootstrap DRAFT statements below/above are superseded by LOOP_STATE and this latest record.
