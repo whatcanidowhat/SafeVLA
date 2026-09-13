@@ -79,3 +79,7 @@ authorization.status=APPROVED，既有完整性和状态转换检查不放宽。
 新增真实顺序合成回归和可执行状态拒绝不一致回归；完整验证真实research-loop历史，
 包括93e1f66、18eef394、72b9fa929。不修改LOOP_STATE或实验设计，
 不增加状态转换，不rewrite/squash/force push，不领取或执行真实handoff任务。
+
+## 2026-09-14 — PI复核CONTROL-PROTOCOL-FIX-001
+
+PI已通过GitHub独立读取并审查commit f2d477c1befb74acb5fc7f76b89ab6cd41e5e4c9、修复后的validator与成功CI。确认修复仅放宽PI_REVIEW且NOT_AUTHORIZED的分阶段设计写入；可执行状态仍要求Markdown/JSON均为APPROVED且authorization为APPROVED。原EXP-LOOP-HANDOFF-001的CONTROL_ONLY_NOOP授权在其既有时限和0 GPU/0 episode预算内继续有效；本记录不修改LOOP_STATE、不扩大任务范围、不授权001B。Codex如领取任务，instruction_commit必须绑定本PI复核记录所在的最新research-loop HEAD，且仅在该HEAD的CI成功后执行。
