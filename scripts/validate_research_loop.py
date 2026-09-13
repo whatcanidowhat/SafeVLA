@@ -117,17 +117,34 @@ def validate_snapshot(view):
     require(d.get("experiment_id") == s["experiment_id"] and d.get("cycle_id") == s["cycle_id"], "design identity mismatch")
     md = view.read(NEXT).decode("utf-8")
     require(re.search(r"^Experiment ID:\s*" + re.escape(s["experiment_id"]) + r"\s*$", md, re.M), "NEXT_EXPERIMENT mismatch")
-    require(re.search(r"^Status:\s*" + re.escape(d.get("status", "__MISSING__")) + r"\s*$", md, re.M), "Markdown/JSON design status mismatch")
+    md_statuses = re.findall(r"^Status:[ \t]*(\S+)[ \t]*$", md, re.M)
+    require(len(md_statuses) == 1, "Markdown must declare exactly one design status")
+    md_status = md_statuses[0]
+    json_status = d.get("status")
     prefix = f"research/handoffs/{s['cycle_id']}/"
     require({prefix + n for n in BASE_OUTPUTS}.issubset(s["required_outputs"]), "missing required handoff outputs")
     require(all(x.startswith(prefix) and safe_path(x) for x in s["required_outputs"]), "handoff path/cycle mismatch")
     auth = s["authorization"]
     if auth["scope"] == "CONTROL_ONLY_NOOP":
         require(auth["max_gpu"] == auth["max_episodes"] == 0 and s["execution_worktree"] is None, "no-op cannot allocate runtime")
+    staged_review = (
+        s["status"] == "PI_REVIEW"
+        and s["next_actor"] == "PI"
+        and auth["status"] == "NOT_AUTHORIZED"
+        and s["instruction_commit"] is None
+        and s["claim_id"] is None
+    )
     if s["status"] == "PI_REVIEW":
-        require(auth["status"] == "NOT_AUTHORIZED" and d.get("status") == "DRAFT", "review must not authorize execution")
+        require(auth["status"] == "NOT_AUTHORIZED", "review must not authorize execution")
+        if staged_review:
+            # PI can publish the two design files separately; neither grants execution.
+            require(md_status in ("DRAFT", "APPROVED") and json_status in ("DRAFT", "APPROVED"),
+                    "invalid staged design status")
+        else:
+            require(md_status == json_status == "DRAFT", "non-staging review requires draft designs")
     else:
-        require(auth["status"] == "APPROVED" and d.get("status") == "APPROVED", "execution state needs approved design")
+        require(auth["status"] == "APPROVED" and md_status == json_status == "APPROVED",
+                "execution state needs both designs approved")
         require(all(d.get(k) for k in DESIGN_FIELDS), "incomplete approved experiment design")
         require(auth["approved_by"] and auth["approved_at_utc"] and auth["expires_at_utc"], "approval metadata incomplete")
         require(utc(auth["expires_at_utc"]) > utc(auth["approved_at_utc"]), "approval expiration invalid")

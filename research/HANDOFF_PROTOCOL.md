@@ -41,6 +41,23 @@ execution_worktree and required_outputs during execution. Prior cycle IDs cannot
 Control history must be linear; no force push. CI validates every commit, so bundling an invalid transition
 between valid endpoints is also rejected.
 
+## PI staged design commits (CONTROL-PROTOCOL-FIX-001)
+
+A PI may publish NEXT_EXPERIMENT.json and NEXT_EXPERIMENT.md in separate commits.
+Only when ALL five guards hold is staging permitted:
+LOOP_STATE.status=PI_REVIEW, next_actor=PI, authorization.status=NOT_AUTHORIZED,
+instruction_commit=null, and claim_id=null.
+The Markdown/JSON status pairs may be DRAFT/DRAFT, APPROVED/DRAFT,
+DRAFT/APPROVED, or APPROVED/APPROVED. None grants execution authority.
+The final PI authorization commit must update LOOP_STATE separately or together
+with the designs; once LOOP_STATE is not PI_REVIEW, both designs must be
+APPROVED and authorization.status must be APPROVED. Existing complete-design,
+identity, transition, expiry and claim checks remain in force.
+A PI_REVIEW state retaining a previous instruction/claim does not qualify for
+this staging exception and retains the existing DRAFT/DRAFT requirement.
+All historical commits are validated with these rules, without skipping,
+rewriting or squashing staging commits. No state transition is added.
+
 ## PI approval A
 
 PI reads the exact current research-loop commit and evidence packet using the PI-side GitHub connection.

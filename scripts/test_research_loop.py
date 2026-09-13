@@ -103,6 +103,72 @@ class ProtocolTests(unittest.TestCase):
     def test_bootstrap_and_approval_history(self):
         self.assertEqual(validate_history(self.root), 2)
 
+
+    def test_pi_review_allows_staged_design_commits(self):
+        root = Path(self.temp.name) / "pi-staging"
+        s = fixture(root)
+        original_state = (root / STATE).read_bytes()
+        # All four design combinations are inert while every staging guard holds.
+        for md_status, json_status in [("DRAFT", "DRAFT"), ("APPROVED", "DRAFT"),
+                                       ("DRAFT", "APPROVED"), ("APPROVED", "APPROVED")]:
+            with self.subTest(markdown=md_status, json=json_status):
+                save(root, "research/NEXT_EXPERIMENT.json", design(s, json_status))
+                save(root, "research/NEXT_EXPERIMENT.md",
+                     f"Experiment ID: {s['experiment_id']}\nStatus: {md_status}\n")
+                checked = validate_snapshot(View(root))
+                self.assertEqual(checked["status"], "PI_REVIEW")
+                self.assertEqual(checked["authorization"]["status"], "NOT_AUTHORIZED")
+                self.assertEqual((root / STATE).read_bytes(), original_state)
+
+        # Relaxation is unavailable if any eligibility guard is absent.
+        for change in [{"next_actor": "CODEX"}, {"instruction_commit": "a" * 40},
+                       {"claim_id": "syntheticclaim1"}, {"authorization": dict(s["authorization"], status="APPROVED")}]:
+            with self.subTest(ineligible=change):
+                save(root, STATE, dict(s, **change))
+                with self.assertRaises(Invalid):
+                    validate_snapshot(View(root))
+        save(root, STATE, s)
+
+        # Reproduce the actual four-commit order without changing LOOP_STATE
+        # in either intermediate design commit.
+        install(root, s)
+        save(root, "research/NEXT_EXPERIMENT.json", design(s, "APPROVED"))
+        git(root, "add", "research/NEXT_EXPERIMENT.json")
+        git(root, "commit", "-m", "PI stages JSON approval")
+        self.assertEqual(validate_history(root), 2)
+        save(root, "research/NEXT_EXPERIMENT.md",
+             f"Experiment ID: {s['experiment_id']}\nStatus: APPROVED\n")
+        git(root, "add", "research/NEXT_EXPERIMENT.md")
+        git(root, "commit", "-m", "PI stages Markdown approval")
+        self.assertEqual(validate_history(root), 3)
+        self.assertEqual((root / STATE).read_bytes(), original_state)
+        s.update(status="APPROVED_FOR_CODEX", next_actor="CODEX", state_version=2, updated_by="PI")
+        s["authorization"].update(status="APPROVED", approved_by="PI",
+                                 approved_at_utc="2026-09-13T00:00:00+00:00",
+                                 expires_at_utc=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat())
+        save(root, STATE, s)
+        git(root, "add", STATE)
+        git(root, "commit", "-m", "PI publishes final LOOP_STATE authorization")
+        self.assertEqual(validate_history(root), 4)
+
+    def test_executable_state_rejects_design_mismatch(self):
+        validate_snapshot(View(self.root))  # APPROVED / APPROVED is still valid.
+        for md_status, json_status in [("DRAFT", "APPROVED"), ("APPROVED", "DRAFT"),
+                                       ("DRAFT", "DRAFT"), ("READY", "APPROVED"),
+                                       ("APPROVED", None)]:
+            with self.subTest(markdown=md_status, json=json_status):
+                save(self.root, "research/NEXT_EXPERIMENT.json", design(self.s, json_status))
+                save(self.root, "research/NEXT_EXPERIMENT.md",
+                     f"Experiment ID: {self.s['experiment_id']}\nStatus: {md_status}\n")
+                with self.assertRaises(Invalid):
+                    validate_snapshot(View(self.root))
+        install(self.root, self.s, "APPROVED")
+        unauthorized = copy.deepcopy(self.s)
+        unauthorized["authorization"]["status"] = "NOT_AUTHORIZED"
+        save(self.root, STATE, unauthorized)
+        with self.assertRaises(Invalid):
+            validate_snapshot(View(self.root))
+
     def test_claim_binding(self):
         self.running()
         validate_transition(View(self.root, self.a), View(self.root), self.a)

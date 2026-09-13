@@ -68,3 +68,14 @@ No commit/push；未执行001B、200-task、DINO-EQ或reset实验。历史prefli
 ## 2026-09-13 — DEC-HANDOFF-BOOTSTRAP-001
 
 人工评审接受H1 PASS及001A已完成；不得重复001A，001B未授权。授权独立research-loop控制面建设、白名单commit/push，不授权任何实验。创建orphan控制分支以排除开发/runtime源码与旧提交历史。初始LOOP_STATE=PI_REVIEW/next_actor=PI，EXP-LOOP-HANDOFF-001仅DRAFT。旧索引按历史身份保留，canonical ARTIFACT_INDEX另建。构建测试仅合成Git fixture，绝不冒充真实PI批准、claim或ack。完成发布后STOP等待PI独立读取。
+
+
+## CONTROL-PROTOCOL-FIX-001 — 2026-09-14
+
+用户仅授权修复PI_REVIEW逐文件设计staging校验。只有PI_REVIEW、next_actor=PI、
+NOT_AUTHORIZED、instruction_commit=null、claim_id=null全部成立时，允许两份设计
+各自为DRAFT或APPROVED；不授予执行权。其他状态必须保持两份设计APPROVED及
+authorization.status=APPROVED，既有完整性和状态转换检查不放宽。
+新增真实顺序合成回归和可执行状态拒绝不一致回归；完整验证真实research-loop历史，
+包括93e1f66、18eef394、72b9fa929。不修改LOOP_STATE或实验设计，
+不增加状态转换，不rewrite/squash/force push，不领取或执行真实handoff任务。
