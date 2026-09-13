@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 2,
+  "state_version": 3,
   "cycle_id": "handoff-001-20260913",
   "experiment_id": "EXP-LOOP-HANDOFF-001",
-  "status": "APPROVED_FOR_CODEX",
+  "status": "CODEX_RUNNING",
   "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": null,
-  "instruction_commit": null,
+  "instruction_commit": "0dba6b748f26a782a595edeb53f02083850631cb",
   "reviewed_result_commit": null,
-  "claim_id": null,
+  "claim_id": "20aeabe36980458098074f196ec55343",
   "authorization": {
     "status": "APPROVED",
     "approved_by": "PI",
@@ -25,6 +25,6 @@
     "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
     "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
   ],
-  "updated_by": "PI",
-  "updated_at_utc": "2026-09-13T17:46:58.402183+00:00"
+  "updated_by": "CODEX",
+  "updated_at_utc": "2026-09-13T18:33:19.220513+00:00"
 }
