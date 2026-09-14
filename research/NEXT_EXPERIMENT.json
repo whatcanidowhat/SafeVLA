@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-B0-REPRO-001B-PREFLIGHT",
   "cycle_id": "b0-repro-001b-preflight-20260914",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "Can we freeze an unambiguous, auditable full-200 A/A protocol for the verified executable B0 without starting any model, simulator, GPU allocation, or episode?",
   "hypothesis": "Read-only inspection of the verified B0 candidate, 001A provenance packet, dataset metadata, evaluator/launcher source, and historical full-200 evidence can identify the exact 200-task manifest, stable pairing key, worker/scheduling semantics, command templates, resource plan, and pre-registered comparison criteria needed for two new full runs.",
   "competing_explanation": "The full-200 protocol remains underdetermined because task enumeration, worker scheduling, launcher defaults, or metric collection differ across code paths or cannot be resolved without runtime execution; starting 001B now would therefore confound protocol identity with performance variability.",

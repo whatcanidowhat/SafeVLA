@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
-  "state_version": 6,
+  "state_version": 7,
   "cycle_id": "b0-repro-001b-preflight-20260914",
   "experiment_id": "EXP-B0-REPRO-001B-PREFLIGHT",
-  "status": "PI_REVIEW",
-  "next_actor": "PI",
+  "status": "APPROVED_FOR_CODEX",
+  "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_baseline_clean",
   "instruction_commit": null,
   "reviewed_result_commit": "0e9c3bceac3c9b4dbe9daed6d37307080c2d0b3e",
   "claim_id": null,
   "authorization": {
-    "status": "NOT_AUTHORIZED",
-    "approved_by": null,
-    "approved_at_utc": null,
-    "expires_at_utc": null,
+    "status": "APPROVED",
+    "approved_by": "PI",
+    "approved_at_utc": "2026-09-14T03:34:44+00:00",
+    "expires_at_utc": "2026-09-14T07:34:44+00:00",
     "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 0,
     "max_episodes": 0
@@ -26,5 +26,5 @@
     "research/handoffs/b0-repro-001b-preflight-20260914/REVIEW_NOTES.md"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-14T03:33:12+00:00"
+  "updated_at_utc": "2026-09-14T03:34:44+00:00"
 }

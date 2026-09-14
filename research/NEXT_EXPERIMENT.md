@@ -1,8 +1,8 @@
 # Next Experiment — 001B protocol preflight
 
 Experiment ID: EXP-B0-REPRO-001B-PREFLIGHT
-Status: DRAFT
-Authorization: NOT_AUTHORIZED
+Status: APPROVED
+Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / 0 GPU / 0 episode
 Cycle ID: b0-repro-001b-preflight-20260914
 
 ## Purpose
