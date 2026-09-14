@@ -1,53 +1,59 @@
 {
-  "experiment_id": "EXP-LOOP-HANDOFF-001",
-  "cycle_id": "handoff-001-20260913",
+  "experiment_id": "EXP-B0-REPRO-001B-PREFLIGHT",
+  "cycle_id": "b0-repro-001b-preflight-20260914",
   "status": "DRAFT",
-  "research_question": "Can the actual PI and Executor exchange an approved instruction and reviewed no-op result through GitHub?",
-  "hypothesis": "One approved commit is claimed once; result binds it; PI independently acknowledges the result commit.",
-  "competing_explanation": "Local files or Executor-generated acknowledgement falsely appear to establish a two-sided handoff.",
-  "reference": "PI-reviewed GitHub approval commit A",
-  "repeat_or_treatment": "One no-op result C from a single successfully published claim B; no policy treatment.",
-  "unique_variable": "One control handoff cycle; zero research/model execution.",
+  "research_question": "Can we freeze an unambiguous, auditable full-200 A/A protocol for the verified executable B0 without starting any model, simulator, GPU allocation, or episode?",
+  "hypothesis": "Read-only inspection of the verified B0 candidate, 001A provenance packet, dataset metadata, evaluator/launcher source, and historical full-200 evidence can identify the exact 200-task manifest, stable pairing key, worker/scheduling semantics, command templates, resource plan, and pre-registered comparison criteria needed for two new full runs.",
+  "competing_explanation": "The full-200 protocol remains underdetermined because task enumeration, worker scheduling, launcher defaults, or metric collection differ across code paths or cannot be resolved without runtime execution; starting 001B now would therefore confound protocol identity with performance variability.",
+  "reference": "EXP-B0-REPRO-001A provenance-PASS executable B0 and its frozen source/resource identities; historical 86.5% full-200 is context only, not a reference run.",
+  "repeat_or_treatment": "No policy treatment and no episode run. Perform a read-only static cross-check of the executable B0 candidate, 001A artifacts, dataset/task metadata, official evaluator/launcher source, and historical full-200 records, then propose one frozen 001B protocol for PI review.",
+  "unique_variable": "Audit scope expands from the 001A two-task single-worker smoke to the full-200 protocol definition; executable B0 behavior remains unchanged.",
   "fixed_conditions": [
-    "research-loop branch",
-    "one cycle / one approved task",
-    "0 GPU",
-    "0 episodes",
-    "no runtime imports",
-    "non-force pushes",
-    "no self-approval"
+    "Executable B0 candidate remains /nvme2/user/qyy/SafeVLA_baseline_clean at official reference 2aa82559d272b5f888e53433e258914057f15bed plus the already approved local-DINO infrastructure adaptation only",
+    "No modification to policy, success/end logic, horizon, official metrics/cost semantics, checkpoint, reset/counter/cache behavior, or evaluator behavior",
+    "0 GPU allocation, 0 episodes, no model load, no AI2-THOR launch, no SafeVLA rollout",
+    "001A must not be rerun and full 001B must not be started",
+    "Historical 86.5% is descriptive context only and cannot serve as Reference Run",
+    "All runtime/code/dataset inspection is read-only; any ambiguity requiring execution is a stop condition"
   ],
   "metrics": [
-    "instruction_commit equals pre-claim remote HEAD",
-    "one successful claim",
-    "four required outputs readable in GitHub",
-    "PI acknowledgement references result HEAD"
+    "Executable-B0 identity matches the 001A reviewed identity with no unexplained source/resource drift",
+    "Exact full task source is identified and a 200/200 unique stable-task manifest or an explicit evidence-backed blocker is produced",
+    "Stable cross-run pairing key and dynamic episode-ID handling are specified",
+    "Worker count, task assignment/scheduling, seed, shuffle, stochastic/greedy, test augmentation, horizon, and process-boundary semantics are each frozen from evidence rather than guessed",
+    "Two new full-run command templates and output/provenance requirements are specified without executing them",
+    "A resource estimate and hard stop conditions are proposed",
+    "Performance comparison plan is pre-registered before observing new full-200 outcomes: SR delta and paired agreement/uncertainty; official Safety Cost total/distribution/nonzero episodes and paired differences; no arbitrary bitwise-trajectory requirement",
+    "Preflight PASS requires zero unresolved protocol ambiguities that could change task identity, policy behavior, evaluation semantics, or run comparability"
   ],
-  "expected_result": "A -> B -> C -> D with real PI acknowledgement, all CI checks pass.",
-  "falsifying_result": "No actual PI read/approval/ack, stale or duplicate claim, missing outputs, or identity drift.",
+  "expected_result": "A reviewable frozen 001B protocol proposal is produced with exact task identity, worker/scheduling semantics, commands, provenance fields, resource budget, and comparison criteria, while B0 remains untouched and no episode is started.",
+  "falsifying_result": "Any unresolved ambiguity remains about the 200-task set, stable pairing, worker/scheduling semantics, launcher defaults, metric collection, or executable-B0 identity; or resolving such ambiguity would require model/simulator execution. In that case return BLOCKED rather than authorizing full 001B.",
   "alternative_explanations": [
-    "API read access does not prove PI write authority",
-    "CI passing is not PI approval",
-    "server result files alone are not GitHub handoff"
+    "Historical logs may reflect a different launcher or worker topology than the current verified executable B0",
+    "A dataset file containing 200 entries does not by itself prove the evaluator executes exactly those 200 in the same assignment/order",
+    "Single-worker 001A provenance does not establish multi-worker scheduling equivalence",
+    "A proposed performance tolerance may be dominated by finite-sample and stochastic variation rather than implementation drift"
   ],
   "stop_conditions": [
-    "No PI approval or expired approval",
-    "stale local/remote HEAD",
-    "push uncertainty/failure",
-    "validation failure",
-    "any model/GPU/episode requested",
-    "after publishing result STOP for PI"
+    "Any command would load the model, allocate a GPU for inference, start AI2-THOR, or start an episode",
+    "Candidate source/resource identity differs from reviewed 001A without an already approved infrastructure explanation",
+    "The full task manifest cannot be established as exactly 200 unique stable tasks from read-only evidence",
+    "Worker/scheduling or metric semantics remain ambiguous after source/artifact inspection",
+    "Any change to baseline runtime/evaluation code would be required",
+    "Any attempt is made to start EXP-B0-REPRO-001B itself"
   ],
   "command": [
-    "python3",
-    "-c",
-    "print('handoff no-op; no model or episode')"
+    "git",
+    "-C",
+    "/nvme2/user/qyy/SafeVLA_baseline_clean",
+    "rev-parse",
+    "HEAD"
   ],
   "required_outputs": [
-    "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
-    "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
-    "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
-    "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
+    "research/handoffs/b0-repro-001b-preflight-20260914/RESULT_SUMMARY.md",
+    "research/handoffs/b0-repro-001b-preflight-20260914/RUN_MANIFEST.json",
+    "research/handoffs/b0-repro-001b-preflight-20260914/ARTIFACT_INDEX.json",
+    "research/handoffs/b0-repro-001b-preflight-20260914/REVIEW_NOTES.md"
   ],
   "resources": {
     "max_gpu": 0,

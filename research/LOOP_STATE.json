@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
-  "state_version": 5,
-  "cycle_id": "handoff-001-20260913",
-  "experiment_id": "EXP-LOOP-HANDOFF-001",
+  "state_version": 6,
+  "cycle_id": "b0-repro-001b-preflight-20260914",
+  "experiment_id": "EXP-B0-REPRO-001B-PREFLIGHT",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": null,
-  "instruction_commit": "0dba6b748f26a782a595edeb53f02083850631cb",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+  "instruction_commit": null,
   "reviewed_result_commit": "0e9c3bceac3c9b4dbe9daed6d37307080c2d0b3e",
-  "claim_id": "20aeabe36980458098074f196ec55343",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
-    "approved_by": "PI",
-    "approved_at_utc": "2026-09-13T17:46:58.402183+00:00",
-    "expires_at_utc": "2026-09-13T21:46:58.402183+00:00",
-    "scope": "CONTROL_ONLY_NOOP",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
+    "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 0,
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
-    "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
-    "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
-    "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
+    "research/handoffs/b0-repro-001b-preflight-20260914/RESULT_SUMMARY.md",
+    "research/handoffs/b0-repro-001b-preflight-20260914/RUN_MANIFEST.json",
+    "research/handoffs/b0-repro-001b-preflight-20260914/ARTIFACT_INDEX.json",
+    "research/handoffs/b0-repro-001b-preflight-20260914/REVIEW_NOTES.md"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-13T18:40:00+00:00"
+  "updated_at_utc": "2026-09-14T03:33:12+00:00"
 }
