@@ -58,7 +58,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-PI approval was temporarily revoked before any Executor claim after control CI exposed an invalid staged-history record and incomplete machine-readable design fields. Current authoritative `LOOP_STATE` is `PI_REVIEW` / `next_actor=PI` / `NOT_AUTHORIZED`, budget remains 0 GPU / 0 episode. No research execution occurred during the incident. The control validator now preserves the append-only incident explicitly and supports PI revocation only for unclaimed approvals. After the repaired design and latest control CI pass, PI may re-authorize the same experiment. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+The control repair is complete. The repaired history and synthetic protocol tests passed CI, and PI re-authorized the unchanged `EXP-SMALLTARGET-PHENOTYPE-001`. Current authoritative `LOOP_STATE` is `APPROVED_FOR_CODEX` / `next_actor=CODEX`, budget 0 GPU / 0 episode, with `instruction_commit=null` and `claim_id=null` until Executor performs a valid claim. No research execution occurred during the control incident. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
 
 
 ## Control incident — 2026-09-18
@@ -70,3 +70,11 @@ Repair policy:
 - record a narrow historical validator exception only for this exact unclaimed small-target staging incident;
 - add a tested PI edge for revoking an unclaimed approval;
 - return to PI_REVIEW, complete the design fields without changing scientific scope, then re-approve only after CI is green.
+
+
+## Control repair completion
+
+- Repair-state CI passed before re-authorization.
+- Re-authorization commit: `cd411d523bcfa5f335240b266c43bdfe14ada6d6`.
+- Its control-protocol job passed all synthetic tests and full history validation.
+- Executor must claim the latest green `origin/research-loop` HEAD; it must not bind to the earlier failed approval commit.
