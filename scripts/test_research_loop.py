@@ -151,6 +151,34 @@ class ProtocolTests(unittest.TestCase):
         git(root, "commit", "-m", "PI publishes final LOOP_STATE authorization")
         self.assertEqual(validate_history(root), 4)
 
+    def test_pi_can_revoke_unclaimed_approval(self):
+        old = copy.deepcopy(self.s)
+        n = copy.deepcopy(old)
+        n.update(status="PI_REVIEW", next_actor="PI", state_version=3, updated_by="PI",
+                 updated_at_utc=datetime.now(timezone.utc).isoformat())
+        n["authorization"] = {
+            "status": "NOT_AUTHORIZED", "approved_by": None, "approved_at_utc": None,
+            "expires_at_utc": None, "scope": old["authorization"]["scope"],
+            "max_gpu": old["authorization"]["max_gpu"], "max_episodes": old["authorization"]["max_episodes"],
+        }
+        install(self.root, n, "APPROVED")
+        checked = validate_transition(View(self.root, self.a), View(self.root), self.a)
+        self.assertIsNone(checked)
+
+        # Once claimed/running, PI cannot use the pre-claim revocation edge.
+        install(self.root, old, "APPROVED")
+        running = copy.deepcopy(old)
+        running.update(status="CODEX_RUNNING", next_actor="CODEX", state_version=3,
+                       instruction_commit=self.a, claim_id="syntheticclaim1",
+                       updated_by="CODEX", updated_at_utc=datetime.now(timezone.utc).isoformat())
+        save(self.root, STATE, running)
+        revoked = copy.deepcopy(running)
+        revoked.update(status="PI_REVIEW", next_actor="PI", state_version=4, updated_by="PI")
+        revoked["authorization"] = dict(n["authorization"])
+        save(self.root, STATE, revoked)
+        with self.assertRaises(Invalid):
+            validate_transition(View(self.root, self.a), View(self.root), self.a)
+
     def test_executable_state_rejects_design_mismatch(self):
         validate_snapshot(View(self.root))  # APPROVED / APPROVED is still valid.
         for md_status, json_status in [("DRAFT", "APPROVED"), ("APPROVED", "DRAFT"),
