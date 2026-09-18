@@ -58,4 +58,15 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-PI has approved `EXP-SMALLTARGET-PHENOTYPE-001`. Current authoritative `LOOP_STATE` is `APPROVED_FOR_CODEX` / `next_actor=CODEX`, with budget 0 GPU / 0 episode and claim still required before execution. The Executor must bind its claim to the latest `origin/research-loop` HEAD after control CI succeeds. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+PI approval was temporarily revoked before any Executor claim after control CI exposed an invalid staged-history record and incomplete machine-readable design fields. Current authoritative `LOOP_STATE` is `PI_REVIEW` / `next_actor=PI` / `NOT_AUTHORIZED`, budget remains 0 GPU / 0 episode. No research execution occurred during the incident. The control validator now preserves the append-only incident explicitly and supports PI revocation only for unclaimed approvals. After the repaired design and latest control CI pass, PI may re-authorize the same experiment. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+
+
+## Control incident — 2026-09-18
+
+The first small-target approval sequence was staged through multiple Git commits. One intermediate PI_REVIEW state used an empty `required_outputs` list, and the eventual APPROVED state lacked several validator-required machine-readable design fields even though the Markdown design contained their scientific content. GitHub Actions correctly rejected the history. No Executor claim, GPU allocation, simulator launch, model load, or episode occurred.
+
+Repair policy:
+- preserve the bad commits in append-only history rather than force-push/rewrite;
+- record a narrow historical validator exception only for this exact unclaimed small-target staging incident;
+- add a tested PI edge for revoking an unclaimed approval;
+- return to PI_REVIEW, complete the design fields without changing scientific scope, then re-approve only after CI is green.
