@@ -50,5 +50,18 @@
   "resources": {
     "max_gpu": 0,
     "max_episodes": 0
-  }
+  },
+  "competing_explanation": "H-CATEGORY, H-DIFFICULTY, H-SAMPLE, or H-BEHAVIOR can explain the apparent low-SR categories without a causal physical-size effect.",
+  "reference": "Existing historical ObjectNav full-200 raw episode/task evidence tied to the reported 173/200 run, plus static policy-independent scene/task metadata for those exact tasks.",
+  "repeat_or_treatment": "No treatment and no new rollout. This is a single zero-rollout observational re-analysis of existing evidence; descriptive tertiles and adjusted models are sensitivity analyses of the same dataset.",
+  "alternative_explanations": [
+    "Semantic category or training-frequency effects rather than target physical size",
+    "House/scene/task difficulty, expert path length, starting distance, or occlusion",
+    "Small per-category sample size and wide confidence intervals",
+    "Trajectory-derived visible-pixel size as a downstream consequence of failed search/approach rather than an exogenous cause"
+  ],
+  "command": [
+    "python3",
+    "research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py"
+  ]
 }
