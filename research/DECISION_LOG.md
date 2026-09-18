@@ -116,3 +116,18 @@ Next:
 用户明确回复“批准执行 EXP-SMALLTARGET-PHENOTYPE-001”。PI接受此前冻结设计，不修改研究问题、主假设、竞争解释、唯一解释变量、指标或停止条件。执行预算保持0 GPU / 0 episode；仅允许对既有historical full-200原始结果、task specs和静态scene metadata做只读/离线审计。
 
 授权不包含full 001B、任何新rollout、Probe重跑、视频机制实验、reset treatment、Safe-vs-IL比较或baseline/runtime修改。最终执行权仅由随后单独的LOOP_STATE PI_REVIEW→APPROVED_FOR_CODEX状态提交授予；Codex必须先claim并等待claim CI成功，再执行一次并提交handoff后STOP。
+
+
+## 2026-09-18 — DEC-LEGACY-MIGRATION-001：将 02｜SafeVLA研究 迁入共享事实层
+
+背景：网页版PI可以检索Project中的02历史研究对话，但桌面端Executor不能自动读取这些聊天。若关键实验、Probe限制、被否定解释和服务器证据位置只留在聊天中，会导致PI与Executor对研究状态理解不一致。
+
+决策：不上传完整聊天原文，而是进行证据化迁移：
+- 新建 `research/LEGACY_RESEARCH_STATE.md`，按已证实事实、观察、待验证假设、被否定/更正解释和历史branch inventory整理。
+- 新建 `research/EVIDENCE_REGISTER.md`，把研究主张绑定到raw/server/Git证据位置，并标明每项证据可支持与不可支持的结论。
+- 原始服务器证据优先于迁移摘要；冲突必须在handoff中报告，禁止用聊天摘要覆盖raw evidence。
+- 明确保留三类关键边界：历史Probe不是small-object Probe；PT-Guard/GRPO干预分支不是B0；后来的“若干小类别约50% SR”观察与保存的173/200类别表存在run identity待核对问题。
+
+对当前实验的影响：不改变 `EXP-SMALLTARGET-PHENOTYPE-001` 的研究问题、变量、预算或停止条件，也不增加任何rollout/Probe/视频/replay授权。Executor在claim后执行前必须先读两份迁移文档，并从既有raw full-200证据重新核对需要的统计。
+
+安全：历史导出材料中可能含敏感环境/认证信息；迁移文档只记录非敏感路径、哈希和研究结论边界，不复制API key、token或认证URL。
