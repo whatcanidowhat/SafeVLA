@@ -47,6 +47,15 @@ Before more Probe or intervention work, determine whether the reported low-SR ca
 
 EXP-SMALLTARGET-PHENOTYPE-001: zero-rollout audit of the historical full-200 episode-level evidence plus static target-object 3D size metadata. It must not start a model, GPU inference, AI2-THOR or any episode. If the raw evidence cannot support this analysis, return BLOCKED rather than rerunning evaluation.
 
+## 02 research-history migration — 2026-09-18
+
+The substantive legacy research state from Project conversation `02｜SafeVLA研究` and its branches has now been migrated into the shared control plane:
+
+- `research/LEGACY_RESEARCH_STATE.md`: facts / observations / active hypotheses / rejected or corrected interpretations / legacy branch inventory.
+- `research/EVIDENCE_REGISTER.md`: evidence IDs, raw/server/Git locations, what each source can and cannot support, and discrepancies that must be reconciled.
+
+Executor must read both files before claiming scientific conclusions from legacy work. Raw server evidence outranks migrated summaries. In particular, do not merge the researcher's later "~50% small-category SR" recollection with the preserved 173/200 category table until run identity is reconciled; do not use historical Probe AUC or modified-policy/PT-Guard runs as B0 small-target evidence.
+
 ## Control State
 
-PI has approved EXP-SMALLTARGET-PHENOTYPE-001. The authoritative execution gate is LOOP_STATE; once it transitions to APPROVED_FOR_CODEX, Codex may claim only this zero-rollout audit. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+PI has approved `EXP-SMALLTARGET-PHENOTYPE-001`. Current authoritative `LOOP_STATE` is `APPROVED_FOR_CODEX` / `next_actor=CODEX`, with budget 0 GPU / 0 episode and claim still required before execution. The Executor must bind its claim to the latest `origin/research-loop` HEAD after control CI succeeds. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
