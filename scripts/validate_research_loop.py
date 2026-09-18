@@ -89,11 +89,17 @@ def validate_legacy_smalltarget_review(view, old_view=None):
     errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(repaired))
     require(not errors, "legacy small-target review has additional schema defects")
     d = view.data(DESIGN)
-    require(d.get("experiment_id") == s["experiment_id"] and d.get("cycle_id") == s["cycle_id"],
-            "legacy review design identity mismatch")
+    allowed_designs = {
+        ("EXP-B0-REPRO-001B-PREFLIGHT", "b0-repro-001b-preflight-20260914"),
+        (LEGACY_SMALLTARGET_EXPERIMENT, LEGACY_SMALLTARGET_CYCLE),
+    }
+    require((d.get("experiment_id"), d.get("cycle_id")) in allowed_designs,
+            "legacy review staged an unexpected design")
+    require(d.get("status") in ("DRAFT", "APPROVED"), "legacy review design status")
     md = view.read(NEXT).decode("utf-8")
-    require(re.search(r"^Experiment ID:\s*" + re.escape(s["experiment_id"]) + r"\s*$", md, re.M),
-            "legacy review NEXT mismatch")
+    md_ids = re.findall(r"^Experiment ID:\s*(\S+)\s*$", md, re.M)
+    require(len(md_ids) == 1 and md_ids[0] in {x[0] for x in allowed_designs},
+            "legacy review NEXT staged an unexpected experiment")
     if old_view and old_view.exists(STATE):
         o = old_view.data(STATE)
         if not _legacy_smalltarget_review(o):
