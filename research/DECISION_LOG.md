@@ -109,3 +109,10 @@ Causal discipline:
 
 Next:
 完成PI staged review后，若设计文件与control validator一致，则仅授权0 GPU / 0 episode离线审计。Probe、视频机制、readout干预、安全对照、reset treatment均等待本轮结果。
+
+
+## 2026-09-18 — PI批准 EXP-SMALLTARGET-PHENOTYPE-001 执行
+
+用户明确回复“批准执行 EXP-SMALLTARGET-PHENOTYPE-001”。PI接受此前冻结设计，不修改研究问题、主假设、竞争解释、唯一解释变量、指标或停止条件。执行预算保持0 GPU / 0 episode；仅允许对既有historical full-200原始结果、task specs和静态scene metadata做只读/离线审计。
+
+授权不包含full 001B、任何新rollout、Probe重跑、视频机制实验、reset treatment、Safe-vs-IL比较或baseline/runtime修改。最终执行权仅由随后单独的LOOP_STATE PI_REVIEW→APPROVED_FOR_CODEX状态提交授予；Codex必须先claim并等待claim CI成功，再执行一次并提交handoff后STOP。
