@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-18（Asia/Shanghai）
-Mode: PI_REVIEW. Old 001B preflight authorization revoked after expiry. New mainline draft: EXP-SMALLTARGET-PHENOTYPE-001.
+Mode: PI has approved EXP-SMALLTARGET-PHENOTYPE-001 design; execution authority is controlled exclusively by LOOP_STATE. Old 001B preflight remains revoked.
 
 ## Verified Facts
 
@@ -43,10 +43,10 @@ This is a valid phenomenon candidate. It is not yet evidence that "small physica
 
 Before more Probe or intervention work, determine whether the reported low-SR categories are statistically credible and whether policy-independent physical target size explains any of the failure pattern beyond sample-size and task-difficulty alternatives.
 
-## Unique Next Experiment Draft
+## Unique Next Experiment
 
 EXP-SMALLTARGET-PHENOTYPE-001: zero-rollout audit of the historical full-200 episode-level evidence plus static target-object 3D size metadata. It must not start a model, GPU inference, AI2-THOR or any episode. If the raw evidence cannot support this analysis, return BLOCKED rather than rerunning evaluation.
 
 ## Control State
 
-Current next_actor=PI and authorization=NOT_AUTHORIZED while the new experiment is staged and reviewed. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+PI has approved EXP-SMALLTARGET-PHENOTYPE-001. The authoritative execution gate is LOOP_STATE; once it transitions to APPROVED_FOR_CODEX, Codex may claim only this zero-rollout audit. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
