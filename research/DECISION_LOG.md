@@ -131,3 +131,24 @@ Next:
 对当前实验的影响：不改变 `EXP-SMALLTARGET-PHENOTYPE-001` 的研究问题、变量、预算或停止条件，也不增加任何rollout/Probe/视频/replay授权。Executor在claim后执行前必须先读两份迁移文档，并从既有raw full-200证据重新核对需要的统计。
 
 安全：历史导出材料中可能含敏感环境/认证信息；迁移文档只记录非敏感路径、哈希和研究结论边界，不复制API key、token或认证URL。
+
+
+## 2026-09-18 — DEC-CONTROL-REPAIR-002：修复 small-target 授权链 CI 失败
+
+Failure evidence:
+- GitHub Actions run 35326062502 failed in `python scripts/validate_research_loop.py --history`.
+- First observed error: `LOOP_STATE schema violation: deque(['required_outputs'])`.
+- Root cause 1: commit `902a99eb...` opened the new small-target PI_REVIEW cycle with `required_outputs=[]`, violating the existing schema's minimum four handoff outputs. This invalid state was then preserved across several staged design commits.
+- Root cause 2: the first `APPROVED_FOR_CODEX` state had scientifically adequate Markdown instructions, but `NEXT_EXPERIMENT.json` lacked several validator-required machine-readable fields (`competing_explanation`, `reference`, `repeat_or_treatment`, `alternative_explanations`, `command`).
+- No Executor claim occurred: `instruction_commit=null`, `claim_id=null`; budget remained 0 GPU / 0 episode. Therefore this was a control-plane staging error, not a research execution incident.
+
+Repair:
+1. Do not rewrite/squash/force-push the bad history.
+2. Add a narrow append-only-history exception only for the exact 2026-09-18 unclaimed small-target staging incident; all future/current states remain subject to normal validation.
+3. Add and test a PI-only `APPROVED_FOR_CODEX -> PI_REVIEW` revocation edge that is legal only before claim; claimed/running work cannot use it.
+4. Revoke the unclaimed approval, preserve the seven required output paths, return to `PI_REVIEW/NOT_AUTHORIZED`.
+5. Complete the missing machine-readable design fields without changing the scientific question, variable, metrics, resource budget or stop conditions.
+6. Re-authorize only after the repaired control history is green.
+
+Scientific scope unchanged:
+`EXP-SMALLTARGET-PHENOTYPE-001` remains zero-rollout / 0 GPU / 0 episode, using only existing historical full-200 evidence and static metadata. No Probe, replay, video-mechanism, reset treatment, Safe-vs-IL comparison or B0 modification is added.
