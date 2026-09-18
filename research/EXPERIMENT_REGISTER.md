@@ -71,6 +71,6 @@ Status: Executor NOOP_COMPLETED / AWAITING_PI_REVIEW; PI receipt PENDING. Prior 
 | Experiment ID | Status | Actual execution | Scientific role |
 | --- | --- | --- | --- |
 | EXP-B0-REPRO-001B-PREFLIGHT | SUPERSEDED / AUTH_EXPIRED / NOT_CLAIMED | no claim/result on control branch | B0 protocol polish deferred; not current bottleneck |
-| EXP-SMALLTARGET-PHENOTYPE-001 | DRAFT / NOT_AUTHORIZED | none | Test whether reported low-SR categories support a genuine policy-independent target-size association before mechanism Probe/intervention |
+| EXP-SMALLTARGET-PHENOTYPE-001 | APPROVED DESIGN / execution gate follows LOOP_STATE | none | Test whether reported low-SR categories support a genuine policy-independent target-size association before mechanism Probe/intervention |
 
 EXP-SMALLTARGET-PHENOTYPE-001 is observational, not a treatment. Primary explanatory variable is static 3D target size from scene metadata; post-rollout visible pixels are downstream phenotype only. Planned handoff: research/handoffs/smalltarget-phenotype-001-20260918/.
