@@ -1,8 +1,8 @@
 # Next Experiment — Small-target phenotype audit
 
 Experiment ID: EXP-SMALLTARGET-PHENOTYPE-001
-Status: DRAFT
-Authorization: NOT_AUTHORIZED
+Status: APPROVED
+Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / 0 GPU / 0 episode
 Cycle ID: smalltarget-phenotype-001-20260918
 
 ## Why now
