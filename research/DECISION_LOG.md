@@ -87,3 +87,25 @@ PI已通过GitHub独立读取并审查commit f2d477c1befb74acb5fc7f76b89ab6cd41e
 ## 2026-09-14 — EXP-LOOP-HANDOFF-001 Executor handoff
 
 Explicit PI/user resumption authorized only CONTROL_ONLY_NOOP at 0dba6b748f26a782a595edeb53f02083850631cb. Approval CI and claim 16748eab9993b568faf2e78213df29a6ebb31d81 CI succeeded before one print-only no-op (exit0). Publish AWAITING_PI_REVIEW / next_actor=PI with instruction_commit and claim_id unchanged, then STOP. PI acknowledgement remains pending; no full-loop completion claim, baseline change, second experiment or 001B. Evidence: research/handoffs/handoff-001-20260913/.
+
+
+## 2026-09-18 — DEC-SMALLTARGET-MAINLINE-001：从001B协议工程切回小目标现象验证
+
+Evidence review:
+- 001A已满足当前只读诊断所需的最小B0 provenance；继续优先完善full-200 A/A协议的边际科学价值低于验证主研究现象。
+- 研究者报告若干类别SR约50%，但类别不等于尺寸；basketball/kettle等例子暴露“低SR类别=小物体”的逻辑跳跃。
+- 历史0.955/0.982/0.992 AUC来自close-and-visible/stop-legality类Probe，不是small-object-size Probe，且存在PT-Guard轨迹与step级切分泄漏风险，不能用于证明小目标representation。
+- 源码核对确认end由Actor action distribution选择；<=2m+nav可见只在end执行后作为successful_if_done判据。因此单个end_prob≈0.993365只证明非法end phenotype，不能定位representation/readout/safety机制。
+- 旧EXP-B0-REPRO-001B-PREFLIGHT授权已过期且control branch无claim/result，已撤销。
+
+Decision:
+唯一下一实验改为EXP-SMALLTARGET-PHENOTYPE-001。先用既有历史full-200原始结果和静态scene/task metadata回答“低SR类别是否真实、physical target size是否与失败相关”。不运行模型，不启动AI2-THOR，不新增episode。
+
+Causal discipline:
+- 物理尺寸必须来自policy-independent 3D metadata；distance和trajectory max visible pixels不得冒充size。
+- 先报告每类别n/SR/Wilson CI，再做连续size关联和有限难度控制。
+- visible pixels / premature end / horizon failure只作为下游failure morphology。
+- 若原始200条episode证据、stable task identity或静态size metadata不能复原，则BLOCKED；不得以重新跑评估替代。
+
+Next:
+完成PI staged review后，若设计文件与control validator一致，则仅授权0 GPU / 0 episode离线审计。Probe、视频机制、readout干预、安全对照、reset treatment均等待本轮结果。
