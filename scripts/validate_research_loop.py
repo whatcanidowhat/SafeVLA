@@ -19,6 +19,7 @@ BASE_OUTPUTS = {"RESULT_SUMMARY.md", "RUN_MANIFEST.json", "ARTIFACT_INDEX.json",
 ACTOR = {"PI_REVIEW": "PI", "APPROVED_FOR_CODEX": "CODEX", "CODEX_RUNNING": "CODEX",
          "AWAITING_PI_REVIEW": "PI", "BLOCKED": "PI", "INVALID": "PI", "ABORTED": "PI"}
 EDGES = {("PI_REVIEW", "APPROVED_FOR_CODEX"): "PI",
+         ("APPROVED_FOR_CODEX", "PI_REVIEW"): "PI",
          ("APPROVED_FOR_CODEX", "CODEX_RUNNING"): "CODEX",
          ("CODEX_RUNNING", "AWAITING_PI_REVIEW"): "CODEX",
          ("AWAITING_PI_REVIEW", "PI_REVIEW"): "PI",
@@ -32,6 +33,102 @@ MAX_FILE = 1024 * 1024
 SECRET_PATTERNS = [rb"gh[pousr]_[A-Za-z0-9_]{20,}", rb"github_pat_[A-Za-z0-9_]{20,}",
                    rb"https?://[^\s/\"<>]+@", rb"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----",
                    rb"(?i)(?:authorization\s*:\s*(?:bearer|token)|(?:api_key|access_token|password)\s*[=:])\s*[\"']?[A-Za-z0-9_+/=-]{20,}"]
+
+
+# Narrow append-only-history exception for the 2026-09-18 small-target control incident.
+# No Executor claim or research execution occurred in these states. The exception exists only so
+# history validation can preserve, rather than rewrite, the invalid staging/approval records.
+LEGACY_SMALLTARGET_CYCLE = "smalltarget-phenotype-001-20260918"
+LEGACY_SMALLTARGET_EXPERIMENT = "EXP-SMALLTARGET-PHENOTYPE-001"
+LEGACY_MISSING_DESIGN_FIELDS = {
+    "competing_explanation", "reference", "repeat_or_treatment",
+    "alternative_explanations", "command",
+}
+
+
+def _legacy_smalltarget_review(s):
+    a = s.get("authorization", {})
+    return (
+        s.get("cycle_id") == LEGACY_SMALLTARGET_CYCLE
+        and s.get("experiment_id") == LEGACY_SMALLTARGET_EXPERIMENT
+        and s.get("state_version") == 8
+        and s.get("status") == "PI_REVIEW"
+        and s.get("next_actor") == "PI"
+        and s.get("instruction_commit") is None
+        and s.get("claim_id") is None
+        and a.get("status") == "NOT_AUTHORIZED"
+        and s.get("required_outputs") == []
+    )
+
+
+def _legacy_smalltarget_unclaimed_approval(s):
+    a = s.get("authorization", {})
+    return (
+        s.get("cycle_id") == LEGACY_SMALLTARGET_CYCLE
+        and s.get("experiment_id") == LEGACY_SMALLTARGET_EXPERIMENT
+        and s.get("state_version") == 9
+        and s.get("status") == "APPROVED_FOR_CODEX"
+        and s.get("next_actor") == "CODEX"
+        and s.get("instruction_commit") is None
+        and s.get("claim_id") is None
+        and a.get("status") == "APPROVED"
+        and a.get("approved_by") == "PI"
+        and a.get("max_gpu") == 0
+        and a.get("max_episodes") == 0
+    )
+
+
+def validate_legacy_smalltarget_review(view, old_view=None):
+    s = view.data(STATE)
+    require(_legacy_smalltarget_review(s), "legacy small-target review exception mismatch")
+    # Prove that required_outputs=[] is the only schema-level defect we are excusing.
+    schema = view.data(SCHEMA)
+    repaired = dict(s)
+    prefix = f"research/handoffs/{s['cycle_id']}/"
+    repaired["required_outputs"] = [prefix + n for n in sorted(BASE_OUTPUTS)]
+    errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(repaired))
+    require(not errors, "legacy small-target review has additional schema defects")
+    d = view.data(DESIGN)
+    require(d.get("experiment_id") == s["experiment_id"] and d.get("cycle_id") == s["cycle_id"],
+            "legacy review design identity mismatch")
+    md = view.read(NEXT).decode("utf-8")
+    require(re.search(r"^Experiment ID:\s*" + re.escape(s["experiment_id"]) + r"\s*$", md, re.M),
+            "legacy review NEXT mismatch")
+    if old_view and old_view.exists(STATE):
+        o = old_view.data(STATE)
+        if not _legacy_smalltarget_review(o):
+            require(o.get("instruction_commit") is None and o.get("claim_id") is None,
+                    "legacy review replaced a claimed/executing cycle")
+    return s
+
+
+def validate_legacy_smalltarget_unclaimed_approval(view, old_view=None):
+    s = view.data(STATE)
+    require(_legacy_smalltarget_unclaimed_approval(s), "legacy small-target approval exception mismatch")
+    schema = view.data(SCHEMA)
+    errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(s))
+    require(not errors, "legacy small-target approval state schema defect")
+    prefix = f"research/handoffs/{s['cycle_id']}/"
+    require({prefix + n for n in BASE_OUTPUTS}.issubset(s["required_outputs"]),
+            "legacy approval missing base outputs")
+    require(all(x.startswith(prefix) and safe_path(x) for x in s["required_outputs"]),
+            "legacy approval output path mismatch")
+    d = view.data(DESIGN)
+    require(d.get("experiment_id") == s["experiment_id"] and d.get("cycle_id") == s["cycle_id"],
+            "legacy approval design identity mismatch")
+    require(d.get("status") == "APPROVED", "legacy approval JSON status mismatch")
+    md = view.read(NEXT).decode("utf-8")
+    require(re.search(r"^Status:[ \t]*APPROVED[ \t]*$", md, re.M), "legacy approval Markdown status mismatch")
+    missing = {k for k in DESIGN_FIELDS if not d.get(k)}
+    require(missing and missing.issubset(LEGACY_MISSING_DESIGN_FIELDS),
+            "legacy approval has unexpected design defects")
+    require(d.get("required_outputs") == s["required_outputs"], "legacy approval output mismatch")
+    require(d.get("resources") == {"max_gpu": 0, "max_episodes": 0}, "legacy approval resource mismatch")
+    if old_view and old_view.exists(STATE):
+        o = old_view.data(STATE)
+        require(_legacy_smalltarget_review(o) or _legacy_smalltarget_unclaimed_approval(o),
+                "legacy approval has unexpected parent state")
+    return s
 
 
 class Invalid(ValueError):
@@ -195,6 +292,21 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
     if edge == ("PI_REVIEW", "APPROVED_FOR_CODEX"):
         require(n["authorization"]["approved_by"] == "PI", "only PI approval is accepted")
         require(n["reviewed_result_commit"] == o["reviewed_result_commit"], "approval cannot fabricate review receipt")
+    elif edge == ("APPROVED_FOR_CODEX", "PI_REVIEW"):
+        require(o["instruction_commit"] is None and o["claim_id"] is None,
+                "PI may revoke only an unclaimed approval")
+        require(n["authorization"]["status"] == "NOT_AUTHORIZED",
+                "revoked approval must remove execution authorization")
+        require(n["authorization"]["approved_by"] is None
+                and n["authorization"]["approved_at_utc"] is None
+                and n["authorization"]["expires_at_utc"] is None,
+                "revoked approval must clear approval metadata")
+        require(n["reviewed_result_commit"] == o["reviewed_result_commit"],
+                "revocation cannot fabricate review receipt")
+        require(n["required_outputs"] == o["required_outputs"]
+                and n["execution_worktree"] == o["execution_worktree"],
+                "revocation cannot change frozen execution paths")
+        return
     elif edge == ("APPROVED_FOR_CODEX", "CODEX_RUNNING"):
         require(n["instruction_commit"] == parent_sha, "instruction_commit must equal pre-claim remote HEAD")
         require(old_view.read(DESIGN) == new_view.read(DESIGN) and old_view.read(NEXT) == new_view.read(NEXT), "claim changed PI instructions")
@@ -245,10 +357,17 @@ def validate_history(root, head="HEAD"):
         require(len(parents) <= 1, "control history must be linear")
         parent = parents[0] if parents else None
         v = View(root, sha)
+        old_view = View(root, parent) if parent else None
         audit_tree(v)
-        validate_transition(View(root, parent) if parent else None, v, parent, bootstrap=parent is None)
-        n = v.data(STATE)
-        o = View(root, parent).data(STATE) if parent else None
+        raw_state = v.data(STATE)
+        if _legacy_smalltarget_review(raw_state):
+            n = validate_legacy_smalltarget_review(v, old_view)
+        elif _legacy_smalltarget_unclaimed_approval(raw_state):
+            n = validate_legacy_smalltarget_unclaimed_approval(v, old_view)
+        else:
+            validate_transition(old_view, v, parent, bootstrap=parent is None)
+            n = raw_state
+        o = old_view.data(STATE) if parent else None
         if n["status"] == "APPROVED_FOR_CODEX" and (not o or o["status"] != "APPROVED_FOR_CODEX"):
             require(n["cycle_id"] not in used_cycles, "cycle already executed; PI must choose a new cycle")
         if n["status"] == "CODEX_RUNNING" and (not o or o["status"] != "CODEX_RUNNING"):
