@@ -1,58 +1,107 @@
-# Next Experiment — 001B protocol preflight
+# Next Experiment — Small-target phenotype audit
 
-Experiment ID: EXP-B0-REPRO-001B-PREFLIGHT
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / 0 GPU / 0 episode
-Cycle ID: b0-repro-001b-preflight-20260914
+Experiment ID: EXP-SMALLTARGET-PHENOTYPE-001
+Status: DRAFT
+Authorization: NOT_AUTHORIZED
+Cycle ID: smalltarget-phenotype-001-20260918
 
-## Purpose
+## Why now
 
-001A has already passed provenance in the reviewed single-worker two-task smoke. The full 200-task A/A run is still not authorized because its task manifest, worker/scheduling semantics, exact commands, budget, and comparison criteria are not yet frozen. This preflight exists only to resolve those protocol questions from read-only evidence before any full run.
+001A has already provided enough provenance for read-only diagnosis. The old 001B preflight authorization expired and was never claimed. The scientific bottleneck is earlier: several categories were observed by the researcher to have roughly 50% SR, but "low-SR category" has not yet been shown to mean "small physical target."
+
+Historical Probe AUC values 0.955/0.982/0.992 are exploratory close-and-visible / stop-legality decoding results, not small-object-size probes, so they cannot answer this question.
 
 ## Research question
 
-Can the current verified executable B0 support an unambiguous, auditable full-200 A/A protocol definition without starting any model, simulator, GPU inference, or episode?
+In the existing historical ObjectNav full-200 evaluation, is lower target physical size associated with lower success after first checking per-category sample size/uncertainty and available pre-policy difficulty covariates?
 
-## Hypothesis
+## Hypotheses
 
-Read-only inspection of the executable B0 candidate, 001A provenance packet, dataset/task metadata, evaluator/launcher source, and historical full-200 records is sufficient to freeze the exact 200 tasks, stable pairing key, worker/scheduling semantics, two new run commands, resource plan, and pre-registered comparison criteria.
+H-SIZE: smaller targets, measured from policy-independent 3D object metadata, have lower SR.
 
-## Competing explanation
+Competing explanations:
+- H-CATEGORY: semantic category explains the low SR, not size.
+- H-DIFFICULTY: low-SR categories occur in harder houses/tasks, longer expert paths, or farther initial conditions.
+- H-SAMPLE: the apparent ~50% SR is driven by small n and wide uncertainty.
+- H-BEHAVIOR: low visible-pixel counts are consequences of failed search/approach and cannot be used as an exogenous size definition.
 
-The protocol may remain underdetermined because task enumeration, worker topology, launcher defaults, or metric collection differ across paths or require runtime execution to resolve. If so, report BLOCKED rather than guessing or launching 001B.
+## Study type / unique explanatory variable
 
-## Scope and unique variable
+Zero-rollout observational audit. No policy treatment.
 
-There is no policy treatment. The only scope change versus 001A is from a two-task single-worker smoke to defining the full-200 protocol. Executable B0 behavior must remain unchanged.
+Primary explanatory variable:
+- per task, median 3D bounding-box volume across all valid broad-synset target object IDs in that house;
+- also record median maximum side length as a robustness descriptor.
+
+Do not use target distance or trajectory max-visible-pixels as "physical size."
+
+## Control
+
+Continuous size analysis first. For descriptive comparison, define small/medium/large tertiles from the full analyzable set without using success labels; the large-target tertile is the descriptive control.
 
 ## Fixed conditions
 
-- Candidate: `/nvme2/user/qyy/SafeVLA_baseline_clean`, official reference HEAD `2aa82559d272b5f888e53433e258914057f15bed`, with only the already approved local-DINO infrastructure adaptation.
-- Do not modify policy, actor/decoder, success/end logic, horizon, official metrics/cost semantics, checkpoint, reset/counter/cache, sensors, augmentation, or evaluator behavior.
-- 0 GPU, 0 episode, no model load, no AI2-THOR, no SafeVLA rollout.
-- Do not rerun 001A. Do not start full 001B.
-- Historical 86.5% remains context only; it is not a Reference Run.
-- Runtime/code/dataset inspection is read-only.
+- 0 GPU, 0 episode, no model load, no AI2-THOR.
+- Do not modify B0, runtime source, evaluation semantics, success/end logic, reset/cache behavior, or the dev worktree.
+- Use only existing historical full-200 raw results, task specs, and static scene metadata.
+- Historical 173/200=86.5% is context; raw episode-level evidence must be reconciled to it before interpretation.
+- Post-rollout visible pixels, episode length, final distance, premature end and videos are downstream phenotype variables only.
+- Old PT-Guard Probe trajectories must not be used as clean-B0 mechanism evidence.
 
 ## Required evidence
 
-The handoff must either freeze or explicitly block each of these: executable-B0 identity; exact 200-task manifest and source hash; stable task pairing key; dynamic episode-ID handling; worker count; task assignment/scheduling; seed; shuffle; stochastic/greedy setting; test augmentation; horizon; process boundaries; two new full-run command templates; output/provenance requirements; resource estimate; and pre-registered comparison plan for SR and official Safety Cost.
+Build one row per historical task with:
+- stable task key;
+- target category/synset;
+- success;
+- episode length;
+- expert_length if available;
+- failure termination type if derivable;
+- all valid target object IDs;
+- primary physical-size summary;
+- initial target distance only if derivable from pre-policy/static evidence;
+- existing max nav-visible-pixels only as downstream phenotype.
 
-For performance comparison, propose criteria before observing new 001B outcomes. At minimum include SR delta, paired success agreement with uncertainty, and official Safety Cost total/distribution/nonzero-episode behavior with paired differences. Do not require bitwise-identical trajectories.
+Report:
+- every category: n, successes, SR, Wilson 95% CI;
+- suspected low-SR categories if present, without restricting the analysis to them;
+- continuous association between log physical size and success, with effect estimate and uncertainty;
+- if complete data permit: logistic(success ~ log_size + expert_length [+ independently available initial_distance]);
+- small/medium/large tertile SR + Wilson CI;
+- missing metadata count, analyzable n, duplicate-key check, and reconciliation to 200 tasks / 173 successes.
 
-Preflight PASS requires zero unresolved ambiguity that could change task identity, policy behavior, evaluation semantics, or comparability. Otherwise return BLOCKED.
+Do not include category as a fixed effect if the small dataset makes physical size non-identifiable; instead report category-stratified sensitivity and state the limitation.
 
-## Formal command anchor
+## Expected result
 
-`git -C /nvme2/user/qyy/SafeVLA_baseline_clean rev-parse HEAD`
+H-SIZE is strengthened only if the low-SR observation survives sample-size/CI inspection and policy-independent physical size shows a stable association with failure under available difficulty adjustment.
 
-This command is only an identity anchor. The audit itself may use additional read-only shell/source inspection commands, all of which must be recorded in the run manifest. No command may load the model, allocate inference GPU, start AI2-THOR, or start an episode.
+H-SIZE is weakened if category SR is unstable, size has little/reversed association, or the relation disappears after available controls.
 
-## Required outputs
+## Alternative explanations
 
-- `research/handoffs/b0-repro-001b-preflight-20260914/RESULT_SUMMARY.md`
-- `research/handoffs/b0-repro-001b-preflight-20260914/RUN_MANIFEST.json`
-- `research/handoffs/b0-repro-001b-preflight-20260914/ARTIFACT_INDEX.json`
-- `research/handoffs/b0-repro-001b-preflight-20260914/REVIEW_NOTES.md`
+Category semantics, training frequency, scene/house layout, path difficulty, starting distance, occlusion and sample-size instability remain live alternatives.
 
-Full EXP-B0-REPRO-001B remains NOT_AUTHORIZED after this preflight until a later PI review explicitly approves it.
+## Stop conditions
+
+Return BLOCKED rather than running anything new if:
+- raw full-200 evidence cannot be tied to the historical 173/200 result;
+- stable task identity cannot be reconstructed;
+- static target-size metadata cannot be obtained without simulator/model execution;
+- size would have to be defined using distance or trajectory-derived visible pixels;
+- any new episode, model load, GPU inference, AI2-THOR launch, or baseline code change would be required.
+
+## Required derived artifacts
+
+- research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv
+- research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv
+- research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md
+
+## Required handoff outputs
+
+- research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md
+- research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json
+- research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json
+- research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md
+
+After handoff, STOP. Do not start Probe, video-mechanism, reset, Safe-vs-IL, or a new full-200 run.
