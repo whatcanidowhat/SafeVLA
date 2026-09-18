@@ -152,3 +152,15 @@ Repair:
 
 Scientific scope unchanged:
 `EXP-SMALLTARGET-PHENOTYPE-001` remains zero-rollout / 0 GPU / 0 episode, using only existing historical full-200 evidence and static metadata. No Probe, replay, video-mechanism, reset treatment, Safe-vs-IL comparison or B0 modification is added.
+
+
+## 2026-09-18 — DEC-CONTROL-REPAIR-003：repair CI通过并恢复small-target执行授权
+
+Repair validation passed before re-authorization:
+- synthetic control tests: PASS;
+- full append-only control-history validation: PASS;
+- no force-push/rewrite/squash;
+- no Executor claim, GPU/model/simulator/episode execution occurred during the incident.
+
+PI then re-authorized the unchanged `EXP-SMALLTARGET-PHENOTYPE-001` at commit `cd411d523bcfa5f335240b266c43bdfe14ada6d6`.
+Budget remains 0 GPU / 0 episode. Executor must claim the latest green `origin/research-loop` HEAD and bind `instruction_commit` to that pre-claim HEAD. Earlier failed approval commits are historical incident records only and must not be claimed.
