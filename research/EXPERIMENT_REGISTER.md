@@ -64,3 +64,13 @@ Required artifacts和完整command、源/权重哈希、episode结果分别保�
 ## Latest execution — EXP-LOOP-HANDOFF-001 / 2026-09-14
 
 Status: Executor NOOP_COMPLETED / AWAITING_PI_REVIEW; PI receipt PENDING. Prior DRAFT/NOT_AUTHORIZED entry is historical and superseded. One print-only command, exit0, GPU0, episodes0. Instruction 0dba6b748f26a782a595edeb53f02083850631cb; claim 16748eab9993b568faf2e78213df29a6ebb31d81; claim_id 20aeabe36980458098074f196ec55343. All four handoff outputs are under research/handoffs/handoff-001-20260913/. No retry, no new experiment, no 001B.
+
+
+## 2026-09-18 — mainline redirected to small-target phenotype
+
+| Experiment ID | Status | Actual execution | Scientific role |
+| --- | --- | --- | --- |
+| EXP-B0-REPRO-001B-PREFLIGHT | SUPERSEDED / AUTH_EXPIRED / NOT_CLAIMED | no claim/result on control branch | B0 protocol polish deferred; not current bottleneck |
+| EXP-SMALLTARGET-PHENOTYPE-001 | DRAFT / NOT_AUTHORIZED | none | Test whether reported low-SR categories support a genuine policy-independent target-size association before mechanism Probe/intervention |
+
+EXP-SMALLTARGET-PHENOTYPE-001 is observational, not a treatment. Primary explanatory variable is static 3D target size from scene metadata; post-rollout visible pixels are downstream phenotype only. Planned handoff: research/handoffs/smalltarget-phenotype-001-20260918/.
