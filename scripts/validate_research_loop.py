@@ -333,9 +333,10 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
 
 def audit_tree(view):
     if view.ref:
-        entries = git(view.root, "ls-tree", "-r", view.ref).decode().splitlines()
+        # NUL records preserve literal UTF-8 paths, independent of core.quotePath.
+        entries = git(view.root, "ls-tree", "-r", "-z", view.ref).decode("utf-8").split("\0")
         files = []
-        for entry in entries:
+        for entry in filter(None, entries):
             meta, path = entry.split("\t", 1)
             require(meta.split()[0] in {"100644", "100755"}, "symlink/submodule forbidden")
             files.append(path)

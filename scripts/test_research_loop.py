@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 import research_loop_claim as claim_module
 from validate_research_loop import (Invalid, View, STATE, validate_snapshot,
-                                    validate_transition, validate_history, validate_index, scan_file)
+                                    validate_transition, validate_history, validate_index, scan_file, audit_tree)
 
 SOURCE = Path(__file__).resolve().parents[1]
 
@@ -103,6 +103,32 @@ class ProtocolTests(unittest.TestCase):
     def test_bootstrap_and_approval_history(self):
         self.assertEqual(validate_history(self.root), 2)
 
+
+    def test_history_preserves_non_ascii_paths(self):
+        path = "research/\u5206\u6790 output.md"
+        save(self.root, path, "Synthetic UTF-8 filename fixture")
+        git(self.root, "add", path)
+        git(self.root, "commit", "-m", "Synthetic non-ASCII artifact")
+        for quote in ("true", "false"):
+            with self.subTest(quote_path=quote):
+                git(self.root, "config", "core.quotePath", quote)
+                self.assertEqual(validate_history(self.root), 3)
+
+    def test_non_ascii_path_still_enforces_whitelist(self):
+        path = "outside/\u5206\u6790.md"
+        save(self.root, path, "Synthetic forbidden path")
+        git(self.root, "add", path)
+        git(self.root, "commit", "-m", "Synthetic whitelist violation")
+        with self.assertRaisesRegex(Invalid, "outside control whitelist"):
+            audit_tree(View(self.root, "HEAD"))
+
+    def test_non_ascii_path_still_enforces_artifact_rules(self):
+        path = "research/\u5206\u6790.pt"
+        save(self.root, path, "Synthetic forbidden extension")
+        git(self.root, "add", path)
+        git(self.root, "commit", "-m", "Synthetic artifact violation")
+        with self.assertRaisesRegex(Invalid, "DISALLOWED_ARTIFACT"):
+            audit_tree(View(self.root, "HEAD"))
 
     def test_pi_review_allows_staged_design_commits(self):
         root = Path(self.temp.name) / "pi-staging"

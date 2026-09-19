@@ -174,3 +174,10 @@ The inventory records 684 paths (680 existing/readable, 4 missing names); 645 ex
 Final W&B raw table is 200 rows / 173 successes / sum_cost 145 and matches its recorded SHA256. Stable task-path normalization pairs 200/200 tasks, with 200/200 expert_length == gt_episode_len and room-visitation values present.
 Static scene/asset sources exist, but annotated size is not yet validated as transformed per-target simulator bounding-box size. Four recovered Probe worker tensor hashes differ; the original AUC artifact/analysis identity remains unresolved.
 Raw tensors, media, large logs and datasets remain server-side with SHA256/size. Existing experimental source copies are referenced rather than duplicated into the control plane. Old development status snapshots inside the archive are historical, not current authority.
+
+
+## 2026-09-20 — Control validator UTF-8 path repair
+
+Evidence archive commit `06a8265051298b103a76ff26db490d262da3882c` preserved the approved 158-file packet exactly. Its history CI exposed a pre-existing parser defect: `git ls-tree` quotes non-ASCII filenames by default, but the validator treated that display-escaped string as a literal path and rejected a research Markdown artifact as outside the whitelist. Working-tree validation uses NUL-delimited paths and did not expose this defect before publication.
+
+Use `git ls-tree -z` and parse NUL-delimited records for committed snapshots. Regression tests cover UTF-8 research filenames with either core.quotePath setting, and ensure non-ASCII names cannot bypass the whitelist or disallowed artifact extensions. Preserve the original evidence commit and its packet bytes; append this validator repair without rewriting history. Experiment state/design, runtime and execution authorization remain unchanged.
