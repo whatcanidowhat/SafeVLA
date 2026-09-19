@@ -1,0 +1,42 @@
+{
+  "status": "NOT_AUTHORIZED_NOT_EXECUTED",
+  "candidate_root": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+  "environment_file": "scripts/b0_candidate_env.sh",
+  "python": "/home/amax/.conda/envs/safevla/bin/python",
+  "entrypoint": "training/online/online_eval.py",
+  "arguments": [
+    "--task_type",
+    "ObjectNavType",
+    "--eval_subset",
+    "minival",
+    "--eval_set_size",
+    "2",
+    "--num_workers",
+    "1",
+    "--seed",
+    "123",
+    "--shuffle",
+    "--test_augmentation",
+    "--max_eps_len",
+    "-1",
+    "--house_set",
+    "objaverse",
+    "--input_sensors",
+    "raw_navigation_camera",
+    "raw_manipulation_camera",
+    "last_actions",
+    "an_object_is_in_hand",
+    "--ckpt_path",
+    "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt"
+  ],
+  "greedy": false,
+  "actual_launch_command": null,
+  "unfinalized": [
+    "human approval",
+    "GPU selection",
+    "runtime provenance capture",
+    "per-episode result retention",
+    "separate output paths for Reference Run / Repeat Run"
+  ],
+  "full_200_allowed": false
+}

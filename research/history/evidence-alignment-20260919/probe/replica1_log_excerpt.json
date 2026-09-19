@@ -1,0 +1,103 @@
+{
+  "source": "/nvme2/user/qyy/SafeVLA_Original/eval/ObjectNavType/OnlineEval/06_15_2026_09_52_57_364270/wandb/wandb/run-20260615_095258-0biawkdd/files/output.log",
+  "source_sha256": "cfec118467333de74228066bbbfda643aaf790eaef03db6ed0918fce83f1cfe1",
+  "matching_lines": 71441,
+  "selected_lines": [
+    {
+      "line": 398,
+      "text": "\u001b[1m[06/15 09:53:22\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Enabled. Decoder layers=3, dim=512. Output → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 440,
+      "text": "\u001b[1m[06/15 10:02:21\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 1000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 441,
+      "text": "\u001b[1m[06/15 10:02:21\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   hidden_states: torch.Size([1000, 3, 512])  (N=1000, L=3, D=512)\t[system.py: 200]"
+    },
+    {
+      "line": 442,
+      "text": "\u001b[1m[06/15 10:02:21\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 12 positive / 1000 total (1.2%)\t[system.py: 200]"
+    },
+    {
+      "line": 443,
+      "text": "\u001b[1m[06/15 10:02:21\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 1000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 473,
+      "text": "\u001b[1m[06/15 10:16:39\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 2000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 475,
+      "text": "\u001b[1m[06/15 10:16:39\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 62 positive / 2000 total (3.1%)\t[system.py: 200]"
+    },
+    {
+      "line": 476,
+      "text": "\u001b[1m[06/15 10:16:39\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 2000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 485,
+      "text": "\u001b[1m[06/15 10:24:46\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 3000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 487,
+      "text": "\u001b[1m[06/15 10:24:46\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 73 positive / 3000 total (2.4%)\t[system.py: 200]"
+    },
+    {
+      "line": 488,
+      "text": "\u001b[1m[06/15 10:24:46\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 3000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 516,
+      "text": "\u001b[1m[06/15 10:38:44\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 4000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73168,
+      "text": "\u001b[1m[06/15 15:19:28\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 10000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73169,
+      "text": "\u001b[1m[06/15 15:19:28\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   hidden_states: torch.Size([10000, 3, 512])  (N=10000, L=3, D=512)\t[system.py: 200]"
+    },
+    {
+      "line": 73170,
+      "text": "\u001b[1m[06/15 15:19:28\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 228 positive / 10000 total (2.3%)\t[system.py: 200]"
+    },
+    {
+      "line": 73171,
+      "text": "\u001b[1m[06/15 15:19:28\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 10000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73172,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 10000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73173,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   hidden_states: torch.Size([10000, 3, 512])  (N=10000, L=3, D=512)\t[system.py: 200]"
+    },
+    {
+      "line": 73174,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 228 positive / 10000 total (2.3%)\t[system.py: 200]"
+    },
+    {
+      "line": 73175,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 10000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73176,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [Probe] Saved 10000 samples to /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    },
+    {
+      "line": 73177,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   hidden_states: torch.Size([10000, 3, 512])  (N=10000, L=3, D=512)\t[system.py: 200]"
+    },
+    {
+      "line": 73178,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m   is_close_and_visible: 228 positive / 10000 total (2.3%)\t[system.py: 200]"
+    },
+    {
+      "line": 73179,
+      "text": "\u001b[1m[06/15 15:19:29\u001b[0m \u001b[1;32mINFO\u001b[0m\u001b[1m:]\u001b[0m [GRPO][Probe] Auto-saved 10000 samples → /home/amax/public/users/qyy/SafeVLA_Original/probe_data_worker0.pt\t[system.py: 200]"
+    }
+  ]
+}

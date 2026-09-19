@@ -1,0 +1,45 @@
+{
+  "checkpoint_path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+  "checkpoint_type": "AllenAct SafeRL model_state_dict",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "checkpoint_size_bytes": 2027033991,
+  "checkpoint_top_level_keys": [
+    "model_state_dict",
+    "total_steps",
+    "optimizer_state_dict",
+    "training_pipeline_state_dict",
+    "trainer_seed"
+  ],
+  "checkpoint_tensor_count": 417,
+  "checkpoint_parameter_numel": 218218047,
+  "runtime_model_tensor_count": 417,
+  "loaded_parameter_count": 417,
+  "total_parameter_count": 417,
+  "missing_keys": [],
+  "unexpected_keys": [],
+  "shape_mismatch_keys": [],
+  "critical_parameter_status": {
+    "visual_encoder.fusion_token": true,
+    "decoder.layers.0.attention.wq.weight": true,
+    "actor.linear.weight": true,
+    "actor.linear.bias": true,
+    "critic_tsfm.critic.fc.weight": true,
+    "c_critic_tsfm.critic.fc.weight": true
+  },
+  "actor_linear_weight_shape": [
+    20,
+    512
+  ],
+  "actor_linear_bias_shape": [
+    20
+  ],
+  "total_steps": 12551992,
+  "trainer_seed": 1613187116,
+  "training_stage_steps": [
+    202404,
+    800688,
+    11548900
+  ],
+  "rollout_count": 3125,
+  "audit_method": "CPU construction of exact eval model plus load_state_dict result and selected exact-tensor comparisons; runtime smoke independently recorded [] missing/unexpected."
+}

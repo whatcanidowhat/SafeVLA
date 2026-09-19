@@ -1,0 +1,73 @@
+{
+  "definition": "PRE calls ObjectNavTask.successful_if_done(strict_success=False); environment end calls the same function with default non-strict.",
+  "canonical_source": "canonical_final_v2/smoke_steps.jsonl",
+  "canonical_executed_end_event_count": 1,
+  "canonical_all_aligned": true,
+  "all_successfully_completed_smoke_end_event_count": 5,
+  "events": [
+    {
+      "source": "smoke_steps.jsonl",
+      "run_id": "p0-p7-smoke-20260812",
+      "episode_id": "ObjectNavType_420_1786528970_findamug",
+      "env_step_id": 8,
+      "policy_selected_action": "end",
+      "executed_action": "end",
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": false,
+      "final_success": false,
+      "aligned": true
+    },
+    {
+      "source": "reset_two_episode/smoke_steps.jsonl",
+      "run_id": "p4-reset-two-episode-20260812",
+      "episode_id": "ObjectNavType_420_1786529654_findamug",
+      "env_step_id": 8,
+      "policy_selected_action": "end",
+      "executed_action": "end",
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": false,
+      "final_success": false,
+      "aligned": true
+    },
+    {
+      "source": "reset_two_episode/smoke_steps.jsonl",
+      "run_id": "p4-reset-two-episode-20260812",
+      "episode_id": "ObjectNavType_1095_1786529666_searchforabasketball",
+      "env_step_id": 21,
+      "policy_selected_action": "end",
+      "executed_action": "end",
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": true,
+      "final_success": true,
+      "aligned": true
+    },
+    {
+      "source": "canonical_smoke/smoke_steps.jsonl",
+      "run_id": "p6-canonical-final-20260812",
+      "episode_id": "ObjectNavType_420_1786530074_findamug",
+      "env_step_id": 11,
+      "policy_selected_action": "end",
+      "executed_action": "end",
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": false,
+      "final_success": false,
+      "aligned": true
+    },
+    {
+      "source": "canonical_final_v2/smoke_steps.jsonl",
+      "run_id": "p6-canonical-final-v2-20260812",
+      "episode_id": "ObjectNavType_420_1786530346_findamug",
+      "env_step_id": 8,
+      "policy_selected_action": "end",
+      "executed_action": "end",
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": false,
+      "final_success": false,
+      "aligned": true
+    }
+  ],
+  "all_executed_end_events_aligned": true,
+  "illegal_end_events": 4,
+  "legal_end_events": 1,
+  "note": "Events are independent executions and are not deduplicated by task/step."
+}

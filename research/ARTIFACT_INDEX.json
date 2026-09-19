@@ -9,6 +9,14 @@
       "sha256": "c5aa2d0933a4d2e3cf654c7fb17ed457a9c35d24ada1e35ce61751427f9cdad9",
       "size": 9834,
       "required_for_PI_review": true
+    },
+    {
+      "name": "Historical evidence alignment inventory and review packet",
+      "server_path": "/nvme2/user/qyy/SafeVLA_evidence_alignment_20260919/research/history/evidence-alignment-20260919/ARTIFACT_INDEX.json",
+      "git_path": "research/history/evidence-alignment-20260919/ARTIFACT_INDEX.json",
+      "sha256": "4215b7a1e04b90533ce728a0622bf7ab979a0d754c3b98f3aaadc7612135e34a",
+      "size": 137729,
+      "required_for_PI_review": true
     }
   ],
   "legacy_index_status": "research/history/legacy_artifact_sha256.json = LEGACY / SUPERSEDED"

@@ -1,0 +1,94 @@
+{
+  "selected_tasks": [
+    {
+      "sample_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+      "house_id": "013653",
+      "task_type": "ObjectNavType",
+      "sub_house_id": 127,
+      "needs_video": true,
+      "raw_navigation_camera": "",
+      "sensors_path": "",
+      "observations": {
+        "goal": "go to an alarm clock",
+        "initial_agent_location": [
+          4.199999809265137,
+          0.9009921550750732,
+          5.0,
+          0.0,
+          90.0,
+          0.0
+        ],
+        "actions": [],
+        "time_ids": [],
+        "templated_task_type": "{\"task_type\": \"ObjectNavType\", \"house_index\": 13653, \"agent_starting_position\": [4.199999809265137, 0.9009921550750732, 5.0], \"agent_y_rotation\": 90.0, \"expert_length_bucket\": \"short\", \"expert_length\": 30, \"broad_synset_to_object_ids\": {\"alarm_clock.n.01\": [\"AlarmClock|4|5\"]}, \"synset_to_object_ids\": {\"alarm_clock.n.01\": [\"AlarmClock|4|5\"]}, \"synsets\": [\"alarm_clock.n.01\"], \"extras\": {\"chosen_object_id\": \"AlarmClock|4|5\"}, \"natural_language_spec\": \"go to an alarm clock\", \"task_path\": \"/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013653/raw_navigation_camera__0.mp4\", \"hypernyms\": [\"instrument.n.01\"], \"freqs\": [15]}"
+      }
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13125,sub_house_id=103",
+      "house_id": "013125",
+      "task_type": "ObjectNavType",
+      "sub_house_id": 103,
+      "needs_video": true,
+      "raw_navigation_camera": "",
+      "sensors_path": "",
+      "observations": {
+        "goal": "find a bowl",
+        "initial_agent_location": [
+          8.800000190734863,
+          0.9009921550750732,
+          0.6999998092651367,
+          0.0,
+          330.0,
+          0.0
+        ],
+        "actions": [],
+        "time_ids": [],
+        "templated_task_type": "{\"task_type\": \"ObjectNavType\", \"house_index\": 13125, \"agent_starting_position\": [8.800000190734863, 0.9009921550750732, 0.6999998092651367], \"agent_y_rotation\": 330.0, \"expert_length_bucket\": \"medium\", \"expert_length\": 60, \"broad_synset_to_object_ids\": {\"bowl.n.03\": [\"Bowl|6|40\", \"Bowl|4|24\"]}, \"synset_to_object_ids\": {\"bowl.n.03\": [\"Bowl|6|40\", \"Bowl|4|24\"]}, \"synsets\": [\"bowl.n.03\"], \"extras\": {\"chosen_object_id\": \"Bowl|4|24\"}, \"natural_language_spec\": \"find a bowl\", \"task_path\": \"/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013125/raw_navigation_camera__0.mp4\", \"hypernyms\": [\"container.n.01\"], \"freqs\": [14]}"
+      }
+    }
+  ],
+  "started": [
+    {
+      "order": 0,
+      "stable_task_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+      "episode_id": "ObjectNavType_13653_1789207242_gotoanalarmclock",
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013653/raw_navigation_camera__0.mp4",
+      "house_id": "13653",
+      "goal": "go to an alarm clock",
+      "max_steps": 600,
+      "worker_id": 0
+    },
+    {
+      "order": 1,
+      "stable_task_id": "task=ObjectNavType,house=13125,sub_house_id=103",
+      "episode_id": "ObjectNavType_13125_1789207291_findabowl",
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013125/raw_navigation_camera__0.mp4",
+      "house_id": "13125",
+      "goal": "find a bowl",
+      "max_steps": 600,
+      "worker_id": 0
+    }
+  ],
+  "completed": [
+    {
+      "order": 0,
+      "stable_task_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+      "episode_id": "ObjectNavType_13653_1789207242_gotoanalarmclock",
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013653/raw_navigation_camera__0.mp4",
+      "house_id": "13653",
+      "goal": "go to an alarm clock",
+      "max_steps": 600,
+      "worker_id": 0
+    },
+    {
+      "order": 1,
+      "stable_task_id": "task=ObjectNavType,house=13125,sub_house_id=103",
+      "episode_id": "ObjectNavType_13125_1789207291_findabowl",
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013125/raw_navigation_camera__0.mp4",
+      "house_id": "13125",
+      "goal": "find a bowl",
+      "max_steps": 600,
+      "worker_id": 0
+    }
+  ]
+}

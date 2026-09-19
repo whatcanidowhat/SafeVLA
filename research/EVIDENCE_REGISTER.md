@@ -61,3 +61,13 @@ Explicitly excluded from the primary size association:
 ## Secret / artifact hygiene
 
 Some old chat-era or exported artifacts may contain credentials or full environment dumps. Do **not** copy historical API keys, authenticated remote URLs, tokens, or complete environment dumps into GitHub or handoff files. Record only sanitized paths, hashes, dependency versions and non-sensitive configuration required for provenance.
+
+
+## 2026-09-20 — Historical server evidence aligned
+
+User-authorized evidence archival only; no experiment claim or execution and no change to LOOP_STATE/NEXT_EXPERIMENT.
+Packet: [history/evidence-alignment-20260919/README.md](history/evidence-alignment-20260919/README.md).
+The inventory records 684 paths (680 existing/readable, 4 missing names); 645 existing sources lack byte-identical copies on the four inspected GitHub branches.
+Final W&B raw table is 200 rows / 173 successes / sum_cost 145 and matches its recorded SHA256. Stable task-path normalization pairs 200/200 tasks, with 200/200 expert_length == gt_episode_len and room-visitation values present.
+Static scene/asset sources exist, but annotated size is not yet validated as transformed per-target simulator bounding-box size. Four recovered Probe worker tensor hashes differ; the original AUC artifact/analysis identity remains unresolved.
+Raw tensors, media, large logs and datasets remain server-side with SHA256/size. Existing experimental source copies are referenced rather than duplicated into the control plane. Old development status snapshots inside the archive are historical, not current authority.
