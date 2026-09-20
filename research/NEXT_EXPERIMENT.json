@@ -1,67 +1,74 @@
 {
-  "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
-  "cycle_id": "smalltarget-phenotype-001-20260918",
+  "experiment_id": "EXP-SIZE-RUNTIME-METADATA-001",
+  "cycle_id": "size-runtime-metadata-001-20260920",
   "status": "DRAFT",
-  "research_question": "In the existing historical ObjectNav full-200 evaluation, is lower policy-independent target physical size associated with lower success after first establishing category-level sample size/uncertainty and accounting for available pre-policy task difficulty covariates?",
-  "hypothesis": "H-SIZE: smaller targets, measured from target-object 3D bounding-box metadata independent of policy behavior, have lower navigation success.",
-  "competing_explanations": [
-    "H-CATEGORY: semantic category rather than physical size explains low SR",
-    "H-DIFFICULTY: house/task difficulty, expert path length, or initial distance explains the pattern",
-    "H-SAMPLE: apparent ~50% category SR is unstable because per-category n is small",
-    "H-BEHAVIOR: low visible-pixel counts are consequences of failed search/approach rather than an exogenous target-size cause"
-  ],
-  "unique_variable": "Primary explanatory variable is per-task median 3D bounding-box volume across all valid broad-synset target object IDs; median maximum side length is a robustness descriptor.",
-  "control": "Continuous analysis first; large-target tertile is descriptive control after tertiles are defined on the full analyzable set without success labels.",
+  "research_question": "Can the exact historical simulator/runtime environment provide a valid, policy-independent scene-instance 3D bounding box for every success-eligible broad-synset target in the 200-task historical ObjectNav set before any SafeVLA policy action?",
+  "hypothesis": "H-RUNTIME-AABB: exact-version runtime object metadata at initial scene state provides finite, non-zero AABB geometry for all 368 broad target IDs, yielding complete task-level size summaries for all 200 tasks.",
+  "competing_explanation": "H-RUNTIME-GAP: build mismatch, unsupported assets, ambiguous runtime identity, or unstable scene initialization prevents complete/reproducible runtime geometry recovery.",
+  "reference": "EXP-SMALLTARGET-PHENOTYPE-001 BLOCKED handoff at 9910cb2c5645a3549d6e8e474827ee12de1df8bd: 200 tasks, 368 broad targets, 42 static candidate boxes, 0 validated task sizes.",
+  "repeat_or_treatment": "Measurement-only runtime metadata recovery. Deterministic 12-task preflight selected without success labels is loaded twice; full 200-task extraction occurs only if preflight passes. No policy treatment.",
+  "unique_variable": "Geometry metadata acquisition source changes from insufficient static asset/annotation files to exact historical runtime scene-instance object metadata; task specs/scenes/targets/policy behavior remain fixed.",
   "fixed_conditions": [
-    "0 GPU, 0 episodes, no model load, no AI2-THOR",
-    "No B0/runtime/evaluation/source modifications",
-    "Use existing historical full-200 raw results, task specs, and static scene metadata only",
-    "Do not define physical size using distance or trajectory-derived visible pixels",
-    "Treat historical AUC 0.955/0.982/0.992 as exploratory stop-legality Probe evidence, not small-target evidence"
+    "Exact archived 200 task specs and previously hashed scene/asset datasets",
+    "Resolve and record exact historical simulator package/build/executable identity before scene loading",
+    "No SafeVLA checkpoint/model load, Actor/Critic forward, navigation policy action, or ObjectNav evaluation episode",
+    "At most 224 scene initializations: 24 preflight plus at most 200 full extraction",
+    "Geometry extraction must not load success/failure labels, episode length, Safety Cost, visible pixels, or other outcomes",
+    "Exact runtime object identity mapping only; no fuzzy category/name matching",
+    "Primary descriptor is initial-state runtime axis-aligned bounding box; do not call it canonical intrinsic volume",
+    "OBB is optional secondary metadata and cannot replace missing primary AABB",
+    "No B0/runtime source, task-spec, success/end, reset/cache, or historical-result modification",
+    "No size-success association in this experiment"
   ],
   "metrics": [
-    "Per-category n, successes, SR, Wilson 95% CI",
-    "Continuous effect estimate for log physical size versus success with uncertainty",
-    "If complete data permit: logistic(success ~ log_size + expert_length [+ independently available initial_distance])",
-    "Small/medium/large tertile SR with Wilson 95% CI",
-    "Missing size metadata count and analyzable n",
-    "Duplicate stable-task-key check and reconciliation with historical 200 tasks / 173 successes",
-    "Optional downstream failure morphology from already-recorded visible pixels / termination type, explicitly non-causal"
+    "Exact simulator/runtime identity status",
+    "Preflight exact target mapping and AABB validity",
+    "Preflight repeated-load exact equality and max absolute/relative dimension difference",
+    "Full exact-ID mapping n/368",
+    "Valid runtime AABB n/368",
+    "Complete task geometry n/200",
+    "Missing/ambiguous targets by synset/source type",
+    "Optional OBB availability n/368",
+    "For complete tasks only: median AABB volume and median maximum side across all broad targets"
   ],
-  "expected_result": "Either establish that the reported low-SR categories are statistically credible and that policy-independent target size is associated with failure, or weaken the size narrative in favor of category/difficulty/sample explanations.",
-  "falsifying_result": "Low-SR categories are unstable under uncertainty, physical size shows little/reversed association, or the association disappears under available difficulty controls.",
-  "stop_conditions": [
-    "Any new model/simulator/GPU/episode execution would be required",
-    "Historical full-200 raw evidence cannot be reconciled with the 173/200 report",
-    "Stable task identity cannot be reconstructed",
-    "Physical-size metadata cannot be obtained statically",
-    "Size would have to be defined by distance or outcome-derived visible pixels",
-    "Any baseline/runtime code change is required"
-  ],
-  "required_outputs": [
-    "research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md",
-    "research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json",
-    "research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json",
-    "research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md",
-    "research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv",
-    "research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv",
-    "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
-  ],
-  "resources": {
-    "max_gpu": 0,
-    "max_episodes": 0
-  },
-  "competing_explanation": "H-CATEGORY, H-DIFFICULTY, H-SAMPLE, or H-BEHAVIOR can explain the apparent low-SR categories without a causal physical-size effect.",
-  "reference": "Existing historical ObjectNav full-200 raw episode/task evidence tied to the reported 173/200 run, plus static policy-independent scene/task metadata for those exact tasks.",
-  "repeat_or_treatment": "No treatment and no new rollout. This is a single zero-rollout observational re-analysis of existing evidence; descriptive tertiles and adjusted models are sensitivity analyses of the same dataset.",
+  "expected_result": "Runtime metadata provides stable valid AABB geometry for 368/368 broad targets and complete geometry for 200/200 tasks, removing the measurement blocker without testing H-SIZE itself.",
+  "falsifying_result": "Any success-eligible target lacks exact valid runtime AABB mapping, the historical runtime identity cannot be established, or repeat initialization yields materially unstable geometry; no imputation or automatic downstream association is allowed.",
   "alternative_explanations": [
-    "Semantic category or training-frequency effects rather than target physical size",
-    "House/scene/task difficulty, expert path length, starting distance, or occlusion",
-    "Small per-category sample size and wide confidence intervals",
-    "Trajectory-derived visible-pixel size as a downstream consequence of failed search/approach rather than an exogenous cause"
+    "Installed simulator/runtime differs from the historical evaluation build",
+    "Custom Objaverse or built-in THOR assets expose different metadata paths",
+    "Runtime object IDs differ from archived scene IDs",
+    "Physics/scene initialization changes object transforms",
+    "World-axis AABB is orientation-dependent and measures scene-instance extent rather than canonical intrinsic size",
+    "Required geometry exists only after an invalidating environment mutation"
+  ],
+  "stop_conditions": [
+    "Exact historical simulator build identity cannot be recovered",
+    "Any SafeVLA model/checkpoint or policy forward would be required",
+    "Target identity requires fuzzy mapping",
+    "Preflight target mapping or AABB validity is incomplete",
+    "Repeated initialization yields unexplained geometry instability beyond numerical tolerance",
+    "Obtaining metadata requires navigation/policy actions or baseline/runtime source modification",
+    "Runtime units/extent semantics cannot be established well enough for interpretation",
+    "Any size-success association, Probe, replay, reset treatment, Safe-vs-IL comparison, or new B0 evaluation would start"
   ],
   "command": [
     "python3",
-    "research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py"
-  ]
+    "research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py"
+  ],
+  "required_outputs": [
+    "research/handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/RUN_MANIFEST.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/REVIEW_NOTES.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/runtime_version_manifest.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/preflight_repeatability.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/target_geometry.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/task_geometry.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/coverage_report.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py"
+  ],
+  "resources": {
+    "max_gpu": 1,
+    "max_episodes": 0
+  }
 }

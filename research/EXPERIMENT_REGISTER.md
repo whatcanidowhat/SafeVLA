@@ -85,3 +85,13 @@ The metadata-first audit mapped 200 tasks and all 368 broad-synset target IDs to
 The pre-registered stop condition is met: return BLOCKED to PI. No distance, visible-pixel or category-name proxy, incomplete-target median, category statistical analysis, tertile, association or regression was used. episode_table.csv preserves 200 historical raw rows with empty size cells; category_sr.csv explicitly records NOT_EXECUTED with blank statistics. H-SIZE remains untested.
 
 Handoff: [RESULT_SUMMARY.md](handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md), with metadata coverage, source hashes, raw identity checks and all required outputs. Proposed prerequisite only: a version-bound static geometry and instance-transform source covering all broad targets, including built-in THOR assets. No new experiment is approved; executor STOP after publication. Existing development changes and frozen NEXT_EXPERIMENT files are preserved.
+
+
+## 2026-09-20 — PI review after metadata BLOCKED
+
+| Experiment ID | Status | Actual execution | Scientific role |
+| --- | --- | --- | --- |
+| EXP-SMALLTARGET-PHENOTYPE-001 | BLOCKED / PI ACKNOWLEDGED | static-only audit; 0GPU/0episode; validated size n=0 | H-SIZE remains untested; static geometry source insufficient |
+| EXP-SIZE-RUNTIME-METADATA-001 | DRAFT / NOT_AUTHORIZED | none | Validate exact-runtime initial-state target AABB coverage/repeatability before any size-performance analysis |
+
+The new cycle is `size-runtime-metadata-001-20260920`. It is a measurement prerequisite, not a policy treatment and not an SR experiment.

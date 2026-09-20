@@ -214,3 +214,32 @@ The metadata-first audit mapped 200 tasks and all 368 broad-synset target IDs to
 The pre-registered stop condition is met: return BLOCKED to PI. No distance, visible-pixel or category-name proxy, incomplete-target median, category statistical analysis, tertile, association or regression was used. episode_table.csv preserves 200 historical raw rows with empty size cells; category_sr.csv explicitly records NOT_EXECUTED with blank statistics. H-SIZE remains untested.
 
 Handoff: [RESULT_SUMMARY.md](handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md), with metadata coverage, source hashes, raw identity checks and all required outputs. Proposed prerequisite only: a version-bound static geometry and instance-transform source covering all broad targets, including built-in THOR assets. No new experiment is approved; executor STOP after publication. Existing development changes and frozen NEXT_EXPERIMENT files are preserved.
+
+
+## 2026-09-20 — DEC-SMALLTARGET-BLOCKED-REVIEW-001：接受BLOCKED并将唯一下一实验改为runtime geometry recovery
+
+PI独立读取commit `9910cb2c5645a3549d6e8e474827ee12de1df8bd`、RESULT_SUMMARY、RUN_MANIFEST、REVIEW_NOTES、size_analysis和200行episode table，并确认最终CI `35500291745` 为success。
+
+Accepted result:
+- 200/200 historical tasks与368个broad target IDs均成功静态匹配；
+- 仅42/368 targets存在candidate asset bbox；326缺失；
+- 仅31/200 tasks candidate-complete；
+- units / scale / scene transform / instance-bound equivalence未验证，因此validated task size=0；
+- H-SIZE未被支持也未被否定，因为核心解释变量没有被合法测量；
+- Executor遵守0 GPU / 0 episode / 0 model / 0 simulator，未用distance、visible pixels、category或不完整subset替代尺寸。
+
+Additional PI exploratory audit of the archived raw 200-row table:
+- mug SR=8/13=61.5%，basketball SR=6/9=66.7%；
+- sub_house_id<20恰好包含11个mug、8个basketball、1个vase；该20条中的8个failure全部属于mug/basketball；
+- 在sub_house_id>=20中仅剩mug 2条、basketball 1条，且均成功，因此现有200条对“category effect vs early task allocation”缺乏有效overlap，不能把两种解释当独立证据；
+- failure的expert_length均值108.26，success为49.06，H-DIFFICULTY仍是强竞争解释。
+这些统计仅用于PI选择下一实验，不作为未经预注册的论文结论。
+
+Decision:
+不进入Probe、readout、安全、reset或新B0性能实验。唯一下一实验为 `EXP-SIZE-RUNTIME-METADATA-001`，先解决测量工具：使用**exact historical simulator runtime**在scene初始化后、任何policy action之前读取target runtime AABB。该实验不读取success labels，不做size-success association。
+
+Rationale:
+AI2-THOR公开接口说明object metadata可包含axisAlignedBoundingBox及size/cornerPoints，但world-axis AABB会随对象pose/orientation变化；因此本轮只验证“初始场景中的scene-instance extent”，不把它宣传成canonical intrinsic size。 exact historical build是否具有并稳定提供该字段，必须由实验本身验证。
+
+Authorization:
+当前仅DRAFT / PI_REVIEW / NOT_AUTHORIZED。预计预算最多1 GPU用于simulator graphics，0 SafeVLA/ObjectNav episodes，0 model loads，最多224次scene initialization。等待用户/PI显式批准后才可进入APPROVED_FOR_CODEX。

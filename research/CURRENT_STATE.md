@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-20（Asia/Shanghai）
-Mode: EXP-SMALLTARGET-PHENOTYPE-001 BLOCKED at the static physical-size metadata gate; next actor PI; executor stopped.
+Mode: PI_REVIEW. EXP-SMALLTARGET-PHENOTYPE-001 acknowledged as BLOCKED; new unique draft is EXP-SIZE-RUNTIME-METADATA-001.
 
 ## Verified Facts
 
@@ -41,11 +41,14 @@ This is a valid phenomenon candidate. It is not yet evidence that "small physica
 
 ## Highest-Value Uncertainty
 
-Before more Probe or intervention work, determine whether the reported low-SR categories are statistically credible and whether policy-independent physical target size explains any of the failure pattern beyond sample-size and task-difficulty alternatives.
+The size-performance hypothesis is still untested because the primary geometry variable is missing. The immediate uncertainty is whether the exact historical simulator runtime can expose stable initial-state scene-instance AABB geometry for the 368 broad targets without any policy execution.
+
+A PI exploratory re-read of the archived 200-row table also shows that category and task allocation are badly entangled: sub_house_id<20 contains 11/13 mug tasks, 8/9 basketball tasks and one vase; all 8 failures in that stratum are mug/basketball. Outside it, only 2 mug and 1 basketball tasks remain. This means the apparent low SR of mug/basketball is not independent evidence for a category or size effect. Separately, expert_length is much larger for failures (108.26 mean) than successes (49.06 mean), so task difficulty remains a serious competing explanation. These are exploratory PI audit facts, not a formal adjusted-effect experiment.
 
 ## Unique Next Experiment
 
-EXP-SMALLTARGET-PHENOTYPE-001: zero-rollout audit of the historical full-200 episode-level evidence plus static target-object 3D size metadata. It must not start a model, GPU inference, AI2-THOR or any episode. If the raw evidence cannot support this analysis, return BLOCKED rather than rerunning evaluation.
+EXP-SIZE-RUNTIME-METADATA-001: recover and validate initial-state scene-instance AABB geometry from the exact historical simulator/runtime, with no SafeVLA model, no policy action and 0 ObjectNav episodes. Geometry extraction is outcome-blind. Only if this measurement path is complete and stable may a later PI-approved experiment join geometry to success outcomes.
+
 
 ## 02 research-history migration — 2026-09-18
 
@@ -58,7 +61,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-Authoritative LOOP_STATE is BLOCKED / next_actor=PI after the claimed metadata-first audit. Required handoff outputs are published with no validated size variable and no downstream size/category analysis. Original experiment design and budget remain frozen. No restart, approval renewal, or subsequent experiment is authorized by this result.
+The BLOCKED handoff at `9910cb2c5645a3549d6e8e474827ee12de1df8bd` has been independently acknowledged by PI. Recovery protocol now permits terminal handoffs to return to PI_REVIEW without direct re-approval. Current cycle is fresh and unused: `size-runtime-metadata-001-20260920`; current experiment `EXP-SIZE-RUNTIME-METADATA-001` is DRAFT / NOT_AUTHORIZED. No Executor claim or simulator execution is authorized yet.
 
 
 ## Control incident — 2026-09-18

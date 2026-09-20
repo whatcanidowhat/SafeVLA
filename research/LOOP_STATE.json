@@ -1,33 +1,36 @@
 {
   "schema_version": "1.0",
-  "state_version": 16,
-  "cycle_id": "smalltarget-phenotype-001-20260918",
-  "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
+  "state_version": 17,
+  "cycle_id": "size-runtime-metadata-001-20260920",
+  "experiment_id": "EXP-SIZE-RUNTIME-METADATA-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": "290b426ac65d35ef1f8cb4819e9662c4fae1bb31",
+  "instruction_commit": null,
   "reviewed_result_commit": "9910cb2c5645a3549d6e8e474827ee12de1df8bd",
-  "claim_id": "67dd8e9069184c8d9fbb4725a21f1232",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
     "approved_by": null,
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 0,
+    "max_gpu": 1,
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md",
-    "research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json",
-    "research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json",
-    "research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md",
-    "research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv",
-    "research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv",
-    "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
+    "research/handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/RUN_MANIFEST.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/REVIEW_NOTES.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/runtime_version_manifest.json",
+    "research/handoffs/size-runtime-metadata-001-20260920/preflight_repeatability.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/target_geometry.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/task_geometry.csv",
+    "research/handoffs/size-runtime-metadata-001-20260920/coverage_report.md",
+    "research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-20T10:16:00+00:00"
+  "updated_at_utc": "2026-09-20T10:20:00+00:00"
 }
