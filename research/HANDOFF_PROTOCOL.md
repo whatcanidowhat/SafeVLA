@@ -123,9 +123,10 @@ Failure to publish leaves local evidence, not a claimed successful handoff.
 ## PI acknowledgement D
 
 PI independently reads result commit C (including BLOCKED/INVALID/ABORTED handoffs) and its required artifacts through GitHub.
-PI updates status=PI_REVIEW, next_actor=PI, reviewed_result_commit=C, updated_by=PI,
-authorization.status=NOT_AUTHORIZED and clears approved_by/approved_at_utc/expires_at_utc; retain instruction_commit
-and claim_id as historical provenance. The design returns to DRAFT. Increment state_version and publish review commit D.
+PI updates status=PI_REVIEW, next_actor=PI, reviewed_result_commit=C, updated_by=PI and
+authorization.status=NOT_AUTHORIZED; retain instruction_commit and claim_id as historical provenance. For
+BLOCKED/INVALID/ABORTED recovery, PI also clears approved_by/approved_at_utc/expires_at_utc before reopening review.
+The design returns to DRAFT. Increment state_version and publish review commit D.
 The validator checks reviewed_result_commit against D's immediate result parent.
 If intervening result corrections exist, PI reads and acknowledges their latest result HEAD.
 A new experiment requires a fresh unused cycle_id and explicit subsequent PI approval, never approval by Executor.
