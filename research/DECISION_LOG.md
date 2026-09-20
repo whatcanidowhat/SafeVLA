@@ -181,3 +181,25 @@ Raw tensors, media, large logs and datasets remain server-side with SHA256/size.
 Evidence archive commit `06a8265051298b103a76ff26db490d262da3882c` preserved the approved 158-file packet exactly. Its history CI exposed a pre-existing parser defect: `git ls-tree` quotes non-ASCII filenames by default, but the validator treated that display-escaped string as a literal path and rejected a research Markdown artifact as outside the whitelist. Working-tree validation uses NUL-delimited paths and did not expose this defect before publication.
 
 Use `git ls-tree -z` and parse NUL-delimited records for committed snapshots. Regression tests cover UTF-8 research filenames with either core.quotePath setting, and ensure non-ASCII names cannot bypass the whitelist or disallowed artifact extensions. Preserve the original evidence commit and its packet bytes; append this validator repair without rewriting history. Experiment state/design, runtime and execution authorization remain unchanged.
+
+
+## 2026-09-20 — DEC-EVIDENCE-ALIGNMENT-REVIEW-001：接受历史证据包并保持small-target实验不变
+
+PI通过GitHub独立核验：
+- `06a8265051298b103a76ff26db490d262da3882c` 归档历史证据；
+- `fed5d8fe282bff0d3c119033ccb565f1574753d9` 修复UTF-8路径校验；
+- Actions run `35463659449` 全绿，synthetic control tests和完整history/artifact validation均通过。
+
+接受为共享证据层的事实：
+- 2026-08-03 historical full-200最终W&B表=200行/173 success/sum_cost=145；
+- stable task-path 200/200唯一配对；
+- expert_length == gt_episode_len 200/200；
+- room-visitation字段200/200可用；
+- Probe、end audit、sub120及大文件均已有Git副本或server_path+SHA256登记。
+
+仍未解决：
+- annotations/scene metadata中的size字段尚未证明等同于当前任务中目标实例经缩放/变换后的真实3D bounding box；
+- 四个Probe worker tensor哈希不同，历史AUC三元组的精确原始artifact/analysis identity仍未恢复。
+
+Decision:
+不改 `EXP-SMALLTARGET-PHENOTYPE-001` 的研究问题、唯一变量、指标或预算。正式执行时先验证policy-independent physical-size变量能否由静态metadata合法构造；若不能，按预注册stop condition返回BLOCKED，不以distance、visible pixels或category名称替代。旧授权已过期且从未claim，先撤销再对同一未执行cycle续发新授权。
