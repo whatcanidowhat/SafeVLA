@@ -329,6 +329,10 @@ class ProtocolTests(unittest.TestCase):
         validate_transition(View(self.root, b), View(self.root), b)
         git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic blocked result")
         c = git(self.root, "rev-parse", "HEAD")
+        # State-preserving maintenance may intervene before PI recovery acknowledgement.
+        save(self.root, "research/maintenance-note.md", "state-preserving protocol note\n")
+        git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic blocked maintenance")
+        maintenance = git(self.root, "rev-parse", "HEAD")
 
         ack = copy.deepcopy(s)
         ack.update(status="PI_REVIEW", next_actor="PI", state_version=5, updated_by="PI",
@@ -339,7 +343,7 @@ class ProtocolTests(unittest.TestCase):
             "max_gpu": s["authorization"]["max_gpu"], "max_episodes": s["authorization"]["max_episodes"],
         }
         install(self.root, ack, "DRAFT")
-        validate_transition(View(self.root, c), View(self.root), c)
+        validate_transition(View(self.root, maintenance), View(self.root), maintenance)
 
         # Direct exception-state re-approval remains forbidden.
         install(self.root, s, "APPROVED")
