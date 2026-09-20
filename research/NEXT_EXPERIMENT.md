@@ -1,8 +1,8 @@
 # Next Experiment — Small-target phenotype audit
 
 Experiment ID: EXP-SMALLTARGET-PHENOTYPE-001
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / 0 GPU / 0 episode
+Status: DRAFT
+Authorization: NOT_AUTHORIZED — PI acknowledged BLOCKED result; new experiment not yet staged
 Cycle ID: smalltarget-phenotype-001-20260918
 
 ## Why now

@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
   "cycle_id": "smalltarget-phenotype-001-20260918",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "research_question": "In the existing historical ObjectNav full-200 evaluation, is lower policy-independent target physical size associated with lower success after first establishing category-level sample size/uncertainty and accounting for available pre-policy task difficulty covariates?",
   "hypothesis": "H-SIZE: smaller targets, measured from target-object 3D bounding-box metadata independent of policy behavior, have lower navigation success.",
   "competing_explanations": [
