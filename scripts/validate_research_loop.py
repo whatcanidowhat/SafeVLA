@@ -174,6 +174,30 @@ class View:
         return json.loads(self.read(path))
 
 
+def terminal_state_entry_commit(root, start_sha):
+    """Return the commit where the current terminal LOOP_STATE first appeared.
+
+    Allows PI to publish state-preserving protocol/doc repairs before acknowledging a
+    BLOCKED/INVALID/ABORTED handoff without losing the actual result commit identity.
+    """
+    current = start_sha
+    current_state = View(root, current).data(STATE)
+    require(current_state["status"] in {"BLOCKED", "INVALID", "ABORTED"},
+            "terminal entry requested for non-terminal state")
+    while True:
+        parts = git(root, "rev-list", "--parents", "-n", "1", current).decode().split()
+        if len(parts) < 2:
+            return current
+        parent = parts[1]
+        pv = View(root, parent)
+        if not pv.exists(STATE):
+            return current
+        parent_state = pv.data(STATE)
+        if parent_state != current_state:
+            return current
+        current = parent
+
+
 def utc(s):
     return datetime.fromisoformat(s.replace("Z", "+00:00"))
 
@@ -325,7 +349,12 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
         require(n["instruction_commit"] == o["instruction_commit"] and n["claim_id"] == o["claim_id"], "claim identity changed")
         if edge in {("AWAITING_PI_REVIEW", "PI_REVIEW"), ("BLOCKED", "PI_REVIEW"),
                     ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
-            require(n["reviewed_result_commit"] == parent_sha, "PI acknowledgement must reference result HEAD")
+            if edge == ("AWAITING_PI_REVIEW", "PI_REVIEW"):
+                expected_review = parent_sha
+            else:
+                expected_review = terminal_state_entry_commit(old_view.root, parent_sha)
+            require(n["reviewed_result_commit"] == expected_review,
+                    "PI acknowledgement must reference the terminal result entry commit")
             require(n["authorization"]["status"] == "NOT_AUTHORIZED",
                     "PI acknowledgement must remove execution authorization")
             if edge in {("BLOCKED", "PI_REVIEW"), ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
