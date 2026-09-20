@@ -299,7 +299,8 @@ class ProtocolTests(unittest.TestCase):
         git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic result")
         c = git(self.root, "rev-parse", "HEAD")
         s.update(status="PI_REVIEW", next_actor="PI", state_version=5, updated_by="PI", reviewed_result_commit=c)
-        s["authorization"]["status"] = "NOT_AUTHORIZED"
+        s["authorization"].update(status="NOT_AUTHORIZED", approved_by=None,
+                                  approved_at_utc=None, expires_at_utc=None)
         install(self.root, s)
         validate_transition(View(self.root, c), View(self.root), c)
         s["reviewed_result_commit"] = b
