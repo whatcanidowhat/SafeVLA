@@ -1,8 +1,8 @@
 # Next Experiment — Runtime scene-instance geometry recovery
 
 Experiment ID: EXP-SIZE-RUNTIME-METADATA-001
-Status: DRAFT
-Authorization: NOT_AUTHORIZED
+Status: APPROVED
+Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU for simulator graphics only / 0 SafeVLA episodes
 Cycle ID: size-runtime-metadata-001-20260920
 
 ## Why this experiment now

@@ -243,3 +243,20 @@ AI2-THOR公开接口说明object metadata可包含axisAlignedBoundingBox及size/
 
 Authorization:
 当前仅DRAFT / PI_REVIEW / NOT_AUTHORIZED。预计预算最多1 GPU用于simulator graphics，0 SafeVLA/ObjectNav episodes，0 model loads，最多224次scene initialization。等待用户/PI显式批准后才可进入APPROVED_FOR_CODEX。
+
+
+## 2026-09-20 — PI批准 EXP-SIZE-RUNTIME-METADATA-001 执行
+
+用户明确回复“批准执行 EXP-SIZE-RUNTIME-METADATA-001”。PI批准此前冻结的measurement-recovery设计，不修改研究问题、H-RUNTIME-AABB、H-RUNTIME-GAP、唯一变量、preflight、指标或stop conditions。
+
+Authorization:
+- scope=RESEARCH_EXPERIMENT；
+- max_gpu=1，仅允许simulator graphics/runtime；
+- max_episodes=0；
+- SafeVLA model/checkpoint loads=0；
+- Actor/Critic forwards=0；
+- 最多224次scene initialization（12-task preflight双次加载=24，preflight通过后最多200次full extraction）；
+- geometry extraction不得读取success/failure、episode length、Safety Cost、visible pixels等outcome字段；
+- 不得进行size-success association、Probe、replay、reset、Safe-vs-IL或新B0评估。
+
+Executor必须先等待本approval commit control CI成功，再claim最新绿色HEAD并等待claim CI成功后执行。任何preflight stop condition触发即BLOCKED并STOP。

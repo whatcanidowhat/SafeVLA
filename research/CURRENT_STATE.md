@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-20（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-SMALLTARGET-PHENOTYPE-001 acknowledged as BLOCKED; new unique draft is EXP-SIZE-RUNTIME-METADATA-001.
+Mode: EXP-SIZE-RUNTIME-METADATA-001 APPROVED_FOR_CODEX; next actor CODEX; max 1 GPU for simulator graphics only / 0 SafeVLA episodes.
 
 ## Verified Facts
 
@@ -61,7 +61,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-The BLOCKED handoff at `9910cb2c5645a3549d6e8e474827ee12de1df8bd` has been independently acknowledged by PI. Recovery protocol now permits terminal handoffs to return to PI_REVIEW without direct re-approval. Current cycle is fresh and unused: `size-runtime-metadata-001-20260920`; current experiment `EXP-SIZE-RUNTIME-METADATA-001` is DRAFT / NOT_AUTHORIZED. No Executor claim or simulator execution is authorized yet.
+User/PI explicitly approved `EXP-SIZE-RUNTIME-METADATA-001`. Current authoritative LOOP_STATE is `APPROVED_FOR_CODEX` / `next_actor=CODEX`; `instruction_commit=null` and `claim_id=null` until a valid Executor claim. Authorization budget is max 1 GPU **only for simulator graphics/runtime**, 0 SafeVLA/ObjectNav episodes and 0 model loads. The Executor must first verify this approval commit's CI is green, then claim the latest green `origin/research-loop` HEAD and wait for claim CI before any scene initialization. No size-success association, Probe, replay, reset, Safe-vs-IL or B0 evaluation is authorized.
 
 
 ## Control incident — 2026-09-18

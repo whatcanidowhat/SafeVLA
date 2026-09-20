@@ -95,3 +95,12 @@ Handoff: [RESULT_SUMMARY.md](handoffs/smalltarget-phenotype-001-20260918/RESULT_
 | EXP-SIZE-RUNTIME-METADATA-001 | DRAFT / NOT_AUTHORIZED | none | Validate exact-runtime initial-state target AABB coverage/repeatability before any size-performance analysis |
 
 The new cycle is `size-runtime-metadata-001-20260920`. It is a measurement prerequisite, not a policy treatment and not an SR experiment.
+
+
+## 2026-09-20 — EXP-SIZE-RUNTIME-METADATA-001 approved
+
+| Experiment ID | Status | Execution budget | Scientific role |
+| --- | --- | --- | --- |
+| EXP-SIZE-RUNTIME-METADATA-001 | APPROVED_FOR_CODEX / awaiting claim | max 1 simulator-graphics GPU, 0 episodes, 0 model loads, <=224 scene initializations | Validate exact-runtime initial-state scene-instance AABB coverage/repeatability; no outcome association |
+
+Approval does not imply H-RUNTIME-AABB is true. If exact historical build identity, exact-ID mapping, primary AABB validity or repeatability fails, return BLOCKED without imputation or downstream analysis.
