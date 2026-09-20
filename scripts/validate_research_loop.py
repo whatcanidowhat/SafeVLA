@@ -23,6 +23,9 @@ EDGES = {("PI_REVIEW", "APPROVED_FOR_CODEX"): "PI",
          ("APPROVED_FOR_CODEX", "CODEX_RUNNING"): "CODEX",
          ("CODEX_RUNNING", "AWAITING_PI_REVIEW"): "CODEX",
          ("AWAITING_PI_REVIEW", "PI_REVIEW"): "PI",
+         ("BLOCKED", "PI_REVIEW"): "PI",
+         ("INVALID", "PI_REVIEW"): "PI",
+         ("ABORTED", "PI_REVIEW"): "PI",
          ("CODEX_RUNNING", "BLOCKED"): "CODEX",
          ("CODEX_RUNNING", "INVALID"): "CODEX",
          ("CODEX_RUNNING", "ABORTED"): "CODEX"}
@@ -320,12 +323,20 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
         require(utc(n["updated_at_utc"]) <= utc(n["authorization"]["expires_at_utc"]), "expired approval")
     else:
         require(n["instruction_commit"] == o["instruction_commit"] and n["claim_id"] == o["claim_id"], "claim identity changed")
-        if edge == ("AWAITING_PI_REVIEW", "PI_REVIEW"):
+        if edge in {("AWAITING_PI_REVIEW", "PI_REVIEW"), ("BLOCKED", "PI_REVIEW"),
+                    ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
             require(n["reviewed_result_commit"] == parent_sha, "PI acknowledgement must reference result HEAD")
+            require(n["authorization"]["status"] == "NOT_AUTHORIZED",
+                    "PI acknowledgement must remove execution authorization")
+            require(n["authorization"]["approved_by"] is None
+                    and n["authorization"]["approved_at_utc"] is None
+                    and n["authorization"]["expires_at_utc"] is None,
+                    "PI acknowledgement must clear approval metadata")
         else:
             require(n["authorization"] == o["authorization"], "executor changed authorization")
             require(old_view.read(DESIGN) == new_view.read(DESIGN) and old_view.read(NEXT) == new_view.read(NEXT), "executor changed approved design")
-    if edge != ("AWAITING_PI_REVIEW", "PI_REVIEW"):
+    if edge not in {("AWAITING_PI_REVIEW", "PI_REVIEW"), ("BLOCKED", "PI_REVIEW"),
+                    ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
         require(n["reviewed_result_commit"] == o["reviewed_result_commit"], "executor cannot acknowledge PI review")
     if edge != ("PI_REVIEW", "APPROVED_FOR_CODEX"):
         require(n["required_outputs"] == o["required_outputs"] and n["execution_worktree"] == o["execution_worktree"], "frozen execution conditions changed")
