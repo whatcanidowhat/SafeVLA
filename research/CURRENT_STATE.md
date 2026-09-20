@@ -7,7 +7,7 @@ Mode: PI has approved EXP-SMALLTARGET-PHENOTYPE-001 design; execution authority 
 
 - EXP-B0-REPRO-001A is COMPLETED / PROVENANCE PASS for its narrow goal: two Reference + two Repeat episodes on the same executable B0, stable 2/2 task pairing, and traceable source/resource identity. It does not prove full-200 performance equivalence.
 - Executable B0 remains official reference 2aa82559d272b5f888e53433e258914057f15bed plus the manually accepted local-DINO infrastructure adaptation only.
-- Historical full-200 summary reports ObjectNav SR=173/200=0.865 and 27 failures; this remains historical evidence until episode-level raw records are re-audited.
+- Historical full-200 raw evidence has now been re-aligned to the archived 2026-08-03 run: final W&B table has 200 rows, 173 successes and sum_cost=145; stable task-path normalization pairs 200/200 tasks, and expert_length == gt_episode_len for all 200. This verifies the identity/integrity of that historical run, but does not convert it into a fresh formal B0 rerun.
 - A historical canonical state recorded stop_legal=false while Actor end probability was approximately 0.993365 and greedy action was end. This establishes an illegal/premature-end phenotype in at least one state, not its mechanism.
 - Source audit confirms end is a learned Actor action. Actor hidden beliefs are mapped by a LinearActorHead into an action distribution; end is sampled or mode-selected like other actions. Only after end is executed does ObjectNav successful_if_done() check whether a valid target is visible in the navigation camera within maximum_distance=2.
 - Therefore end_prob≈0.993365 is not an "end Probe"; it is the Actor probability assigned to the end action. The historical Probe AUC values 0.955/0.982/0.992 are a separate exploratory layer-wise decoder Probe for a close-and-visible / stop-legality-like label.
@@ -58,7 +58,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-The control repair is complete. The repaired history and synthetic protocol tests passed CI, and PI re-authorized the unchanged `EXP-SMALLTARGET-PHENOTYPE-001`. Current authoritative `LOOP_STATE` is `APPROVED_FOR_CODEX` / `next_actor=CODEX`, budget 0 GPU / 0 episode, with `instruction_commit=null` and `claim_id=null` until Executor performs a valid claim. No research execution occurred during the control incident. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+The historical evidence alignment package is published and CI-green. Because the previous execution authorization expired before claim, PI has temporarily returned the same cycle to `PI_REVIEW` / `NOT_AUTHORIZED` while reviewing the aligned evidence. No research execution has occurred. The experiment design, 0 GPU / 0 episode budget and stop conditions remain unchanged. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
 
 
 ## Control incident — 2026-09-18
@@ -88,3 +88,23 @@ The inventory records 684 paths (680 existing/readable, 4 missing names); 645 ex
 Final W&B raw table is 200 rows / 173 successes / sum_cost 145 and matches its recorded SHA256. Stable task-path normalization pairs 200/200 tasks, with 200/200 expert_length == gt_episode_len and room-visitation values present.
 Static scene/asset sources exist, but annotated size is not yet validated as transformed per-target simulator bounding-box size. Four recovered Probe worker tensor hashes differ; the original AUC artifact/analysis identity remains unresolved.
 Raw tensors, media, large logs and datasets remain server-side with SHA256/size. Existing experimental source copies are referenced rather than duplicated into the control plane. Old development status snapshots inside the archive are historical, not current authority.
+
+
+## 2026-09-20 — PI review of aligned evidence
+
+Independent GitHub verification:
+- archival evidence commit: `06a8265051298b103a76ff26db490d262da3882c`;
+- current aligned control HEAD before PI renewal: `fed5d8fe282bff0d3c119033ccb565f1574753d9`;
+- GitHub Actions run `35463659449`: completed / success, including synthetic control tests and full history/artifact validation;
+- evidence packet: `research/history/evidence-alignment-20260919/`.
+
+What changed scientifically:
+- the exact historical 173/200 result and its 200 stable task identities are now directly recoverable from shared/raw evidence;
+- `expert_length` and room-visitation fields are available for all 200;
+- static scene/asset metadata is available, but the proposed physical-size variable is **not yet validated** as actual transformed per-target simulator bounding-box size;
+- four recovered Probe worker tensors have different hashes, so the old AUC artifact identity remains unresolved.
+
+Decision impact:
+- no reason to change the unique next experiment;
+- `EXP-SMALLTARGET-PHENOTYPE-001` should first validate whether a policy-independent task-level size variable can be constructed from the archived static metadata;
+- if that cannot be done without simulator/model execution or an invalid proxy, the experiment must return BLOCKED as pre-registered.
