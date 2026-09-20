@@ -307,6 +307,47 @@ class ProtocolTests(unittest.TestCase):
         with self.assertRaises(Invalid):
             validate_transition(View(self.root, c), View(self.root), c)
 
+    def test_pi_acknowledges_blocked_handoff(self):
+        s = self.running()
+        git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic claim")
+        b = git(self.root, "rev-parse", "HEAD")
+        prefix = "research/handoffs/test-cycle-1/"
+        summary = "Synthetic blocked result; no research execution.\n"
+        save(self.root, prefix + "RESULT_SUMMARY.md", summary)
+        save(self.root, prefix + "REVIEW_NOTES.md", "Synthetic blocked review notes\n")
+        import hashlib
+        save(self.root, prefix + "ARTIFACT_INDEX.json", {"schema_version": "1.0", "artifacts": [{
+            "name": "summary", "server_path": "/synthetic/RESULT_SUMMARY.md",
+            "git_path": prefix + "RESULT_SUMMARY.md", "sha256": hashlib.sha256(summary.encode()).hexdigest(),
+            "size": len(summary.encode()), "required_for_PI_review": True}]})
+        s.update(status="BLOCKED", next_actor="PI", state_version=4)
+        save(self.root, STATE, s)
+        save(self.root, prefix + "RUN_MANIFEST.json", {k: s[k] for k in
+             ["cycle_id", "experiment_id", "instruction_commit", "claim_id", "status"]} |
+             {"gpu_count": 0, "episodes_started": 0, "command": ["synthetic-blocked"]})
+        validate_transition(View(self.root, b), View(self.root), b)
+        git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic blocked result")
+        c = git(self.root, "rev-parse", "HEAD")
+
+        ack = copy.deepcopy(s)
+        ack.update(status="PI_REVIEW", next_actor="PI", state_version=5, updated_by="PI",
+                   reviewed_result_commit=c, updated_at_utc=datetime.now(timezone.utc).isoformat())
+        ack["authorization"] = {
+            "status": "NOT_AUTHORIZED", "approved_by": None, "approved_at_utc": None,
+            "expires_at_utc": None, "scope": s["authorization"]["scope"],
+            "max_gpu": s["authorization"]["max_gpu"], "max_episodes": s["authorization"]["max_episodes"],
+        }
+        install(self.root, ack, "DRAFT")
+        validate_transition(View(self.root, c), View(self.root), c)
+
+        # Direct exception-state re-approval remains forbidden.
+        install(self.root, s, "APPROVED")
+        bad = copy.deepcopy(s)
+        bad.update(status="APPROVED_FOR_CODEX", next_actor="CODEX", state_version=5, updated_by="PI")
+        save(self.root, STATE, bad)
+        with self.assertRaises(Invalid):
+            validate_transition(View(self.root, c), View(self.root), c)
+
     def test_secret_and_size(self):
         for blob in [(b"gh" + b"p_" + b"a" * 30), (b"https://" + b"user:credential@example.invalid/x"),
                      b"a" * (1024 * 1024 + 1)]:
