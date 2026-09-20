@@ -17,6 +17,14 @@
       "sha256": "4215b7a1e04b90533ce728a0622bf7ab979a0d754c3b98f3aaadc7612135e34a",
       "size": 137729,
       "required_for_PI_review": true
+    },
+    {
+      "name": "smalltarget-phenotype-001-metadata-blocked-handoff-index",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json",
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json",
+      "sha256": "d16709646fae2a4d882ee4e2c8ee64a652a6ebdcf25430538552304e7fd9357f",
+      "size": 6192,
+      "required_for_PI_review": true
     }
   ],
   "legacy_index_status": "research/history/legacy_artifact_sha256.json = LEGACY / SUPERSEDED"

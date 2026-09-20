@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 14,
+  "state_version": 15,
   "cycle_id": "smalltarget-phenotype-001-20260918",
   "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "BLOCKED",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "290b426ac65d35ef1f8cb4819e9662c4fae1bb31",
@@ -29,5 +29,5 @@
     "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-09-20T08:23:56.310985+00:00"
+  "updated_at_utc": "2026-09-20T08:38:18.056289+00:00"
 }

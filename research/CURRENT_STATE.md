@@ -1,7 +1,7 @@
 # Current State
 
-Updated: 2026-09-18（Asia/Shanghai）
-Mode: PI has approved EXP-SMALLTARGET-PHENOTYPE-001 design; execution authority is controlled exclusively by LOOP_STATE. Old 001B preflight remains revoked.
+Updated: 2026-09-20（Asia/Shanghai）
+Mode: EXP-SMALLTARGET-PHENOTYPE-001 BLOCKED at the static physical-size metadata gate; next actor PI; executor stopped.
 
 ## Verified Facts
 
@@ -58,7 +58,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-The historical evidence alignment package is published and CI-green. Because the previous execution authorization expired before claim, PI has temporarily returned the same cycle to `PI_REVIEW` / `NOT_AUTHORIZED` while reviewing the aligned evidence. No research execution has occurred. The experiment design, 0 GPU / 0 episode budget and stop conditions remain unchanged. Full 001B, Probe reruns, video-mechanism studies, reset treatment and Safe-vs-IL comparisons remain NOT_AUTHORIZED.
+Authoritative LOOP_STATE is BLOCKED / next_actor=PI after the claimed metadata-first audit. Required handoff outputs are published with no validated size variable and no downstream size/category analysis. Original experiment design and budget remain frozen. No restart, approval renewal, or subsequent experiment is authorized by this result.
 
 
 ## Control incident — 2026-09-18
@@ -108,3 +108,14 @@ Decision impact:
 - no reason to change the unique next experiment;
 - `EXP-SMALLTARGET-PHENOTYPE-001` should first validate whether a policy-independent task-level size variable can be constructed from the archived static metadata;
 - if that cannot be done without simulator/model execution or an invalid proxy, the experiment must return BLOCKED as pre-registered.
+
+
+## 2026-09-20 — EXP-SMALLTARGET-PHENOTYPE-001 metadata gate BLOCKED
+
+Claim 72634cf7c3a954dd99456b2d75c3af539da9e68e bound renewed PI approval 290b426ac65d35ef1f8cb4819e9662c4fae1bb31; claim CI 35499476480 succeeded before execution. Budget used: 0 GPU / 0 episode / 0 model load / 0 simulator launch.
+
+The metadata-first audit mapped 200 tasks and all 368 broad-synset target IDs to scene objects. Candidate asset bounding boxes cover only 42 targets; 326 lack candidates in inspected static sources. Only 31 tasks are candidate-complete, and no candidate has been promoted to validated scene-instance physical size: units/scale/transformation equivalence remains unestablished. Thus validated size count and analyzable n are 0. The bounded search does not establish global nonexistence of another static source.
+
+The pre-registered stop condition is met: return BLOCKED to PI. No distance, visible-pixel or category-name proxy, incomplete-target median, category statistical analysis, tertile, association or regression was used. episode_table.csv preserves 200 historical raw rows with empty size cells; category_sr.csv explicitly records NOT_EXECUTED with blank statistics. H-SIZE remains untested.
+
+Handoff: [RESULT_SUMMARY.md](handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md), with metadata coverage, source hashes, raw identity checks and all required outputs. Proposed prerequisite only: a version-bound static geometry and instance-transform source covering all broad targets, including built-in THOR assets. No new experiment is approved; executor STOP after publication. Existing development changes and frozen NEXT_EXPERIMENT files are preserved.

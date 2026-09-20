@@ -74,3 +74,14 @@ Status: Executor NOOP_COMPLETED / AWAITING_PI_REVIEW; PI receipt PENDING. Prior 
 | EXP-SMALLTARGET-PHENOTYPE-001 | APPROVED DESIGN / execution gate follows LOOP_STATE | none | Test whether reported low-SR categories support a genuine policy-independent target-size association before mechanism Probe/intervention |
 
 EXP-SMALLTARGET-PHENOTYPE-001 is observational, not a treatment. Primary explanatory variable is static 3D target size from scene metadata; post-rollout visible pixels are downstream phenotype only. Planned handoff: research/handoffs/smalltarget-phenotype-001-20260918/.
+
+
+## 2026-09-20 — EXP-SMALLTARGET-PHENOTYPE-001 metadata gate BLOCKED
+
+Claim 72634cf7c3a954dd99456b2d75c3af539da9e68e bound renewed PI approval 290b426ac65d35ef1f8cb4819e9662c4fae1bb31; claim CI 35499476480 succeeded before execution. Budget used: 0 GPU / 0 episode / 0 model load / 0 simulator launch.
+
+The metadata-first audit mapped 200 tasks and all 368 broad-synset target IDs to scene objects. Candidate asset bounding boxes cover only 42 targets; 326 lack candidates in inspected static sources. Only 31 tasks are candidate-complete, and no candidate has been promoted to validated scene-instance physical size: units/scale/transformation equivalence remains unestablished. Thus validated size count and analyzable n are 0. The bounded search does not establish global nonexistence of another static source.
+
+The pre-registered stop condition is met: return BLOCKED to PI. No distance, visible-pixel or category-name proxy, incomplete-target median, category statistical analysis, tertile, association or regression was used. episode_table.csv preserves 200 historical raw rows with empty size cells; category_sr.csv explicitly records NOT_EXECUTED with blank statistics. H-SIZE remains untested.
+
+Handoff: [RESULT_SUMMARY.md](handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md), with metadata coverage, source hashes, raw identity checks and all required outputs. Proposed prerequisite only: a version-bound static geometry and instance-transform source covering all broad targets, including built-in THOR assets. No new experiment is approved; executor STOP after publication. Existing development changes and frozen NEXT_EXPERIMENT files are preserved.
