@@ -29,12 +29,15 @@ boundary, not proof supplied by a JSON label. Do not impersonate a PI acknowledg
 | CODEX_RUNNING | AWAITING_PI_REVIEW | CODEX | PI |
 | AWAITING_PI_REVIEW | PI_REVIEW | PI | PI |
 | CODEX_RUNNING | BLOCKED / INVALID / ABORTED | CODEX | PI |
+| BLOCKED / INVALID / ABORTED | PI_REVIEW | PI | PI |
 
 Draft edits may remain PI_REVIEW and are PI-owned. A same-state edit increments state_version if state JSON changes.
 Unchanged state allows documentation maintenance; approved design content cannot change.
-All other transitions are rejected. Exception states are terminal in schema version 1.0:
-no automatic retry/recovery, and no implicit exception-to-approved transition. PI must review the failure and
-explicitly revise the recovery protocol before reopening it. This bootstrap does not add recovery authority.
+Exception states remain non-executable and cannot transition directly to APPROVED_FOR_CODEX. PI may acknowledge a
+complete BLOCKED/INVALID/ABORTED handoff back to PI_REVIEW only after independently reading the result commit and
+required artifacts. That acknowledgement must set reviewed_result_commit to the immediate result HEAD, clear active
+authorization metadata, retain instruction_commit/claim_id as historical provenance, and return both design files to
+DRAFT. A subsequent experiment must use a fresh unused cycle_id; no automatic retry or implicit approval is allowed.
 
 state_version increments exactly once per state mutation. Retain cycle/experiment, approval, budgets,
 execution_worktree and required_outputs during execution. Prior cycle IDs cannot be reused for another claim.
@@ -119,10 +122,10 @@ Failure to publish leaves local evidence, not a claimed successful handoff.
 
 ## PI acknowledgement D
 
-PI independently reads result commit C and its required artifacts through GitHub.
+PI independently reads result commit C (including BLOCKED/INVALID/ABORTED handoffs) and its required artifacts through GitHub.
 PI updates status=PI_REVIEW, next_actor=PI, reviewed_result_commit=C, updated_by=PI,
-authorization.status=NOT_AUTHORIZED; retain instruction_commit and claim_id as historical provenance.
-The design returns to DRAFT. Increment state_version and publish review commit D.
+authorization.status=NOT_AUTHORIZED and clears approved_by/approved_at_utc/expires_at_utc; retain instruction_commit
+and claim_id as historical provenance. The design returns to DRAFT. Increment state_version and publish review commit D.
 The validator checks reviewed_result_commit against D's immediate result parent.
 If intervening result corrections exist, PI reads and acknowledges their latest result HEAD.
 A new experiment requires a fresh unused cycle_id and explicit subsequent PI approval, never approval by Executor.
