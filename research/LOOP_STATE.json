@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 13,
+  "state_version": 14,
   "cycle_id": "smalltarget-phenotype-001-20260918",
   "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
-  "status": "APPROVED_FOR_CODEX",
+  "status": "CODEX_RUNNING",
   "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": null,
+  "instruction_commit": "290b426ac65d35ef1f8cb4819e9662c4fae1bb31",
   "reviewed_result_commit": "0e9c3bceac3c9b4dbe9daed6d37307080c2d0b3e",
-  "claim_id": null,
+  "claim_id": "67dd8e9069184c8d9fbb4725a21f1232",
   "authorization": {
     "status": "APPROVED",
     "approved_by": "PI",
@@ -28,6 +28,6 @@
     "research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv",
     "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
   ],
-  "updated_by": "PI",
-  "updated_at_utc": "2026-09-20T08:20:00+00:00"
+  "updated_by": "CODEX",
+  "updated_at_utc": "2026-09-20T08:23:56.310985+00:00"
 }
