@@ -35,9 +35,11 @@ Draft edits may remain PI_REVIEW and are PI-owned. A same-state edit increments 
 Unchanged state allows documentation maintenance; approved design content cannot change.
 Exception states remain non-executable and cannot transition directly to APPROVED_FOR_CODEX. PI may acknowledge a
 complete BLOCKED/INVALID/ABORTED handoff back to PI_REVIEW only after independently reading the result commit and
-required artifacts. That acknowledgement must set reviewed_result_commit to the immediate result HEAD, clear active
-authorization metadata, retain instruction_commit/claim_id as historical provenance, and return both design files to
-DRAFT. A subsequent experiment must use a fresh unused cycle_id; no automatic retry or implicit approval is allowed.
+required artifacts. If state-preserving protocol/document maintenance commits are needed before recovery, the
+acknowledgement binds reviewed_result_commit to the commit where that terminal LOOP_STATE first appeared, not to the
+later maintenance HEAD. PI clears active authorization metadata, retains instruction_commit/claim_id as historical
+provenance, and returns both design files to DRAFT. A subsequent experiment must use a fresh unused cycle_id; no
+automatic retry or implicit approval is allowed.
 
 state_version increments exactly once per state mutation. Retain cycle/experiment, approval, budgets,
 execution_worktree and required_outputs during execution. Prior cycle IDs cannot be reused for another claim.
