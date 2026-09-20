@@ -328,10 +328,11 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
             require(n["reviewed_result_commit"] == parent_sha, "PI acknowledgement must reference result HEAD")
             require(n["authorization"]["status"] == "NOT_AUTHORIZED",
                     "PI acknowledgement must remove execution authorization")
-            require(n["authorization"]["approved_by"] is None
-                    and n["authorization"]["approved_at_utc"] is None
-                    and n["authorization"]["expires_at_utc"] is None,
-                    "PI acknowledgement must clear approval metadata")
+            if edge in {("BLOCKED", "PI_REVIEW"), ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
+                require(n["authorization"]["approved_by"] is None
+                        and n["authorization"]["approved_at_utc"] is None
+                        and n["authorization"]["expires_at_utc"] is None,
+                        "exception recovery must clear approval metadata")
         else:
             require(n["authorization"] == o["authorization"], "executor changed authorization")
             require(old_view.read(DESIGN) == new_view.read(DESIGN) and old_view.read(NEXT) == new_view.read(NEXT), "executor changed approved design")
