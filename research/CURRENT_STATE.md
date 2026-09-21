@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-21（Asia/Shanghai）
-Mode: EXP-SIZE-RUNTIME-METADATA-001 BLOCKED; next actor PI; execution stopped after 44 scene initializations / 0 episodes. Current claim cannot resume.
+Mode: PI_REVIEW. EXP-SIZE-RUNTIME-METADATA-001 BLOCKED handoff independently acknowledged; no execution authorized.
 
 ## Verified Facts
 
@@ -132,3 +132,25 @@ One simulator graphics GPU, 44/224 scene initializations, 0 episodes, 0 model/ch
 Handoff: [RESULT_SUMMARY.md](handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md), [coverage_report.md](handoffs/size-runtime-metadata-001-20260920/coverage_report.md), [ARTIFACT_INDEX.json](handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json). Original traceback, script, raw snapshots, partial CSVs and independent validation are Git-readable. Required outputs are complete; scientific extraction is incomplete.
 
 The only next action is PI review. A fresh transport-resilient extraction cycle is a proposal only, requiring an explicit design and budget that account for this partial run. The current claim is terminal and must not auto-resume. No further experiment or PI acknowledgement is authorized or fabricated. Executor STOP after handoff publication.
+
+
+## 2026-09-22 — PI acknowledgement of EXP-SIZE-RUNTIME-METADATA-001 BLOCKED
+
+PI independently reviewed result commit `ac2c9fe80f113345f5092205b07192a47a0e0358` and the required handoff outputs.
+
+Accepted facts:
+- exact historical AI2-THOR build identity was recovered to commit `966bd7758586e05d18f6181f459c0e90ba318bec` with CloudRendering;
+- the 12-task double-load preflight passed: 18/18 target comparisons were exact-equal, max absolute and relative geometry difference 0;
+- the full extraction attempted only 20/200 tasks before an inherited stdout progress print raised `BrokenPipeError`;
+- all 26 targets attempted in the full phase exact-mapped and had valid creation-state AABB; all 20 attempted tasks were complete;
+- 342 targets / 180 tasks are unattempted, not observed missing;
+- actual budget was 44 scene initializations, one simulator-graphics GPU, 0 ObjectNav episodes, 0 model loads and 0 Actor/Critic forwards;
+- no outcome fields were read and no size-success association was run.
+
+Scientific interpretation:
+- H-RUNTIME-AABB remains unresolved for complete 368/368 coverage;
+- the partial result materially strengthens the plausibility of runtime geometry recovery but does not establish complete coverage;
+- the blocking event is an execution-output transport failure, not an observed geometry/mapping failure;
+- creation-state world-axis AABB remains a scene-instance extent, not canonical intrinsic volume.
+
+The old claim is closed and cannot resume. Any completion attempt requires a fresh cycle and an explicit new PI approval.

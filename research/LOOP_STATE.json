@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
-  "state_version": 20,
+  "state_version": 21,
   "cycle_id": "size-runtime-metadata-001-20260920",
   "experiment_id": "EXP-SIZE-RUNTIME-METADATA-001",
-  "status": "BLOCKED",
+  "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "f5d0f56b975eab9f54e96343fb42d6b01df4d1a7",
-  "reviewed_result_commit": "9910cb2c5645a3549d6e8e474827ee12de1df8bd",
+  "reviewed_result_commit": "ac2c9fe80f113345f5092205b07192a47a0e0358",
   "claim_id": "d9d1942257d745f7a5d21ebec54c595b",
   "authorization": {
-    "status": "APPROVED",
-    "approved_by": "PI",
-    "approved_at_utc": "2026-09-20T11:07:00+00:00",
-    "expires_at_utc": "2026-09-21T11:07:00+00:00",
+    "status": "NOT_AUTHORIZED",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 1,
     "max_episodes": 0
@@ -31,6 +31,6 @@
     "research/handoffs/size-runtime-metadata-001-20260920/coverage_report.md",
     "research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py"
   ],
-  "updated_by": "CODEX",
-  "updated_at_utc": "2026-09-21T07:37:14.006868+00:00"
+  "updated_by": "PI",
+  "updated_at_utc": "2026-09-21T17:52:00+00:00"
 }

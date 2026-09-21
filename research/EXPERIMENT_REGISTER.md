@@ -114,3 +114,12 @@ One simulator graphics GPU, 44/224 scene initializations, 0 episodes, 0 model/ch
 Handoff: [RESULT_SUMMARY.md](handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md), [coverage_report.md](handoffs/size-runtime-metadata-001-20260920/coverage_report.md), [ARTIFACT_INDEX.json](handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json). Original traceback, script, raw snapshots, partial CSVs and independent validation are Git-readable. Required outputs are complete; scientific extraction is incomplete.
 
 The only next action is PI review. A fresh transport-resilient extraction cycle is a proposal only, requiring an explicit design and budget that account for this partial run. The current claim is terminal and must not auto-resume. No further experiment or PI acknowledgement is authorized or fabricated. Executor STOP after handoff publication.
+
+
+## 2026-09-22 — PI acknowledgement of runtime metadata BLOCKED
+
+| Experiment ID | Status | Actual execution | Evidence status |
+| --- | --- | --- | --- |
+| EXP-SIZE-RUNTIME-METADATA-001 | BLOCKED / PI ACKNOWLEDGED | 24 preflight + 20 full scene initializations; 0 episodes | 18/18 repeat comparisons exact; 26/26 attempted full targets valid; complete coverage unresolved due BrokenPipe output interruption |
+
+Old claim is closed and cannot resume. Any completion attempt requires a fresh cycle.

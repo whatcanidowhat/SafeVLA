@@ -270,3 +270,19 @@ One simulator graphics GPU, 44/224 scene initializations, 0 episodes, 0 model/ch
 Handoff: [RESULT_SUMMARY.md](handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md), [coverage_report.md](handoffs/size-runtime-metadata-001-20260920/coverage_report.md), [ARTIFACT_INDEX.json](handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json). Original traceback, script, raw snapshots, partial CSVs and independent validation are Git-readable. Required outputs are complete; scientific extraction is incomplete.
 
 The only next action is PI review. A fresh transport-resilient extraction cycle is a proposal only, requiring an explicit design and budget that account for this partial run. The current claim is terminal and must not auto-resume. No further experiment or PI acknowledgement is authorized or fabricated. Executor STOP after handoff publication.
+
+
+## 2026-09-22 — DEC-RUNTIME-GEOMETRY-001-REVIEW：接受输出管道中断的BLOCKED结果
+
+PI独立审阅 `ac2c9fe80f113345f5092205b07192a47a0e0358` 的RESULT_SUMMARY、RUN_MANIFEST、coverage_report、runtime identity、repeatability、partial geometry CSV与原始sample。
+
+Evidence accepted:
+- exact historical build commit=966bd7758586e05d18f6181f459c0e90ba318bec，CloudRendering；
+- 12-task preflight双次加载共18个target comparison，18/18 exact-equal，最大绝对/相对差异均0；
+- full阶段实际完成20/200 tasks、26 targets；26/26 exact ID mapping + valid creation-state AABB，observed mapping/geometry failure=0；
+- 剩余342 targets / 180 tasks是UNATTEMPTED，不得标记为missing；
+- BLOCKED由full-loop progress stdout的BrokenPipeError触发，当前证据不支持把它解释为simulator/geometry失败；
+- 44/224 scene initializations，1 simulator GPU，0 episode，0 model load，0 Actor/Critic forward；未读取outcome字段。
+
+Decision:
+H-RUNTIME-AABB保持UNRESOLVED，H-RUNTIME-GAP也未被支持。旧claim关闭，不resume。下一轮若继续，只允许fresh cycle，以完全相同measurement semantics重跑完整200 tasks，同时把唯一工程变化限制为transport-resilient output/checkpoint机制，并用上一轮已完成的20 tasks作为cross-cycle overlap control。仍禁止任何size-success association。

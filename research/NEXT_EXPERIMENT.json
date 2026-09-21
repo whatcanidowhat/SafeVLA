@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-SIZE-RUNTIME-METADATA-001",
   "cycle_id": "size-runtime-metadata-001-20260920",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "research_question": "Can the exact historical simulator/runtime environment provide a valid, policy-independent scene-instance 3D bounding box for every success-eligible broad-synset target in the 200-task historical ObjectNav set before any SafeVLA policy action?",
   "hypothesis": "H-RUNTIME-AABB: exact-version runtime object metadata at initial scene state provides finite, non-zero AABB geometry for all 368 broad target IDs, yielding complete task-level size summaries for all 200 tasks.",
   "competing_explanation": "H-RUNTIME-GAP: build mismatch, unsupported assets, ambiguous runtime identity, or unstable scene initialization prevents complete/reproducible runtime geometry recovery.",
