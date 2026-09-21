@@ -286,3 +286,18 @@ Evidence accepted:
 
 Decision:
 H-RUNTIME-AABB保持UNRESOLVED，H-RUNTIME-GAP也未被支持。旧claim关闭，不resume。下一轮若继续，只允许fresh cycle，以完全相同measurement semantics重跑完整200 tasks，同时把唯一工程变化限制为transport-resilient output/checkpoint机制，并用上一轮已完成的20 tasks作为cross-cycle overlap control。仍禁止任何size-success association。
+
+
+## 2026-09-22 — DEC-RUNTIME-GEOMETRY-002-DRAFT：唯一下一实验为transport-resilient full extraction
+
+Reasoning:
+- 001的12-task repeatability与first-20 full pass均未出现mapping/AABB失败；
+- BLOCKED发生在task20已保存后的一次stdout progress print，属于已观察到的transport failure；
+- 剩余180 tasks完全未尝试，因此不能从001推断complete coverage；
+- 直接进入size-success分析仍然越过measurement gate。
+
+Decision:
+新建fresh cycle `size-runtime-metadata-002-20260922` / `EXP-SIZE-RUNTIME-METADATA-002`。全新重跑200 tasks一次，最终dataset全部来自新cycle；前20 tasks与上一轮冻结结果做cross-cycle exact overlap control。唯一工程变化是移除inherited stdout/stderr依赖并增加atomic per-task checkpoint/progress manifest。scientific geometry semantics保持不变。
+
+Budget:
+max 1 simulator GPU；0 ObjectNav/SafeVLA episodes；0 model load；0 Actor/Critic forward；最多200 scene initializations。当前仅DRAFT / NOT_AUTHORIZED，等待用户显式批准。

@@ -1,151 +1,192 @@
-# Next Experiment — Runtime scene-instance geometry recovery
+# Next Experiment — Transport-resilient complete runtime geometry extraction
 
-Experiment ID: EXP-SIZE-RUNTIME-METADATA-001
+Experiment ID: EXP-SIZE-RUNTIME-METADATA-002
 Status: DRAFT
-Authorization: NOT_AUTHORIZED — PI acknowledged BLOCKED handoff; no retry/resume authorized
-Cycle ID: size-runtime-metadata-001-20260920
+Authorization: NOT_AUTHORIZED
+Cycle ID: size-runtime-metadata-002-20260922
 
 ## Why this experiment now
 
-EXP-SMALLTARGET-PHENOTYPE-001 stopped correctly at its metadata gate. Static sources mapped all 368 success-eligible broad target IDs to scene objects, but only 42 targets had candidate asset bounding boxes; zero task-level physical-size values were validated.
+EXP-SIZE-RUNTIME-METADATA-001 established a strong but incomplete measurement path:
+- the exact historical AI2-THOR build was recovered;
+- 12 tasks loaded twice produced 18/18 exact-equal target-geometry comparisons;
+- the first 20 full tasks produced 26/26 exact-mapped valid creation-state AABBs and 20/20 complete task summaries;
+- execution stopped only because a progress `print(..., flush=True)` hit `BrokenPipeError` after task 20;
+- 342 targets / 180 tasks were never attempted, so complete coverage remains unresolved.
 
-The next bottleneck is therefore measurement, not representation or policy mechanism. A runtime simulator metadata path may expose scene-instance bounding boxes after an exact scene load, but that must be verified in the exact historical simulator build before it can be used as the policy-independent size variable.
-
-A PI exploratory audit of the already archived 200-row table also found severe allocation confounding: sub_house_id<20 contains 11/13 mug tasks, 8/9 basketball tasks and 1 vase task; all 8 failures in that 20-task stratum are mug/basketball. Outside that stratum, only 2 mug and 1 basketball tasks remain. Therefore the historical low-SR category observation is not independently identifiable from task allocation in this sample. This is exploratory motivation, not a formal category-effect result.
+The prior partial dataset is not a complete scientific result, but it is now a useful frozen overlap reference. The next experiment should repeat all 200 tasks under the same geometry semantics while changing only output/checkpoint transport so the measurement can complete without depending on an inherited stdout pipe.
 
 ## Research question
 
-Can the exact historical simulator/runtime environment provide a valid, policy-independent scene-instance 3D bounding box for every success-eligible broad-synset target in the 200-task historical ObjectNav set, before any SafeVLA policy action is executed?
+Under the exact same historical simulator build, scene inputs, target identities and creation-state geometry definition, can a transport-resilient extraction recover valid scene-instance AABB geometry for all 368 broad targets / 200 tasks, while exactly reproducing the 20 previously completed full tasks?
 
 ## Hypothesis
 
-H-RUNTIME-AABB:
-After loading each archived house with the exact historical simulator build and before policy execution, runtime object metadata exposes a finite, non-zero scene-instance axis-aligned bounding box for all 368 success-eligible target IDs, allowing all 200 tasks to receive a complete task-level size summary.
+H-COMPLETE-RUNTIME-GEOMETRY:
+The previous blocker was transport-only. A fresh full extraction with durable per-task checkpoints and no inherited stdout dependency will:
+1. exactly reproduce the prior 20-task full geometry; and
+2. provide exact-ID valid creation-state AABB geometry for all 368/368 broad targets and complete task summaries for 200/200 tasks.
 
 ## Competing explanation
 
-H-RUNTIME-GAP:
-The static gap reflects a real runtime metadata/mapping limitation, build mismatch, unsupported custom assets, or unstable scene initialization; runtime metadata will therefore fail to provide complete and reproducible scene-instance geometry.
+H-LATE-RUNTIME-GAP:
+Although the first 20 tasks succeeded, later tasks contain runtime-ID, scene-loading, geometry-validity or stability failures that prevent complete 368/368 coverage. The prior BrokenPipe merely occurred before those failures could be observed.
 
 ## Reference
 
-The reference is the BLOCKED handoff from EXP-SMALLTARGET-PHENOTYPE-001 at commit 9910cb2c5645a3549d6e8e474827ee12de1df8bd:
-- 200/200 task identity recovered;
-- 368 broad target IDs mapped to static scene objects;
-- 42/368 candidate static asset boxes;
-- 0 validated task-level physical sizes.
+Frozen result commit:
+`ac2c9fe80f113345f5092205b07192a47a0e0358`
+
+Reference facts:
+- historical build commit: `966bd7758586e05d18f6181f459c0e90ba318bec`;
+- 20 full tasks already measured;
+- 26 full target geometries valid;
+- original partial `target_geometry.csv`, `task_geometry.csv` and per-task geometry sample JSONs are read-only reference artifacts;
+- prior 12-task double-load preflight already passed and is not repeated as a separate 24-load stage.
 
 ## Repeat / treatment
 
-This is a measurement-recovery experiment, not a policy treatment.
+This is a measurement repeat/completion, not a policy treatment.
 
-Only new measurement path:
-- exact-version simulator runtime object metadata immediately after deterministic scene initialization.
-
-Preflight repeatability control:
-- deterministically select 12 tasks without reading success labels:
-  - first 6 stable task keys with at least one static candidate bbox;
-  - first 6 stable task keys with no static candidate bbox;
-- load each selected scene twice independently;
-- require exact target mapping and stable geometry before full extraction.
-
-If the preflight passes, load the 200 historical tasks once for geometry extraction.
+Fresh run:
+- deterministically rerun **all 200 historical tasks once** from the beginning;
+- the first 20 tasks form a cross-cycle overlap control against the prior partial run;
+- after task 20, require exact equality of target IDs and recorded AABB geometry to the frozen prior values before proceeding to tasks 21–200;
+- the final primary dataset comes entirely from this fresh cycle. Do not splice old and new task rows.
 
 ## Unique variable
 
-The only changed factor is **geometry metadata acquisition source**:
-static asset/annotation metadata (previously insufficient) -> exact historical runtime scene-instance object metadata.
+The only intended change from EXP-SIZE-RUNTIME-METADATA-001 is **transport/checkpoint implementation**:
 
-Task specs, scene files, target IDs and all policy/evaluation behavior remain fixed.
+Previous:
+- progress writes to inherited stdout could terminate the process;
+- full-task summaries were primarily materialized at finalization.
+
+New:
+- no progress or final status depends on inherited stdout/stderr;
+- redirect process diagnostics to local server files or suppress inherited-pipe writes;
+- persist each completed task's raw geometry and task summary atomically before moving to the next task;
+- maintain a durable machine-readable progress/checkpoint manifest after every task;
+- final CSVs are regenerated from durable per-task records.
+
+Simulator build, scene/task bytes, target IDs, CreateHouse initialization, `autoSimulation=False`, no-post-load-physics semantics and geometry extraction logic must otherwise remain fixed.
 
 ## Fixed conditions
 
-- Use the exact archived 200 task specs and the same scene/asset datasets already hashed in the evidence packet.
-- Resolve and record the exact historical simulator package/build/executable identity before scene loading. If it cannot be tied to the historical run, STOP.
-- No SafeVLA checkpoint/model load.
+- Exact historical AI2-THOR build commit `966bd7758586e05d18f6181f459c0e90ba318bec`, CloudRendering.
+- Before any scene initialization, re-hash the runtime executable, UnityPlayer, Assembly-CSharp and relevant Python/runtime source files; require identity with the accepted prior runtime manifest unless PI explicitly reviews a mismatch.
+- Use the same archived 200 task specs and the same scene/asset inputs as the prior cycle.
+- Outcome-blind execution: do not read success/failure, episode length, Safety Cost, visible pixels, category SR tables or any outcome-derived file.
+- No SafeVLA checkpoint/model import or load.
 - No Actor/Critic forward.
-- No navigation policy action and no ObjectNav evaluation episode.
-- Scene creation/reset required to materialize metadata is allowed; maximum 224 scene initializations (24 preflight loads + at most 200 full extraction loads).
-- Geometry extraction must not load success/failure labels, episode length, Safety Cost, visible pixels or other outcome columns.
-- Map targets by exact runtime object identity. No fuzzy category/name matching.
-- Primary geometry field is the runtime scene-instance axis-aligned bounding box at initial scene state.
-- Do not call AABB volume an intrinsic/canonical object volume: world-axis AABB may depend on the fixed scene pose/orientation.
-- Object-oriented bounding box may be recorded as a secondary descriptor when the exact runtime exposes it, but may not replace missing primary AABB values.
-- Do not modify B0/runtime source, benchmark task specs, success/end logic, reset/cache behavior or the historical result table.
-- No target-size versus success association is permitted in this experiment.
+- No navigation policy action.
+- No ObjectNav/SafeVLA evaluation episode.
+- Exactly one fresh scene initialization per historical task; maximum 200 scene initializations.
+- Exact runtime object-ID mapping only; no fuzzy matching.
+- Primary descriptor remains initial creation-state world-axis AABB. It is a scene-instance extent, not canonical intrinsic volume.
+- Record OBB availability/points as secondary metadata when exposed; do not substitute OBB for a missing primary AABB.
+- No size-success/category association in this experiment.
+- No modification of B0/runtime source, task specs, success/end logic, reset/cache behavior or historical outcome tables.
 
-## Control and validity checks
+## Transport-resilience requirements
 
-1. Version control: exact simulator package/build and relevant executable/source identity recorded before extraction.
-2. Identity control: 368 expected broad target IDs; report exact runtime mapping count and every mismatch.
-3. Geometry validity: each primary AABB must have finite positive x/y/z extents and/or eight finite corner points.
-4. Repeatability: for the deterministic 12-task preflight, compare two independent initializations. Report exact equality plus max absolute/relative dimension difference.
-5. Coverage: report target-level valid AABB n/368 and task-level complete n/200.
-6. Static-reference check: for the 42 prior candidate-static-box targets, record whether runtime metadata exists. Do not demand numeric equality unless the scale/transform semantics are explicitly reconstructed and documented.
-7. Optional OBB audit: report OBB availability separately; never mix AABB and OBB into one primary size variable.
+- The extractor must not call an inherited stdout/stderr progress `print` whose failure can abort measurement.
+- After each task, write a per-task record using write-temp + atomic rename (or an equivalently crash-safe local operation).
+- After each task, update a durable progress manifest containing completed task keys, scene-initialization count and last successful task.
+- Re-running the extractor after a process failure is **not authorized in this cycle** unless the failure happens before any scene initialization. Any post-initialization failure returns BLOCKED to PI; no implicit resume.
+- Final CSVs must be derivable solely from the fresh cycle's durable task records.
+- Do not overwrite or mutate prior-cycle handoff artifacts.
+
+## Cross-cycle overlap control
+
+Before task 21:
+- compare all target IDs and primary AABB vectors for fresh tasks 1–20 against the frozen prior full-pass values;
+- require 20/20 task identity agreement;
+- require all previously recorded 26 targets to exist with exact ID match;
+- report exact equality and max absolute/relative geometry difference;
+- default acceptance: exact equality; if floating representation differs but is within the previously registered numerical tolerance, STOP as BLOCKED for PI interpretation rather than silently accepting a looser criterion.
 
 ## Metrics
 
-- exact simulator/runtime identity status;
-- preflight target mapping rate;
-- preflight AABB validity rate;
-- preflight repeated-load max absolute and relative difference;
-- full exact-ID mapping n/368;
-- valid runtime AABB n/368;
-- complete task geometry n/200;
-- missing/ambiguous targets by target synset and source type;
-- optional OBB availability n/368;
-- if and only if a task is complete: median target AABB volume and median maximum side length, computed across all valid broad targets in that task.
+- runtime/version/hash identity status;
+- fresh scene initializations / 200;
+- first-20 task overlap agreement / 20;
+- first-20 target overlap agreement / 26;
+- overlap exact-equal target count;
+- overlap max absolute and relative AABB-vector difference;
+- exact runtime target-ID mapping n / 368;
+- valid primary AABB n / 368;
+- complete task geometry n / 200;
+- OBB availability n / 368;
+- missing/ambiguous/invalid target list if any;
+- per-task median AABB volume and median maximum side only when all broad targets in that task are valid;
+- durable checkpoint consistency: completed task record count equals progress-manifest count equals final complete-task count.
 
 ## Expected result
 
-If H-RUNTIME-AABB holds, the exact runtime will provide stable AABB metadata for 368/368 broad targets and complete task-level geometry for 200/200 tasks. This would remove the measurement blocker but would **not** itself support H-SIZE; outcome association remains a later experiment.
+If H-COMPLETE-RUNTIME-GEOMETRY holds:
+- the first 20 tasks exactly reproduce the prior partial run;
+- 368/368 targets exact-map to valid creation-state AABBs;
+- 200/200 tasks receive complete fresh-cycle geometry summaries;
+- no geometry/mapping failure occurs;
+- H-SIZE still remains untested until a later, separately approved outcome-association experiment.
 
 ## Falsifying result
 
-H-RUNTIME-AABB is falsified as a complete recovery path if any success-eligible target cannot be mapped exactly to a valid runtime AABB, if the exact historical runtime build cannot be established, or if repeated scene initialization yields materially unstable geometry.
+The hypothesis is falsified as a complete recovery path if:
+- accepted runtime/source identity changes;
+- any first-20 overlap target is not exactly reproduced;
+- any of the 368 target IDs cannot be exactly mapped;
+- any primary AABB is missing, non-finite or non-positive;
+- any task is incomplete;
+- the extraction cannot finish within 200 scene initializations;
+- a process/transport failure occurs after scene initialization begins.
 
-A partial result is still reported, but no missing target may be imputed and no downstream size-success analysis may start automatically.
+Partial data must be preserved but cannot be silently combined with the previous cycle to claim complete coverage.
 
 ## Alternative explanations
 
-- the installed simulator/runtime differs from the historical evaluation build;
-- custom Objaverse or built-in THOR assets expose different metadata paths;
-- runtime object IDs differ from archived scene IDs;
-- physics/scene initialization changes object transforms;
-- world-axis AABB varies with object orientation and measures scene-instance extent rather than canonical intrinsic size;
-- the needed geometry exists only after an environment mutation that would invalidate the intended initial-state measurement.
+- a later scene or built-in/custom asset exposes different runtime metadata than the first 20 tasks;
+- some archived scene object IDs are not stable under runtime creation;
+- creation-state physics/asset hooks produce scene-specific metadata failures in later houses;
+- the output-channel crash was only an early interruption and hid a later scientific coverage gap;
+- world-axis AABB is reproducible but remains an orientation-dependent scene-instance extent;
+- the historical build chain is source/version matched but historical executable byte equality was not contemporaneously archived.
 
 ## Stop conditions
 
 Return BLOCKED and STOP if:
-- exact historical simulator build identity cannot be recovered;
-- any SafeVLA model/checkpoint or policy forward would be required;
-- target identity requires fuzzy mapping;
-- preflight target mapping or AABB validity is incomplete;
-- repeat initialization changes target geometry beyond documented numerical tolerance without an explained deterministic cause;
-- obtaining the metadata requires navigation/policy actions or baseline/runtime source modification;
-- units/extent semantics cannot be established well enough to interpret the runtime field;
-- any success/failure association, Probe, replay, reset treatment, Safe-vs-IL comparison or new B0 evaluation would be started.
+- runtime/source hashes or build identity fail the frozen identity checks;
+- any outcome-derived file/column would be needed;
+- any SafeVLA model/policy component would need to load;
+- any policy/environment navigation action would be needed;
+- the first-20 overlap is not exact;
+- any task requires fuzzy target mapping;
+- any primary AABB is invalid/missing;
+- any post-start process/transport error occurs;
+- completing the dataset would require >200 scene initializations;
+- any size-success association, Probe, replay, reset treatment, Safe-vs-IL comparison or B0 evaluation would start.
 
 ## Resource budget
 
-- max GPU: 1, simulator graphics/runtime only; model GPU use is forbidden.
-- max ObjectNav/SafeVLA episodes: 0.
-- max scene initializations: 224.
-- model loads: 0.
+- max GPU: 1, simulator graphics/runtime only;
+- max ObjectNav/SafeVLA episodes: 0;
+- max scene initializations: 200;
+- model/checkpoint loads: 0;
+- Actor/Critic forwards: 0.
 
 ## Required outputs
 
-- `research/handoffs/size-runtime-metadata-001-20260920/RESULT_SUMMARY.md`
-- `research/handoffs/size-runtime-metadata-001-20260920/RUN_MANIFEST.json`
-- `research/handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json`
-- `research/handoffs/size-runtime-metadata-001-20260920/REVIEW_NOTES.md`
-- `research/handoffs/size-runtime-metadata-001-20260920/runtime_version_manifest.json`
-- `research/handoffs/size-runtime-metadata-001-20260920/preflight_repeatability.csv`
-- `research/handoffs/size-runtime-metadata-001-20260920/target_geometry.csv`
-- `research/handoffs/size-runtime-metadata-001-20260920/task_geometry.csv`
-- `research/handoffs/size-runtime-metadata-001-20260920/coverage_report.md`
-- `research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py`
+- `research/handoffs/size-runtime-metadata-002-20260922/RESULT_SUMMARY.md`
+- `research/handoffs/size-runtime-metadata-002-20260922/RUN_MANIFEST.json`
+- `research/handoffs/size-runtime-metadata-002-20260922/ARTIFACT_INDEX.json`
+- `research/handoffs/size-runtime-metadata-002-20260922/REVIEW_NOTES.md`
+- `research/handoffs/size-runtime-metadata-002-20260922/runtime_version_manifest.json`
+- `research/handoffs/size-runtime-metadata-002-20260922/cross_cycle_overlap.csv`
+- `research/handoffs/size-runtime-metadata-002-20260922/target_geometry.csv`
+- `research/handoffs/size-runtime-metadata-002-20260922/task_geometry.csv`
+- `research/handoffs/size-runtime-metadata-002-20260922/coverage_report.md`
+- `research/handoffs/size-runtime-metadata-002-20260922/batch_manifest.json`
+- `research/handoffs/size-runtime-metadata-002-20260922/extract_runtime_geometry_v2.py`
 
-After producing the handoff, STOP. PI must review coverage and measurement validity before any size-performance association is authorized.
+After handoff publication, STOP. Complete geometry coverage alone does not authorize a size-performance analysis.

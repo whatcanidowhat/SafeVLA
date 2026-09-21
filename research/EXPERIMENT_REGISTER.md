@@ -123,3 +123,12 @@ The only next action is PI review. A fresh transport-resilient extraction cycle 
 | EXP-SIZE-RUNTIME-METADATA-001 | BLOCKED / PI ACKNOWLEDGED | 24 preflight + 20 full scene initializations; 0 episodes | 18/18 repeat comparisons exact; 26/26 attempted full targets valid; complete coverage unresolved due BrokenPipe output interruption |
 
 Old claim is closed and cannot resume. Any completion attempt requires a fresh cycle.
+
+
+## 2026-09-22 — transport-resilient geometry completion draft
+
+| Experiment ID | Status | Planned execution | Scientific role |
+| --- | --- | --- | --- |
+| EXP-SIZE-RUNTIME-METADATA-002 | DRAFT / NOT_AUTHORIZED | fresh 200 task loads; first 20 are frozen overlap control; max1 simulator GPU / 0 episodes | Complete and validate runtime scene-instance AABB coverage without outcome access |
+
+No old/new row splicing is allowed for the primary dataset. Complete geometry recovery still does not authorize H-SIZE testing.

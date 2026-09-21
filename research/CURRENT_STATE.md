@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-21（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-SIZE-RUNTIME-METADATA-001 BLOCKED handoff independently acknowledged; no execution authorized.
+Mode: PI_REVIEW. EXP-SIZE-RUNTIME-METADATA-002 is the unique next DRAFT; NOT_AUTHORIZED.
 
 ## Verified Facts
 
@@ -41,13 +41,13 @@ This is a valid phenomenon candidate. It is not yet evidence that "small physica
 
 ## Highest-Value Uncertainty
 
-The size-performance hypothesis is still untested because the primary geometry variable is missing. The immediate uncertainty is whether the exact historical simulator runtime can expose stable initial-state scene-instance AABB geometry for the 368 broad targets without any policy execution.
+The runtime measurement path now has strong partial support but incomplete coverage. The open question is no longer whether the first few scenes expose stable geometry; it is whether the same exact path completes all 368 targets / 200 tasks. The previous run cannot answer this because it ended at task 20 from a stdout BrokenPipe.
 
-A PI exploratory re-read of the archived 200-row table also shows that category and task allocation are badly entangled: sub_house_id<20 contains 11/13 mug tasks, 8/9 basketball tasks and one vase; all 8 failures in that stratum are mug/basketball. Outside it, only 2 mug and 1 basketball tasks remain. This means the apparent low SR of mug/basketball is not independent evidence for a category or size effect. Separately, expert_length is much larger for failures (108.26 mean) than successes (49.06 mean), so task difficulty remains a serious competing explanation. These are exploratory PI audit facts, not a formal adjusted-effect experiment.
+The prior 20 full tasks are now a frozen cross-cycle overlap control. A fresh run must reproduce them exactly before proceeding, then complete the remaining tasks without transport-dependent output.
 
 ## Unique Next Experiment
 
-EXP-SIZE-RUNTIME-METADATA-001: recover and validate initial-state scene-instance AABB geometry from the exact historical simulator/runtime, with no SafeVLA model, no policy action and 0 ObjectNav episodes. Geometry extraction is outcome-blind. Only if this measurement path is complete and stable may a later PI-approved experiment join geometry to success outcomes.
+EXP-SIZE-RUNTIME-METADATA-002: fresh 200-task, outcome-blind runtime geometry extraction with transport-resilient atomic per-task checkpoints. First 20 tasks must exactly reproduce the frozen prior partial run. No size-success association is part of this experiment.
 
 
 ## 02 research-history migration — 2026-09-18
@@ -61,7 +61,7 @@ Executor must read both files before claiming scientific conclusions from legacy
 
 ## Control State
 
-User/PI explicitly approved `EXP-SIZE-RUNTIME-METADATA-001`. Current authoritative LOOP_STATE is `APPROVED_FOR_CODEX` / `next_actor=CODEX`; `instruction_commit=null` and `claim_id=null` until a valid Executor claim. Authorization budget is max 1 GPU **only for simulator graphics/runtime**, 0 SafeVLA/ObjectNav episodes and 0 model loads. The Executor must first verify this approval commit's CI is green, then claim the latest green `origin/research-loop` HEAD and wait for claim CI before any scene initialization. No size-success association, Probe, replay, reset, Safe-vs-IL or B0 evaluation is authorized.
+The BLOCKED result `ac2c9fe80f113345f5092205b07192a47a0e0358` has been PI-acknowledged and its claim is closed. Current fresh cycle is `size-runtime-metadata-002-20260922`, experiment `EXP-SIZE-RUNTIME-METADATA-002`, status `PI_REVIEW` / `NOT_AUTHORIZED`, with `instruction_commit=null` and `claim_id=null`. No scene initialization or Executor claim is authorized until explicit user/PI approval and a green approval CI.
 
 
 ## Control incident — 2026-09-18
