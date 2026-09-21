@@ -1,0 +1,29 @@
+{
+  "status": "BLOCKED",
+  "reason": "BrokenPipeError: [Errno 32] Broken pipe",
+  "started_at_utc": "2026-09-20T13:03:35.295519+00:00",
+  "completed_at_utc": "2026-09-20T13:25:25.522989+00:00",
+  "scene_initializations": 44,
+  "max_scene_initializations": 224,
+  "gpu_count": 1,
+  "gpu_index": 3,
+  "safevla_episodes": 0,
+  "model_checkpoint_loads": 0,
+  "actor_critic_forwards": 0,
+  "outcome_columns_read": false,
+  "size_success_association": false,
+  "preflight_comparisons": 18,
+  "full_target_rows": 26,
+  "complete_tasks": 20,
+  "action_counts": {
+    "ChangeResolution": 44,
+    "ChangeQuality": 44,
+    "Initialize": 44,
+    "DeleteLRUFromProceduralCache": 88,
+    "CreateHouse": 44,
+    "AssetsInDatabase": 44,
+    "CreateRuntimeAsset": 1377,
+    "CreateRuntimeAssets": 44
+  },
+  "forbidden_modules_present": []
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "at_utc": "2026-09-20T13:06:03.692197+00:00",
+    "owned_unity_processes": [
+      {
+        "unity_pid": 3508931,
+        "extractor_pid": 3505586,
+        "unity_command": [
+          "/home/amax/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec",
+          "-screen-fullscreen",
+          "0",
+          "-screen-quality",
+          "7",
+          "-screen-width",
+          "396",
+          "-screen-height",
+          "224",
+          "-force-device-index",
+          "4"
+        ]
+      }
+    ],
+    "progress": {
+      "status": "SCENE_INITIALIZING",
+      "reason": "",
+      "updated_at_utc": "2026-09-20T13:05:27.542150+00:00",
+      "scene_initializations": 7,
+      "max_scene_initializations": 224,
+      "gpu_count": 1,
+      "action_counts": {
+        "ChangeResolution": 7,
+        "ChangeQuality": 6,
+        "Initialize": 6,
+        "DeleteLRUFromProceduralCache": 12,
+        "CreateHouse": 6,
+        "AssetsInDatabase": 6,
+        "CreateRuntimeAsset": 110,
+        "CreateRuntimeAssets": 6
+      },
+      "outcome_columns_read": false
+    }
+  }
+]

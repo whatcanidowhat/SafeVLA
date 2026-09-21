@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 19,
+  "state_version": 20,
   "cycle_id": "size-runtime-metadata-001-20260920",
   "experiment_id": "EXP-SIZE-RUNTIME-METADATA-001",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "BLOCKED",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "f5d0f56b975eab9f54e96343fb42d6b01df4d1a7",
@@ -32,5 +32,5 @@
     "research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-09-20T11:14:52.954267+00:00"
+  "updated_at_utc": "2026-09-21T07:37:14.006868+00:00"
 }

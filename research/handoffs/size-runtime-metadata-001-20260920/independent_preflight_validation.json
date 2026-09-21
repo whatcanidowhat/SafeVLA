@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "independent_preflight_tasks": 12,
+  "independent_target_comparisons": 18,
+  "all_exact_equal": true,
+  "max_absolute_dimension_difference_m": 0.0,
+  "inputs": "24 geometry-only samples; no outcome files",
+  "comparisons": [
+    {
+      "task_key": "ObjectNavType/val/000420/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaMug|2|33",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/000420/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaMilkshake|6|0",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/000714/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaMilkshake|6|1",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/001095/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaBasketball|2|0",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/001730/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaMilkshake|7|64",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/001852/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaMug|4|0",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/002819/raw_navigation_camera__0.mp4",
+      "target_id": "ObjaBasketball|6|50",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/004110/raw_navigation_camera__0.mp4",
+      "target_id": "BasketBall|4|1",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|4|42",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|6|67",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|7|87",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|8|98",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010822/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|7|30",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010822/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|2|45",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010822/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|6|20",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/010846/raw_navigation_camera__0.mp4",
+      "target_id": "SprayBottle|3|17",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/011059/raw_navigation_camera__0.mp4",
+      "target_id": "Sofa|7|1",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    },
+    {
+      "task_key": "ObjectNavType/val/011097/raw_navigation_camera__0.mp4",
+      "target_id": "Vase|2|38",
+      "exact_equal": true,
+      "max_absolute_dimension_difference_m": 0.0
+    }
+  ]
+}

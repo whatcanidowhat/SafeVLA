@@ -1,0 +1,11 @@
+{
+  "path": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/wandb/wandb/run-20260803_011640-z9jilvit/files/requirements.txt",
+  "sha256": "7f19831befc5e06c78cbe512d9dc528ed8f0653afed69f196fb6e259ac0aaeab",
+  "size": 4736,
+  "simulator_dependencies": [
+    "ai2thor-colab==0.1.2",
+    "ai2thor==0+966bd7758586e05d18f6181f459c0e90ba318bec",
+    "objathor==0.0.8",
+    "prior==1.0.3"
+  ]
+}

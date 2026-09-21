@@ -25,6 +25,14 @@
       "sha256": "d16709646fae2a4d882ee4e2c8ee64a652a6ebdcf25430538552304e7fd9357f",
       "size": 6192,
       "required_for_PI_review": true
+    },
+    {
+      "name": "size-runtime-metadata-001-partial-blocked-handoff-index",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json",
+      "git_path": "research/handoffs/size-runtime-metadata-001-20260920/ARTIFACT_INDEX.json",
+      "sha256": "3002e0ea3ade756a9033a9ef4416dbeef054dfeadb23560f90c0c32524702ce1",
+      "size": 30147,
+      "required_for_PI_review": true
     }
   ],
   "legacy_index_status": "research/history/legacy_artifact_sha256.json = LEGACY / SUPERSEDED"
