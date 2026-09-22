@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-21（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-SIZE-RUNTIME-METADATA-002 is the unique next DRAFT; NOT_AUTHORIZED.
+Mode: PI_REVIEW. EXP-LOW-SR-STAGE-LOCALIZATION-001 is the unique next DRAFT; physical-size measurement is deprioritized.
 
 ## Verified Facts
 
@@ -154,3 +154,20 @@ Scientific interpretation:
 - creation-state world-axis AABB remains a scene-instance extent, not canonical intrinsic volume.
 
 The old claim is closed and cannot resume. Any completion attempt requires a fresh cycle and an explicit new PI approval.
+
+
+## 2026-09-22 — Mainline redirected from size measurement to mechanism-stage localization
+
+Researcher decision: no further physical-size measurement on the mainline. The project now treats the relevant categories as a qualitative small-object-like / formally low-SR group, without claiming that physical size has been causally proven.
+
+Important PI correction:
+- `sub_house_id` is the shuffled dataset sample index, not house difficulty. Earlier interpretations of `sub_house_id<20` as "harder tasks" are withdrawn.
+- `expert_length` is the recorded expert trajectory length and can be used only as a long-horizon difficulty proxy; it is not a proven shortest path or pure environment difficulty metric.
+- real `house_index` shows a historical low-index failure cluster, but index ordering is not itself a validated difficulty scale.
+
+Exploratory aligned-data facts to be formally reproduced by the next experiment:
+- mug+basketball+laptop+bowl: 34/48 successes (70.8%) versus 139/152 (91.4%) in other categories;
+- among 14 failures in that group: 9 never entered the target room, 10 never had narrow target visibility in the nav camera, 4 were nav-visible;
+- coarse expert_length strata retain a group gap: <=50 92.3% vs 97.8%; 51–100 57.1% vs 90.7%; >100 25.0% vs 58.8%.
+
+These facts motivate exploration/room-arrival as the current leading stage hypothesis, but internal mechanism claims await the formal stage audit and a subsequent controlled diagnostic.

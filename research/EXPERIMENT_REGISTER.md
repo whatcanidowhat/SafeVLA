@@ -132,3 +132,13 @@ Old claim is closed and cannot resume. Any completion attempt requires a fresh c
 | EXP-SIZE-RUNTIME-METADATA-002 | DRAFT / NOT_AUTHORIZED | fresh 200 task loads; first 20 are frozen overlap control; max1 simulator GPU / 0 episodes | Complete and validate runtime scene-instance AABB coverage without outcome access |
 
 No old/new row splicing is allowed for the primary dataset. Complete geometry recovery still does not authorize H-SIZE testing.
+
+
+## 2026-09-22 — mainline redirected to failure-stage localization
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-SIZE-RUNTIME-METADATA-002 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Researcher deprioritized further physical-size measurement |
+| EXP-LOW-SR-STAGE-LOCALIZATION-001 | DRAFT / NOT_AUTHORIZED | Formalize task-difficulty proxy and localize low-SR failures to room-arrival / camera-encounter / post-visibility stage |
+
+No model execution is authorized by this staging commit.

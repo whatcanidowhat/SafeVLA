@@ -1,192 +1,176 @@
-# Next Experiment — Transport-resilient complete runtime geometry extraction
+# Next Experiment — Low-SR failure-stage localization
 
-Experiment ID: EXP-SIZE-RUNTIME-METADATA-002
+Experiment ID: EXP-LOW-SR-STAGE-LOCALIZATION-001
 Status: DRAFT
 Authorization: NOT_AUTHORIZED
-Cycle ID: size-runtime-metadata-002-20260922
+Cycle ID: low-sr-stage-localization-001-20260922
 
 ## Why this experiment now
 
-EXP-SIZE-RUNTIME-METADATA-001 established a strong but incomplete measurement path:
-- the exact historical AI2-THOR build was recovered;
-- 12 tasks loaded twice produced 18/18 exact-equal target-geometry comparisons;
-- the first 20 full tasks produced 26/26 exact-mapped valid creation-state AABBs and 20/20 complete task summaries;
-- execution stopped only because a progress `print(..., flush=True)` hit `BrokenPipeError` after task 20;
-- 342 targets / 180 tasks were never attempted, so complete coverage remains unresolved.
+The researcher explicitly deprioritized further physical-size measurement. The research objective is now to determine where the low success rate enters the causal chain as quickly as possible.
 
-The prior partial dataset is not a complete scientific result, but it is now a useful frozen overlap reference. The next experiment should repeat all 200 tasks under the same geometry semantics while changing only output/checkpoint transport so the measurement can complete without depending on an inherited stdout pipe.
+This change is accepted with one scientific boundary: the project may use "small-object-like / low-SR categories" as a practical phenomenon label, but physical size is no longer claimed as a proven causal variable. The current formal target group is defined from the historical 200-run performance table, not from a newly measured size threshold.
+
+A PI re-audit also corrected an earlier mistake: `sub_house_id` is the shuffled dataset sample index, not a house-difficulty variable. Earlier statements that "sub_house_id<20 tasks are harder" are invalid. Real house identity is `house_index`.
+
+Preliminary existing-data checks motivate a fast formal localization:
+- selected low-SR categories: mug, basketball, laptop, bowl;
+- combined historical SR: 34/48 = 70.8% versus 139/152 = 91.4% for other categories;
+- among their 14 failures, 10/14 never become visible in the navigation camera and 9/14 never enter the target room;
+- coarse expert-length strata still show lower SR for the selected group:
+  - <=50: 24/26 = 92.3% vs 90/92 = 97.8%;
+  - 51–100: 8/14 = 57.1% vs 39/43 = 90.7%;
+  - >100: 2/8 = 25.0% vs 10/17 = 58.8%.
+These are PI exploratory checks and must be reproduced by this experiment before being promoted.
 
 ## Research question
 
-Under the exact same historical simulator build, scene inputs, target identities and creation-state geometry definition, can a transport-resilient extraction recover valid scene-instance AABB geometry for all 368 broad targets / 200 tasks, while exactly reproducing the 20 previously completed full tasks?
+For the historically low-SR target categories (mug, basketball, laptop, bowl), after accounting descriptively for long-horizon task difficulty using the pre-policy `expert_length` proxy, where do failures first appear in the observable causal chain?
 
-## Hypothesis
+Causal chain for this audit:
+task/goal -> exploration/room arrival -> target enters nav camera -> post-visibility approach/termination -> success.
 
-H-COMPLETE-RUNTIME-GEOMETRY:
-The previous blocker was transport-only. A fresh full extraction with durable per-task checkpoints and no inherited stdout dependency will:
-1. exactly reproduce the prior 20-task full geometry; and
-2. provide exact-ID valid creation-state AABB geometry for all 368/368 broad targets and complete task summaries for 200/200 tasks.
+## Hypotheses
+
+H-EXPLORE:
+The dominant low-SR failure mass occurs before target visual encounter: the agent often fails to reach the target room or never puts the target into the navigation camera.
+
+H-DOWNSTREAM:
+After accounting for task horizon, most low-SR failures still reach the target room / see the target, so the primary bottleneck is downstream perception/representation/approach/termination.
 
 ## Competing explanation
 
-H-LATE-RUNTIME-GAP:
-Although the first 20 tasks succeeded, later tasks contain runtime-ID, scene-loading, geometry-validity or stability failures that prevent complete 368/368 coverage. The prior BrokenPipe merely occurred before those failures could be observed.
+H-DIFFICULTY:
+The low SR is substantially explained by longer/harder tasks rather than a target-specific mechanism. The selected categories should approach the other-category SR once compared within similar expert-length strata.
 
-## Reference
+## Definition of "harder task" for this audit
 
-Frozen result commit:
-`ac2c9fe80f113345f5092205b07192a47a0e0358`
+Primary pre-policy difficulty proxy:
+- `expert_length = task_info["expert_length"] = historical gt_episode_len`.
 
-Reference facts:
-- historical build commit: `966bd7758586e05d18f6181f459c0e90ba318bec`;
-- 20 full tasks already measured;
-- 26 full target geometries valid;
-- original partial `target_geometry.csv`, `task_geometry.csv` and per-task geometry sample JSONs are read-only reference artifacts;
-- prior 12-task double-load preflight already passed and is not repeated as a separate 24-load stage.
+Important limitation:
+- this is the recorded expert trajectory length, not a proven shortest path and not a pure environment-difficulty variable;
+- it is used only as a **long-horizon difficulty proxy**.
 
-## Repeat / treatment
+Do NOT use the following to define task difficulty because they are policy outcomes or invalid identifiers:
+- `sub_house_id` (sample index);
+- episode length;
+- target-room visitation;
+- visible pixels;
+- whether end was taken;
+- success/failure.
 
-This is a measurement repeat/completion, not a policy treatment.
+Secondary descriptive scene factor:
+- real `house_index`, reported only as a scene stratum / cluster indicator, not as a numeric difficulty score.
+- Any claim that low house_index itself causes difficulty is prohibited.
 
-Fresh run:
-- deterministically rerun **all 200 historical tasks once** from the beginning;
-- the first 20 tasks form a cross-cycle overlap control against the prior partial run;
-- after task 20, require exact equality of target IDs and recorded AABB geometry to the frozen prior values before proceeding to tasks 21–200;
-- the final primary dataset comes entirely from this fresh cycle. Do not splice old and new task rows.
+## Study type
 
-## Unique variable
+Zero-rollout observational audit of the existing aligned historical full-200 evidence.
 
-The only intended change from EXP-SIZE-RUNTIME-METADATA-001 is **transport/checkpoint implementation**:
+No SafeVLA execution, no simulator, no GPU, no new episode.
 
-Previous:
-- progress writes to inherited stdout could terminate the process;
-- full-task summaries were primarily materialized at finalization.
+## Target groups
 
-New:
-- no progress or final status depends on inherited stdout/stderr;
-- redirect process diagnostics to local server files or suppress inherited-pipe writes;
-- persist each completed task's raw geometry and task summary atomically before moving to the next task;
-- maintain a durable machine-readable progress/checkpoint manifest after every task;
-- final CSVs are regenerated from durable per-task records.
+Primary low-SR group, fixed before analysis:
+- `mug.n.04`
+- `basketball.n.02`
+- `laptop.n.01`
+- `bowl.n.03`
 
-Simulator build, scene/task bytes, target IDs, CreateHouse initialization, `autoSimulation=False`, no-post-load-physics semantics and geometry extraction logic must otherwise remain fixed.
+Reference group:
+- all other ObjectNav categories in the same aligned 200-task run.
 
-## Fixed conditions
+The group is called **low-SR target group** in formal outputs. Do not label the statistical group as "small objects" unless explicitly marked as the researcher's qualitative description.
 
-- Exact historical AI2-THOR build commit `966bd7758586e05d18f6181f459c0e90ba318bec`, CloudRendering.
-- Before any scene initialization, re-hash the runtime executable, UnityPlayer, Assembly-CSharp and relevant Python/runtime source files; require identity with the accepted prior runtime manifest unless PI explicitly reviews a mismatch.
-- Use the same archived 200 task specs and the same scene/asset inputs as the prior cycle.
-- Outcome-blind execution: do not read success/failure, episode length, Safety Cost, visible pixels, category SR tables or any outcome-derived file.
-- No SafeVLA checkpoint/model import or load.
-- No Actor/Critic forward.
-- No navigation policy action.
-- No ObjectNav/SafeVLA evaluation episode.
-- Exactly one fresh scene initialization per historical task; maximum 200 scene initializations.
-- Exact runtime object-ID mapping only; no fuzzy matching.
-- Primary descriptor remains initial creation-state world-axis AABB. It is a scene-instance extent, not canonical intrinsic volume.
-- Record OBB availability/points as secondary metadata when exposed; do not substitute OBB for a missing primary AABB.
-- No size-success/category association in this experiment.
-- No modification of B0/runtime source, task specs, success/end logic, reset/cache behavior or historical outcome tables.
+## Difficulty analysis
 
-## Transport-resilience requirements
+1. Reproduce overall n/SR for target and reference groups.
+2. Reproduce expert_length distribution for success and failure.
+3. Pre-declared descriptive bins:
+   - <=50
+   - 51–100
+   - >100
+4. Report n, success, SR and Wilson 95% CI for target/reference groups within each bin.
+5. Fit one parsimonious sensitivity model if numerically identifiable:
+   `success ~ low_sr_group + log1p(expert_length)`
+   Report coefficient/odds ratio + uncertainty; do not use it as causal proof.
+6. Report house_index distribution and the previously observed low-house-index cluster, but do not treat house_index ordering as a difficulty scale.
 
-- The extractor must not call an inherited stdout/stderr progress `print` whose failure can abort measurement.
-- After each task, write a per-task record using write-temp + atomic rename (or an equivalently crash-safe local operation).
-- After each task, update a durable progress manifest containing completed task keys, scene-initialization count and last successful task.
-- Re-running the extractor after a process failure is **not authorized in this cycle** unless the failure happens before any scene initialization. Any post-initialization failure returns BLOCKED to PI; no implicit resume.
-- Final CSVs must be derivable solely from the fresh cycle's durable task records.
-- Do not overwrite or mutate prior-cycle handoff artifacts.
+## Failure-stage taxonomy
 
-## Cross-cycle overlap control
+Apply only to historical failures, using already-aligned narrow target-ID evidence:
 
-Before task 21:
-- compare all target IDs and primary AABB vectors for fresh tasks 1–20 against the frozen prior full-pass values;
-- require 20/20 task identity agreement;
-- require all previously recorded 26 targets to exist with exact ID match;
-- report exact equality and max absolute/relative geometry difference;
-- default acceptance: exact equality; if floating representation differs but is within the previously registered numerical tolerance, STOP as BLOCKED for PI interpretation rather than silently accepting a looser criterion.
+S0 — room-arrival failure:
+- `has_agent_been_in_room == False`.
+- Interpretation: failure occurred before confirmed target-room arrival; downstream visual recognition cannot be the sole explanation for this episode.
+
+S1 — local-search / camera-encounter failure:
+- target room was entered, but narrow target `vis_pix_navigation == 0`.
+- Interpretation: agent reached the relevant room but never put the target into the nav camera.
+
+S2 — post-visibility failure:
+- narrow target `vis_pix_navigation > 0`.
+- Split descriptively:
+  - S2a: episode length < 600 (termination-like morphology; exact final end action is not assumed unless separately evidenced);
+  - S2b: episode length == 600 (horizon morphology).
+
+Do not infer a neural mechanism directly from S0/S1/S2.
+
+## Controls
+
+- Report the same S0/S1/S2 failure-stage distribution for the reference-category failures.
+- For each low-SR failure, identify up to 3 nearest successful controls from the same category by absolute expert_length difference.
+- Mark controls with poor overlap rather than forcing a match.
+- Also provide cross-category expert-length-nearest controls if same-category overlap is absent; keep the two control types separate.
 
 ## Metrics
 
-- runtime/version/hash identity status;
-- fresh scene initializations / 200;
-- first-20 task overlap agreement / 20;
-- first-20 target overlap agreement / 26;
-- overlap exact-equal target count;
-- overlap max absolute and relative AABB-vector difference;
-- exact runtime target-ID mapping n / 368;
-- valid primary AABB n / 368;
-- complete task geometry n / 200;
-- OBB availability n / 368;
-- missing/ambiguous/invalid target list if any;
-- per-task median AABB volume and median maximum side only when all broad targets in that task are valid;
-- durable checkpoint consistency: completed task record count equals progress-manifest count equals final complete-task count.
+- target-group and reference-group n/SR/Wilson CI;
+- expert_length mean/median by group × outcome;
+- SR/Wilson CI within the three fixed expert-length bins;
+- optional parsimonious logistic sensitivity estimate;
+- low-SR failure counts and proportions in S0/S1/S2a/S2b;
+- reference failure counts and proportions in S0/S1/S2a/S2b;
+- same-category matched-control expert-length gaps;
+- count of failures with no reasonable same-category difficulty overlap;
+- real house_index distribution by group/outcome.
 
 ## Expected result
 
-If H-COMPLETE-RUNTIME-GEOMETRY holds:
-- the first 20 tasks exactly reproduce the prior partial run;
-- 368/368 targets exact-map to valid creation-state AABBs;
-- 200/200 tasks receive complete fresh-cycle geometry summaries;
-- no geometry/mapping failure occurs;
-- H-SIZE still remains untested until a later, separately approved outcome-association experiment.
+If H-EXPLORE is strengthened:
+- S0+S1 is the majority of low-SR failures, and
+- the low-SR group remains meaningfully below the reference group within at least the medium/long expert-length strata.
 
-## Falsifying result
+This would justify the next causal experiment focusing on goal-conditioned exploration / room search / temporal policy behavior before target visibility.
 
-The hypothesis is falsified as a complete recovery path if:
-- accepted runtime/source identity changes;
-- any first-20 overlap target is not exactly reproduced;
-- any of the 368 target IDs cannot be exactly mapped;
-- any primary AABB is missing, non-finite or non-positive;
-- any task is incomplete;
-- the extraction cannot finish within 200 scene initializations;
-- a process/transport failure occurs after scene initialization begins.
+If H-DOWNSTREAM is strengthened:
+- most low-SR failures are S2, especially under matched difficulty.
+Then the next causal experiment should focus on visual representation, Actor readout and termination after target encounter.
 
-Partial data must be preserved but cannot be silently combined with the previous cycle to claim complete coverage.
-
-## Alternative explanations
-
-- a later scene or built-in/custom asset exposes different runtime metadata than the first 20 tasks;
-- some archived scene object IDs are not stable under runtime creation;
-- creation-state physics/asset hooks produce scene-specific metadata failures in later houses;
-- the output-channel crash was only an early interruption and hid a later scientific coverage gap;
-- world-axis AABB is reproducible but remains an orientation-dependent scene-instance extent;
-- the historical build chain is source/version matched but historical executable byte equality was not contemporaneously archived.
+If H-DIFFICULTY is strengthened:
+- within expert-length strata, the low-SR gap largely disappears.
+Then mechanism work must focus on long-horizon navigation difficulty rather than target-specific perception.
 
 ## Stop conditions
 
-Return BLOCKED and STOP if:
-- runtime/source hashes or build identity fail the frozen identity checks;
-- any outcome-derived file/column would be needed;
-- any SafeVLA model/policy component would need to load;
-- any policy/environment navigation action would be needed;
-- the first-20 overlap is not exact;
-- any task requires fuzzy target mapping;
-- any primary AABB is invalid/missing;
-- any post-start process/transport error occurs;
-- completing the dataset would require >200 scene initializations;
-- any size-success association, Probe, replay, reset treatment, Safe-vs-IL comparison or B0 evaluation would start.
-
-## Resource budget
-
-- max GPU: 1, simulator graphics/runtime only;
-- max ObjectNav/SafeVLA episodes: 0;
-- max scene initializations: 200;
-- model/checkpoint loads: 0;
-- Actor/Critic forwards: 0.
+Return BLOCKED if:
+- the aligned 200-task raw table or narrow failure evidence cannot be reconciled;
+- `expert_length` identity cannot be tied to the same historical tasks;
+- failure-stage labels would require inventing missing visibility/room fields;
+- analysis would require new rollout, simulator, model inference or size measurement;
+- any internal Probe or intervention would be started automatically.
 
 ## Required outputs
 
-- `research/handoffs/size-runtime-metadata-002-20260922/RESULT_SUMMARY.md`
-- `research/handoffs/size-runtime-metadata-002-20260922/RUN_MANIFEST.json`
-- `research/handoffs/size-runtime-metadata-002-20260922/ARTIFACT_INDEX.json`
-- `research/handoffs/size-runtime-metadata-002-20260922/REVIEW_NOTES.md`
-- `research/handoffs/size-runtime-metadata-002-20260922/runtime_version_manifest.json`
-- `research/handoffs/size-runtime-metadata-002-20260922/cross_cycle_overlap.csv`
-- `research/handoffs/size-runtime-metadata-002-20260922/target_geometry.csv`
-- `research/handoffs/size-runtime-metadata-002-20260922/task_geometry.csv`
-- `research/handoffs/size-runtime-metadata-002-20260922/coverage_report.md`
-- `research/handoffs/size-runtime-metadata-002-20260922/batch_manifest.json`
-- `research/handoffs/size-runtime-metadata-002-20260922/extract_runtime_geometry_v2.py`
+- `research/handoffs/low-sr-stage-localization-001-20260922/RESULT_SUMMARY.md`
+- `research/handoffs/low-sr-stage-localization-001-20260922/RUN_MANIFEST.json`
+- `research/handoffs/low-sr-stage-localization-001-20260922/ARTIFACT_INDEX.json`
+- `research/handoffs/low-sr-stage-localization-001-20260922/REVIEW_NOTES.md`
+- `research/handoffs/low-sr-stage-localization-001-20260922/difficulty_strata.csv`
+- `research/handoffs/low-sr-stage-localization-001-20260922/failure_stage_table.csv`
+- `research/handoffs/low-sr-stage-localization-001-20260922/matched_controls.csv`
+- `research/handoffs/low-sr-stage-localization-001-20260922/stage_analysis.md`
+- `research/handoffs/low-sr-stage-localization-001-20260922/analyze_low_sr_stage.py`
 
-After handoff publication, STOP. Complete geometry coverage alone does not authorize a size-performance analysis.
+After handoff, STOP. Internal model diagnostics are a separate experiment selected from the stage-localization result.

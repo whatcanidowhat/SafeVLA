@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "state_version": 22,
-  "cycle_id": "size-runtime-metadata-002-20260922",
-  "experiment_id": "EXP-SIZE-RUNTIME-METADATA-002",
+  "state_version": 23,
+  "cycle_id": "low-sr-stage-localization-001-20260922",
+  "experiment_id": "EXP-LOW-SR-STAGE-LOCALIZATION-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
@@ -16,22 +16,20 @@
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 1,
+    "max_gpu": 0,
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/size-runtime-metadata-002-20260922/RESULT_SUMMARY.md",
-    "research/handoffs/size-runtime-metadata-002-20260922/RUN_MANIFEST.json",
-    "research/handoffs/size-runtime-metadata-002-20260922/ARTIFACT_INDEX.json",
-    "research/handoffs/size-runtime-metadata-002-20260922/REVIEW_NOTES.md",
-    "research/handoffs/size-runtime-metadata-002-20260922/runtime_version_manifest.json",
-    "research/handoffs/size-runtime-metadata-002-20260922/cross_cycle_overlap.csv",
-    "research/handoffs/size-runtime-metadata-002-20260922/target_geometry.csv",
-    "research/handoffs/size-runtime-metadata-002-20260922/task_geometry.csv",
-    "research/handoffs/size-runtime-metadata-002-20260922/coverage_report.md",
-    "research/handoffs/size-runtime-metadata-002-20260922/batch_manifest.json",
-    "research/handoffs/size-runtime-metadata-002-20260922/extract_runtime_geometry_v2.py"
+    "research/handoffs/low-sr-stage-localization-001-20260922/RESULT_SUMMARY.md",
+    "research/handoffs/low-sr-stage-localization-001-20260922/RUN_MANIFEST.json",
+    "research/handoffs/low-sr-stage-localization-001-20260922/ARTIFACT_INDEX.json",
+    "research/handoffs/low-sr-stage-localization-001-20260922/REVIEW_NOTES.md",
+    "research/handoffs/low-sr-stage-localization-001-20260922/difficulty_strata.csv",
+    "research/handoffs/low-sr-stage-localization-001-20260922/failure_stage_table.csv",
+    "research/handoffs/low-sr-stage-localization-001-20260922/matched_controls.csv",
+    "research/handoffs/low-sr-stage-localization-001-20260922/stage_analysis.md",
+    "research/handoffs/low-sr-stage-localization-001-20260922/analyze_low_sr_stage.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-21T17:58:30+00:00"
+  "updated_at_utc": "2026-09-22T07:35:00+00:00"
 }

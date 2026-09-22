@@ -301,3 +301,24 @@ Decision:
 
 Budget:
 max 1 simulator GPU；0 ObjectNav/SafeVLA episodes；0 model load；0 Actor/Critic forward；最多200 scene initializations。当前仅DRAFT / NOT_AUTHORIZED，等待用户显式批准。
+
+
+## 2026-09-22 — DEC-MAINLINE-MECHANISM-001：停止继续验证physical size，先定位failure stage
+
+User decision:
+研究者明确认为目标物体相对更小属于足够明确的常识性观察，不希望继续把主线时间投入physical-size measurement；下一步优先回答“低SR到底在哪个机制阶段发生”，并尽快澄清“更难任务”的含义。
+
+PI boundary:
+接受停止size measurement，但不把“size causally causes failure”升级为论文结论。正式统计对象改称low-SR target group；small-object-like仅作为研究者定性描述。
+
+Correction:
+此前基于`sub_house_id<20`的“更难任务”解释错误。历史审计已确认`sub_house_id`是shuffle后的sample index。真实house为`house_index`。当前可用的pre-policy difficulty proxy是`expert_length=task_info["expert_length"]`，但它是expert trajectory length，不是纯环境难度或已证明的shortest path。
+
+Exploratory evidence:
+- low-SR group(mug/basketball/laptop/bowl) SR=34/48=70.8%，other=139/152=91.4%；
+- 14个low-SR failures中9个never target-room，10个never nav-visible，4个nav-visible；
+- expert_length分层后gap仍存在：<=50 92.3% vs97.8%，51–100 57.1% vs90.7%，>100 25.0% vs58.8%。
+因此当前leading stage hypothesis是pre-visibility exploration/room-arrival，但尚未形成正式结果。
+
+Decision:
+supersede未批准的EXP-SIZE-RUNTIME-METADATA-002。唯一下一DRAFT为`EXP-LOW-SR-STAGE-LOCALIZATION-001`，0GPU/0episode，仅用现有full-200证据正式复现difficulty-stratified SR与S0/S1/S2 stage taxonomy。结果决定下一内部诊断走exploration branch还是post-visibility representation/readout branch。
