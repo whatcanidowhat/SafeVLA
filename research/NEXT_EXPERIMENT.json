@@ -1,65 +1,76 @@
 {
-  "experiment_id": "EXP-LOW-SR-STAGE-LOCALIZATION-001",
-  "cycle_id": "low-sr-stage-localization-001-20260922",
+  "experiment_id": "EXP-SEMANTIC-DECISION-MISMATCH-001",
+  "cycle_id": "semantic-decision-mismatch-001-20260922",
   "status": "DRAFT",
-  "research_question": "For historically low-SR categories (mug, basketball, laptop, bowl), after descriptive control for long-horizon task difficulty using expert_length, where do failures first appear in the observable chain: room arrival, nav-camera encounter, or post-visibility behavior?",
-  "hypothesis": "H-EXPLORE: the dominant low-SR failure mass occurs before target visual encounter, through failure to reach the target room or put the target into the nav camera.",
-  "competing_explanation": "H-DIFFICULTY or H-DOWNSTREAM: the low SR is largely explained by longer expert trajectories, or most failures occur after target visibility and therefore point downstream.",
-  "reference": "Aligned historical full-200 run (200 tasks, 173 successes) plus narrow target-ID reanalysis. No new rollout.",
-  "repeat_or_treatment": "Zero-rollout observational audit. Reproduce PI exploratory group/difficulty/stage counts from aligned raw evidence and build matched success controls; no treatment.",
-  "unique_variable": "Primary comparison is predeclared low-SR category group versus reference categories within fixed expert_length strata. No physical-size variable is measured or tested.",
+  "research_question": "For historically low-SR ObjectNav tasks under clean B0, does the causal chain fail before target encounter (exploration), in target representation, in Actor use/readout, or in termination calibration?",
+  "hypothesis": "H-USE/H-EXPLORE screen: distinguish pre-visibility exploration failures from post-visibility representation/use failures; if L3 target/stop-relevant information remains decodable but Actor end readout is weakly sensitive/aligned, support representation-use mismatch.",
+  "competing_explanation": "H-REP, H-DIFFICULTY, or stochastic non-reproduction: target evidence may be weak/lost, long-horizon task difficulty may dominate, or fresh B0 reruns may not reproduce historical failure phenotypes.",
+  "reference": "02｜SafeVLA research history plus aligned historical full-200 evidence: old Probe AUC ~0.955/0.982/0.992 is exploratory only; Done Gate changed failure morphology without net SR gain; one illegal high-end-prob case and one long low-end-prob horizon case establish heterogeneous termination phenotypes.",
+  "repeat_or_treatment": "Diagnostic case-control rerun on 18 preselected tasks × 2 seeds (max 36 episodes) under unchanged B0, followed by clean episode-heldout probes and one offline L3 probe-direction Actor-head sensitivity test. No online behavior intervention.",
+  "unique_variable": "Only causal manipulation is offline L3 perturbation along a clean probe-derived direction versus equal-norm random/shuffled-label directions with frozen Actor head; live B0 behavior is unchanged.",
   "fixed_conditions": [
-    "Use aligned historical 200-task evidence only",
-    "Low-SR group fixed to mug.n.04, basketball.n.02, laptop.n.01, bowl.n.03",
-    "expert_length is a long-horizon proxy, not shortest path or pure environment difficulty",
-    "sub_house_id is sample index and cannot be used as difficulty",
-    "house_index may be reported as a scene stratum but not a numeric difficulty score",
-    "No GPU, simulator, SafeVLA execution, model load, episode or new size measurement",
-    "No neural Probe or intervention in this experiment",
-    "No causal claim from observational stage labels"
+    "Official B0 source/checkpoint/evaluation semantics unchanged",
+    "No PT-Guard, done gate, steering, reranking or action rewrite",
+    "Exactly two seeds: 123 and 456; max 36 diagnostic episodes",
+    "Historical outcome used only for task selection; fresh-run phenotype labels recomputed",
+    "Hook only root actor causal branch; do not mix reward/cost critic hidden states",
+    "No extra Actor forward per environment decision",
+    "No extra live successful_if_done/object_is_visible_in_camera oracle calls",
+    "Passive target visibility/distance only from already-produced event/state metadata",
+    "Probe split by episode/house, never by frame",
+    "No physical-size analysis",
+    "expert_length used only as long-horizon matching proxy"
   ],
   "metrics": [
-    "Group n/SR/Wilson CI",
-    "expert_length mean/median by group and outcome",
-    "SR/Wilson CI in <=50, 51-100, >100 expert_length bins",
-    "Optional success ~ low_sr_group + log1p(expert_length) sensitivity model",
-    "S0/S1/S2a/S2b counts and proportions for low-SR and reference failures",
-    "Same-category and cross-category nearest-control expert_length gaps",
-    "house_index distributions by group/outcome"
+    "Fresh P0/P1 phenotype counts and seed reproducibility",
+    "Premature illegal-end and horizon/hesitation counts",
+    "First target encounter rate and time",
+    "Fusion/L1/L2/L3 target-visible ROC-AUC, PR-AUC, balanced accuracy/F1 with episode/house split and CI",
+    "Optional passive stop-proxy probe metrics",
+    "Actor end-probability before/after target encounter",
+    "Probe-direction vs random/shuffled Actor-head sensitivity and alignment",
+    "Loop/oscillation/action-entropy metrics",
+    "Same-category and cross-category expert_length match gaps"
   ],
-  "expected_result": "Either formalize that pre-visibility exploration/room-arrival dominates low-SR failures and remains after coarse difficulty stratification, or redirect the next mechanism experiment toward downstream visual/readout/termination or general long-horizon difficulty.",
-  "falsifying_result": "H-EXPLORE is weakened if most low-SR failures are post-visibility S2 or if the low-SR performance gap largely disappears within expert_length strata.",
+  "expected_result": "Produce a decision among exploration-before-evidence, representation bottleneck, representation-use/readout mismatch, termination calibration, or unresolved/stochastic non-reproduction, thereby selecting one mechanism-specific intervention experiment rather than another broad audit.",
+  "falsifying_result": "The leading 02 hypothesis of representation-use mismatch is weakened if fresh post-visibility failures show weak L3 decodability, or if L3 decodability is strong and Actor sensitivity/alignment is also strong while wrong behavior persists.",
   "alternative_explanations": [
-    "expert_length captures only part of task difficulty and is not shortest-path distance",
-    "house/scene geometry and initial target distance may confound the comparison",
-    "room visitation and visible pixels are policy outcomes, not exogenous task difficulty",
-    "small sample counts within categories can make stage proportions unstable",
-    "the user's qualitative small-object grouping is not itself a causal size measurement"
+    "Fresh stochastic reruns may not reproduce historical failure",
+    "Passive target-visibility evidence may differ from official success-oracle semantics",
+    "expert_length does not fully capture task difficulty",
+    "Linear Probe may exploit correlated features or miss nonlinear information",
+    "Redundant representations make a single probe direction non-unique",
+    "Offline Actor-head perturbation does not prove full online behavioral causality",
+    "Diagnostic case-control tasks do not estimate population SR"
   ],
   "stop_conditions": [
-    "Aligned historical raw evidence cannot be reconciled",
-    "expert_length cannot be tied to the same task identities",
-    "required room/visibility fields are missing for failures",
-    "new model/simulator/episode execution would be required",
-    "any Probe/intervention or physical-size analysis would start automatically"
+    "B0 identity cannot be preserved",
+    "Diagnostic code changes action/history/RNG/cache/forward count/environment semantics",
+    "PT-Guard/done gate/steering/action rewrite is active",
+    "Visibility labeling requires an extra live simulator/oracle query",
+    "Selected task identity is unstable",
+    "Any online behavior intervention would be introduced"
   ],
   "command": [
     "python3",
-    "research/handoffs/low-sr-stage-localization-001-20260922/analyze_low_sr_stage.py"
+    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_runner.py"
   ],
   "required_outputs": [
-    "research/handoffs/low-sr-stage-localization-001-20260922/RESULT_SUMMARY.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/RUN_MANIFEST.json",
-    "research/handoffs/low-sr-stage-localization-001-20260922/ARTIFACT_INDEX.json",
-    "research/handoffs/low-sr-stage-localization-001-20260922/REVIEW_NOTES.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/difficulty_strata.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/failure_stage_table.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/matched_controls.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/stage_analysis.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/analyze_low_sr_stage.py"
+    "research/handoffs/semantic-decision-mismatch-001-20260922/RESULT_SUMMARY.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/RUN_MANIFEST.json",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/ARTIFACT_INDEX.json",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/REVIEW_NOTES.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_task_manifest.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/episode_summary.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/step_trace.parquet",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/probe_results.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/readout_sensitivity.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/failure_path_analysis.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_runner.py",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/offline_probe_readout.py"
   ],
   "resources": {
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 36
   }
 }

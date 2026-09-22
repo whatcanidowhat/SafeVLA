@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-21（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-LOW-SR-STAGE-LOCALIZATION-001 is the unique next DRAFT; physical-size measurement is deprioritized.
+Mode: PI_REVIEW. EXP-SEMANTIC-DECISION-MISMATCH-001 is the unique next DRAFT; previous stage-only audit superseded before approval.
 
 ## Verified Facts
 
@@ -171,3 +171,19 @@ Exploratory aligned-data facts to be formally reproduced by the next experiment:
 - coarse expert_length strata retain a group gap: <=50 92.3% vs 97.8%; 51–100 57.1% vs 90.7%; >100 25.0% vs 58.8%.
 
 These facts motivate exploration/room-arrival as the current leading stage hypothesis, but internal mechanism claims await the formal stage audit and a subsequent controlled diagnostic.
+
+
+## 2026-09-22 — Experiment redesigned from 02｜SafeVLA research logic
+
+The previous zero-rollout stage-localization draft was too shallow relative to the established 02 research question. The mainline is now restored to the original semantic-decision-mismatch chain:
+
+`target evidence -> fusion/temporal representation -> Actor readout/logits -> end/move/turn behavior`
+
+Key carried-forward facts:
+- historical layer-wise AUC increased rather than collapsed, so "Layer 3 forgets target information" is not the leading interpretation;
+- old Probe evidence is not formal because of PT-Guard, missing episode IDs and frame-level leakage risk;
+- done-gating previously traded premature termination for hesitation/loops without net SR gain;
+- SafeVLA exhibits both illegal high-end-prob failure and long low-end-prob horizon failure;
+- therefore the next experiment must distinguish exploration-before-evidence, representation weakness, Actor-use/readout mismatch and termination calibration on clean B0.
+
+The new experiment uses targeted historical cases only for diagnostic selection, reruns them under clean B0, recomputes fresh phenotypes, performs episode/house-heldout target-visible probes, and—only offline—tests Actor-head sensitivity to the clean L3 probe direction versus random/shuffled controls.

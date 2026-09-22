@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "state_version": 23,
-  "cycle_id": "low-sr-stage-localization-001-20260922",
-  "experiment_id": "EXP-LOW-SR-STAGE-LOCALIZATION-001",
+  "state_version": 24,
+  "cycle_id": "semantic-decision-mismatch-001-20260922",
+  "experiment_id": "EXP-SEMANTIC-DECISION-MISMATCH-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
@@ -16,20 +16,23 @@
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 36
   },
   "required_outputs": [
-    "research/handoffs/low-sr-stage-localization-001-20260922/RESULT_SUMMARY.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/RUN_MANIFEST.json",
-    "research/handoffs/low-sr-stage-localization-001-20260922/ARTIFACT_INDEX.json",
-    "research/handoffs/low-sr-stage-localization-001-20260922/REVIEW_NOTES.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/difficulty_strata.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/failure_stage_table.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/matched_controls.csv",
-    "research/handoffs/low-sr-stage-localization-001-20260922/stage_analysis.md",
-    "research/handoffs/low-sr-stage-localization-001-20260922/analyze_low_sr_stage.py"
+    "research/handoffs/semantic-decision-mismatch-001-20260922/RESULT_SUMMARY.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/RUN_MANIFEST.json",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/ARTIFACT_INDEX.json",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/REVIEW_NOTES.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_task_manifest.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/episode_summary.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/step_trace.parquet",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/probe_results.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/readout_sensitivity.csv",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/failure_path_analysis.md",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_runner.py",
+    "research/handoffs/semantic-decision-mismatch-001-20260922/offline_probe_readout.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-22T07:35:00+00:00"
+  "updated_at_utc": "2026-09-22T12:05:00+00:00"
 }

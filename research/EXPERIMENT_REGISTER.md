@@ -142,3 +142,13 @@ No old/new row splicing is allowed for the primary dataset. Complete geometry re
 | EXP-LOW-SR-STAGE-LOCALIZATION-001 | DRAFT / NOT_AUTHORIZED | Formalize task-difficulty proxy and localize low-SR failures to room-arrival / camera-encounter / post-visibility stage |
 
 No model execution is authorized by this staging commit.
+
+
+## 2026-09-22 — 02-mainline diagnostic redesign
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-LOW-SR-STAGE-LOCALIZATION-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Stage taxonomy alone did not test the established 02 representation-vs-use question |
+| EXP-SEMANTIC-DECISION-MISMATCH-001 | DRAFT / NOT_AUTHORIZED | Clean-B0 targeted causal-path diagnosis: exploration -> representation -> Actor use/readout -> termination |
+
+Planned max budget: 1 GPU, 36 diagnostic episodes. No online behavior intervention is part of this draft.

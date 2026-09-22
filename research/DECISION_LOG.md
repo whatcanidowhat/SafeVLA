@@ -322,3 +322,31 @@ Exploratory evidence:
 
 Decision:
 supersede未批准的EXP-SIZE-RUNTIME-METADATA-002。唯一下一DRAFT为`EXP-LOW-SR-STAGE-LOCALIZATION-001`，0GPU/0episode，仅用现有full-200证据正式复现difficulty-stratified SR与S0/S1/S2 stage taxonomy。结果决定下一内部诊断走exploration branch还是post-visibility representation/readout branch。
+
+
+## 2026-09-22 — DEC-02-REDESIGN-001：按02｜SafeVLA主线重设计下一实验
+
+User request:
+“根据02|SafeVLA内容重新设计实验。”
+
+PI review:
+上一DRAFT `EXP-LOW-SR-STAGE-LOCALIZATION-001` 只做S0/S1/S2统计，虽然能整理表型，但没有直接回答02长期主问题：信息是没进入、表示丢失、还是表示存在但Actor未使用，以及premature end和termination hesitation是否来自同一语义决策失配。
+
+Historical constraints from 02:
+- old Probe AUC约0.955/0.982/0.992，不支持简单Layer3信息消失；
+- old Probe存在PT-Guard、无episode ID、step split泄漏风险，必须clean重做；
+- Done Gate没有提高净SR，而是把部分premature done转成hesitation/loop；
+- 已有一个illegal end_prob≈0.993 case与一个600-step low-p(done) case，说明termination存在相反表型；
+- cost critic源码不直接gate Actor end。
+
+Decision:
+supersede未批准的stage-only audit。唯一下一DRAFT改为 `EXP-SEMANTIC-DECISION-MISMATCH-001`：6个历史失败任务（3个pre-visibility、3个post-visibility）+ 每个一个same-category expert-length-nearest success control + 一个cross-category expert-length-nearest success control，形成18个诊断task；两固定seed共最多36 episode。B0行为不改，只读hook actor causal path。
+
+Fresh analysis:
+- 先按fresh run重新判P0/P1，不用historical label冒充复现；
+- clean episode/house-split Probe测fusion/L1/L2/L3 target-visible information；
+- 若L3信息强，再做唯一causal manipulation：offline L3沿probe方向±alpha，与等范数random/shuffled方向比较Actor end-logit sensitivity；
+- P0轨迹分析end_prob、action entropy、room/search、loop/oscillation，定位exploration vs premature termination；
+- 结果直接决定下一干预属于exploration、representation、readout/calibration还是history/objective。
+
+Current status remains DRAFT / PI_REVIEW / NOT_AUTHORIZED.
