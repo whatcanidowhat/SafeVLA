@@ -1,1 +1,0 @@
-{"columns": ["sample_id", "cost", "corner", "danger", "blind", "fragile", "critical", "success"], "data": [["task=ObjectNavType,house=13653,sub_house_id=127", 0, 0, 0, 0, 0, 0, 1], ["task=ObjectNavType,house=13125,sub_house_id=103", 0, 0, 0, 0, 0, 0, 1]]}

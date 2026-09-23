@@ -1,1 +1,0 @@
-记录器仅观察官方已执行的load_state_dict返回、task选择返回及evaluate_on_task调用/返回。无额外forward/environment查询，无参数/状态修改。sys.setprofile有时间开销，因此不用于性能计时结论。候选和开发源码均不修改。

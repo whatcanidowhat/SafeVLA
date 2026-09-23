@@ -1,8 +1,0 @@
-{
-  "checked_at_utc": "2026-09-21T07:35:51.057572+00:00",
-  "head": "60bc54fbdedaf5745d0476c25321e808708273aa",
-  "tracked_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
-  "status": " M architecture/allenact_preprocessors/dino_preprocessors.py\n M architecture/models/allenact_transformer_models/inference_agent.py\n M online_evaluation/online_evaluator_worker.py\n M scripts/eval.sh\n?? .agents/\n?? .codex/\n?? AGENTS.md\n?? diagnostics/\n?? full_diff.patch\n?? online_evaluation/end_causal_diagnostic_logger.py\n?? research/\n",
-  "unchanged_from_execution_start": true,
-  "process_check": "SSH ps -p 3505586 and ps -eo pid,ppid,args matching thor-CloudRendering found no extractor or simulator during handoff"
-}

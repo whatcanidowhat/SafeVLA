@@ -1,3 +1,0 @@
-frame_0based,displayed_decision_1based,executed_action,p_end_approx,p_end_chroma_endpoint_approx,end_legacy_width_px,end_chroma_endpoint_px,action_thresholds_agree,move_ahead_approx,rotate_right_approx,rotate_left_approx,move_back_approx,done_approx,sub_done_approx,rotate_left_small_approx,rotate_right_small_approx
-0,1,l,0.0,0.0,0,0,True,0.0,0.0,1,0.0,0.0,0.0,0.0,0.0
-1,2,end,1,0.9818181818181818,55,54,True,0.0,0.0,0.0,0.0,1,0.0,0.0,0.0
