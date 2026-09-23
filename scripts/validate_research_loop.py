@@ -213,8 +213,12 @@ def validate_legacy_sparse_ack(view, old_view, commit_sha):
             and d.get("cycle_id") == "premature-end-dynamics-001-20260923"
             and d.get("status") == "DRAFT",
             "legacy sparse-ack JSON mismatch")
-    entries = git(view.root, "ls-tree", "-r", "--name-only", commit_sha).decode().splitlines()
-    require(set(entries) == {STATE, NEXT, DESIGN}, "legacy sparse-ack tree shape mismatch")
+    # History validation supplies a ref-backed View and therefore verifies the exact
+    # sparse commit tree. Unit fixtures may call this helper on a working-tree View,
+    # where the production SHA is intentionally absent from the synthetic repository.
+    if view.ref:
+        entries = git(view.root, "ls-tree", "-r", "--name-only", view.ref).decode().splitlines()
+        require(set(entries) == {STATE, NEXT, DESIGN}, "legacy sparse-ack tree shape mismatch")
     return s
 
 
