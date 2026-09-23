@@ -1,183 +1,206 @@
-# Next Experiment — Reset / rollover causal gate
+# Next Experiment — Premature termination dynamics audit
 
-Experiment ID: EXP-RESET-ROLLOVER-CAUSAL-001
+Experiment ID: EXP-PREMATURE-END-DYNAMICS-001
 Status: DRAFT
 Authorization: NOT_AUTHORIZED
-Cycle ID: reset-rollover-causal-001-20260923
+Cycle ID: premature-end-dynamics-001-20260923
 
-## Why this experiment is the correct next step after rereading 02｜SafeVLA研究
+## Why this experiment is now the unique next step
 
-The 02 branch contains an explicit gate that the previous draft skipped:
+The current GitHub draft `EXP-RESET-ROLLOVER-CAUSAL-001` remains scientifically relevant, but its Gate-B role is narrower than previously treated: it blocks formal hidden-state / Probe / readout interpretation when cross-episode decoder state is uncontrolled. It does **not** block a zero-rollout audit of already-recorded actions and rendered Actor probabilities from the historical full-200 run.
 
-- Gate A passed for checkpoint/runtime/action/logging identity.
-- Gate C passed for end/success label timing in the audited scope.
-- **Gate B failed** because official `InferenceAgentVIDA.reset()` does not clear Actor/Reward-Critic/Cost-Critic `time_step_counter` or K/V cache.
-- A short controlled test showed old cache is masked at a fresh episode start and dirty-old-cache vs zero-old-cache output matched in that short regime.
-- However model `max_steps=500` while ObjectNav horizon is 600, and the counter accumulates across episodes. Therefore rollover timing can depend on prior episode lengths and may alter the effective temporal history later in an episode.
+Newly reviewed evidence makes premature termination the highest-value uncertainty:
+- the aligned historical full-200 run has 27 failures, of which 16 are sub-horizon (`eps_len<600`);
+- one audited historical state has `stop_legal=false`, Actor `p(end)≈0.993365`, greedy `end`, and final failure;
+- one opposite 600-step failure (sub120) has video-rendered `p(done)<~0.018` throughout, so termination failures are heterogeneous;
+- official ObjectNav RL reward configuration uses `step_penalty=0`, `failed_stop_reward=0`, `reached_horizon_reward=0`, `goal_success_reward=10`; therefore a termination loophole is mechanistically plausible but **not proven**;
+- the SafeVLA paper reports cautious / curtailed behavior under extreme failure, but this does not prove that safety alignment causes early termination in the historical B0 run.
 
-02 explicitly stopped formal hidden-state/Probe interpretation until this reset pathway was causally bounded.
-
-Therefore the previously staged `EXP-SEMANTIC-DECISION-MISMATCH-001` is superseded before approval. We first close Gate B with a minimal causal replay; only then may a clean Probe/readout experiment be authorized.
+The immediate question is therefore not yet “does SafeRL cause early exit?” but first: **what termination dynamics actually precede the historical sub-horizon failures?**
 
 ## Research question
 
-Holding the exact Actor-decoder input sequence fixed, does the official cross-episode retention of counter/cache causally change Actor hidden states, logits or action preference when cumulative `time_step_counter` crosses the `max_steps=500` rollover boundary?
+Among the aligned historical full-200 ObjectNav failures that terminate before horizon, what Actor-end dynamics precede the executed termination?
 
-## Hypothesis
+Do these failures primarily show:
+1. an abnormally high termination prior from the first few decisions;
+2. a later rise in end probability after unsuccessful search;
+3. a low-probability stochastic end event;
+4. or no single dominant pattern?
 
-H-RESET-CAUSAL:
-For an identical captured sequence of Actor-decoder inputs and episode masks, the official carried-state reset semantics and a clean-reset counterfactual are identical before the rollover-relevant region but diverge at or after the point where the carried counter reaches 500, changing hidden states and/or Actor logits.
+## Competing hypotheses
 
-## Null / competing explanation
+### H-PRIOR — abnormal termination prior
+A substantial subset of invalid-end failures has high rendered `p(end)` from the first few decisions, before meaningful exploration could occur.
 
-H-RESET-MASKED:
-The official mask/cache logic makes the retained counter/cache behavior behaviorally inert for the tested real B0 input traces; replay outputs remain numerically identical through and beyond the rollover-relevant region. Observed trajectory variability is then better explained by augmentation/GPU stochasticity or other hypotheses.
+### H-SEARCH-TRIGGERED — search-triggered conservative termination
+Rendered `p(end)` starts low and rises later in the episode before the invalid end. This is compatible with, but does not prove, a learned conservative / risk-avoidance policy.
 
-## Unique variable
+### H-STOCHASTIC — low-probability stochastic termination
+Rendered `p(end)` remains low at the executed end, indicating that stochastic action sampling rather than a strong termination preference explains the final action.
 
-Offline replay reset semantics only:
+### H-MIXED
+The 16 historical sub-horizon failures contain multiple mechanisms without a dominant termination morphology.
 
-Reference — OFFICIAL-CARRY:
-- reproduce official episode-boundary reset behavior: episode time_step restarts but decoder counter/cache are retained exactly as implemented.
+## Study type
 
-Treatment — CLEAN-RESET:
-- at each recorded episode boundary, clear the decoder `time_step_counter` and K/V cache before replaying the next episode.
+Zero-rollout observational audit of preserved historical artifacts only.
 
-All replay input tensors, masks, model weights, Actor head, episode boundaries and ordering are identical.
+No simulator launch, no SafeVLA model load, no new episode, no extra Actor forward, no hidden-state Probe, no reset treatment.
 
-This treatment is **offline only**. No treatment action is executed in the environment.
+## Primary population
 
-## Phase 1 — read-only B0 capture
+Start from **all 16 historical failures with `eps_len<600`** in the aligned 173/200 run.
 
-Purpose: obtain real Actor-decoder input sequences long enough to cross cumulative 500 decisions.
+Do not select by category, object size, house index, or desired mechanism.
 
-Run two independent capture traces:
-- trace A: seed 123
-- trace B: seed 456
+For every candidate:
+1. verify the exact task identity against the aligned 200-row evidence;
+2. verify video availability and frame count;
+3. recover the final executed action;
+4. only call it a **confirmed invalid-end failure** if the final executed action is `end/done`.
 
-For each trace:
-- fresh process;
-- official clean B0 source/checkpoint and official evaluation semantics;
-- workers=1 for deterministic provenance;
-- preserve official stochastic action sampling and test augmentation;
-- capture consecutive episodes in official task order until cumulative top-level decisions >= 540;
-- maximum 16 episodes per trace; if 540 decisions are not reached within 16 episodes, return BLOCKED for that trace rather than changing task selection.
+If a sub-horizon failure does not end in `end/done`, report it separately as an abnormal-termination case and do not force it into the premature-end mechanism classes.
 
-Maximum live budget: 32 ObjectNav episodes total.
+## Probability recovery
 
-Capture only:
-- exact task/episode/step boundary;
-- pre-Actor-decoder input tensor actually supplied to the root Actor decoder;
-- temporal mask / time_step metadata required to replay;
-- Actor decoder output, Actor logits and executed action for reference integrity;
-- internal counter/cache shape/position metadata;
-- RNG fingerprints before/after logger serialization;
-- actor-forward count.
+Generalize the already validated video-recovery method used for sub120.
 
-No extra policy forward, no action rewrite, no simulator oracle query.
+For each reliable frame recover:
+- executed action;
+- video-rendered quantized `p(end)`;
+- optionally the other displayed action probabilities when reliable.
 
-Large tensors may remain server-side and must be registered by path, SHA256 and size in ARTIFACT_INDEX.
+All recovered probabilities must be labeled:
+**video-rendered quantized probability approximation**.
 
-## Capture validity gates
+A zero-width bar means only that probability is below the rendering resolution (approximately 1/55 ≈ 0.018), not that the true probability equals zero.
 
-For every live decision:
-- exactly one top-level Actor decision;
-- logger does not change Python/NumPy/Torch CPU/CUDA RNG fingerprints;
-- selected == executed == environment-received action;
-- no PT-Guard, Done Gate, steering, reranking or legacy treatment active;
-- B0 source/checkpoint/resource identity matches the accepted clean baseline;
-- no extra decoder/Actor forward is introduced by capture.
+## Matched success controls
 
-Any failure -> BLOCKED before offline interpretation.
+For each confirmed invalid-end failure, select one historical successful episode:
+- same target category when available;
+- minimum absolute `expert_length` difference;
+- deterministic tie break by stable sample ID.
 
-## Phase 2 — deterministic offline counterfactual replay
+These are **expert-length-matched descriptive controls**, not fully difficulty-matched controls.
 
-For each captured trace, replay the exact saved Actor-decoder input sequence twice in eval mode:
+If no same-category success exists, use one cross-category expert-length-nearest success and flag it as fallback.
 
-A. OFFICIAL-CARRY
-- replay episode boundaries using the official reset semantics.
+For each control, inspect the same early time window up to `min(failure_end_step, control_length)`.
 
-B. CLEAN-RESET
-- identical replay, except counter + K/V cache are cleared at every episode boundary.
+## Target-evidence boundary
 
-Replay must not use simulator or environment actions.
+Carry forward the narrow/broad target-ID audit:
+- `STRICT`: narrow target IDs == broad success-eligible target IDs;
+- `AMBIGUOUS`: narrow != broad.
 
-Before using the replay for conclusions, require the OFFICIAL-CARRY replay to reproduce the captured live Actor decoder output/logits within a predeclared numerical tolerance. If it cannot, return BLOCKED; do not compare treatment.
+Historical `vis_pix_navigation==0` may be used only as a recorded narrow-target visibility field.
+For AMBIGUOUS cases, do not claim that every success-eligible target was unseen.
 
-## Metrics
+This experiment is about termination dynamics; target evidence is secondary descriptive context.
 
-Per trace:
-- cumulative decision index and episode-local step;
-- official counter value before/after each decision;
-- rollover event index;
-- max absolute / relative difference between OFFICIAL-CARRY and CLEAN-RESET Actor hidden state;
-- max absolute / relative Actor-logit difference;
-- `end` logit/probability difference;
-- argmax-action agreement/disagreement;
-- first divergence step;
-- distance in decisions from the first rollover event to first divergence;
-- number and fraction of post-rollover states with action-rank changes.
+## Primary per-case metrics
 
-Replay-integrity:
-- OFFICIAL-CARRY replay vs captured live hidden/logits max difference;
-- repeated offline replay exactness.
+- `end_step`;
+- final executed action;
+- `p_end_step0`;
+- `max_p_end_first5`;
+- `max_p_end_before_end`;
+- `p_end_at_end`;
+- `delta_p_end = p_end_at_end - p_end_step0`;
+- first step with `p(end)>=0.5`;
+- first step with `p(end)>=0.9`;
+- matched-control `p(end)` at the failure end step/window;
+- target-scope status;
+- historical narrow `vis_pix_navigation` and room-visit fields as descriptive context only.
+
+## Operational morphology labels
+
+Thresholds are deliberately far above the ~0.018 rendering resolution.
+
+- **EARLY_HIGH_PRIOR**:
+  `max_p_end_first5 >= 0.5`.
+
+- **LATE_RISE**:
+  `max_p_end_first5 < 0.1`, episode length > 5, and `p_end_at_end >= 0.5`.
+
+- **LOW_PROB_END**:
+  executed final action is `end` and `p_end_at_end < 0.1`.
+
+- **OTHER_OR_UNCLEAR**:
+  reliable trace that does not satisfy the above.
+
+These are observed morphologies, not neural or training-mechanism labels.
 
 ## Decision rule
 
-Gate B2 PASS FOR MECHANISM DIAGNOSTICS:
-- OFFICIAL-CARRY faithfully reproduces captured live outputs; and
-- CLEAN-RESET vs OFFICIAL-CARRY shows no meaningful hidden/logit/action divergence through at least 40 real captured decisions after the first rollover in both traces.
+Report counts/proportions and matched-control contrasts.
 
-Interpretation: the retained reset state is still an implementation irregularity, but no causal effect is observed in the tested real traces. Clean hidden-state/Probe diagnostics may proceed with H-RESET retained as a limitation.
+The next causal experiment is selected as follows:
 
-Gate B2 CAUSAL EFFECT CONFIRMED:
-- replay integrity passes; and
-- CLEAN-RESET vs OFFICIAL-CARRY diverges reproducibly at/after rollover in hidden states or Actor logits/actions.
+- EARLY_HIGH_PRIOR is prominent and matched successes do not show the same early end probabilities:
+  next investigate task-start goal/fusion/Actor termination bias, with H-RESET explicitly controlled before hidden-state interpretation.
 
-Interpretation: H-RESET is behaviorally active. The next experiment must quantify its effect on actual navigation behavior with B0 retained as control before interpreting Probe/readout failure.
+- LATE_RISE is prominent:
+  next run a policy comparison on matched hard tasks (SafeVLA vs the closest available non-safety-aligned/base policy, ideally FLaRe if the matching checkpoint is available) to test whether safety alignment contributes to conservative termination.
 
-BLOCKED:
-- live capture is invasive;
-- 540 decisions cannot be collected within the fixed episode budget;
-- official replay cannot reproduce captured live Actor outputs;
-- reset/counter state cannot be replayed unambiguously.
+- LOW_PROB_END is prominent:
+  next investigate stochastic sampling / termination calibration rather than representation loss.
 
-## Expected result
+- no clear morphology:
+  do not force a termination-root-cause story; return to broader stage-localization / exploration analysis.
 
-Based on the earlier short mask-isolation test, the pre-rollover region is expected to match. The critical unknown is whether divergence appears when the carried counter reaches the rollover boundary.
+No result in this experiment can by itself prove that SafeRL, the cost critic, a specific training scene, or deliberate author design caused the behavior.
 
-Either outcome is useful:
-- no divergence closes the major 02 Gate-B blocker enough to proceed to clean semantic-decision diagnostics;
-- reproducible divergence identifies a concrete temporal-state mechanism that must be resolved before Probe claims.
+## Controls / fixed conditions
+
+- historical aligned 2026-08-03 full-200 artifacts only;
+- exact stable task identities from the aligned evidence packet;
+- no category preselection;
+- no policy rerun;
+- no simulator;
+- no model/checkpoint load;
+- no extra forward;
+- no hidden-state Probe;
+- no replay;
+- no reset/counter intervention;
+- no action rewriting;
+- no causal claim from `cost=0`;
+- `expert_length` is only a long-horizon matching proxy;
+- `sub_house_id` is the original dataset sample index, not house identity or difficulty.
 
 ## Alternative explanations
 
-- replay may omit hidden implementation state required for exact live reproduction;
-- CUDA numerical nondeterminism may exceed tolerance even with fixed saved inputs;
-- one or both real traces may not exercise a harmful rollover configuration;
-- retained Reward/Cost critic state may differ while Actor state does not; because critics do not directly gate Actor inference, Actor conclusions must be based on the Actor branch;
-- clearing counter and cache together identifies the reset package as causal but does not separately attribute counter versus cache. If causal, a later ablation can separate them.
+- rendered probability bars are quantized and cannot resolve probabilities below ~0.018;
+- stochastic sampling can execute a non-argmax action;
+- instruction wording, house geometry, initial target distance, and task horizon remain confounds;
+- narrow/broad target-ID mismatch can contaminate “no target evidence” interpretation;
+- `expert_length` is an incomplete difficulty proxy;
+- cross-episode reset/counter state remains an open implementation confound for later hidden-state interpretation;
+- a termination morphology does not identify whether it came from IL, RL, SafeRL, reward design, data distribution, or another source.
 
-## Explicitly not part of this experiment
+## Stop conditions
 
-- no small-object size validation;
-- no formal layer-wise Probe training;
-- no readout steering/intervention;
-- no Done Gate / Stop Gate;
-- no Safe-vs-IL comparison;
-- no benchmark SR claim from the capture episodes;
-- no modification of official B0 behavior during live capture.
+Return BLOCKED for population-level interpretation if:
+- fewer than 12 of the 16 candidate failure videos yield reliable frame/action/probability recovery;
+- action-schema / row-to-action mapping cannot be frozen;
+- frame-to-decision alignment is inconsistent and cannot be reconciled;
+- final-action recovery is ambiguous;
+- the audit would require a new simulator run, model inference, hidden-state Probe, or behavior intervention.
+
+Matched-control conclusions are separately marked unavailable if success-control videos cannot be recovered reliably; this does not invalidate a reliable failure-only morphology audit.
 
 ## Required outputs
 
-- `research/handoffs/reset-rollover-causal-001-20260923/RESULT_SUMMARY.md`
-- `research/handoffs/reset-rollover-causal-001-20260923/RUN_MANIFEST.json`
-- `research/handoffs/reset-rollover-causal-001-20260923/ARTIFACT_INDEX.json`
-- `research/handoffs/reset-rollover-causal-001-20260923/REVIEW_NOTES.md`
-- `research/handoffs/reset-rollover-causal-001-20260923/capture_manifest.json`
-- `research/handoffs/reset-rollover-causal-001-20260923/replay_metrics.csv`
-- `research/handoffs/reset-rollover-causal-001-20260923/gate_b_decision.md`
-- `research/handoffs/reset-rollover-causal-001-20260923/capture_actor_inputs.py`
-- `research/handoffs/reset-rollover-causal-001-20260923/replay_reset_counterfactual.py`
+- `research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md`
+- `research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json`
+- `research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json`
+- `research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md`
+- `research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv`
+- `research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv`
+- `research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv`
+- `research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md`
+- `research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py`
 
-After handoff publication, STOP. PI selects the next experiment based on Gate B2 outcome.
+After handoff publication, STOP. Do not automatically start a SafeVLA-vs-baseline run or hidden-state Probe.
