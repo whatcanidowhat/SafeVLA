@@ -62,6 +62,12 @@ LEGACY_PREMATURE_OLD_EXPERIMENT = "EXP-RESET-ROLLOVER-CAUSAL-001"
 LEGACY_PREMATURE_NEW_CYCLE = "premature-end-dynamics-001-20260923"
 LEGACY_PREMATURE_NEW_EXPERIMENT = "EXP-PREMATURE-END-DYNAMICS-001"
 
+# Narrow append-only-history exception for a PI acknowledgement publishing mistake on 2026-09-23.
+# Commit 0d91... accidentally created a sparse tree containing only LOOP_STATE and the two NEXT files.
+# No execution authorization or research execution was present. A following commit restores the exact
+# full parent tree plus the intended acknowledgement files. Preserve history and exempt only this SHA.
+LEGACY_SPARSE_ACK_COMMIT = "0d91c85df9cd5be8ac9de9d1ab3b6f10cc4a9d5d"
+
 
 def _legacy_smalltarget_review(s):
     a = s.get("authorization", {})
@@ -171,6 +177,44 @@ def validate_legacy_premature_staging(view, old_view, commit_sha):
             and d.get("status") == "DRAFT",
             "legacy premature-end staged JSON mismatch",
         )
+    return s
+
+
+def validate_legacy_sparse_ack(view, old_view, commit_sha):
+    require(commit_sha == LEGACY_SPARSE_ACK_COMMIT, "legacy sparse-ack SHA mismatch")
+    require(old_view is not None and old_view.exists(STATE), "legacy sparse-ack missing parent")
+    s = view.data(STATE)
+    o = old_view.data(STATE)
+    require(
+        o.get("status") == "AWAITING_PI_REVIEW"
+        and o.get("experiment_id") == "EXP-PREMATURE-END-DYNAMICS-001"
+        and o.get("cycle_id") == "premature-end-dynamics-001-20260923",
+        "legacy sparse-ack parent mismatch",
+    )
+    require(
+        s.get("state_version") == o.get("state_version") + 1
+        and s.get("status") == "PI_REVIEW"
+        and s.get("next_actor") == "PI"
+        and s.get("experiment_id") == o.get("experiment_id")
+        and s.get("cycle_id") == o.get("cycle_id")
+        and s.get("instruction_commit") == o.get("instruction_commit")
+        and s.get("claim_id") == o.get("claim_id")
+        and s.get("reviewed_result_commit") == "f79b3cfd19e8f537715d2c321e13885e7303ba1f"
+        and s.get("authorization", {}).get("status") == "NOT_AUTHORIZED",
+        "legacy sparse-ack state mismatch",
+    )
+    md = view.read(NEXT).decode("utf-8")
+    d = view.data(DESIGN)
+    require(re.search(r"^Experiment ID:\s*EXP-PREMATURE-END-DYNAMICS-001\s*$", md, re.M),
+            "legacy sparse-ack Markdown identity mismatch")
+    require(re.search(r"^Status:[ \t]*DRAFT[ \t]*$", md, re.M),
+            "legacy sparse-ack Markdown status mismatch")
+    require(d.get("experiment_id") == "EXP-PREMATURE-END-DYNAMICS-001"
+            and d.get("cycle_id") == "premature-end-dynamics-001-20260923"
+            and d.get("status") == "DRAFT",
+            "legacy sparse-ack JSON mismatch")
+    entries = git(view.root, "ls-tree", "-r", "--name-only", commit_sha).decode().splitlines()
+    require(set(entries) == {STATE, NEXT, DESIGN}, "legacy sparse-ack tree shape mismatch")
     return s
 
 
@@ -471,7 +515,9 @@ def validate_history(root, head="HEAD"):
         old_view = View(root, parent) if parent else None
         audit_tree(v)
         raw_state = v.data(STATE)
-        if sha in LEGACY_PREMATURE_STAGING_COMMITS:
+        if sha == LEGACY_SPARSE_ACK_COMMIT:
+            n = validate_legacy_sparse_ack(v, old_view, sha)
+        elif sha in LEGACY_PREMATURE_STAGING_COMMITS:
             n = validate_legacy_premature_staging(v, old_view, sha)
         elif _legacy_smalltarget_review(raw_state):
             n = validate_legacy_smalltarget_review(v, old_view)
