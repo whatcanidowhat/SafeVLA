@@ -14,7 +14,8 @@ from unittest.mock import patch
 
 import research_loop_claim as claim_module
 from validate_research_loop import (Invalid, View, STATE, validate_snapshot,
-                                    validate_transition, validate_history, validate_index, scan_file, audit_tree)
+                                    validate_transition, validate_history, validate_index, scan_file, audit_tree,
+                                    validate_legacy_premature_staging)
 
 SOURCE = Path(__file__).resolve().parents[1]
 
@@ -176,6 +177,65 @@ class ProtocolTests(unittest.TestCase):
         git(root, "add", STATE)
         git(root, "commit", "-m", "PI publishes final LOOP_STATE authorization")
         self.assertEqual(validate_history(root), 4)
+
+    def test_narrow_legacy_premature_end_staging_exception(self):
+        root = Path(self.temp.name) / "legacy-premature-staging"
+        s0 = fixture(root)
+        parent = git(root, "rev-parse", "HEAD")
+
+        legacy = copy.deepcopy(s0)
+        legacy.update(
+            state_version=25,
+            cycle_id="reset-rollover-causal-001-20260923",
+            experiment_id="EXP-RESET-ROLLOVER-CAUSAL-001",
+            status="PI_REVIEW",
+            next_actor="PI",
+            instruction_commit=None,
+            claim_id=None,
+            updated_by="PI",
+        )
+        legacy["authorization"] = {
+            "status": "NOT_AUTHORIZED", "approved_by": None, "approved_at_utc": None,
+            "expires_at_utc": None, "scope": "RESEARCH_EXPERIMENT",
+            "max_gpu": 1, "max_episodes": 32,
+        }
+        legacy["required_outputs"] = [
+            "research/handoffs/reset-rollover-causal-001-20260923/" + n
+            for n in ["RESULT_SUMMARY.md", "RUN_MANIFEST.json", "ARTIFACT_INDEX.json", "REVIEW_NOTES.md"]
+        ]
+        save(root, STATE, legacy)
+
+        old_design = design(legacy, "DRAFT")
+        save(root, "research/NEXT_EXPERIMENT.json", old_design)
+        save(
+            root,
+            "research/NEXT_EXPERIMENT.md",
+            "Experiment ID: EXP-PREMATURE-END-DYNAMICS-001\nStatus: DRAFT\n",
+        )
+
+        # The normal snapshot validator must still reject this mismatch.
+        with self.assertRaisesRegex(Invalid, "NEXT_EXPERIMENT mismatch"):
+            validate_snapshot(View(root))
+
+        checked = validate_legacy_premature_staging(
+            View(root), View(root, parent), "149ab525a99aa02afd0f4aa61472d3fd1ec2680e"
+        )
+        self.assertEqual(checked["status"], "PI_REVIEW")
+
+        new_design = copy.deepcopy(old_design)
+        new_design.update(
+            experiment_id="EXP-PREMATURE-END-DYNAMICS-001",
+            cycle_id="premature-end-dynamics-001-20260923",
+            status="DRAFT",
+        )
+        save(root, "research/NEXT_EXPERIMENT.json", new_design)
+        checked = validate_legacy_premature_staging(
+            View(root), View(root, parent), "0151b678a822f780190130690f1eb75955e2eca6"
+        )
+        self.assertEqual(checked["experiment_id"], "EXP-RESET-ROLLOVER-CAUSAL-001")
+
+        with self.assertRaisesRegex(Invalid, "exception SHA mismatch"):
+            validate_legacy_premature_staging(View(root), View(root, parent), "0" * 40)
 
     def test_pi_can_revoke_unclaimed_approval(self):
         old = copy.deepcopy(self.s)
