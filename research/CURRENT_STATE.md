@@ -1,54 +1,54 @@
 # Current State
 
-Updated: 2026-09-21（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-RESET-ROLLOVER-CAUSAL-001 is the unique next DRAFT after rereading 02｜SafeVLA; Probe/readout diagnostics are gated on reset-rollover causality.
+Updated: 2026-09-23（Asia/Shanghai）
+Mode: PI_REVIEW. EXP-PREMATURE-END-DYNAMICS-001 is the unique next DRAFT / NOT_AUTHORIZED. Reset-rollover remains deferred as a prerequisite only for future hidden-state/Probe interpretation.
 
 ## Verified Facts
 
-- EXP-B0-REPRO-001A is COMPLETED / PROVENANCE PASS for its narrow goal: two Reference + two Repeat episodes on the same executable B0, stable 2/2 task pairing, and traceable source/resource identity. It does not prove full-200 performance equivalence.
-- Executable B0 remains official reference 2aa82559d272b5f888e53433e258914057f15bed plus the manually accepted local-DINO infrastructure adaptation only.
-- Historical full-200 raw evidence has now been re-aligned to the archived 2026-08-03 run: final W&B table has 200 rows, 173 successes and sum_cost=145; stable task-path normalization pairs 200/200 tasks, and expert_length == gt_episode_len for all 200. This verifies the identity/integrity of that historical run, but does not convert it into a fresh formal B0 rerun.
-- A historical canonical state recorded stop_legal=false while Actor end probability was approximately 0.993365 and greedy action was end. This establishes an illegal/premature-end phenotype in at least one state, not its mechanism.
-- Source audit confirms end is a learned Actor action. Actor hidden beliefs are mapped by a LinearActorHead into an action distribution; end is sampled or mode-selected like other actions. Only after end is executed does ObjectNav successful_if_done() check whether a valid target is visible in the navigation camera within maximum_distance=2.
-- Therefore end_prob≈0.993365 is not an "end Probe"; it is the Actor probability assigned to the end action. The historical Probe AUC values 0.955/0.982/0.992 are a separate exploratory layer-wise decoder Probe for a close-and-visible / stop-legality-like label.
-- Those historical Probe results are hypothesis-generating only: the run contained PT-Guard action rewriting, the saved artifact lacks full episode/task provenance, and step-level splitting risks temporal leakage. They do not prove small-target representation.
-- A later topology audit established that a formal Actor Probe must use the root actor_critic.decoder branch; reward-critic and cost-critic hidden states must not be mixed into Actor representation claims.
-- The old EXP-B0-REPRO-001B-PREFLIGHT approval expired on 2026-09-14T07:34:44Z and control state showed claim_id=null. It has been revoked rather than executed.
-
-## Researcher Observation — not yet independently audited
-
-The researcher reports several target categories such as cup/mug-like objects, basketball, kettle and apple showing navigation SR around 50% in evaluation summaries.
-
-This is a valid phenomenon candidate. It is not yet evidence that "small physical size" is the cause: category, sample size, house/scene difficulty, expert path length, initial distance and occlusion remain alternatives. Basketball/kettle also demonstrate that low-SR category and "small object" cannot be treated as synonyms.
+- EXP-B0-REPRO-001A remains COMPLETED / PROVENANCE PASS for narrow executable-B0 identity/task pairing only.
+- The aligned historical 2026-08-03 full-200 evidence has 200 tasks, 173 successes, 27 failures and total historical Safety Cost 145.
+- 16/27 failures are sub-horizon (`eps_len<600`). This is a high-value premature-termination phenotype but final executed action should be recovered from video before every case is called an invalid end.
+- Official end is a learned Actor action; ObjectNav success is checked only after end is executed via nav-camera visibility of a broad success-eligible target within maximum_distance=2.
+- One historical audited state has `stop_legal=false`, Actor `p(end)≈0.993365`, greedy `end`, and failure. This proves at least one high-confidence illegal-end state, not its mechanism.
+- One recovered 600-step historical failure (sub120) shows the opposite termination morphology: video-rendered `p(done)<~0.018` throughout, with no executed done. This is a quantized video approximation and a single case.
+- Official ObjectNav RL reward configuration sets `step_penalty=0`, `failed_stop_reward=0`, `reached_horizon_reward=0`, `goal_success_reward=10`. This makes an early-exit optimization loophole plausible but does not prove that SafeRL caused historical premature ends.
+- H-RESET remains unresolved: official cross-episode decoder counter/cache carry exists and may matter around rollover. The previous short control only showed masking at fresh-episode start. It must be bounded before formal hidden-state/Probe causal interpretation, but it does not invalidate an artifact-only analysis of already-recorded output probabilities/actions.
+- Historical layer-wise Probe evidence remains exploratory/provenance-limited and is not used in the next experiment.
 
 ## Active Hypotheses
 
-- H-SIZE: policy-independent target physical size contributes to lower ObjectNav SR.
-- H-CATEGORY: semantic category explains low SR independent of size.
-- H-DIFFICULTY: hard houses/tasks, longer expert paths, farther starts or occlusion explain the pattern.
-- H-SAMPLE: category-level ~50% SR is unstable because n is small.
-- H-REPRESENTATION / H-READOUT / H-EXPLORATION / H-TERMINATION / H-SAFETY remain downstream mechanism hypotheses. They should not be selected before the target-size/category phenotype is made precise.
-- H-RESET remains a known confound/risk hypothesis; its causal effect on SR is still unproven and it is not the current mainline.
+- H-PRIOR: some invalid-end failures have an abnormally high termination prior from the first few decisions.
+- H-SEARCH-TRIGGERED: end probability starts low and rises after unsuccessful search; this is compatible with conservative termination but does not identify training cause.
+- H-STOCHASTIC: some invalid ends are low-probability stochastic samples rather than strong termination preferences.
+- H-MIXED: premature-end failures are heterogeneous and no single termination morphology dominates.
+- H-SAFETY-TRAINING: safety-constrained training may contribute to conservative Actor behavior. This is downstream attribution and is **not** tested by the next artifact audit.
+- H-RESET remains a future hidden-state interpretation confound/gate.
 
 ## Unsupported Interpretations
 
-- "Small targets are already proven to cause low SR."
-- "AUC 0.992 proves the model represents small objects."
-- "end_prob≈0.993 is a Probe score or a success probability."
-- "High end probability proves representation loss, readout mismatch, or safety-induced termination."
-- "Safety critic directly gates inference and forces end."
-- "Trajectory max visible pixels is target physical size." It is policy-dependent and may be a consequence/mediator of search and approach behavior.
+- “The authors deliberately trained these exact test scenes/tasks to early-exit.” No evidence yet.
+- “Zero Safety Cost means safety training had no effect.” Official cost events and learned policy behavior are different.
+- “failed_stop_reward=0 proves SafeRL causes premature end.” It only establishes a plausible objective loophole.
+- “All eps_len<600 failures are already proven end actions.” Final executed action will be recovered per case.
+- “High p(end) proves representation loss/readout failure.” It proves an Actor output phenotype only.
+- “sub_house_id is a house index or difficulty score.” It is an original dataset sample index assigned before evaluation-order shuffle.
 
 ## Highest-Value Uncertainty
 
-The runtime measurement path now has strong partial support but incomplete coverage. The open question is no longer whether the first few scenes expose stable geometry; it is whether the same exact path completes all 368 targets / 200 tasks. The previous run cannot answer this because it ended at task 20 from a stdout BrokenPipe.
+Across the 16 historical sub-horizon failures, is premature termination systematically driven by:
+1. a high early termination prior;
+2. a later rise after unsuccessful search;
+3. low-probability stochastic sampling;
+4. or heterogeneous mechanisms?
 
-The prior 20 full tasks are now a frozen cross-cycle overlap control. A fresh run must reproduce them exactly before proceeding, then complete the remaining tasks without transport-dependent output.
+This can be answered from existing videos/tables before spending new GPU episodes or interpreting hidden states.
 
 ## Unique Next Experiment
 
-EXP-SIZE-RUNTIME-METADATA-002: fresh 200-task, outcome-blind runtime geometry extraction with transport-resilient atomic per-task checkpoints. First 20 tasks must exactly reproduce the frozen prior partial run. No size-success association is part of this experiment.
+EXP-PREMATURE-END-DYNAMICS-001: zero-rollout recovery of executed final actions and video-rendered quantized `p(end)` trajectories for all historical sub-horizon failures, with expert_length-nearest historical success controls.
 
+Budget: 0 GPU / 0 episode / 0 model forward / 0 simulator.
+Status: DRAFT / NOT_AUTHORIZED.
 
 ## 02 research-history migration — 2026-09-18
 
