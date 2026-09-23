@@ -1,68 +1,70 @@
 {
-  "experiment_id": "EXP-RESET-ROLLOVER-CAUSAL-001",
-  "cycle_id": "reset-rollover-causal-001-20260923",
+  "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
+  "cycle_id": "premature-end-dynamics-001-20260923",
   "status": "DRAFT",
-  "research_question": "Holding the exact Actor-decoder input sequence fixed, does official cross-episode counter/cache retention causally change Actor hidden states, logits, or action preference when cumulative time_step_counter crosses max_steps=500?",
-  "hypothesis": "H-RESET-CAUSAL: OFFICIAL-CARRY and CLEAN-RESET replay remain matched before the rollover-relevant region but diverge at/after carried counter rollover, showing a causal temporal-state effect.",
-  "competing_explanation": "H-RESET-MASKED: episode masks/cache semantics make retained reset state behaviorally inert on the tested real B0 input traces; replay remains matched through and beyond rollover.",
-  "reference": "02｜SafeVLA Gate B: reset retains Actor/Reward/Cost counters and KV cache; short controlled dirty-cache vs zero-cache test matched, but cumulative counter rollover at max_steps=500 remains untested causally.",
-  "repeat_or_treatment": "Two real read-only B0 capture traces (seed 123 and 456), each until >=540 decisions with max16 episodes; deterministic offline replay under official carried reset versus clean reset. No online treatment.",
-  "unique_variable": "Offline episode-boundary decoder reset semantics only: official counter/cache carry versus clearing counter+KV cache. Identical saved decoder inputs, masks, weights, Actor head and order.",
+  "research_question": "Among aligned historical ObjectNav failures that terminate before horizon, what Actor-end dynamics precede the executed termination: early high termination prior, later search-triggered rise, low-probability stochastic end, or a mixed/no-clear pattern?",
+  "hypothesis": "H-PRIOR / H-SEARCH-TRIGGERED / H-STOCHASTIC are competing observational morphologies; the audit must not assume safety alignment or representation failure is the cause.",
+  "competing_explanation": "H-MIXED: sub-horizon failures may contain heterogeneous mechanisms, and video-rendered probability quantization, stochastic sampling, task difficulty, reset state, language, or scene factors may explain individual cases.",
+  "reference": "Aligned historical 2026-08-03 full-200 run: 173/200 successes, 27 failures, 16 sub-horizon failures; one audited illegal end with p(end)≈0.993365 and one opposite 600-step sub120 trace with rendered p(done)<~0.018 throughout. Official ObjectNav reward config has zero failed-stop/step/horizon reward and +10 success reward, making but not proving an early-exit incentive.",
+  "repeat_or_treatment": "Zero-rollout observational audit of existing historical videos/tables. Confirm final end actions for all 16 sub-horizon failures, recover quantized p(end) traces, and compare to one expert_length-nearest historical success control per case. No treatment.",
+  "unique_variable": "Primary analysis contrast is termination-time dynamics within confirmed invalid-end failures and versus deterministic expert_length-nearest successful controls; no policy/environment variable is manipulated.",
   "fixed_conditions": [
-    "Clean official B0 source/checkpoint/runtime identity",
-    "Live capture preserves official stochastic sampling and test augmentation",
-    "workers=1 and fresh process per capture trace",
-    "No PT-Guard, Done Gate, steering, reranking, action rewrite or extra oracle query",
-    "Exactly one normal Actor decision/forward per environment decision",
-    "Capture must preserve RNG fingerprints and selected/executed/environment-received action identity",
-    "Offline replay uses exact captured Actor-decoder inputs and episode masks",
-    "No simulator/environment action during counterfactual replay",
-    "No Probe/readout/size/intervention or benchmark SR analysis"
+    "Use only aligned historical 2026-08-03 full-200 artifacts",
+    "Start from all 16 eps_len<600 failures; no category/size/house preselection",
+    "Confirm final executed action from video before labeling invalid-end",
+    "Use the validated video-rendered probability extraction semantics; zero bar means below ~1/55 resolution, not true zero",
+    "No simulator, model/checkpoint load, new episode, Actor forward, hidden-state Probe, replay, reset treatment, or action rewrite",
+    "expert_length is only a long-horizon matching proxy",
+    "sub_house_id is original dataset sample index, not house identity or difficulty",
+    "Carry narrow==broad target-scope status; do not overinterpret narrow visibility when scope is ambiguous",
+    "Do not infer SafeRL causation, cost-critic gating, deliberate scene-specific training, or data leakage from termination morphology alone"
   ],
   "metrics": [
-    "Capture actor-forward/RNG/action-integrity checks",
-    "OFFICIAL-CARRY replay fidelity versus captured live hidden/logits",
-    "First cumulative rollover index",
-    "OFFICIAL-CARRY vs CLEAN-RESET hidden max abs/relative difference",
-    "Actor-logit max abs/relative difference",
-    "End-logit/probability difference",
-    "Argmax-action agreement and first divergence step",
-    "Post-rollover action-rank change fraction",
-    "Deterministic repeated-replay exactness"
+    "Reliable failure traces recovered / 16",
+    "Final executed action and end_step",
+    "p_end_step0 and max_p_end_first5",
+    "max_p_end_before_end and p_end_at_end",
+    "delta_p_end",
+    "first step p(end)>=0.5 and >=0.9",
+    "EARLY_HIGH_PRIOR / LATE_RISE / LOW_PROB_END / OTHER_OR_UNCLEAR counts",
+    "Matched-success p(end) in the corresponding early window",
+    "Target-scope EXACT/AMBIGUOUS and historical narrow visibility/room fields as descriptive context"
   ],
-  "expected_result": "Pre-rollover outputs match; the experiment determines whether real captured inputs produce divergence after carried counter rollover. No divergence weakens H-RESET enough to proceed to clean Probe diagnostics; reproducible divergence makes reset a causal mechanism requiring behavioral quantification first.",
-  "falsifying_result": "H-RESET-CAUSAL is weakened if both real traces show faithful replay and no meaningful carry-vs-clean divergence for at least 40 decisions after rollover.",
+  "expected_result": "The experiment should select one next causal branch only if a clear termination morphology is observed; otherwise it should explicitly return NO_CLEAR_TERMINATION_PATTERN rather than forcing a mechanism.",
+  "falsifying_result": "Any single leading termination hypothesis is weakened if the 16 confirmed sub-horizon failures are heterogeneous or matched successes show similar p(end) dynamics.",
   "alternative_explanations": [
-    "Replay may miss hidden live state needed for exact reproduction",
-    "CUDA numerical nondeterminism may exceed tolerance",
-    "Selected traces may not exercise a harmful rollover configuration",
-    "Critic reset state may differ without affecting Actor because critics do not directly gate inference",
-    "A causal reset-package effect would not yet separate counter from cache"
+    "Rendered action probabilities are quantized and sub-resolution mass is invisible",
+    "Stochastic sampling can execute non-argmax actions",
+    "Instruction template, house geometry, initial distance, and long-horizon task difficulty remain confounds",
+    "narrow/broad target-ID mismatch can contaminate no-target-evidence interpretation",
+    "expert_length is an incomplete difficulty proxy",
+    "Cross-episode reset/counter state remains an open confound for later hidden-state interpretation",
+    "Observed termination dynamics do not identify whether the cause is IL, RL, SafeRL, reward design, data distribution, or implementation"
   ],
   "stop_conditions": [
-    "Live capture changes RNG/action/history/cache/forward count/environment semantics",
-    "A trace fails to reach 540 decisions within 16 episodes",
-    "Official-carry replay cannot reproduce captured live Actor outputs within predeclared tolerance",
-    "Reset state cannot be replayed unambiguously",
-    "Any online reset treatment, Probe training, steering or behavior intervention would start"
+    "Fewer than 12 of 16 candidate failure traces can be recovered reliably",
+    "Action schema or row-to-action mapping cannot be frozen",
+    "Frame-to-decision alignment cannot be reconciled",
+    "Final action or p(end) extraction is ambiguous",
+    "Completion would require simulator/model execution, hidden-state Probe, replay, reset treatment, or behavior intervention"
   ],
   "command": [
     "python3",
-    "research/handoffs/reset-rollover-causal-001-20260923/capture_actor_inputs.py"
+    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
   ],
   "required_outputs": [
-    "research/handoffs/reset-rollover-causal-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/capture_manifest.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/replay_metrics.csv",
-    "research/handoffs/reset-rollover-causal-001-20260923/gate_b_decision.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/capture_actor_inputs.py",
-    "research/handoffs/reset-rollover-causal-001-20260923/replay_reset_counterfactual.py"
+    "research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
   ],
   "resources": {
-    "max_gpu": 1,
-    "max_episodes": 32
+    "max_gpu": 0,
+    "max_episodes": 0
   }
 }
