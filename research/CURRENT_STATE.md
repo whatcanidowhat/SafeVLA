@@ -1,54 +1,52 @@
 # Current State
 
 Updated: 2026-09-23（Asia/Shanghai）
-Mode: EXP-PREMATURE-END-DYNAMICS-001 completed; AWAITING_PI_REVIEW / next_actor PI. Executor stopped; no further experiment approved.
+Mode: PI_REVIEW. EXP-CLEAN-B0-PREMATURE-END-REPRO-001 is the unique next DRAFT / NOT_AUTHORIZED.
 
 ## Verified Facts
 
-- EXP-B0-REPRO-001A remains COMPLETED / PROVENANCE PASS for narrow executable-B0 identity/task pairing only.
-- The aligned historical 2026-08-03 full-200 evidence has 200 tasks, 173 successes, 27 failures and total historical Safety Cost 145.
-- 16/27 failures are sub-horizon (`eps_len<600`). This is a high-value premature-termination phenotype but final executed action should be recovered from video before every case is called an invalid end.
-- Official end is a learned Actor action; ObjectNav success is checked only after end is executed via nav-camera visibility of a broad success-eligible target within maximum_distance=2.
-- One historical audited state has `stop_legal=false`, Actor `p(end)≈0.993365`, greedy `end`, and failure. This proves at least one high-confidence illegal-end state, not its mechanism.
-- One recovered 600-step historical failure (sub120) shows the opposite termination morphology: video-rendered `p(done)<~0.018` throughout, with no executed done. This is a quantized video approximation and a single case.
-- Official ObjectNav RL reward configuration sets `step_penalty=0`, `failed_stop_reward=0`, `reached_horizon_reward=0`, `goal_success_reward=10`. This makes an early-exit optimization loophole plausible but does not prove that SafeRL caused historical premature ends.
-- H-RESET remains unresolved: official cross-episode decoder counter/cache carry exists and may matter around rollover. The previous short control only showed masking at fresh-episode start. It must be bounded before formal hidden-state/Probe causal interpretation, but it does not invalidate an artifact-only analysis of already-recorded output probabilities/actions.
-- Historical layer-wise Probe evidence remains exploratory/provenance-limited and is not used in the next experiment.
+- Result commit `f79b3cfd19e8f537715d2c321e13885e7303ba1f` completed EXP-PREMATURE-END-DYNAMICS-001 and its result CI passed.
+- All 16/16 historical sub-horizon failures were recovered; all final executed actions were `end`.
+- All failure first-decision rendered `p(end)` bars were sub-resolution, and all preterminal maxima stayed below 0.5. Every >=0.5 crossing happened on the terminal decision.
+- Frozen labels were LATE_RISE 13/16, EARLY_HIGH_PRIOR 1/16, OTHER_OR_UNCLEAR 2/16, LOW_PROB_END 0/16. LATE_RISE here does not establish gradual buildup.
+- The lone EARLY_HIGH_PRIOR case lasted two decisions, so its terminal end falls inside the first-five window; this is not evidence for a high task-start prior.
+- 10/11 unique matched successful controls also first crossed 0.5 at their own successful terminal decision. Abrupt terminal `p(end)` increase is not failure-specific.
+- Historical matching is weak for causal interpretation: 13/16 control windows include successful termination; controls are reused; expert-length gap median=34, range=2–133.
+- The historical 2026-08-03 run used commit `60bc54fbdedaf5745d0476c25321e808708273aa`. Its evaluator called `successful_if_done(strict_success=False)` before `agent.get_action`; the visibility path can issue `GetVisibleObjects` on a cache miss.
+- Official reference `2aa82559...` does not contain that pre-decision call. The historical run is therefore hypothesis-generating rather than formal clean-B0 trajectory evidence under the current Baseline Contract. A behavioral effect of the extra query is not proven.
+- EXP-B0-REPRO-001A remains the only narrow executable-B0 provenance pass; a formal clean full-200 B0 termination profile is still missing.
 
-## Active Hypotheses
+## Hypothesis Status
 
-- H-PRIOR: some invalid-end failures have an abnormally high termination prior from the first few decisions.
-- H-SEARCH-TRIGGERED: end probability starts low and rises after unsuccessful search; this is compatible with conservative termination but does not identify training cause.
-- H-STOCHASTIC: some invalid ends are low-probability stochastic samples rather than strong termination preferences.
-- H-MIXED: premature-end failures are heterogeneous and no single termination morphology dominates.
-- H-SAFETY-TRAINING: safety-constrained training may contribute to conservative Actor behavior. This is downstream attribution and is **not** tested by the next artifact audit.
-- H-RESET remains a future hidden-state interpretation confound/gate.
+- H-PRIOR: weakened as a population explanation.
+- H-SEARCH-TRIGGERED: not established; the observed jump is terminal-only and also occurs in successful termination.
+- H-STOCHASTIC under the preregistered terminal <0.1 criterion: not supported in this historical census.
+- H-INVALID-END: verified historically, not yet under clean B0.
+- H-SAFETY-TRAINING: untested.
+- H-RESET: unresolved and still gates later hidden-state / Probe interpretation.
 
 ## Unsupported Interpretations
 
-- “The authors deliberately trained these exact test scenes/tasks to early-exit.” No evidence yet.
-- “Zero Safety Cost means safety training had no effect.” Official cost events and learned policy behavior are different.
-- “failed_stop_reward=0 proves SafeRL causes premature end.” It only establishes a plausible objective loophole.
-- “All eps_len<600 failures are already proven end actions.” Final executed action will be recovered per case.
-- “High p(end) proves representation loss/readout failure.” It proves an Actor output phenotype only.
-- “sub_house_id is a house index or difficulty score.” It is an original dataset sample index assigned before evaluation-order shuffle.
+- “13/16 LATE_RISE proves search failure gradually causes conservative termination.”
+- “The terminal p(end) jump is failure-specific.”
+- “SafeRL caused the historical invalid ends.”
+- “The historical 173/200 run is a formal clean B0 result.”
+- “The extra pre-decision GetVisibleObjects definitely changed behavior.” It is a provenance violation/potential side effect, not a demonstrated causal effect.
 
 ## Highest-Value Uncertainty
 
-Across the 16 historical sub-horizon failures, is premature termination systematically driven by:
-1. a high early termination prior;
-2. a later rise after unsuccessful search;
-3. low-probability stochastic sampling;
-4. or heterogeneous mechanisms?
-
-This can be answered from existing videos/tables before spending new GPU episodes or interpreting hidden states.
+Does the invalid-end phenotype survive a complete clean executable-B0 evaluation when the historical pre-decision oracle/debug instrumentation is absent?
 
 ## Unique Next Experiment
 
-EXP-PREMATURE-END-DYNAMICS-001: zero-rollout recovery of executed final actions and video-rendered quantized `p(end)` trajectories for all historical sub-horizon failures, with expert_length-nearest historical success controls.
+`EXP-CLEAN-B0-PREMATURE-END-REPRO-001`: one complete clean-B0 200-task ObjectNav evaluation, then offline termination classification from the produced official artifacts.
 
-Budget used: 0 GPU / 0 episode / 0 model forward / 0 simulator.
-Status: COMPLETED / AWAITING_PI_REVIEW. See the latest handoff below.
+Planned budget: max 1 GPU / max 200 episodes.
+Status: DRAFT / PI_REVIEW / NOT_AUTHORIZED.
+
+## Control State
+
+Previous result `f79b3cfd...` has been PI-acknowledged. Current fresh cycle is `clean-b0-premature-end-repro-001-20260923`; no claim or execution is authorized until explicit PI/user approval and green approval CI.
 
 ## 02 research-history migration — 2026-09-18
 
