@@ -48,6 +48,20 @@ LEGACY_MISSING_DESIGN_FIELDS = {
     "alternative_explanations", "command",
 }
 
+# Narrow append-only-history exception for the 2026-09-23 premature-end PI staging incident.
+# Three intermediate commits staged a new NEXT_EXPERIMENT before LOOP_STATE moved to the
+# new cycle. No claim or research execution occurred. Keep the commits in history rather
+# than rewriting them, and exempt only these exact snapshots.
+LEGACY_PREMATURE_STAGING_COMMITS = {
+    "149ab525a99aa02afd0f4aa61472d3fd1ec2680e",
+    "0151b678a822f780190130690f1eb75955e2eca6",
+    "7fba4aedfaa9978581ba3bee643c5ffe953ddb35",
+}
+LEGACY_PREMATURE_OLD_CYCLE = "reset-rollover-causal-001-20260923"
+LEGACY_PREMATURE_OLD_EXPERIMENT = "EXP-RESET-ROLLOVER-CAUSAL-001"
+LEGACY_PREMATURE_NEW_CYCLE = "premature-end-dynamics-001-20260923"
+LEGACY_PREMATURE_NEW_EXPERIMENT = "EXP-PREMATURE-END-DYNAMICS-001"
+
 
 def _legacy_smalltarget_review(s):
     a = s.get("authorization", {})
@@ -108,6 +122,55 @@ def validate_legacy_smalltarget_review(view, old_view=None):
         if not _legacy_smalltarget_review(o):
             require(o.get("instruction_commit") is None and o.get("claim_id") is None,
                     "legacy review replaced a claimed/executing cycle")
+    return s
+
+
+def validate_legacy_premature_staging(view, old_view, commit_sha):
+    require(commit_sha in LEGACY_PREMATURE_STAGING_COMMITS,
+            "legacy premature-end staging exception SHA mismatch")
+    s = view.data(STATE)
+    require(
+        s.get("state_version") == 25
+        and s.get("cycle_id") == LEGACY_PREMATURE_OLD_CYCLE
+        and s.get("experiment_id") == LEGACY_PREMATURE_OLD_EXPERIMENT
+        and s.get("status") == "PI_REVIEW"
+        and s.get("next_actor") == "PI"
+        and s.get("instruction_commit") is None
+        and s.get("claim_id") is None
+        and s.get("authorization", {}).get("status") == "NOT_AUTHORIZED",
+        "legacy premature-end staging state mismatch",
+    )
+    schema = view.data(SCHEMA)
+    errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(s))
+    require(not errors, "legacy premature-end staging state schema defect")
+    require(old_view is not None and old_view.exists(STATE),
+            "legacy premature-end staging missing parent")
+    parent_state = old_view.data(STATE)
+    require(parent_state.get("instruction_commit") is None and parent_state.get("claim_id") is None,
+            "legacy premature-end staging replaced a claimed state")
+
+    md = view.read(NEXT).decode("utf-8")
+    md_ids = re.findall(r"^Experiment ID:\s*(\S+)\s*$", md, re.M)
+    require(md_ids == [LEGACY_PREMATURE_NEW_EXPERIMENT],
+            "legacy premature-end staged Markdown mismatch")
+    require(re.search(r"^Status:[ \t]*DRAFT[ \t]*$", md, re.M),
+            "legacy premature-end staged Markdown status mismatch")
+
+    d = view.data(DESIGN)
+    if commit_sha == "149ab525a99aa02afd0f4aa61472d3fd1ec2680e":
+        require(
+            d.get("experiment_id") == LEGACY_PREMATURE_OLD_EXPERIMENT
+            and d.get("cycle_id") == LEGACY_PREMATURE_OLD_CYCLE
+            and d.get("status") == "DRAFT",
+            "legacy premature-end first staged JSON mismatch",
+        )
+    else:
+        require(
+            d.get("experiment_id") == LEGACY_PREMATURE_NEW_EXPERIMENT
+            and d.get("cycle_id") == LEGACY_PREMATURE_NEW_CYCLE
+            and d.get("status") == "DRAFT",
+            "legacy premature-end staged JSON mismatch",
+        )
     return s
 
 
@@ -408,7 +471,9 @@ def validate_history(root, head="HEAD"):
         old_view = View(root, parent) if parent else None
         audit_tree(v)
         raw_state = v.data(STATE)
-        if _legacy_smalltarget_review(raw_state):
+        if sha in LEGACY_PREMATURE_STAGING_COMMITS:
+            n = validate_legacy_premature_staging(v, old_view, sha)
+        elif _legacy_smalltarget_review(raw_state):
             n = validate_legacy_smalltarget_review(v, old_view)
         elif _legacy_smalltarget_unclaimed_approval(raw_state):
             n = validate_legacy_smalltarget_unclaimed_approval(v, old_view)
