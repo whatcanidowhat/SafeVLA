@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "state_version": 25,
-  "cycle_id": "reset-rollover-causal-001-20260923",
-  "experiment_id": "EXP-RESET-ROLLOVER-CAUSAL-001",
+  "state_version": 26,
+  "cycle_id": "premature-end-dynamics-001-20260923",
+  "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
@@ -16,20 +16,20 @@
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 1,
-    "max_episodes": 32
+    "max_gpu": 0,
+    "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/reset-rollover-causal-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/capture_manifest.json",
-    "research/handoffs/reset-rollover-causal-001-20260923/replay_metrics.csv",
-    "research/handoffs/reset-rollover-causal-001-20260923/gate_b_decision.md",
-    "research/handoffs/reset-rollover-causal-001-20260923/capture_actor_inputs.py",
-    "research/handoffs/reset-rollover-causal-001-20260923/replay_reset_counterfactual.py"
+    "research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv",
+    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md",
+    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-23T08:20:00+00:00"
+  "updated_at_utc": "2026-09-23T08:52:00+00:00"
 }
