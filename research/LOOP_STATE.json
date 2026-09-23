@@ -1,35 +1,36 @@
 {
   "schema_version": "1.0",
-  "state_version": 30,
-  "cycle_id": "premature-end-dynamics-001-20260923",
-  "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
+  "state_version": 31,
+  "cycle_id": "clean-b0-premature-end-repro-001-20260923",
+  "experiment_id": "EXP-CLEAN-B0-PREMATURE-END-REPRO-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": "681cd28355cfa79a6eaec7f663d9b3776da7f37e",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+  "instruction_commit": null,
   "reviewed_result_commit": "f79b3cfd19e8f537715d2c321e13885e7303ba1f",
-  "claim_id": "37f4a6ae9b5d41ada6753d75f2b30caa",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
-    "approved_by": "PI",
-    "approved_at_utc": "2026-09-23T09:10:00+00:00",
-    "expires_at_utc": "2026-09-24T09:10:00+00:00",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 200
   },
   "required_outputs": [
-    "research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/episode_results.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/termination_summary.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/historical_overlap.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/b0_provenance.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/analyze_clean_b0_termination.py",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-23T15:20:00+00:00"
+  "updated_at_utc": "2026-09-23T15:30:00+00:00"
 }

@@ -1,70 +1,67 @@
 {
-  "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
-  "cycle_id": "premature-end-dynamics-001-20260923",
+  "experiment_id": "EXP-CLEAN-B0-PREMATURE-END-REPRO-001",
+  "cycle_id": "clean-b0-premature-end-repro-001-20260923",
   "status": "DRAFT",
-  "research_question": "Among aligned historical ObjectNav failures that terminate before horizon, what Actor-end dynamics precede the executed termination: early high termination prior, later search-triggered rise, low-probability stochastic end, or a mixed/no-clear pattern?",
-  "hypothesis": "H-PRIOR / H-SEARCH-TRIGGERED / H-STOCHASTIC are competing observational morphologies; the audit must not assume safety alignment or representation failure is the cause.",
-  "competing_explanation": "H-MIXED: sub-horizon failures may contain heterogeneous mechanisms, and video-rendered probability quantization, stochastic sampling, task difficulty, reset state, language, or scene factors may explain individual cases.",
-  "reference": "Aligned historical 2026-08-03 full-200 run: 173/200 successes, 27 failures, 16 sub-horizon failures; one audited illegal end with p(end)≈0.993365 and one opposite 600-step sub120 trace with rendered p(done)<~0.018 throughout. Official ObjectNav reward config has zero failed-stop/step/horizon reward and +10 success reward, making but not proving an early-exit incentive.",
-  "repeat_or_treatment": "Zero-rollout observational audit of existing historical videos/tables. Confirm final end actions for all 16 sub-horizon failures, recover quantized p(end) traces, and compare to one expert_length-nearest historical success control per case. No treatment.",
-  "unique_variable": "Primary analysis contrast is termination-time dynamics within confirmed invalid-end failures and versus deterministic expert_length-nearest successful controls; no policy/environment variable is manipulated.",
+  "research_question": "Under executable clean B0, does a complete 200-task ObjectNav evaluation still exhibit sub-horizon failures whose final executed action is end?",
+  "hypothesis": "H-PERSIST: clean B0 still contains at least some confirmed sub-horizon invalid-end failures.",
+  "competing_explanation": "H-HISTORICAL-PROVENANCE: the historical modified-evaluator run has a materially different termination profile, and clean B0 has few or no sub-horizon invalid-end failures.",
+  "reference": "EXP-PREMATURE-END-DYNAMICS-001 verified 16 historical sub-horizon failures ending with end, but terminal p(end) jumps were also seen in matched successes. The historical 2026-08-03 evaluator at commit 60bc54f... also called successful_if_done before agent.get_action, which can issue GetVisibleObjects on cache miss; that run is therefore not formal clean-B0 trajectory evidence.",
+  "repeat_or_treatment": "One complete 200-task ObjectNav evaluation under accepted executable B0. Historical 173/200 evidence is descriptive reference only, not a causal treatment arm.",
+  "unique_variable": "Evaluator provenance is clean executable B0 with non-approved historical instrumentation absent; no online treatment is introduced.",
   "fixed_conditions": [
-    "Use only aligned historical 2026-08-03 full-200 artifacts",
-    "Start from all 16 eps_len<600 failures; no category/size/house preselection",
-    "Confirm final executed action from video before labeling invalid-end",
-    "Use the validated video-rendered probability extraction semantics; zero bar means below ~1/55 resolution, not true zero",
-    "No simulator, model/checkpoint load, new episode, Actor forward, hidden-state Probe, replay, reset treatment, or action rewrite",
-    "expert_length is only a long-horizon matching proxy",
-    "sub_house_id is original dataset sample index, not house identity or difficulty",
-    "Carry narrow==broad target-scope status; do not overinterpret narrow visibility when scope is ambiguous",
-    "Do not infer SafeRL causation, cost-critic gating, deliberate scene-specific training, or data leakage from termination morphology alone"
+    "Use /nvme2/user/qyy/SafeVLA_baseline_clean",
+    "Official reference 2aa82559d272b5f888e53433e258914057f15bed plus only the accepted local-DINO infrastructure adaptation",
+    "Use the previously frozen SafeVLA checkpoint, local DINO checkpoint/source, and ObjectNavType minival dataset identities",
+    "Exactly 200 tasks; horizon 600; seed 123; workers 4; shuffle on; test augmentation on; greedy false",
+    "Official success/end/metric/action semantics unchanged",
+    "No PT-Guard, Done Gate, shadow logger, steering, reranking, Probe, action rewrite, extra policy forward, or extra pre-decision simulator/oracle query",
+    "Record exact code/resource/runtime provenance before execution"
   ],
   "metrics": [
-    "Reliable failure traces recovered / 16",
-    "Final executed action and end_step",
-    "p_end_step0 and max_p_end_first5",
-    "max_p_end_before_end and p_end_at_end",
-    "delta_p_end",
-    "first step p(end)>=0.5 and >=0.9",
-    "EARLY_HIGH_PRIOR / LATE_RISE / LOW_PROB_END / OTHER_OR_UNCLEAR counts",
-    "Matched-success p(end) in the corresponding early window",
-    "Target-scope EXACT/AMBIGUOUS and historical narrow visibility/room fields as descriptive context"
+    "Official SR, Safety Cost, SEL and episode-length distribution",
+    "Failures with eps_len<600",
+    "Final executed action for every sub-horizon failure and confirmed invalid-end count",
+    "Horizon failures and final action",
+    "Quantized video p(end) start/preterminal/terminal for clean invalid-end cases",
+    "Descriptive outcomes for the 16 historical invalid-end task IDs",
+    "200/200 task/result/video completeness and provenance"
   ],
-  "expected_result": "The experiment should select one next causal branch only if a clear termination morphology is observed; otherwise it should explicitly return NO_CLEAR_TERMINATION_PATTERN rather than forcing a mechanism.",
-  "falsifying_result": "Any single leading termination hypothesis is weakened if the 16 confirmed sub-horizon failures are heterogeneous or matched successes show similar p(end) dynamics.",
+  "expected_result": "Establish the first formal clean-B0 full-200 termination profile and decide whether premature invalid-end remains a clean-B0 mechanism target.",
+  "falsifying_result": "H-PERSIST is weakened if the clean full-200 run has zero confirmed sub-horizon invalid-end failures.",
   "alternative_explanations": [
-    "Rendered action probabilities are quantized and sub-resolution mass is invisible",
-    "Stochastic sampling can execute non-argmax actions",
-    "Instruction template, house geometry, initial distance, and long-horizon task difficulty remain confounds",
-    "narrow/broad target-ID mismatch can contaminate no-target-evidence interpretation",
-    "expert_length is an incomplete difficulty proxy",
-    "Cross-episode reset/counter state remains an open confound for later hidden-state interpretation",
-    "Observed termination dynamics do not identify whether the cause is IL, RL, SafeRL, reward design, data distribution, or implementation"
+    "One stochastic seed does not estimate run-to-run variance",
+    "Four-worker scheduling can change individual stochastic trajectories",
+    "Accepted local-DINO loading is an infrastructure adaptation rather than proven bitwise historical equivalence",
+    "The historical extra visibility query may be behaviorally inert despite violating the current B0 diagnostic contract",
+    "Cross-episode decoder counter/cache retention remains part of official B0",
+    "Clean invalid-end persistence would not identify safety training, representation, readout, reward design, or sampling as the cause"
   ],
   "stop_conditions": [
-    "Fewer than 12 of 16 candidate failure traces can be recovered reliably",
-    "Action schema or row-to-action mapping cannot be frozen",
-    "Frame-to-decision alignment cannot be reconciled",
-    "Final action or p(end) extraction is ambiguous",
-    "Completion would require simulator/model execution, hidden-state Probe, replay, reset treatment, or behavior intervention"
+    "Frozen B0/code/checkpoint/DINO/dataset identity does not match",
+    "Any unapproved evaluator/policy hook or extra pre-decision query is active",
+    "Seed/workers/shuffle/augmentation/greedy settings differ",
+    "The evaluation cannot complete exactly 200 tasks",
+    "Strict resource loading fails",
+    "Task identities are duplicated/missing or cannot align 200/200"
   ],
   "command": [
-    "python3",
-    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
+    "bash",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
   ],
   "required_outputs": [
-    "research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv",
-    "research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md",
-    "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/episode_results.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/termination_summary.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/historical_overlap.csv",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/b0_provenance.json",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/analyze_clean_b0_termination.py",
+    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
   ],
   "resources": {
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 200
   }
 }
