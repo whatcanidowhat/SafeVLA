@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-09-21（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-SEMANTIC-DECISION-MISMATCH-001 is the unique next DRAFT; previous stage-only audit superseded before approval.
+Mode: PI_REVIEW. EXP-RESET-ROLLOVER-CAUSAL-001 is the unique next DRAFT after rereading 02｜SafeVLA; Probe/readout diagnostics are gated on reset-rollover causality.
 
 ## Verified Facts
 
@@ -187,3 +187,12 @@ Key carried-forward facts:
 - therefore the next experiment must distinguish exploration-before-evidence, representation weakness, Actor-use/readout mismatch and termination calibration on clean B0.
 
 The new experiment uses targeted historical cases only for diagnostic selection, reruns them under clean B0, recomputes fresh phenotypes, performs episode/house-heldout target-visible probes, and—only offline—tests Actor-head sensitivity to the clean L3 probe direction versus random/shuffled controls.
+
+
+## 2026-09-23 — PI reread of 02｜SafeVLA changes experiment order
+
+Direct reread of the migrated 02 branch recovered an explicit methodological stop that the previous draft violated: Gate B was FAIL because official reset retains decoder counters/KV cache across episodes, with cumulative rollover at max_steps=500. The historical short controlled test only showed that old cache is masked at a fresh episode start; it did not eliminate later rollover effects.
+
+Therefore the clean Probe/readout experiment cannot yet be the next formal experiment. Hidden-state interpretation must first bound H-RESET on real B0 input traces.
+
+The previous `EXP-SEMANTIC-DECISION-MISMATCH-001` is superseded before approval, not executed. Its representation/use design remains queued and should return only if Gate B2 passes or is otherwise causally bounded.

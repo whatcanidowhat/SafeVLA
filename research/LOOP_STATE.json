@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "state_version": 24,
-  "cycle_id": "semantic-decision-mismatch-001-20260922",
-  "experiment_id": "EXP-SEMANTIC-DECISION-MISMATCH-001",
+  "state_version": 25,
+  "cycle_id": "reset-rollover-causal-001-20260923",
+  "experiment_id": "EXP-RESET-ROLLOVER-CAUSAL-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
@@ -17,22 +17,19 @@
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 1,
-    "max_episodes": 36
+    "max_episodes": 32
   },
   "required_outputs": [
-    "research/handoffs/semantic-decision-mismatch-001-20260922/RESULT_SUMMARY.md",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/RUN_MANIFEST.json",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/ARTIFACT_INDEX.json",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/REVIEW_NOTES.md",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_task_manifest.csv",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/episode_summary.csv",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/step_trace.parquet",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/probe_results.csv",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/readout_sensitivity.csv",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/failure_path_analysis.md",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/diagnostic_runner.py",
-    "research/handoffs/semantic-decision-mismatch-001-20260922/offline_probe_readout.py"
+    "research/handoffs/reset-rollover-causal-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/reset-rollover-causal-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/reset-rollover-causal-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/reset-rollover-causal-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/reset-rollover-causal-001-20260923/capture_manifest.json",
+    "research/handoffs/reset-rollover-causal-001-20260923/replay_metrics.csv",
+    "research/handoffs/reset-rollover-causal-001-20260923/gate_b_decision.md",
+    "research/handoffs/reset-rollover-causal-001-20260923/capture_actor_inputs.py",
+    "research/handoffs/reset-rollover-causal-001-20260923/replay_reset_counterfactual.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-22T12:05:00+00:00"
+  "updated_at_utc": "2026-09-23T08:20:00+00:00"
 }

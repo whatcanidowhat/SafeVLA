@@ -152,3 +152,13 @@ No model execution is authorized by this staging commit.
 | EXP-SEMANTIC-DECISION-MISMATCH-001 | DRAFT / NOT_AUTHORIZED | Clean-B0 targeted causal-path diagnosis: exploration -> representation -> Actor use/readout -> termination |
 
 Planned max budget: 1 GPU, 36 diagnostic episodes. No online behavior intervention is part of this draft.
+
+
+## 2026-09-23 — 02 Gate-B order restored
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-SEMANTIC-DECISION-MISMATCH-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | 02 branch explicitly blocks formal hidden-state/Probe interpretation until reset rollover is causally bounded |
+| EXP-RESET-ROLLOVER-CAUSAL-001 | DRAFT / NOT_AUTHORIZED | Real-input offline counterfactual test of official carried reset vs clean reset around max_steps=500 rollover |
+
+Planned budget: max1 GPU, max32 read-only B0 capture episodes; offline replay has no simulator actions.

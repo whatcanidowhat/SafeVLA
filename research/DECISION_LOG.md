@@ -350,3 +350,30 @@ Fresh analysis:
 - 结果直接决定下一干预属于exploration、representation、readout/calibration还是history/objective。
 
 Current status remains DRAFT / PI_REVIEW / NOT_AUTHORIZED.
+
+
+## 2026-09-23 — DEC-02-REREAD-GATEB-001：按02原始Gate顺序重排实验
+
+User asked to first read `02｜SafeVLA研究` and then design the experiment.
+
+PI reread found the decisive omitted constraint:
+- Gate A PASS；
+- Gate C PASS（限定审计范围）；
+- Gate B FAIL：official reset不清Actor/Reward/Cost counter与KV cache；
+- short decoder control只证明新episode开头旧cache被mask，不能排除累计counter在500 rollover后的history/logit/action影响；
+- 02明确要求在Gate B未关闭前停止正式Probe/hidden-state机制解释。
+
+Decision:
+supersede未批准的 `EXP-SEMANTIC-DECISION-MISMATCH-001`。唯一下一DRAFT改为 `EXP-RESET-ROLLOVER-CAUSAL-001`。
+
+Design:
+1. 两条clean-B0只读capture trace（seed123/456），每条累计>=540 decisions，最多16 episodes；
+2. 保存真实Actor-decoder输入与episode masks，不额外forward、不改变RNG/action；
+3. offline对完全相同输入做OFFICIAL-CARRY vs CLEAN-RESET counterfactual replay；
+4. 先要求official replay复现实况，再检查rollover前后hidden/logit/end/action差异；
+5. live环境中不执行reset treatment。
+
+Decision consequence:
+- 若rollover后无差异，Gate B2可在限定证据下通过，下一轮恢复semantic-decision mismatch / clean Probe + Actor-use实验；
+- 若rollover后出现可复现差异，H-RESET成为已证实的机制通路，下一轮先做行为影响量化；
+- 不论哪种结果，本轮都不修改B0、不训练Probe、不做Stop Gate。
