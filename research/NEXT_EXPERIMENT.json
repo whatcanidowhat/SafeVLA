@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
   "cycle_id": "premature-end-dynamics-001-20260923",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "Among aligned historical ObjectNav failures that terminate before horizon, what Actor-end dynamics precede the executed termination: early high termination prior, later search-triggered rise, low-probability stochastic end, or a mixed/no-clear pattern?",
   "hypothesis": "H-PRIOR / H-SEARCH-TRIGGERED / H-STOCHASTIC are competing observational morphologies; the audit must not assume safety alignment or representation failure is the cause.",
   "competing_explanation": "H-MIXED: sub-horizon failures may contain heterogeneous mechanisms, and video-rendered probability quantization, stochastic sampling, task difficulty, reset state, language, or scene factors may explain individual cases.",
