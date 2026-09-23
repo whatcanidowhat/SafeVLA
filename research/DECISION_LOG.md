@@ -461,3 +461,25 @@ Repair:
 - regression coverage added before opening any new research cycle.
 
 Scientific result and acknowledgement decision are unchanged. No next experiment is authorized by this repair.
+
+
+## 2026-09-23 — DEC-PREMATURE-END-RESULT-REVIEW-001：接受历史 invalid-end，否定对 LATE_RISE 的过强机制解释
+
+Independent PI review of result commit `f79b3cfd19e8f537715d2c321e13885e7303ba1f`:
+- 16/16 historical sub-horizon failures are reliably recovered and final action=end;
+- all first-decision p(end) bars are sub-resolution;
+- all preterminal maxima <0.5; every >=0.5 crossing occurs at terminal end;
+- frozen labels: LATE_RISE13 / EARLY_HIGH_PRIOR1 / OTHER2 / LOW_PROB_END0;
+- the sole EARLY_HIGH_PRIOR is a two-decision episode with terminal end inside the first-five window;
+- 10/11 unique matched successes also first cross0.5 at successful termination.
+
+PI interpretation:
+The labels are mechanically correct, but they do not support “search failure gradually raises p(end).” The robust observation is an abrupt terminal switch. Because successful termination shows the same switch, the unresolved question is why an end is legal in success and illegal in failure.
+
+Provenance audit:
+The 2026-08-03 run used commit `60bc54fbdedaf5745d0476c25321e808708273aa`. Its evaluator calls `successful_if_done(strict_success=False)` before `agent.get_action`; the visibility path can issue `GetVisibleObjects(maxDistance=2)` on a cache miss. Observations were captured before this query and a behavioral effect is not established, but the extra simulator query violates the current clean-B0 contract.
+
+Decision:
+Do not proceed directly to SafeVLA-vs-FLaRe. The unique next DRAFT is `EXP-CLEAN-B0-PREMATURE-END-REPRO-001`: one full-200 evaluation under accepted executable B0, followed by offline termination classification. Historical 173/200 remains descriptive reference only.
+
+No execution is authorized by this decision.
