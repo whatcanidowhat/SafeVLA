@@ -15,7 +15,7 @@ from unittest.mock import patch
 import research_loop_claim as claim_module
 from validate_research_loop import (Invalid, View, STATE, validate_snapshot,
                                     validate_transition, validate_history, validate_index, scan_file, audit_tree,
-                                    validate_legacy_premature_staging)
+                                    validate_legacy_premature_staging, validate_legacy_sparse_ack)
 
 SOURCE = Path(__file__).resolve().parents[1]
 
@@ -236,6 +236,46 @@ class ProtocolTests(unittest.TestCase):
 
         with self.assertRaisesRegex(Invalid, "exception SHA mismatch"):
             validate_legacy_premature_staging(View(root), View(root, parent), "0" * 40)
+
+    def test_narrow_legacy_sparse_ack_exception(self):
+        root = Path(self.temp.name) / "legacy-sparse-ack"
+        s0 = fixture(root)
+        # Build a synthetic AWAITING result parent for identity checks.
+        s0.update(
+            state_version=29,
+            cycle_id="premature-end-dynamics-001-20260923",
+            experiment_id="EXP-PREMATURE-END-DYNAMICS-001",
+            status="AWAITING_PI_REVIEW",
+            next_actor="PI",
+            instruction_commit="681cd28355cfa79a6eaec7f663d9b3776da7f37e",
+            claim_id="37f4a6ae9b5d41ada6753d75f2b30caa",
+            updated_by="CODEX",
+        )
+        s0["authorization"] = {
+            "status": "APPROVED", "approved_by": "PI",
+            "approved_at_utc": "2026-09-23T09:10:00+00:00",
+            "expires_at_utc": "2026-09-24T09:10:00+00:00",
+            "scope": "RESEARCH_EXPERIMENT", "max_gpu": 0, "max_episodes": 0,
+        }
+        s0["required_outputs"] = [
+            "research/handoffs/premature-end-dynamics-001-20260923/" + n
+            for n in ["RESULT_SUMMARY.md","RUN_MANIFEST.json","ARTIFACT_INDEX.json","REVIEW_NOTES.md"]
+        ]
+        install(root, s0, "APPROVED")
+        git(root, "add", "."); git(root, "commit", "-m", "Synthetic awaiting parent")
+        parent = git(root, "rev-parse", "HEAD")
+
+        ack = copy.deepcopy(s0)
+        ack.update(state_version=30,status="PI_REVIEW",next_actor="PI",updated_by="PI",
+                   reviewed_result_commit="f79b3cfd19e8f537715d2c321e13885e7303ba1f")
+        ack["authorization"]["status"]="NOT_AUTHORIZED"
+        install(root, ack, "DRAFT")
+        checked = validate_legacy_sparse_ack(
+            View(root), View(root,parent), "0d91c85df9cd5be8ac9de9d1ab3b6f10cc4a9d5d"
+        )
+        self.assertEqual(checked["status"], "PI_REVIEW")
+        with self.assertRaisesRegex(Invalid, "SHA mismatch"):
+            validate_legacy_sparse_ack(View(root), View(root,parent), "0"*40)
 
     def test_pi_can_revoke_unclaimed_approval(self):
         old = copy.deepcopy(self.s)
