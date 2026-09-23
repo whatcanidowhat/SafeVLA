@@ -445,3 +445,19 @@ This was historical CPU-only video/table analysis: 0 GPU, 0 episodes, 0 simulato
 Handoff: [RESULT_SUMMARY.md](handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md), [analysis](handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md), [artifact index](handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json). Claim a5045c5255b67f3e0f1d4f559d2d6078f70f9544 and its green CI preceded execution. Frozen designs and claim/authorization identity are preserved.
 
 Next actor PI. One proposal follows the frozen LATE_RISE branch: review a matched hard-task SafeVLA versus comparable non-safety/base-policy causal comparison, with comparability and confounds explicitly controlled. This proposal is not approved or executed. Gate B remains unresolved for future hidden-state interpretation. No next experiment or PI acknowledgement is self-issued. Executor STOP after publication.
+
+
+## 2026-09-23 — CONTROL-PROTOCOL-REPAIR-005：PI acknowledgement sparse-tree incident
+
+During PI acknowledgement of result commit `f79b3cfd19e8f537715d2c321e13885e7303ba1f`, a low-level Git tree construction mistake created commit `0d91c85df9cd5be8ac9de9d1ab3b6f10cc4a9d5d` with only three tracked files: `research/LOOP_STATE.json`, `research/NEXT_EXPERIMENT.md`, and `research/NEXT_EXPERIMENT.json`. This accidentally omitted the rest of the control tree.
+
+No execution authorization was introduced: the sparse snapshot is PI_REVIEW / NOT_AUTHORIZED and preserves the completed experiment's historical claim only. No Executor claim, GPU, simulator, episode, model load or analysis followed this commit.
+
+Repair:
+- append-only restoration commit `7a63f05e1925ef7322f217132939dd943aee91f8` reconstructs the exact full parent tree from result commit `f79b3cfd...` and overlays only the intended acknowledgement files;
+- no force push, reset, squash or history rewrite;
+- normal validation remains strict;
+- a narrow history exception applies only to exact sparse commit `0d91c85d...`, verifies its exact parent/state/design identity and exact three-file tree shape;
+- regression coverage added before opening any new research cycle.
+
+Scientific result and acknowledgement decision are unchanged. No next experiment is authorized by this repair.
