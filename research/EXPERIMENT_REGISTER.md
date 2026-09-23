@@ -162,3 +162,13 @@ Planned max budget: 1 GPU, 36 diagnostic episodes. No online behavior interventi
 | EXP-RESET-ROLLOVER-CAUSAL-001 | DRAFT / NOT_AUTHORIZED | Real-input offline counterfactual test of official carried reset vs clean reset around max_steps=500 rollover |
 
 Planned budget: max1 GPU, max32 read-only B0 capture episodes; offline replay has no simulator actions.
+
+
+## 2026-09-23 — premature-end dynamics becomes the next diagnostic
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-RESET-ROLLOVER-CAUSAL-001 | SUPERSEDED BEFORE APPROVAL / DEFERRED | Gate B remains open for future hidden-state/Probe interpretation, but it does not block a zero-rollout audit of already-recorded Actor end probabilities/actions |
+| EXP-PREMATURE-END-DYNAMICS-001 | DRAFT / NOT_AUTHORIZED | Characterize all historical sub-horizon failures as early-high-prior, later-rise, low-probability stochastic end, or mixed before attributing cause to SafeRL/representation |
+
+Planned budget: 0 GPU / 0 episode / 0 model forward / 0 simulator. Existing historical videos and aligned tables only.
