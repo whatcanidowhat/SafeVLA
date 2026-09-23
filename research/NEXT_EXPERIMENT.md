@@ -1,8 +1,8 @@
 # Next Experiment — Premature termination dynamics audit
 
 Experiment ID: EXP-PREMATURE-END-DYNAMICS-001
-Status: DRAFT
-Authorization: NOT_AUTHORIZED
+Status: APPROVED
+Authorization: APPROVED
 Cycle ID: premature-end-dynamics-001-20260923
 
 ## Why this experiment is now the unique next step
