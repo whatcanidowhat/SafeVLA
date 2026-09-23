@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "state_version": 31,
-  "cycle_id": "clean-b0-premature-end-repro-001-20260923",
-  "experiment_id": "EXP-CLEAN-B0-PREMATURE-END-REPRO-001",
+  "state_version": 32,
+  "cycle_id": "end-legality-calibration-001-20260923",
+  "experiment_id": "EXP-END-LEGALITY-CALIBRATION-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": null,
   "reviewed_result_commit": "f79b3cfd19e8f537715d2c321e13885e7303ba1f",
   "claim_id": null,
@@ -16,21 +16,19 @@
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 1,
-    "max_episodes": 200
+    "max_gpu": 0,
+    "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/episode_results.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/termination_summary.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/historical_overlap.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/b0_provenance.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/analyze_clean_b0_termination.py",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
+    "research/handoffs/end-legality-calibration-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/end-legality-calibration-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/end-legality-calibration-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/end-legality-calibration-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/end-legality-calibration-001-20260923/terminal_end_events.csv",
+    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration_summary.csv",
+    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration.md",
+    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-23T15:30:00+00:00"
+  "updated_at_utc": "2026-09-23T15:40:00+00:00"
 }

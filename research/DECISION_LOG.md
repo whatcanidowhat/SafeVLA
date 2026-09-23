@@ -483,3 +483,20 @@ Decision:
 Do not proceed directly to SafeVLA-vs-FLaRe. The unique next DRAFT is `EXP-CLEAN-B0-PREMATURE-END-REPRO-001`: one full-200 evaluation under accepted executable B0, followed by offline termination classification. Historical 173/200 remains descriptive reference only.
 
 No execution is authorized by this decision.
+
+
+## 2026-09-23 — DEC-SKIP-REPRO-001：不再为 historical invalid-end 做重复复现
+
+Researcher decision:
+Full-200 clean-B0 rerun and targeted clean-B0 reproduction are both removed from the current mainline. The purpose of the project is mechanism diagnosis, and the 16 historical invalid-end cases already provide a sufficient discovery set for the next diagnostic question.
+
+Boundary retained:
+The historical 2026-08-03 run is not promoted to formal clean-B0 prevalence evidence. Its evaluator provenance limitation remains documented. Skipping reproduction trades formal baseline generality for research speed; any final paper claim about official-B0 prevalence will require separate evidence later if that claim becomes necessary.
+
+Next question:
+The previous audit showed terminal p(end) rises abruptly in both failures and successes. Therefore the next useful distinction is legal versus illegal terminal decision, not reproduction of the same failures.
+
+Unique next DRAFT:
+`EXP-END-LEGALITY-CALIBRATION-001`, zero-rollout / 0 GPU / 0 episode. Compare all recoverable successful terminal end events with the 16 confirmed illegal terminal ends using video-rendered quantized action probabilities.
+
+No execution is authorized.

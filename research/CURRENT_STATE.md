@@ -1,52 +1,25 @@
 # Current State
 
 Updated: 2026-09-23（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-CLEAN-B0-PREMATURE-END-REPRO-001 is the unique next DRAFT / NOT_AUTHORIZED.
+Mode: PI_REVIEW. EXP-END-LEGALITY-CALIBRATION-001 is the unique next DRAFT / NOT_AUTHORIZED.
+
+## Mainline decision
+The researcher rejected both the proposed full-200 clean-B0 rerun and targeted clean-B0 reproduction as unnecessary for the current mechanism-diagnosis mainline. Those proposals are superseded before approval and were never executed.
+
+Historical evidence remains usable as a discovery set, with an explicit boundary: it supports claims about the observed 2026-08-03 run, not formal clean-B0 prevalence or paper-level causal attribution.
 
 ## Verified Facts
-
-- Result commit `f79b3cfd19e8f537715d2c321e13885e7303ba1f` completed EXP-PREMATURE-END-DYNAMICS-001 and its result CI passed.
-- All 16/16 historical sub-horizon failures were recovered; all final executed actions were `end`.
-- All failure first-decision rendered `p(end)` bars were sub-resolution, and all preterminal maxima stayed below 0.5. Every >=0.5 crossing happened on the terminal decision.
-- Frozen labels were LATE_RISE 13/16, EARLY_HIGH_PRIOR 1/16, OTHER_OR_UNCLEAR 2/16, LOW_PROB_END 0/16. LATE_RISE here does not establish gradual buildup.
-- The lone EARLY_HIGH_PRIOR case lasted two decisions, so its terminal end falls inside the first-five window; this is not evidence for a high task-start prior.
-- 10/11 unique matched successful controls also first crossed 0.5 at their own successful terminal decision. Abrupt terminal `p(end)` increase is not failure-specific.
-- Historical matching is weak for causal interpretation: 13/16 control windows include successful termination; controls are reused; expert-length gap median=34, range=2–133.
-- The historical 2026-08-03 run used commit `60bc54fbdedaf5745d0476c25321e808708273aa`. Its evaluator called `successful_if_done(strict_success=False)` before `agent.get_action`; the visibility path can issue `GetVisibleObjects` on a cache miss.
-- Official reference `2aa82559...` does not contain that pre-decision call. The historical run is therefore hypothesis-generating rather than formal clean-B0 trajectory evidence under the current Baseline Contract. A behavioral effect of the extra query is not proven.
-- EXP-B0-REPRO-001A remains the only narrow executable-B0 provenance pass; a formal clean full-200 B0 termination profile is still missing.
-
-## Hypothesis Status
-
-- H-PRIOR: weakened as a population explanation.
-- H-SEARCH-TRIGGERED: not established; the observed jump is terminal-only and also occurs in successful termination.
-- H-STOCHASTIC under the preregistered terminal <0.1 criterion: not supported in this historical census.
-- H-INVALID-END: verified historically, not yet under clean B0.
-- H-SAFETY-TRAINING: untested.
-- H-RESET: unresolved and still gates later hidden-state / Probe interpretation.
-
-## Unsupported Interpretations
-
-- “13/16 LATE_RISE proves search failure gradually causes conservative termination.”
-- “The terminal p(end) jump is failure-specific.”
-- “SafeRL caused the historical invalid ends.”
-- “The historical 173/200 run is a formal clean B0 result.”
-- “The extra pre-decision GetVisibleObjects definitely changed behavior.” It is a provenance violation/potential side effect, not a demonstrated causal effect.
-
-## Highest-Value Uncertainty
-
-Does the invalid-end phenotype survive a complete clean executable-B0 evaluation when the historical pre-decision oracle/debug instrumentation is absent?
+- 16/16 historical sub-horizon failures end by executing `end`.
+- First-decision p(end) is sub-resolution in all 16; preterminal maxima remain below 0.5.
+- The terminal p(end) jump also occurs in successful ends, so it is not failure-specific.
+- H-PRIOR and gradual H-SEARCH-TRIGGERED explanations are weakened.
+- The high-value unresolved question is whether the Actor's terminal confidence distinguishes legal from illegal end decisions.
 
 ## Unique Next Experiment
+`EXP-END-LEGALITY-CALIBRATION-001`: zero-rollout audit of legal successful terminal ends versus the 16 illegal terminal ends, using the same historical videos.
 
-`EXP-CLEAN-B0-PREMATURE-END-REPRO-001`: one complete clean-B0 200-task ObjectNav evaluation, then offline termination classification from the produced official artifacts.
-
-Planned budget: max 1 GPU / max 200 episodes.
-Status: DRAFT / PI_REVIEW / NOT_AUTHORIZED.
-
-## Control State
-
-Previous result `f79b3cfd...` has been PI-acknowledged. Current fresh cycle is `clean-b0-premature-end-repro-001-20260923`; no claim or execution is authorized until explicit PI/user approval and green approval CI.
+Budget: 0 GPU / 0 episode.
+Status: DRAFT / NOT_AUTHORIZED.
 
 ## 02 research-history migration — 2026-09-18
 

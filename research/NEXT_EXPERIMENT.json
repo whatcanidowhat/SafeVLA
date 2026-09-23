@@ -1,67 +1,66 @@
 {
-  "experiment_id": "EXP-CLEAN-B0-PREMATURE-END-REPRO-001",
-  "cycle_id": "clean-b0-premature-end-repro-001-20260923",
+  "experiment_id": "EXP-END-LEGALITY-CALIBRATION-001",
+  "cycle_id": "end-legality-calibration-001-20260923",
   "status": "DRAFT",
-  "research_question": "Under executable clean B0, does a complete 200-task ObjectNav evaluation still exhibit sub-horizon failures whose final executed action is end?",
-  "hypothesis": "H-PERSIST: clean B0 still contains at least some confirmed sub-horizon invalid-end failures.",
-  "competing_explanation": "H-HISTORICAL-PROVENANCE: the historical modified-evaluator run has a materially different termination profile, and clean B0 has few or no sub-horizon invalid-end failures.",
-  "reference": "EXP-PREMATURE-END-DYNAMICS-001 verified 16 historical sub-horizon failures ending with end, but terminal p(end) jumps were also seen in matched successes. The historical 2026-08-03 evaluator at commit 60bc54f... also called successful_if_done before agent.get_action, which can issue GetVisibleObjects on cache miss; that run is therefore not formal clean-B0 trajectory evidence.",
-  "repeat_or_treatment": "One complete 200-task ObjectNav evaluation under accepted executable B0. Historical 173/200 evidence is descriptive reference only, not a causal treatment arm.",
-  "unique_variable": "Evaluator provenance is clean executable B0 with non-approved historical instrumentation absent; no online treatment is introduced.",
+  "research_question": "Among executed end decisions in the historical full-200 run, does Actor end confidence distinguish legal terminal states from illegal terminal states?",
+  "hypothesis": "H-CALIBRATION-GAP: illegal terminal ends have end-probability/confidence distributions that substantially overlap legal successful ends, implying that Actor end confidence is poorly aligned with the environment's stop-legality predicate.",
+  "competing_explanation": "H-LOW-CONFIDENCE-END: illegal terminal ends have systematically lower end confidence/margin than legal ends, indicating a sampling/calibration-tail problem rather than high-confidence legality confusion.",
+  "reference": "EXP-PREMATURE-END-DYNAMICS-001 verified 16/16 historical sub-horizon failures ended with end. It also showed terminal-only p(end) jumps in failures and in 10/11 unique successful controls, weakening the search-triggered-rise interpretation.",
+  "repeat_or_treatment": "Zero-rollout retrospective audit of existing historical videos only. Primary comparison is all recoverable legal successful terminal-end events versus the 16 confirmed sub-horizon illegal terminal-end events. No policy/environment intervention.",
+  "unique_variable": "Observed terminal legality label at an executed end: legal successful end versus illegal failed end. This is observational, not manipulated.",
   "fixed_conditions": [
-    "Use /nvme2/user/qyy/SafeVLA_baseline_clean",
-    "Official reference 2aa82559d272b5f888e53433e258914057f15bed plus only the accepted local-DINO infrastructure adaptation",
-    "Use the previously frozen SafeVLA checkpoint, local DINO checkpoint/source, and ObjectNavType minival dataset identities",
-    "Exactly 200 tasks; horizon 600; seed 123; workers 4; shuffle on; test augmentation on; greedy false",
-    "Official success/end/metric/action semantics unchanged",
-    "No PT-Guard, Done Gate, shadow logger, steering, reranking, Probe, action rewrite, extra policy forward, or extra pre-decision simulator/oracle query",
-    "Record exact code/resource/runtime provenance before execution"
+    "Use only the aligned historical 2026-08-03 full-200 artifacts",
+    "Primary illegal set is the 16 already confirmed eps_len<600 failures with final executed end",
+    "Primary legal set is every successful episode with a recoverable terminal video frame; ObjectNav success requires an end action, but video recovery must still validate the probability frame",
+    "Use one frozen bar-geometry/action-row mapping for all videos",
+    "All probabilities are video-rendered quantized approximations; zero-width bars are below rendering resolution, not exact zero",
+    "No simulator, model load, checkpoint load, new episode, replay, Probe, reset treatment, or extra forward",
+    "Do not claim clean-B0 prevalence or SafeRL causation from this historical audit"
   ],
   "metrics": [
-    "Official SR, Safety Cost, SEL and episode-length distribution",
-    "Failures with eps_len<600",
-    "Final executed action for every sub-horizon failure and confirmed invalid-end count",
-    "Horizon failures and final action",
-    "Quantized video p(end) start/preterminal/terminal for clean invalid-end cases",
-    "Descriptive outcomes for the 16 historical invalid-end task IDs",
-    "200/200 task/result/video completeness and provenance"
+    "Recovered legal terminal-end count and illegal terminal-end count",
+    "Terminal p(end) distribution by legality",
+    "Terminal end margin: p(end) minus largest non-end rendered probability",
+    "Preterminal p(end) at t-1 and max over previous five decisions where available",
+    "Terminal jump delta p(end) from t-1 to terminal",
+    "Action-distribution entropy when all rendered bars are reliably recoverable",
+    "AUROC of terminal p(end) and end margin for legal versus illegal terminal events, with episode-level bootstrap confidence intervals",
+    "Median/IQR and quantization sensitivity analysis",
+    "Category/expert_length strata only as secondary descriptive sensitivity checks"
   ],
-  "expected_result": "Establish the first formal clean-B0 full-200 termination profile and decide whether premature invalid-end remains a clean-B0 mechanism target.",
-  "falsifying_result": "H-PERSIST is weakened if the clean full-200 run has zero confirmed sub-horizon invalid-end failures.",
+  "expected_result": "If legal and illegal terminal confidence strongly overlap, treat the problem as terminal legality discrimination/calibration rather than gradual search-triggered quitting. If illegal ends are consistently lower-confidence, prioritize stochastic sampling/termination calibration.",
+  "falsifying_result": "H-CALIBRATION-GAP is weakened if legal terminal ends have clearly higher p(end)/margin than illegal ends with stable separation across quantization sensitivity checks.",
   "alternative_explanations": [
-    "One stochastic seed does not estimate run-to-run variance",
-    "Four-worker scheduling can change individual stochastic trajectories",
-    "Accepted local-DINO loading is an infrastructure adaptation rather than proven bitwise historical equivalence",
-    "The historical extra visibility query may be behaviorally inert despite violating the current B0 diagnostic contract",
-    "Cross-episode decoder counter/cache retention remains part of official B0",
-    "Clean invalid-end persistence would not identify safety training, representation, readout, reward design, or sampling as the cause"
+    "Conditioning on executed end selects for high p(end) in both groups",
+    "Video probabilities are quantized",
+    "Legal and illegal groups differ in category, scene geometry, episode length and task difficulty",
+    "The historical evaluator provenance is not formal clean B0",
+    "Class imbalance (many more legal than illegal ends) affects uncertainty",
+    "Actor confidence overlap does not prove target legality information is absent from hidden representations"
   ],
   "stop_conditions": [
-    "Frozen B0/code/checkpoint/DINO/dataset identity does not match",
-    "Any unapproved evaluator/policy hook or extra pre-decision query is active",
-    "Seed/workers/shuffle/augmentation/greedy settings differ",
-    "The evaluation cannot complete exactly 200 tasks",
-    "Strict resource loading fails",
-    "Task identities are duplicated/missing or cannot align 200/200"
+    "Fewer than 14/16 illegal terminal frames are reliably recoverable",
+    "Fewer than 150 legal successful terminal frames are reliably recoverable",
+    "Action-row/bar geometry cannot be frozen consistently across the corpus",
+    "Terminal frame alignment is ambiguous",
+    "Analysis would require simulator/model execution or hidden-state reconstruction"
   ],
   "command": [
-    "bash",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
+    "python3",
+    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
   ],
   "required_outputs": [
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/episode_results.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/termination_summary.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/historical_overlap.csv",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/b0_provenance.json",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/analyze_clean_b0_termination.py",
-    "research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh"
+    "research/handoffs/end-legality-calibration-001-20260923/RESULT_SUMMARY.md",
+    "research/handoffs/end-legality-calibration-001-20260923/RUN_MANIFEST.json",
+    "research/handoffs/end-legality-calibration-001-20260923/ARTIFACT_INDEX.json",
+    "research/handoffs/end-legality-calibration-001-20260923/REVIEW_NOTES.md",
+    "research/handoffs/end-legality-calibration-001-20260923/terminal_end_events.csv",
+    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration_summary.csv",
+    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration.md",
+    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
   ],
   "resources": {
-    "max_gpu": 1,
-    "max_episodes": 200
+    "max_gpu": 0,
+    "max_episodes": 0
   }
 }

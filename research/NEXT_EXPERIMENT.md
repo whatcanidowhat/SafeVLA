@@ -1,47 +1,45 @@
-# Next Experiment — Clean B0 full-200 premature-end reproduction
+# Next Experiment — Terminal end-legality calibration audit
 
-Experiment ID: EXP-CLEAN-B0-PREMATURE-END-REPRO-001
+Experiment ID: EXP-END-LEGALITY-CALIBRATION-001
 Status: DRAFT
 Authorization: NOT_AUTHORIZED
-Cycle ID: clean-b0-premature-end-repro-001-20260923
+Cycle ID: end-legality-calibration-001-20260923
 
 ## Research question
-Under clean executable B0, does a complete 200-task ObjectNav evaluation still contain sub-horizon failures whose final executed action is `end`?
+When SafeVLA actually executes `end` in the historical full-200 run, does its Actor confidence distinguish a legal successful stop from an illegal failed stop?
 
-## Why this experiment
-The historical audit verified 16/16 sub-horizon failures ended with `end`, but it did not show a gradual search-triggered rise in `p(end)`; the probability increase was terminal-only and also appeared in successful controls. More importantly, the historical 2026-08-03 evaluator used commit `60bc54f...` and called `successful_if_done()` before `agent.get_action`, which can issue `GetVisibleObjects` on a visibility-cache miss. That extra live query violates the current clean-B0 contract. Its behavioral effect is unknown.
+## Why this replaces reproduction
+The researcher explicitly decided that neither a full-200 rerun nor a targeted clean-B0 reproduction is worth the current mainline cost. The 16 historical invalid-end cases are sufficient as a discovery set. Their provenance limitation remains recorded, so this experiment does not promote them to formal clean-B0 prevalence evidence.
 
-Therefore the historical run remains hypothesis-generating. Before SafeVLA-vs-FLaRe or hidden-state attribution, establish the invalid-end phenotype under clean B0.
+The previous audit already showed that the terminal `p(end)` jump is not failure-specific. The next useful question is therefore whether **terminal confidence itself encodes legality**.
 
-## Competing hypotheses
-- H-PERSIST: clean B0 still has confirmed sub-horizon invalid-end failures.
-- H-HISTORICAL-PROVENANCE: clean B0 has few/no such failures or a substantially different profile.
+## Population
+- Illegal end: the 16 confirmed sub-horizon failures with final executed `end`.
+- Legal end: all successful episodes with recoverable terminal probability frames from the same historical run.
 
-## Protocol
-One full 200-task ObjectNav evaluation in `/nvme2/user/qyy/SafeVLA_baseline_clean`.
-
-Freeze: official reference `2aa82559...` plus only accepted local-DINO adaptation; 200 tasks; horizon600; seed123; workers4; shuffle on; test augmentation on; stochastic sampling (`greedy=false`). Preserve official success/end/metrics/action semantics.
-
-Forbidden: PT-Guard, Done Gate, shadow logger, steering, reranking, Probe, action rewrite, extra policy forward, or any extra pre-decision success/visibility/controller query.
+## Hypotheses
+- H-CALIBRATION-GAP: legal and illegal end confidence substantially overlap.
+- H-LOW-CONFIDENCE-END: illegal ends are systematically lower-confidence than legal ends.
 
 ## Metrics
-Report official SR/Safety Cost/SEL; failure and episode-length distributions; count `eps_len<600`; final action for every sub-horizon failure; confirmed invalid-end prevalence; horizon failures; and offline video-derived quantized `p(end)` for clean invalid-end cases. Report outcomes of the 16 historical invalid-end IDs descriptively only.
+Recover terminal quantized `p(end)`, end-vs-next-action margin, t-1 / previous-five-step `p(end)`, terminal jump, and entropy when reliable. Report distributions plus AUROC/bootstrap uncertainty. Because all cases are conditioned on executing `end`, high p(end) in both groups is expected; the informative question is separation between legal and illegal groups.
 
-## Decision
-If clean invalid-end persists, premature termination remains a clean-B0 mechanism target. If zero confirmed invalid-end cases occur, weaken H-PERSIST and investigate provenance/run variability before safety-alignment attribution.
+## Fixed conditions
+Existing historical artifacts only; 0 GPU; 0 episodes; no simulator/model/replay/Probe/reset/extra forward. Quantized video probabilities are approximate. Historical provenance remains a limitation and no SafeRL/clean-B0 causal claim is allowed.
 
-Incomplete 200-task run or any identity/protocol violation => BLOCKED; do not silently resume or change settings.
+## Decision rule
+If legal and illegal terminal confidence overlap strongly, next diagnose whether stop-legality information is absent from representation or present but unused by Actor. Hidden-state work must first respect H-RESET Gate B.
+
+If illegal end confidence is systematically lower, prioritize stochastic sampling / end-threshold calibration as the next intervention branch.
 
 ## Required outputs
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/RESULT_SUMMARY.md`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/RUN_MANIFEST.json`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/ARTIFACT_INDEX.json`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/REVIEW_NOTES.md`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/episode_results.csv`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/termination_summary.csv`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/historical_overlap.csv`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/b0_provenance.json`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/analyze_clean_b0_termination.py`
-- `research/handoffs/clean-b0-premature-end-repro-001-20260923/run_clean_b0_full200.sh`
+- `research/handoffs/end-legality-calibration-001-20260923/RESULT_SUMMARY.md`
+- `research/handoffs/end-legality-calibration-001-20260923/RUN_MANIFEST.json`
+- `research/handoffs/end-legality-calibration-001-20260923/ARTIFACT_INDEX.json`
+- `research/handoffs/end-legality-calibration-001-20260923/REVIEW_NOTES.md`
+- `research/handoffs/end-legality-calibration-001-20260923/terminal_end_events.csv`
+- `research/handoffs/end-legality-calibration-001-20260923/legality_calibration_summary.csv`
+- `research/handoffs/end-legality-calibration-001-20260923/legality_calibration.md`
+- `research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py`
 
 After handoff publication, STOP.

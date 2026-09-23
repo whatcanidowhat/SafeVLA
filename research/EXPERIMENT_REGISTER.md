@@ -194,3 +194,13 @@ Next actor PI. One proposal follows the frozen LATE_RISE branch: review a matche
 | EXP-CLEAN-B0-PREMATURE-END-REPRO-001 | DRAFT / NOT_AUTHORIZED | Establish clean full-200 B0 invalid-end prevalence before safety-alignment or hidden-state attribution |
 
 Planned budget for the new draft: max 1 GPU / 200 ObjectNav episodes; no treatment arm, no Probe, no extra live oracle query.
+
+
+## 2026-09-23 — Reproduction branch dropped; terminal legality calibration is next
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-CLEAN-B0-PREMATURE-END-REPRO-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Researcher judged rerunning already-observed invalid-end tasks to have insufficient information value for the current mechanism mainline |
+| EXP-END-LEGALITY-CALIBRATION-001 | DRAFT / NOT_AUTHORIZED | Test whether Actor terminal confidence separates legal successful end from illegal failed end using existing artifacts |
+
+Budget: 0 GPU / 0 episode.
