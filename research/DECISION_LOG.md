@@ -377,3 +377,33 @@ Decision consequence:
 - 若rollover后无差异，Gate B2可在限定证据下通过，下一轮恢复semantic-decision mismatch / clean Probe + Actor-use实验；
 - 若rollover后出现可复现差异，H-RESET成为已证实的机制通路，下一轮先做行为影响量化；
 - 不论哪种结果，本轮都不修改B0、不训练Probe、不做Stop Gate。
+
+
+## 2026-09-23 — DEC-PREMATURE-END-001：优先定位提前终止动态，暂缓reset rollover
+
+Current GitHub state before this decision:
+- `EXP-RESET-ROLLOVER-CAUSAL-001` was DRAFT / NOT_AUTHORIZED;
+- LOOP_STATE was PI_REVIEW / next_actor=PI / claim_id=null;
+- no reset-rollover capture episode had been executed.
+
+New evidence/review:
+- aligned historical full-200 has 27 failures, including 16 sub-horizon failures;
+- legacy canonical evidence contains one illegal 8-step termination state with stop_legal=false and Actor p(end)≈0.993365;
+- the recovered sub120 horizon case shows the opposite morphology, rendered p(done)<~0.018 through 600 steps;
+- official ObjectNav RL reward configuration uses step_penalty=0, failed_stop_reward=0, reached_horizon_reward=0, goal_success_reward=10. This makes an early-exit objective loophole plausible but does not prove that safety alignment causes it;
+- the paper's cautious/extreme-failure behavior is hypothesis support only, not proof for the historical B0 failures;
+- there is still no evidence that the authors deliberately trained exact test scenes/tasks to early-exit.
+
+Methodological decision:
+Gate B reset/counter rollover remains a real unresolved implementation confound for future hidden-state/Probe/readout claims. However it is not a prerequisite for an artifact-only audit of already-recorded executed actions and rendered Actor probabilities. Because the current project objective is rapid syndrome localization, spending up to 32 fresh episodes on reset before establishing the systematic premature-end morphology has lower information value.
+
+Decision:
+- supersede `EXP-RESET-ROLLOVER-CAUSAL-001` before approval and defer it as a future hidden-state diagnostic gate;
+- stage `EXP-PREMATURE-END-DYNAMICS-001` as the unique next DRAFT;
+- use all 16 historical eps_len<600 failures, first verify final executed action=end from video, then recover p(end) dynamics and one expert_length-nearest historical success control per case;
+- do not preselect low-SR categories and do not infer SafeRL causation from this audit.
+
+Critical correction retained:
+`sub_house_id` is the original dataset sample index assigned before evaluation-order shuffle; it is not house identity or difficulty.
+
+Current status remains PI_REVIEW / NOT_AUTHORIZED. No Executor claim or execution is authorized by this decision.
