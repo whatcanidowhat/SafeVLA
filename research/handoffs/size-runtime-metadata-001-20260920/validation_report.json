@@ -1,0 +1,41 @@
+{
+  "status": "PASS_PARTIAL_ARTIFACT_INTEGRITY",
+  "scientific_run_status": "BLOCKED",
+  "metrics": {
+    "preflight_tasks": 12,
+    "preflight_initializations": 24,
+    "preflight_target_observations": 36,
+    "preflight_target_comparisons": 18,
+    "preflight_exact_equal": 18,
+    "max_absolute_dimension_difference_m": 0,
+    "max_relative_dimension_difference": 0,
+    "full_initializations": 20,
+    "full_exact_mapping": 26,
+    "full_valid_aabb": 26,
+    "expected_full_targets": 368,
+    "unattempted_targets": 342,
+    "full_complete_tasks": 20,
+    "expected_tasks": 200,
+    "unattempted_tasks": 180,
+    "static_candidate_total": 42,
+    "static_candidate_full_valid": 18,
+    "full_obb_available": 26,
+    "observed_mapping_or_geometry_failures": 0
+  },
+  "checks": [
+    "snapshot versus CSV geometry",
+    "positive finite dimensions and corner extents",
+    "exact target membership",
+    "repeat vector equality",
+    "complete-target medians only",
+    "blank unattempted medians",
+    "resource counts",
+    "extractor hash unchanged",
+    "development status and diff unchanged"
+  ],
+  "limitations": [
+    "342 full-pass targets not attempted, not observed missing geometry",
+    "No full recovery or size-success claim",
+    "Offline validator starts no scenes"
+  ]
+}

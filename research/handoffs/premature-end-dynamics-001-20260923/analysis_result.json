@@ -1,0 +1,30 @@
+{
+  "status": "AWAITING_PI_REVIEW",
+  "started_at_utc": "2026-09-23T10:12:59.583754+00:00",
+  "completed_at_utc": "2026-09-23T10:13:05.710072+00:00",
+  "reliable_failures": 16,
+  "confirmed_invalid_end": 16,
+  "morphology_counts": {
+    "LATE_RISE": 13,
+    "OTHER_OR_UNCLEAR": 2,
+    "EARLY_HIGH_PRIOR": 1
+  },
+  "unique_success_controls": 11,
+  "matched_pairs": 16,
+  "cross_category_fallbacks": 0,
+  "scope_counts": {
+    "AMBIGUOUS": 4,
+    "STRICT": 12
+  },
+  "threshold_robust_cases": 16,
+  "chroma_label_agreement": 16,
+  "max_end_pixel_method_difference": 1,
+  "control_early_high_pairs": 0,
+  "windows_including_control_end": 13,
+  "gpu_count": 0,
+  "episodes": 0,
+  "simulator_launches": 0,
+  "model_checkpoint_loads": 0,
+  "actor_critic_forwards": 0,
+  "forbidden_modules_present": []
+}

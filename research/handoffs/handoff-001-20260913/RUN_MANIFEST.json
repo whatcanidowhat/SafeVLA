@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "EXP-LOOP-HANDOFF-001",
+  "cycle_id": "handoff-001-20260913",
+  "run_id": "handoff-001-20260913-20aeabe36980458098074f196ec55343",
+  "instruction_commit": "0dba6b748f26a782a595edeb53f02083850631cb",
+  "claim_commit": "16748eab9993b568faf2e78213df29a6ebb31d81",
+  "claim_id": "20aeabe36980458098074f196ec55343",
+  "status": "AWAITING_PI_REVIEW",
+  "result": "NOOP_COMPLETED",
+  "started_at_utc": "2026-09-13T18:36:07.359511+00:00",
+  "host": "amax",
+  "cwd": "/nvme2/user/qyy/SafeVLA_loop_control",
+  "execution_worktree": null,
+  "command": [
+    "python3",
+    "-c",
+    "print('handoff no-op; no model or episode')"
+  ],
+  "python_executable": "/usr/bin/python3",
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "scope": "CONTROL_ONLY_NOOP",
+  "authorization": {
+    "status": "APPROVED",
+    "approved_by": "PI",
+    "approved_at_utc": "2026-09-13T17:46:58.402183+00:00",
+    "expires_at_utc": "2026-09-13T21:46:58.402183+00:00",
+    "scope": "CONTROL_ONLY_NOOP",
+    "max_gpu": 0,
+    "max_episodes": 0
+  },
+  "git_HEAD_before": "16748eab9993b568faf2e78213df29a6ebb31d81",
+  "git_status_before": "",
+  "git_diff_before": "",
+  "note_status_before": "git_status_before includes only this newly created handoff directory if any file was present at collection; initial clean checkout verified before mkdir",
+  "design_and_protocol_sha256": {
+    "research/NEXT_EXPERIMENT.md": "7cd84eb9e3a7225e512597fc136416f4c841d64706276a38758f646b226a231a",
+    "research/NEXT_EXPERIMENT.json": "6bf0b7f76e4a6f1c7939324b5a3170cd099688287876b69d221942e0caab146c",
+    "scripts/research_loop_claim.py": "f8d1162b1190539760de31df4d193b345feae2f0a6aacaf0979b8633e5e199de",
+    "scripts/validate_research_loop.py": "a3068a75a17aa347723393a4cc063a07a1e0fc35147d672edc93816d8d18e5a2",
+    "research/HANDOFF_PROTOCOL.md": "36033011d271ad34cc369c53507f54ed7dce82edbea3d008905db7aff0e0cd5f"
+  },
+  "approval_ci": {
+    "head_sha": "0dba6b748f26a782a595edeb53f02083850631cb",
+    "conclusion": "success",
+    "url": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/34773972229"
+  },
+  "claim_ci": {
+    "head_sha": "16748eab9993b568faf2e78213df29a6ebb31d81",
+    "conclusion": "success",
+    "url": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/34774992329"
+  },
+  "checkpoint": "NOT_APPLICABLE: no model loaded",
+  "DINO": "NOT_APPLICABLE: no vision encoder loaded",
+  "episode_manifest": [],
+  "runtime_imports": "NOT_APPLICABLE: approved command contains only print; no SafeVLA/model imports requested",
+  "reviewed_result_commit": null,
+  "pi_acknowledgement": "PENDING",
+  "ended_at_utc": "2026-09-13T18:36:07.388930+00:00",
+  "exit_code": 0,
+  "stdout": "handoff no-op; no model or episode\n",
+  "stderr": "",
+  "noop_executions": 1
+}

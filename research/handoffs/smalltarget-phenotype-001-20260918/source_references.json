@@ -1,0 +1,61 @@
+[
+  {
+    "path": "/nvme2/user/qyy/SafeVLA/tasks/object_nav_task.py",
+    "sha256": "0b5a4037f3672f49865922e7525d5eda7da72c9b694baea745b68bc64b4efadb",
+    "size": 7556,
+    "line_ranges": [
+      [
+        119,
+        129
+      ]
+    ],
+    "purpose": "Success eligible IDs use broad_synset_to_object_ids, not narrow IDs."
+  },
+  {
+    "path": "/nvme2/user/qyy/SafeVLA/online_evaluation/online_evaluator.py",
+    "sha256": "e878e5c27512080ddbe9858e16dedb186d3be52b99abf83fea92ed57dbdafee3",
+    "size": 27964,
+    "line_ranges": [
+      [
+        461,
+        479
+      ]
+    ],
+    "purpose": "minival selects static val houses dataset."
+  },
+  {
+    "path": "/nvme2/user/qyy/SafeVLA/utils/data_utils.py",
+    "sha256": "ed594e0d150edd798aa1decdcb1077fd8c9cd408f4626e5acfb7c5f3142e576c",
+    "size": 12111,
+    "line_ranges": [
+      [
+        25,
+        70
+      ],
+      [
+        158,
+        204
+      ]
+    ],
+    "purpose": "JSONL dataset indexing and loader preserve row identity."
+  },
+  {
+    "path": "/nvme2/user/qyy/SafeVLA/tasks/abstract_task_sampler.py",
+    "sha256": "5c0974c32cc7a571a80b0eb72c24c594cdd3c996ef8f49e545204a044ffebf20",
+    "size": 8879,
+    "line_ranges": [
+      [
+        59,
+        65
+      ]
+    ],
+    "purpose": "House index maps to selected house list."
+  },
+  {
+    "path": "/nvme2/user/qyy/SafeVLA/utils/constants/objaverse_data_dirs.py",
+    "sha256": "7a67593dffccfa35244becfd407bd3e4f6bc116eadf369be60c4a38b460c2780",
+    "size": 1255,
+    "line_ranges": [],
+    "purpose": "Dataset path constants; source identity only."
+  }
+]

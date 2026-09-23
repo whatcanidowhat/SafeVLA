@@ -1,0 +1,151 @@
+{
+  "frozen_at_utc": "2026-09-23T10:12:59.607273+00:00",
+  "population": "All 16 historical failures with eps_len<600; no category/size/house preselection",
+  "action_order": [
+    "m",
+    "r",
+    "l",
+    "b",
+    "end",
+    "sub_done",
+    "ls",
+    "rs"
+  ],
+  "rendered_names": [
+    "move_ahead",
+    "rotate_right",
+    "rotate_left",
+    "move_back",
+    "done",
+    "sub_done",
+    "rotate_left_small",
+    "rotate_right_small"
+  ],
+  "frame_alignment": "frame index 0 is first decision; on-video counter is 1-based; frame count must equal eps_len; terminal frame saved before loop break",
+  "bar_semantics": "Legacy strict RGB B>200,R<60,G<60; farthest detected column+1 divided by55, capped1. This is video-rendered quantized probability approximation, not exact logits. Zero means sub-resolution (~1/55).",
+  "inclusive_endpoint_caveat": "PIL rectangle draws x0 through x0+int(55*p), inclusive; H264 color thresholds can move endpoints. Secondary chroma endpoint excludes singleton stem and checks extraction within3 pixels; sensitivity uses +/-2/55 on nonzero estimates, zero [0,1/55]. These are sensitivity bands, not confidence bounds.",
+  "action_validation": "Unique black-text row >=4 pixels and agreement across RGB thresholds60/70/80",
+  "morphology_precedence": [
+    "EARLY_HIGH_PRIOR",
+    "LATE_RISE",
+    "LOW_PROB_END",
+    "OTHER_OR_UNCLEAR"
+  ],
+  "thresholds": "Exact frozen NEXT_EXPERIMENT thresholds .5, .1, >5; no fitted cutoffs",
+  "matching": "same exact target category where available, min absolute expert_length difference; tie by numeric stable sub_house_id then stable task path; with replacement; index only tie-break, not difficulty",
+  "control_window": "frames0 through min(failure_end_step0,control_length-1), inclusive",
+  "pairs": [
+    {
+      "failure_sub_id": 0,
+      "control_sub_id": 7,
+      "failure_task": "ObjectNavType/val/000420/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/004495/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 3,
+      "control_sub_id": 11,
+      "failure_task": "ObjectNavType/val/001730/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/005093/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 4,
+      "control_sub_id": 11,
+      "failure_task": "ObjectNavType/val/001852/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/005093/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 6,
+      "control_sub_id": 11,
+      "failure_task": "ObjectNavType/val/002986/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/005093/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 13,
+      "control_sub_id": 16,
+      "failure_task": "ObjectNavType/val/008224/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/010940/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 24,
+      "control_sub_id": 170,
+      "failure_task": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/013641/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 46,
+      "control_sub_id": 71,
+      "failure_task": "ObjectNavType/val/013943/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012231/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 55,
+      "control_sub_id": 169,
+      "failure_task": "ObjectNavType/val/011295/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/014423/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 68,
+      "control_sub_id": 112,
+      "failure_task": "ObjectNavType/val/012479/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012953/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 87,
+      "control_sub_id": 79,
+      "failure_task": "ObjectNavType/val/013623/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012793/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 110,
+      "control_sub_id": 159,
+      "failure_task": "ObjectNavType/val/013458/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/013699/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 117,
+      "control_sub_id": 159,
+      "failure_task": "ObjectNavType/val/013975/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/013699/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 125,
+      "control_sub_id": 40,
+      "failure_task": "ObjectNavType/val/014286/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012080/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 175,
+      "control_sub_id": 159,
+      "failure_task": "ObjectNavType/val/013708/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/013699/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 176,
+      "control_sub_id": 79,
+      "failure_task": "ObjectNavType/val/014702/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012793/raw_navigation_camera__0.mp4",
+      "fallback": false
+    },
+    {
+      "failure_sub_id": 196,
+      "control_sub_id": 63,
+      "failure_task": "ObjectNavType/val/014568/raw_navigation_camera__0.mp4",
+      "control_task": "ObjectNavType/val/012266/raw_navigation_camera__0.mp4",
+      "fallback": false
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "exception_type": "BrokenPipeError",
+  "reason": "BrokenPipeError: [Errno 32] Broken pipe",
+  "traceback": "Traceback (most recent call last):\n  File \"/nvme2/user/qyy/SafeVLA/research/handoffs/size-runtime-metadata-001-20260920/extract_runtime_geometry.py\", line 236, in main\n    print(json.dumps({'phase':'full','task':n,'scene_initializations':SCENES}),flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n",
+  "scene_initializations": 44
+}

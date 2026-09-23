@@ -1,0 +1,631 @@
+{
+  "run_id": "p4-reset-two-episode-20260812",
+  "git_commit": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "git_branch": "baseline-experiment",
+  "dirty_worktree_patch_sha256": "3bc52ec74c143bd999db7a0f9f21c5a38854cdc741bfe1f329eaf87a3e751045",
+  "checkpoint_path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "checkpoint_load_status": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "loaded_tensor_count": 417,
+    "model_tensor_count": 417,
+    "checkpoint_tensor_count": 417,
+    "critical_parameter_status": {
+      "actor.linear.bias": true,
+      "actor.linear.weight": true
+    }
+  },
+  "dino_path": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+  "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+  "episode": {
+    "sample_id": null,
+    "task_path": "ObjectNavType/val/001095/raw_navigation_camera__0.mp4",
+    "episode_id": "ObjectNavType_1095_1786529666_searchforabasketball",
+    "house_id": "1095",
+    "target": [
+      "basketball.n.02"
+    ],
+    "goal": "search for a basketball",
+    "worker_id": 0,
+    "seed": 123,
+    "max_steps": 600
+  },
+  "environment_steps": 21,
+  "policy_decision_calls": 21,
+  "decoder_branch_forward_counts": {
+    "actor": 21,
+    "reward_critic": 21,
+    "cost_critic": 21
+  },
+  "events": [
+    {
+      "env_step_id": 1,
+      "policy_decision_call_id": 9,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 1,
+      "policy_decision_call_id": 9,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 1,
+      "policy_decision_call_id": 9,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 1,
+      "policy_decision_call_id": 9,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 2,
+      "policy_decision_call_id": 10,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 2,
+      "policy_decision_call_id": 10,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 2,
+      "policy_decision_call_id": 10,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 2,
+      "policy_decision_call_id": 10,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 3,
+      "policy_decision_call_id": 11,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 3,
+      "policy_decision_call_id": 11,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 3,
+      "policy_decision_call_id": 11,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 3,
+      "policy_decision_call_id": 11,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 4,
+      "policy_decision_call_id": 12,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 4,
+      "policy_decision_call_id": 12,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 4,
+      "policy_decision_call_id": 12,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 4,
+      "policy_decision_call_id": 12,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 5,
+      "policy_decision_call_id": 13,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 5,
+      "policy_decision_call_id": 13,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 5,
+      "policy_decision_call_id": 13,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 5,
+      "policy_decision_call_id": 13,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 6,
+      "policy_decision_call_id": 14,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 6,
+      "policy_decision_call_id": 14,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 6,
+      "policy_decision_call_id": 14,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 6,
+      "policy_decision_call_id": 14,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 7,
+      "policy_decision_call_id": 15,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 7,
+      "policy_decision_call_id": 15,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 7,
+      "policy_decision_call_id": 15,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 7,
+      "policy_decision_call_id": 15,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 8,
+      "policy_decision_call_id": 16,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 8,
+      "policy_decision_call_id": 16,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 8,
+      "policy_decision_call_id": 16,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 8,
+      "policy_decision_call_id": 16,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 9,
+      "policy_decision_call_id": 17,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 9,
+      "policy_decision_call_id": 17,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 9,
+      "policy_decision_call_id": 17,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 9,
+      "policy_decision_call_id": 17,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 10,
+      "policy_decision_call_id": 18,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 10,
+      "policy_decision_call_id": 18,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 10,
+      "policy_decision_call_id": 18,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 10,
+      "policy_decision_call_id": 18,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 11,
+      "policy_decision_call_id": 19,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 11,
+      "policy_decision_call_id": 19,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 11,
+      "policy_decision_call_id": 19,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 11,
+      "policy_decision_call_id": 19,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 12,
+      "policy_decision_call_id": 20,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 12,
+      "policy_decision_call_id": 20,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 12,
+      "policy_decision_call_id": 20,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 12,
+      "policy_decision_call_id": 20,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 13,
+      "policy_decision_call_id": 21,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 13,
+      "policy_decision_call_id": 21,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 13,
+      "policy_decision_call_id": 21,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 13,
+      "policy_decision_call_id": 21,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 14,
+      "policy_decision_call_id": 22,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 14,
+      "policy_decision_call_id": 22,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 14,
+      "policy_decision_call_id": 22,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 14,
+      "policy_decision_call_id": 22,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 15,
+      "policy_decision_call_id": 23,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 15,
+      "policy_decision_call_id": 23,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 15,
+      "policy_decision_call_id": 23,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 15,
+      "policy_decision_call_id": 23,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 16,
+      "policy_decision_call_id": 24,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 16,
+      "policy_decision_call_id": 24,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 16,
+      "policy_decision_call_id": 24,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 16,
+      "policy_decision_call_id": 24,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 17,
+      "policy_decision_call_id": 25,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 17,
+      "policy_decision_call_id": 25,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 17,
+      "policy_decision_call_id": 25,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 17,
+      "policy_decision_call_id": 25,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 18,
+      "policy_decision_call_id": 26,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 18,
+      "policy_decision_call_id": 26,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 18,
+      "policy_decision_call_id": 26,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 18,
+      "policy_decision_call_id": 26,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 19,
+      "policy_decision_call_id": 27,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 19,
+      "policy_decision_call_id": 27,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 19,
+      "policy_decision_call_id": 27,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 19,
+      "policy_decision_call_id": 27,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 20,
+      "policy_decision_call_id": 28,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 20,
+      "policy_decision_call_id": 28,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 20,
+      "policy_decision_call_id": 28,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 20,
+      "policy_decision_call_id": 28,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 21,
+      "policy_decision_call_id": 29,
+      "module_forward_call_id": 1,
+      "branch": "actor",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 21,
+      "policy_decision_call_id": 29,
+      "module_forward_call_id": 2,
+      "branch": "actor",
+      "module_name": "actor.linear"
+    },
+    {
+      "env_step_id": 21,
+      "policy_decision_call_id": 29,
+      "module_forward_call_id": 3,
+      "branch": "reward_critic",
+      "module_name": "decoder"
+    },
+    {
+      "env_step_id": 21,
+      "policy_decision_call_id": 29,
+      "module_forward_call_id": 4,
+      "branch": "cost_critic",
+      "module_name": "decoder"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "status": "BLOCKED",
+  "reason": "BrokenPipeError: [Errno 32] Broken pipe",
+  "updated_at_utc": "2026-09-20T13:25:25.523733+00:00",
+  "scene_initializations": 44,
+  "max_scene_initializations": 224,
+  "gpu_count": 1,
+  "action_counts": {
+    "ChangeResolution": 44,
+    "ChangeQuality": 44,
+    "Initialize": 44,
+    "DeleteLRUFromProceduralCache": 88,
+    "CreateHouse": 44,
+    "AssetsInDatabase": 44,
+    "CreateRuntimeAsset": 1377,
+    "CreateRuntimeAssets": 44
+  },
+  "outcome_columns_read": false
+}

@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0",
+  "cycle_id": "smalltarget-phenotype-001-20260918",
+  "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
+  "instruction_commit": "290b426ac65d35ef1f8cb4819e9662c4fae1bb31",
+  "claim_id": "67dd8e9069184c8d9fbb4725a21f1232",
+  "claim_commit": "72634cf7c3a954dd99456b2d75c3af539da9e68e",
+  "claim_ci_url": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/35499476480",
+  "status": "BLOCKED",
+  "scientific_status": "STATIC_PHYSICAL_SIZE_NOT_VALIDATED",
+  "started_at_utc": "2026-09-20T08:26:19.495216+00:00",
+  "completed_at_utc": "2026-09-20T08:34:04.819922+00:00",
+  "command": [
+    "python3",
+    "research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py"
+  ],
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA",
+  "actual_python": "/usr/bin/python3",
+  "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "model_loads": 0,
+  "simulator_launches": 0,
+  "analysis_imports": "Python standard library only",
+  "exit_code": 0,
+  "exit_code_interpretation": "Successfully produced a BLOCKED handoff; not a successful scientific size analysis.",
+  "execution_stages": [
+    "claim via repository script and wait for green CI",
+    "read-only static schema/source inspection using Python over SSH",
+    "python3 research/handoffs/smalltarget-phenotype-001-20260918/metadata_preflight.py",
+    "bounded local static database search",
+    "python3 research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py"
+  ],
+  "frozen_design_sha256": {
+    "NEXT_EXPERIMENT.md": "5b4d80492e8679ccec22614d9ade4a8f1d875e8d297daec570488db84732fb19",
+    "NEXT_EXPERIMENT.json": "c2e3276d160d0699fa2097e5aa1b4ed945e88b9c2468c97e309de566b988753f"
+  },
+  "source_files": {
+    "/nvme2/user/qyy/SafeVLA/benchmark/objectnavtype_val.jsonl.gz": {
+      "sha256": "fa0dffc2dece071716dcf648e19c6944caf1621ee24dadc6996eadcd46eee04a",
+      "size": 10469
+    },
+    "/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28/val.jsonl.gz": {
+      "sha256": "8555f4d97ae0d25a7c3503d0d7f423048910467b4d88e5c78e906ac36fb5746e",
+      "size": 115385197
+    },
+    "/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28/annotations.json.gz": {
+      "sha256": "1e4611dfc798288f4e0d926b086606341b414118d21380f23b855bf90dec6b54",
+      "size": 8369855
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/annotations.json.gz": {
+      "sha256": "1e4611dfc798288f4e0d926b086606341b414118d21380f23b855bf90dec6b54",
+      "size": 8369855
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/4037a5122c294a19bee0e62042ee77fe/thor_metadata.json": {
+      "sha256": "b76a83a2c9069d41cd89a130de295cea0ae09f30dfad57bf7a8ecb035c06b93d",
+      "size": 3934
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/cda66fff0dc142539371a293ea4dabf3/thor_metadata.json": {
+      "sha256": "d8cab38ba6794bcb1011cb0fdad572a0d42608b121365bd2c09dbb8cc8712368",
+      "size": 3941
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/563a01e3d4d84e078eca33ec7c2d1479/thor_metadata.json": {
+      "sha256": "9c7bd0ac65a2083ed13d53159d1bd8c12afa88856f25af60770150c993940d4d",
+      "size": 3905
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/1bdbfaa744f8458c99593de70f364dfb/thor_metadata.json": {
+      "sha256": "b7af8aa14c65d52ef6fd300f21ed89af382f80b7dc52baef46fde951fff69f84",
+      "size": 3951
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/89ee37afe6934fd9b8f8664d8bb1669d/thor_metadata.json": {
+      "sha256": "0b892066e7f64417399ac9a8850df252744a9faad855c889d14b9919014d9107",
+      "size": 3955
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/460b558df54946a5b38c9c45c2f06754/thor_metadata.json": {
+      "sha256": "829960f3e357c2dd396c45f00ae682c4b137ed426d170a2394f919d1d83555ed",
+      "size": 3960
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/1f082fd765304bc9bd73a892eeac65e8/thor_metadata.json": {
+      "sha256": "59203cd32bdf222549b630dbcd35737933dc3ad1210f0283be9badcff1dea203",
+      "size": 3950
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/849b4573e03a40b8b073a2209d1bc1d3/thor_metadata.json": {
+      "sha256": "b3536a4b77585aec0968c87408665abe28a397cba8893a24d081d07db502ae29",
+      "size": 3948
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/4d92ac7449634342935c26d8d3c8b39c/thor_metadata.json": {
+      "sha256": "a5ead4d67d90ea7c1b5aa4e6ae0d8c150781c9b4e98afab1da6db4baf67be92c",
+      "size": 3862
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/d18692ce01d74c368ab953812e3b80d0/thor_metadata.json": {
+      "sha256": "4fb24d09f315cae971883a64f72ccd79f696c2c11ffe5f20c0282ab7fb2d2364",
+      "size": 3885
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/c324ddbc2dec43288993f7241a0f63d4/thor_metadata.json": {
+      "sha256": "122751ccb6d7469f22a8022f669232552bcc18b3918f7785c1f55bd4853590a5",
+      "size": 3927
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/3b10cc22deea407eb5938065aacaa48b/thor_metadata.json": {
+      "sha256": "c5c4088245929cf3054b1d25e67a30b11c455c54b338916b5aaae397736b51da",
+      "size": 3903
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/f75fc256788c4e20983eb6693466b074/thor_metadata.json": {
+      "sha256": "085207cd8f049497cd5c52b008fd35ce8cfa2dcb45c9d8a82dab830b5387e38b",
+      "size": 3940
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/9352c200537048eca281f2f48a8d25cf/thor_metadata.json": {
+      "sha256": "3248fb694d83517e29a2a63fa4df9cf27c163785c0b7b27e19c02a98aa625f3c",
+      "size": 3935
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/2861ed55647249d0a3d571b43d5ce9a1/thor_metadata.json": {
+      "sha256": "0bac863832b78c5c7a606646193073e26c1e0f955f29f6f21c068666b61ab48c",
+      "size": 3726
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/284502adc20c45de8f115e2b5085515a/thor_metadata.json": {
+      "sha256": "41e011272b19edd7ad49f7f261300079bf213199773a8feae2443a3d72b4e3ce",
+      "size": 3875
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/cf0343566b0048c9b58a6959d32c5855/thor_metadata.json": {
+      "sha256": "b25e255c1c7adca0fc82765f83fce4edfb36581a60c6967e21ac95cd808876df",
+      "size": 3885
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/11f2f821f1e1417bbc01ee01d67fae6c/thor_metadata.json": {
+      "sha256": "ac124a88eb28986f74873aa13abb291ff14f70f816ab7f19d208df24da23d433",
+      "size": 3897
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/b1937273e63247c29080b87e250cdf03/thor_metadata.json": {
+      "sha256": "28f37109a6a8af818dcdd815cdafcfbf72117b7882fd53d3142e0bd71ea46737",
+      "size": 3871
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/8f933c82cacb4079bf699f9fe8c3c0d7/thor_metadata.json": {
+      "sha256": "8136cf33c5b25f1aa58b649f66cf1757759b5523473a53886c2e629183882f1d",
+      "size": 3853
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/e3a19a7e6faf47db98c2933f8484ed31/thor_metadata.json": {
+      "sha256": "d056a9cebf7c50507294135279209a6981d2be3f92f8162f846508896a2b1f30",
+      "size": 3870
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/b7d1fd7cdd2b4c81b3c3fd9516a472ac/thor_metadata.json": {
+      "sha256": "f9c298ad2875c4e3fa1b9b3473afa88dbed7a631328a53e813d84aeb2d20a0ac",
+      "size": 3874
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/ef18ca96fff24272916d706db1f63d5a/thor_metadata.json": {
+      "sha256": "dd31da59cf746165877cb960e74ff0bb40a9468e7d2a7eda888216d90713227a",
+      "size": 3898
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/0a97a6e5c2894bfba2d347d333756b0e/thor_metadata.json": {
+      "sha256": "120d840f94f3832a6cd3e5958db073d4d2d3ba9f1ae82d19ca495dd354e77a97",
+      "size": 3876
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/ba98818e981442bb9cda93fac2f97a46/thor_metadata.json": {
+      "sha256": "f6ebc5db35874966af3e9154f2fb53fad684febdacfccc33b45c8b10f51caa32",
+      "size": 3884
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/c0a78b0c02f046cbb770837cfd7d748f/thor_metadata.json": {
+      "sha256": "8de122e5391ab5fe98d38ac95ee0cf9d424bb5e53c025b70efe8df492a8402f0",
+      "size": 3857
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/251800fbef6a413ab88a6390950f5e4b/thor_metadata.json": {
+      "sha256": "8d59cb1064e05c5816713bfe014692f4a490fd9f88d2bd0657af7fc9a75d0b0e",
+      "size": 3876
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/f1d4f2b1b350433eabdbe6b7aa7b5132/thor_metadata.json": {
+      "sha256": "667a831550ab65ad9fe89c84a4d3a00c120065cce6c15fd30f535257afd77c6e",
+      "size": 3901
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/15f59272a388445d9a1a4123aa9e7de2/thor_metadata.json": {
+      "sha256": "4034d605ce1dd17e53ea7b4e601bb26c52b904190c24a50e5fee6be759b15390",
+      "size": 3881
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/d7290a29dcdf433b9af6dd4b5a96da78/thor_metadata.json": {
+      "sha256": "6fdc8f79d053fb0ee5be825de3edc5c23e23ce9065e96162acb5d003428dad31",
+      "size": 3864
+    },
+    "/home/amax/public/datasets/qyy/objaverse_assets/2023_07_28/assets/7cce16ad3deb472086c9997e01884115/thor_metadata.json": {
+      "sha256": "852d34e0cd0d988b0dbd553f77a498ca4addf3d41c03ec65f550c938031b43e8",
+      "size": 3856
+    }
+  },
+  "development_head": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "development_tracked_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+  "source_references": "source_references.json",
+  "limitations": [
+    "Unmatched geometry/size evidence, not model failure",
+    "No global filesystem exhaustiveness claim",
+    "No scientific category or size model executed"
+  ]
+}

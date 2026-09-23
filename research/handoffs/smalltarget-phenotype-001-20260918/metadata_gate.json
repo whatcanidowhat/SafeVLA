@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED",
+  "reason_code": "STATIC_PHYSICAL_SIZE_NOT_VALIDATED",
+  "tasks": 200,
+  "mapped_broad_target_instances": 368,
+  "unmatched_target_instances": 0,
+  "candidate_asset_bbox_instances": 42,
+  "instances_without_candidate_bbox": 326,
+  "tasks_with_candidate_bbox_for_every_target": 31,
+  "tasks_missing_one_or_more_candidate_bbox": 169,
+  "validated_task_physical_sizes": 0,
+  "size_analyzable_n": 0,
+  "units_scale_instance_transform_contract": "NOT_ESTABLISHED",
+  "decision": "Available static evidence cannot establish the approved per-task physical size. Stop before category SR, tertiles, association or regression.",
+  "scope_limit": "This is a failure to construct a valid variable from inspected local sources; not proof no additional static dataset exists.",
+  "forbidden_proxies_used": [],
+  "model_loads": 0,
+  "simulator_launches": 0,
+  "gpu_count": 0,
+  "episodes_started": 0
+}

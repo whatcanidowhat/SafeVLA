@@ -1,0 +1,7 @@
+{
+  "sub_house_id": 120,
+  "frames": 600,
+  "actions_match_legacy": true,
+  "p_end_match_legacy": true,
+  "role": "decoder validation only; not added to the 16-case population"
+}

@@ -1,0 +1,49 @@
+{
+  "run_id": "p6-canonical-final-v2-20260812",
+  "git_commit": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "git_branch": "baseline-experiment",
+  "dirty_worktree_patch_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+  "checkpoint_path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "checkpoint_load_status": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "loaded_tensor_count": 417,
+    "model_tensor_count": 417,
+    "checkpoint_tensor_count": 417,
+    "critical_parameter_status": {
+      "actor.linear.bias": true,
+      "actor.linear.weight": true,
+      "c_critic_tsfm.critic.fc.weight": true,
+      "critic_tsfm.critic.fc.weight": true,
+      "decoder.layers.0.attention.wq.weight": true,
+      "visual_encoder.fusion_token": true
+    }
+  },
+  "dino_path": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+  "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+  "episode": {
+    "sample_id": null,
+    "task_path": "ObjectNavType/val/000420/raw_navigation_camera__0.mp4",
+    "episode_id": "ObjectNavType_420_1786530346_findamug",
+    "house_id": "420",
+    "target": [
+      "mug.n.04"
+    ],
+    "goal": "find a mug",
+    "worker_id": 0,
+    "seed": 123,
+    "max_steps": 600
+  },
+  "final_success": false,
+  "executed_end_events": [
+    {
+      "env_step_id": 8,
+      "environment_received_action": "end",
+      "stop_legal_exact_pre": false,
+      "final_success": false,
+      "aligned": true
+    }
+  ],
+  "all_executed_end_events_aligned": true
+}

@@ -1,0 +1,48 @@
+{
+  "state": {
+    "schema_version": "1.0",
+    "state_version": 28,
+    "cycle_id": "premature-end-dynamics-001-20260923",
+    "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
+    "status": "CODEX_RUNNING",
+    "next_actor": "CODEX",
+    "control_branch": "research-loop",
+    "execution_worktree": "/nvme2/user/qyy/SafeVLA",
+    "instruction_commit": "681cd28355cfa79a6eaec7f663d9b3776da7f37e",
+    "reviewed_result_commit": "ac2c9fe80f113345f5092205b07192a47a0e0358",
+    "claim_id": "37f4a6ae9b5d41ada6753d75f2b30caa",
+    "authorization": {
+      "status": "APPROVED",
+      "approved_by": "PI",
+      "approved_at_utc": "2026-09-23T09:10:00+00:00",
+      "expires_at_utc": "2026-09-24T09:10:00+00:00",
+      "scope": "RESEARCH_EXPERIMENT",
+      "max_gpu": 0,
+      "max_episodes": 0
+    },
+    "required_outputs": [
+      "research/handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md",
+      "research/handoffs/premature-end-dynamics-001-20260923/RUN_MANIFEST.json",
+      "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
+      "research/handoffs/premature-end-dynamics-001-20260923/REVIEW_NOTES.md",
+      "research/handoffs/premature-end-dynamics-001-20260923/premature_end_cases.csv",
+      "research/handoffs/premature-end-dynamics-001-20260923/matched_success_controls.csv",
+      "research/handoffs/premature-end-dynamics-001-20260923/pdone_trace_summary.csv",
+      "research/handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md",
+      "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
+    ],
+    "updated_by": "CODEX",
+    "updated_at_utc": "2026-09-23T09:37:56.605625+00:00"
+  },
+  "claim_commit": "a5045c5255b67f3e0f1d4f559d2d6078f70f9544",
+  "claim_ci": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/35845852871",
+  "head": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "status": " M architecture/allenact_preprocessors/dino_preprocessors.py\n M architecture/models/allenact_transformer_models/inference_agent.py\n M online_evaluation/online_evaluator_worker.py\n M scripts/eval.sh\n?? .agents/\n?? .codex/\n?? AGENTS.md\n?? diagnostics/\n?? full_diff.patch\n?? online_evaluation/end_causal_diagnostic_logger.py\n?? research/\n",
+  "tracked_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+  "command_python": "/home/amax/.conda/envs/safevla/bin/python",
+  "cv2_version": "4.11.0",
+  "gpu_count": 0,
+  "episodes": 0,
+  "simulator_launches": 0,
+  "model_loads": 0
+}

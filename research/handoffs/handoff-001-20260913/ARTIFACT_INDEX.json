@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "EXP-LOOP-HANDOFF-001",
+  "cycle_id": "handoff-001-20260913",
+  "instruction_commit": "0dba6b748f26a782a595edeb53f02083850631cb",
+  "claim_id": "20aeabe36980458098074f196ec55343",
+  "artifacts": [
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control/research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
+      "sha256": "cefc0cd65d9e9ccdf03f54d4c62a067343219ecec5dcd08b2ce2fc14c9b9a031",
+      "size": 1807,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control/research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
+      "sha256": "fc60af49a7267b7def797c2165b5659a00a86b7d0a861232c88c54c544fa2fc4",
+      "size": 2807,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control/research/handoffs/handoff-001-20260913/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md",
+      "sha256": "ccac5116f095330ee20ef7a39d90c7bf291ec051f8c876a6ba1d6f6d53f83639",
+      "size": 1128,
+      "required_for_PI_review": true
+    }
+  ],
+  "required_outputs": [
+    "research/handoffs/handoff-001-20260913/RESULT_SUMMARY.md",
+    "research/handoffs/handoff-001-20260913/RUN_MANIFEST.json",
+    "research/handoffs/handoff-001-20260913/ARTIFACT_INDEX.json",
+    "research/handoffs/handoff-001-20260913/REVIEW_NOTES.md"
+  ],
+  "self_index_policy": "This index does not recursively hash itself; it is bound by the result Git commit. All other required outputs are hashed above."
+}

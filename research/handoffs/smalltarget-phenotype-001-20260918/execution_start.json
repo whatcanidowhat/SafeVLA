@@ -1,0 +1,45 @@
+{
+  "started_at_utc": "2026-09-20T08:26:19.495216+00:00",
+  "cwd": "/nvme2/user/qyy/SafeVLA",
+  "python": "/usr/bin/python3",
+  "version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+  "head": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "status": " M architecture/allenact_preprocessors/dino_preprocessors.py\n M architecture/models/allenact_transformer_models/inference_agent.py\n M online_evaluation/online_evaluator_worker.py\n M scripts/eval.sh\n?? .agents/\n?? .codex/\n?? AGENTS.md\n?? diagnostics/\n?? full_diff.patch\n?? online_evaluation/end_causal_diagnostic_logger.py\n?? research/\n",
+  "tracked_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+  "claim_commit": "72634cf7c3a954dd99456b2d75c3af539da9e68e",
+  "state": {
+    "schema_version": "1.0",
+    "state_version": 14,
+    "cycle_id": "smalltarget-phenotype-001-20260918",
+    "experiment_id": "EXP-SMALLTARGET-PHENOTYPE-001",
+    "status": "CODEX_RUNNING",
+    "next_actor": "CODEX",
+    "control_branch": "research-loop",
+    "execution_worktree": "/nvme2/user/qyy/SafeVLA",
+    "instruction_commit": "290b426ac65d35ef1f8cb4819e9662c4fae1bb31",
+    "reviewed_result_commit": "0e9c3bceac3c9b4dbe9daed6d37307080c2d0b3e",
+    "claim_id": "67dd8e9069184c8d9fbb4725a21f1232",
+    "authorization": {
+      "status": "APPROVED",
+      "approved_by": "PI",
+      "approved_at_utc": "2026-09-20T08:20:00+00:00",
+      "expires_at_utc": "2026-09-21T08:20:00+00:00",
+      "scope": "RESEARCH_EXPERIMENT",
+      "max_gpu": 0,
+      "max_episodes": 0
+    },
+    "required_outputs": [
+      "research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md",
+      "research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json",
+      "research/handoffs/smalltarget-phenotype-001-20260918/ARTIFACT_INDEX.json",
+      "research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md",
+      "research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv",
+      "research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv",
+      "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
+    ],
+    "updated_by": "CODEX",
+    "updated_at_utc": "2026-09-20T08:23:56.310985+00:00"
+  },
+  "gpu_count": 0,
+  "episodes_started": 0
+}

@@ -1,0 +1,180 @@
+{
+  "run_id": "p6-canonical-final-20260812",
+  "git_commit": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "git_branch": "baseline-experiment",
+  "dirty_worktree_patch_sha256": "c4ca119bbd2dd7c76472b06bce759b41d79ead10a93dcfcf6b7ea2cd675fb17b",
+  "checkpoint_path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "checkpoint_load_status": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "loaded_tensor_count": 417,
+    "model_tensor_count": 417,
+    "checkpoint_tensor_count": 417,
+    "critical_parameter_status": {
+      "actor.linear.bias": true,
+      "actor.linear.weight": true,
+      "c_critic_tsfm.critic.fc.weight": true,
+      "critic_tsfm.critic.fc.weight": true,
+      "decoder.layers.0.attention.wq.weight": true,
+      "visual_encoder.fusion_token": true
+    }
+  },
+  "dino_path": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+  "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+  "events": [
+    {
+      "before_reset": {
+        "steps_taken_in_task": 0,
+        "memory_norm": null,
+        "actor": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "reward_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "cost_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        }
+      },
+      "after_reset": {
+        "steps_taken_in_task": 0,
+        "memory_norm": null,
+        "actor": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "reward_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "cost_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        }
+      }
+    },
+    {
+      "before_reset": {
+        "steps_taken_in_task": 0,
+        "memory_norm": null,
+        "actor": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "reward_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "cost_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        }
+      },
+      "after_reset": {
+        "steps_taken_in_task": 0,
+        "memory_norm": null,
+        "actor": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "reward_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        },
+        "cost_critic": {
+          "time_step_counter": 0,
+          "decoder_cache_shape": [
+            0,
+            500,
+            8,
+            64
+          ],
+          "decoder_cache_k_norm": 0.0,
+          "decoder_cache_v_norm": 0.0
+        }
+      }
+    }
+  ],
+  "interpretation": "Counters/caches persist. With trajectory masking, old K/V are masked at a new episode; cumulative max_steps rollover remains a boundary risk requiring an assertion."
+}

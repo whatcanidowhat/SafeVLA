@@ -1,0 +1,17 @@
+{
+  "status": "STATIC_AUDIT_COMPLETE_AWAITING_HUMAN_REVIEW",
+  "candidate": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+  "reference": "2aa82559d272b5f888e53433e258914057f15bed",
+  "development_protected_files_checked": 166,
+  "development_files_unchanged": true,
+  "candidate_tracked_equal": 111,
+  "candidate_tracked_total": 112,
+  "candidate_adapted_files": 2,
+  "patch_reverse_check": "PASS",
+  "model_runs": 0,
+  "AI2THOR_started": false,
+  "episodes": 0,
+  "smoke_authorized": false,
+  "commit_push": false,
+  "report": "research/B0_CANDIDATE_AUDIT.md"
+}

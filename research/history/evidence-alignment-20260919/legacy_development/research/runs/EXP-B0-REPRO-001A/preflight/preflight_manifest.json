@@ -1,0 +1,51 @@
+{
+  "experiment_id": "EXP-B0-REPRO-001A",
+  "status": "BLOCKED_PREFLIGHT",
+  "generated_at_utc": "2026-09-11T12:11:21.948832+00:00",
+  "repo": "/nvme2/user/qyy/SafeVLA",
+  "git_head": "60bc54fbdedaf5745d0476c25321e808708273aa",
+  "git_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+  "official_reference": "6464cbdc0ef4d2948157c43f90304e1261d4209f",
+  "local_upstream": "2aa82559d272b5f888e53433e258914057f15bed",
+  "weights": {
+    "checkpoint": {
+      "path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+      "exists": true,
+      "sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+      "size_bytes": 2027033991
+    },
+    "dino_checkpoint": {
+      "path": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "exists": true,
+      "sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+      "size_bytes": 88283115
+    }
+  },
+  "dino_source_file_count": 157,
+  "planned_configuration_not_executed": {
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "action_selection": "stochastic",
+    "test_augmentation": true,
+    "shuffle": true,
+    "eval_subset": "minival",
+    "eval_set_size": 2,
+    "house_set": "objaverse",
+    "shadow_predictor_enable": false,
+    "end_causal_diagnostics": false,
+    "max_eps_len": -1
+  },
+  "run_count": 0,
+  "episode_count": 0,
+  "reference_run_status": "NOT_STARTED",
+  "repeat_run_status": "NOT_STARTED",
+  "runtime_module_paths": null,
+  "runtime_module_paths_note": "No evaluator/model launched. Static source paths are in source_sha256.json; they are not runtime import evidence.",
+  "actual_commands": [],
+  "blockers": [
+    "Official-equivalence of unconditional pre-decision environment queries is not established."
+  ],
+  "full_200_authorized": false,
+  "historical_full_200_role": "historical reference only"
+}

@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md",
+      "sha256": "8bf5c0d18ff9ddbc9b124fdccd5712fda79b178b6d2ff7754c8e010c3dcdda10",
+      "size": 2525,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/RESULT_SUMMARY.md"
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md",
+      "sha256": "fce2f565f9d41abe44d1143340d45df3712b8347970e0b12f9e9c49ba06ef2ed",
+      "size": 960,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/REVIEW_NOTES.md"
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json",
+      "sha256": "cefc46ddbe4a66b043a47695996e8b54a08e4d966d22db36fdea23ce0981a355",
+      "size": 10331,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/RUN_MANIFEST.json"
+    },
+    {
+      "name": "analyze_smalltarget.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py",
+      "sha256": "f5f88d37b315439b812c0340f5995026c326f913487f1d23c11129697223dc50",
+      "size": 13008,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/analyze_smalltarget.py"
+    },
+    {
+      "name": "category_sr.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv",
+      "sha256": "654be22301bc18da37799d21efa25eebab953e68e004cfbbe1cd41da33df60b2",
+      "size": 882,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/category_sr.csv"
+    },
+    {
+      "name": "development_preservation.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/development_preservation.json",
+      "sha256": "a51790ea7c8c540a84e4e9284b0e07434acef030e9f721d49787ec356478ff95",
+      "size": 1231,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/development_preservation.json"
+    },
+    {
+      "name": "episode_table.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv",
+      "sha256": "67dc257e4b135ae1a1bdfe833efd743de9d5e8e81582c0eab672fe8c2ccb3e96",
+      "size": 49169,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/episode_table.csv"
+    },
+    {
+      "name": "execution_start.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/execution_start.json",
+      "sha256": "03b67dea9a1923db7d0f131805b695bd6d5b50ff4f62562bab39d73b63afd284",
+      "size": 2281,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/execution_start.json"
+    },
+    {
+      "name": "metadata_gate.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/metadata_gate.json",
+      "sha256": "7e73e961e063b33aba1a14aba255dbeefef6ef6c0ffb916413dcb1c27c513822",
+      "size": 912,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/metadata_gate.json"
+    },
+    {
+      "name": "metadata_preflight.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/metadata_preflight.json",
+      "sha256": "d17dcbc8cabfd51f109949d8c7ff7e12bc4418436ad783e5a6b8a05c2a8acd8c",
+      "size": 374847,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/metadata_preflight.json"
+    },
+    {
+      "name": "metadata_preflight.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/metadata_preflight.py",
+      "sha256": "a9a9582e2bfdb8e5eb493803364fcbfa6f1b860742f5eb283543ec9f291037b9",
+      "size": 4285,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/metadata_preflight.py"
+    },
+    {
+      "name": "raw_identity_check.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/raw_identity_check.json",
+      "sha256": "179fc98e1c5427909122e3fb8efa4f20be6df6081d9bf8cdcee7151eb66e9eb8",
+      "size": 518,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/raw_identity_check.json"
+    },
+    {
+      "name": "size_analysis.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md",
+      "sha256": "a9b2f9c9059750198ff4efa561de711e97ff651bb2a76e12fa859c451a337bed",
+      "size": 892,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/size_analysis.md"
+    },
+    {
+      "name": "source_references.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/source_references.json",
+      "sha256": "e9e7b8f89a0f741b8ff0a19c91ee7ab2d7296fbaf7fced3ee7589d681a1ca3ea",
+      "size": 1576,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/source_references.json"
+    },
+    {
+      "name": "static_database_search.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/smalltarget-phenotype-001-20260918/static_database_search.json",
+      "sha256": "d0058fdc8069311e3a8661501f5c44d8a84836b87872f990ec6581c3623ee2a8",
+      "size": 2392,
+      "required_for_PI_review": true,
+      "git_path": "research/handoffs/smalltarget-phenotype-001-20260918/static_database_search.json"
+    }
+  ]
+}
