@@ -407,3 +407,29 @@ Critical correction retained:
 `sub_house_id` is the original dataset sample index assigned before evaluation-order shuffle; it is not house identity or difficulty.
 
 Current status remains PI_REVIEW / NOT_AUTHORIZED. No Executor claim or execution is authorized by this decision.
+
+
+## 2026-09-23 — CONTROL-PROTOCOL-REPAIR-004：premature-end staging history mismatch
+
+Failure evidence:
+- approval HEAD `3af48dc297468cca0b564ef234c2c1c6bd4a435c` failed GitHub Actions run `35841714309`;
+- synthetic protocol tests passed;
+- full history validation failed with `NEXT_EXPERIMENT mismatch`;
+- no Executor claim occurred and no research execution started.
+
+Root cause:
+PI changed the new experiment design in multiple append-only commits before moving `LOOP_STATE` from the old reset-rollover cycle to the new premature-end cycle. Three intermediate commits therefore intentionally contained a staged NEXT_EXPERIMENT identity different from the still-old PI_REVIEW LOOP_STATE:
+- `149ab525a99aa02afd0f4aa61472d3fd1ec2680e`
+- `0151b678a822f780190130690f1eb75955e2eca6`
+- `7fba4aedfaa9978581ba3bee643c5ffe953ddb35`
+
+This was a control-plane publication-order defect only. All three snapshots remained PI_REVIEW / NOT_AUTHORIZED with instruction_commit=null and claim_id=null. No GPU, simulator, model, episode, or artifact analysis was executed.
+
+Repair:
+- preserve the three commits; do not rewrite/squash/force-push history;
+- add a narrow validator exception tied only to the exact three commit SHAs and exact old/new experiment identities/statuses;
+- keep normal snapshot validation strict, so the same mismatch is still rejected anywhere else;
+- add a synthetic regression test proving the ordinary validator rejects the mismatch and only the exact legacy exception accepts it;
+- do not modify the approved scientific design, budgets, or LOOP_STATE while repairing validation.
+
+Executor remains forbidden to claim until a newer research-loop HEAD has green control CI. After green CI, claim must bind to that latest pre-claim HEAD, not the failed approval commit.
