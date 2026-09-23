@@ -184,3 +184,13 @@ This was historical CPU-only video/table analysis: 0 GPU, 0 episodes, 0 simulato
 Handoff: [RESULT_SUMMARY.md](handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md), [analysis](handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md), [artifact index](handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json). Claim a5045c5255b67f3e0f1d4f559d2d6078f70f9544 and its green CI preceded execution. Frozen designs and claim/authorization identity are preserved.
 
 Next actor PI. One proposal follows the frozen LATE_RISE branch: review a matched hard-task SafeVLA versus comparable non-safety/base-policy causal comparison, with comparability and confounds explicitly controlled. This proposal is not approved or executed. Gate B remains unresolved for future hidden-state interpretation. No next experiment or PI acknowledgement is self-issued. Executor STOP after publication.
+
+
+## 2026-09-23 — Premature-end result reviewed; clean-B0 reproduction is next gate
+
+| Experiment ID | Status | Scientific role |
+| --- | --- | --- |
+| EXP-PREMATURE-END-DYNAMICS-001 | COMPLETED / PI REVIEWED | Historical audit: 16/16 sub-horizon failures final=end; terminal p(end) jump is not failure-specific |
+| EXP-CLEAN-B0-PREMATURE-END-REPRO-001 | DRAFT / NOT_AUTHORIZED | Establish clean full-200 B0 invalid-end prevalence before safety-alignment or hidden-state attribution |
+
+Planned budget for the new draft: max 1 GPU / 200 ObjectNav episodes; no treatment arm, no Probe, no extra live oracle query.
