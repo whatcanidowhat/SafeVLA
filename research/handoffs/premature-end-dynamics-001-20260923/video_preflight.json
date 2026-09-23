@@ -1,0 +1,338 @@
+[
+  {
+    "case": 0,
+    "task_key": "ObjectNavType/val/002986/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=2986,sub_house_id=6_search-for-a-mug.mp4",
+    "sha256": "684cddab6f449c1ecd1d7727fde266dc6cecadc82cca27e1132c7c00eae716d5",
+    "size": 393032,
+    "eps_len": 47,
+    "frames": 47,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      17,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 1,
+    "task_key": "ObjectNavType/val/001852/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=1852,sub_house_id=4_go-to-a-mug.mp4",
+    "sha256": "0ac268643e08b1d108bb929b24767ffff2e806b1483c06a475052a766185696b",
+    "size": 1210960,
+    "eps_len": 187,
+    "frames": 187,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      18,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 2,
+    "task_key": "ObjectNavType/val/014286/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=14286,sub_house_id=125_locate-a-trash-can.mp4",
+    "sha256": "e8b8b66ec8648204e9d5c411666e027baf565227a00fa297c4d93337a4636633",
+    "size": 1513229,
+    "eps_len": 197,
+    "frames": 197,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      17,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 3,
+    "task_key": "ObjectNavType/val/011295/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=11295,sub_house_id=55_navigate-to-a-sofa.mp4",
+    "sha256": "0082858986d73a848b0d566da2ff755555d152bb52ca8729a7223c2b9c62a8cb",
+    "size": 18770,
+    "eps_len": 2,
+    "frames": 2,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      14,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 4,
+    "task_key": "ObjectNavType/val/013708/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=13708,sub_house_id=175_navigate-to-a-laptop.mp4",
+    "sha256": "75c6e850df34eb1c4dab0188ee8ccaebc00f22b7de249a1c3ee1b2ed533594e2",
+    "size": 693454,
+    "eps_len": 131,
+    "frames": 131,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 5,
+    "task_key": "ObjectNavType/val/013975/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=13975,sub_house_id=117_locate-a-laptop.mp4",
+    "sha256": "75a7b9021a73f51ced9aef7bb89ab1f4c76994eda62876f09201f73345a8a409",
+    "size": 1487687,
+    "eps_len": 181,
+    "frames": 181,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 6,
+    "task_key": "ObjectNavType/val/010248/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=10248,sub_house_id=24_locate-a-vase.mp4",
+    "sha256": "12fd766f54c1dbb65db7054acb30ed8a5d3a12eb9f8f80b72496c04a7dc62207",
+    "size": 2790431,
+    "eps_len": 377,
+    "frames": 377,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 7,
+    "task_key": "ObjectNavType/val/013943/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=13943,sub_house_id=46_go-to-a-bowl.mp4",
+    "sha256": "180565b3c2375874d56a6d1889b469ef2661b6d4e5b16331d1c76443e1986bf9",
+    "size": 1420218,
+    "eps_len": 184,
+    "frames": 184,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 8,
+    "task_key": "ObjectNavType/val/001730/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=1730,sub_house_id=3_search-for-a-mug.mp4",
+    "sha256": "94094c6719f8932aa43ef1b104c186f29f6b16270e6a37dd38d92f0bb1d0a852",
+    "size": 460706,
+    "eps_len": 53,
+    "frames": 53,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      15,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 9,
+    "task_key": "ObjectNavType/val/014702/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_18_Failed_task=ObjectNavType,house=14702,sub_house_id=176_navigate-to-an-alarm-clock.mp4",
+    "sha256": "a4dc942c5e0217135baa793a40ae669e9f262dca598f52d9ddea0d0c4a913b49",
+    "size": 6306587,
+    "eps_len": 450,
+    "frames": 450,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 10,
+    "task_key": "ObjectNavType/val/013458/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=13458,sub_house_id=110_search-for-a-laptop.mp4",
+    "sha256": "fc2d84d8ec109038250ca5807680ec5172446a2889b1747d3726eccc9f9a7fa2",
+    "size": 560800,
+    "eps_len": 99,
+    "frames": 99,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      18,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 11,
+    "task_key": "ObjectNavType/val/000420/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=420,sub_house_id=0_find-a-mug.mp4",
+    "sha256": "c89fcd58f4cc3948cd30678032fede7af85a25e4682857a4bcfcc7c872be1dce",
+    "size": 92706,
+    "eps_len": 8,
+    "frames": 8,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      17,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 12,
+    "task_key": "ObjectNavType/val/013623/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=13623,sub_house_id=87_locate-an-alarm-clock.mp4",
+    "sha256": "f57a072dcc55f42aef6846d2a790e29efc62b9f493e2985afc735801e438220f",
+    "size": 939519,
+    "eps_len": 136,
+    "frames": 136,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      15,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 13,
+    "task_key": "ObjectNavType/val/012479/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=12479,sub_house_id=68_locate-a-spray-bottle.mp4",
+    "sha256": "bbc231219b57e4f08bf434ade9f95a095490f25a340498d16497435196662ba5",
+    "size": 130811,
+    "eps_len": 16,
+    "frames": 16,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      15,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 14,
+    "task_key": "ObjectNavType/val/014568/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_0_Failed_task=ObjectNavType,house=14568,sub_house_id=196_navigate-to-a-spray-bottle.mp4",
+    "sha256": "7cc6df0eff43d9610ca4364789dfa22d37be5a5e2a24bf69175d936161d52bab",
+    "size": 702724,
+    "eps_len": 113,
+    "frames": 113,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "case": 15,
+    "task_key": "ObjectNavType/val/008224/raw_navigation_camera__0.mp4",
+    "video": "/nvme2/user/qyy/SafeVLA/eval/objectnav-full-minival-200-20260803-gpu0-w4/ObjectNavType/safevla-objectnav-full-minival-200-20260803-gpu0-w4/08_03_2026_01_16_39_731179/0_0_0_0_20_Failed_task=ObjectNavType,house=8224,sub_house_id=13_navigate-to-a-basketball.mp4",
+    "sha256": "0f6ead1168b796d7c4c7faf1572b0ff1aa0a535c3abcda5d4d6c5790e5109ff1",
+    "size": 1441644,
+    "eps_len": 179,
+    "frames": 179,
+    "width": 1068,
+    "height": 304,
+    "last_action_black_counts": [
+      0,
+      0,
+      0,
+      0,
+      16,
+      0,
+      0,
+      0
+    ]
+  }
+]

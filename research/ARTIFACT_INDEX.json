@@ -33,6 +33,14 @@
       "sha256": "3002e0ea3ade756a9033a9ef4416dbeef054dfeadb23560f90c0c32524702ce1",
       "size": 30147,
       "required_for_PI_review": true
+    },
+    {
+      "name": "premature-end-dynamics-001-completed-handoff-index",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
+      "git_path": "research/handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json",
+      "sha256": "09302d6066652091727493936d5686b6aaec47eed11b3d90b0aa2564c6e84e6b",
+      "size": 44630,
+      "required_for_PI_review": true
     }
   ],
   "legacy_index_status": "research/history/legacy_artifact_sha256.json = LEGACY / SUPERSEDED"

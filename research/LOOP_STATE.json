@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 28,
+  "state_version": 29,
   "cycle_id": "premature-end-dynamics-001-20260923",
   "experiment_id": "EXP-PREMATURE-END-DYNAMICS-001",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "AWAITING_PI_REVIEW",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "681cd28355cfa79a6eaec7f663d9b3776da7f37e",
@@ -31,5 +31,5 @@
     "research/handoffs/premature-end-dynamics-001-20260923/analyze_premature_end.py"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-09-23T09:37:56.605625+00:00"
+  "updated_at_utc": "2026-09-23T11:32:29.868956+00:00"
 }
