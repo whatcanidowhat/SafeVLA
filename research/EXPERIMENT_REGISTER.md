@@ -204,3 +204,12 @@ Planned budget for the new draft: max 1 GPU / 200 ObjectNav episodes; no treatme
 | EXP-END-LEGALITY-CALIBRATION-001 | DRAFT / NOT_AUTHORIZED | Test whether Actor terminal confidence separates legal successful end from illegal failed end using existing artifacts |
 
 Budget: 0 GPU / 0 episode.
+
+
+## 2026-09-24 — Terminal legality calibration draft superseded before approval
+
+| Experiment ID | Status | Reason |
+| --- | --- | --- |
+| EXP-END-LEGALITY-CALIBRATION-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Researcher judged further p(end)-based legal-vs-illegal calibration to duplicate already completed probability/termination analyses and provide insufficient incremental information |
+
+No successor experiment is authorized by this decision.

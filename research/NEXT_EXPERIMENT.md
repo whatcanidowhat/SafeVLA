@@ -3,7 +3,15 @@
 Experiment ID: EXP-END-LEGALITY-CALIBRATION-001
 Status: DRAFT
 Authorization: NOT_AUTHORIZED
+Lifecycle: SUPERSEDED BEFORE APPROVAL
+Execution: DO NOT EXECUTE
 Cycle ID: end-legality-calibration-001-20260923
+
+## Supersession decision
+
+This draft was explicitly superseded by the researcher before approval. It must not be claimed or executed. The reason is low incremental information value: the project has already completed closely related `p(end)` analyses, so another legal-vs-illegal confidence audit would largely repeat the same evidence layer.
+
+No successor experiment is authorized by this supersession.
 
 ## Research question
 When SafeVLA actually executes `end` in the historical full-200 run, does its Actor confidence distinguish a legal successful stop from an illegal failed stop?

@@ -1,25 +1,30 @@
 # Current State
 
-Updated: 2026-09-23（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-END-LEGALITY-CALIBRATION-001 is the unique next DRAFT / NOT_AUTHORIZED.
+Updated: 2026-09-24（Asia/Shanghai）
+Mode: PI_REVIEW. No experiment is currently authorized for execution.
 
-## Mainline decision
-The researcher rejected both the proposed full-200 clean-B0 rerun and targeted clean-B0 reproduction as unnecessary for the current mechanism-diagnosis mainline. Those proposals are superseded before approval and were never executed.
+## Latest PI decision
 
-Historical evidence remains usable as a discovery set, with an explicit boundary: it supports claims about the observed 2026-08-03 run, not formal clean-B0 prevalence or paper-level causal attribution.
+`EXP-END-LEGALITY-CALIBRATION-001` is **SUPERSEDED BEFORE APPROVAL / NOT EXECUTED** by explicit researcher decision.
 
-## Verified Facts
+Reason: the proposed legal-vs-illegal terminal `p(end)` calibration repeats an evidence layer that has already been explored. The completed termination-dynamics work already established the relevant `p(end)` behavior sufficiently for the current mainline; another probability-only audit is not expected to materially change the research state.
+
+## Preserved facts
+
 - 16/16 historical sub-horizon failures end by executing `end`.
-- First-decision p(end) is sub-resolution in all 16; preterminal maxima remain below 0.5.
-- The terminal p(end) jump also occurs in successful ends, so it is not failure-specific.
-- H-PRIOR and gradual H-SEARCH-TRIGGERED explanations are weakened.
-- The high-value unresolved question is whether the Actor's terminal confidence distinguishes legal from illegal end decisions.
+- First-decision `p(end)` is sub-resolution in all 16; preterminal maxima remain below 0.5.
+- The terminal `p(end)` jump also appears in successful ends, so it is not failure-specific.
+- H-PRIOR and a simple gradual H-SEARCH-TRIGGERED explanation are weakened.
+- Historical Probe evidence remains exploratory/provenance-limited.
+- H-RESET remains unresolved and must be controlled before formal hidden-state / Probe causal interpretation.
 
-## Unique Next Experiment
-`EXP-END-LEGALITY-CALIBRATION-001`: zero-rollout audit of legal successful terminal ends versus the 16 illegal terminal ends, using the same historical videos.
+## Current research direction
 
-Budget: 0 GPU / 0 episode.
-Status: DRAFT / NOT_AUTHORIZED.
+Do not spend another cycle on `p(end)` description or reproduction. The next experiment has **not yet been selected or authorized**. The next design should move to a deeper mechanism layer, while respecting the existing H-RESET gate before formal hidden-state interpretation.
+
+## Control State
+
+Current control state remains PI_REVIEW / NOT_AUTHORIZED. `EXP-END-LEGALITY-CALIBRATION-001` is retained only as an append-only superseded draft record; it must not be claimed or executed.
 
 ## 02 research-history migration — 2026-09-18
 

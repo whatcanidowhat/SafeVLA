@@ -500,3 +500,25 @@ Unique next DRAFT:
 `EXP-END-LEGALITY-CALIBRATION-001`, zero-rollout / 0 GPU / 0 episode. Compare all recoverable successful terminal end events with the 16 confirmed illegal terminal ends using video-rendered quantized action probabilities.
 
 No execution is authorized.
+
+
+## 2026-09-24 — DEC-SUPERSEDE-END-CALIBRATION-001：停止继续围绕 p(end) 做重复分析
+
+Researcher decision:
+`EXP-END-LEGALITY-CALIBRATION-001` is explicitly **SUPERSEDED BEFORE APPROVAL** and must not be executed.
+
+Reason:
+The project has already completed relevant `p(end)` experiments, including the historical premature-end dynamics audit. A new legal-vs-illegal terminal-confidence comparison would remain at the same descriptive probability layer and is not expected to materially reduce the current mechanism uncertainty.
+
+Scientific implication:
+- preserve the existing p(end) findings;
+- do not spend another cycle on probability-only descriptive analysis;
+- do not infer representation/readout mechanism from those probabilities alone;
+- if the project proceeds to hidden-state/Probe/readout diagnosis, H-RESET remains a prerequisite causal-interpretation gate.
+
+Control implication:
+- no approval;
+- no claim;
+- no execution;
+- no GPU/episode/model/simulator work;
+- no successor experiment is authorized by this supersession alone.

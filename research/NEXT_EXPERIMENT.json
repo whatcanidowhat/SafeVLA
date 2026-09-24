@@ -62,5 +62,8 @@
   "resources": {
     "max_gpu": 0,
     "max_episodes": 0
-  }
+  },
+  "lifecycle_state": "SUPERSEDED_BEFORE_APPROVAL",
+  "superseded_reason": "Researcher determined that further p(end)-based legal-vs-illegal calibration substantially overlaps already completed termination-probability analyses and has insufficient incremental information value.",
+  "execution_decision": "DO_NOT_EXECUTE"
 }
