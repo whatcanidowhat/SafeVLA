@@ -223,3 +223,12 @@ No successor experiment is authorized by this decision.
 | EXP-RESET-001A | DRAFT / NOT_AUTHORIZED | Causal Gate-B test: Actor state carry / rollover -> hidden/logit/action difference under identical teacher-forced inputs |
 
 Budget: max1 GPU, max4 live episodes, no benchmark run. Treatment patch is local-only; handoff evidence is published to research-loop.
+
+
+## 2026-10-07 — EXP-RESET-001A executable approval
+
+| Experiment ID | Status | Budget |
+| --- | --- | --- |
+| EXP-RESET-001A | APPROVED_FOR_CODEX / awaiting claim | max1 GPU; max4 live episodes; bounded offline replay |
+
+The failed timestamp approval was never claimed. The valid approval is the later green reapproval.

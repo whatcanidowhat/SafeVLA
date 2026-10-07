@@ -543,3 +543,18 @@ PI methodological corrections:
 Outcome classes remain R1/R2/R3/R4. No SR claim, Probe, Stop Gate, 200-task run, safety-metric redefinition, size analysis or multi-checkpoint comparison is part of 001A.
 
 Status remains DRAFT / PI_REVIEW / NOT_AUTHORIZED pending explicit approval.
+
+
+## 2026-10-07 — DEC-RESET-001A-APPROVAL：最终授权生效
+
+User explicitly approved EXP-RESET-001A.
+
+Control incident:
+- first approval commit `bb2a107...` failed because `updated_at_utc` regressed relative to its PI_REVIEW parent;
+- no Executor claim or research execution occurred;
+- append-only history preserved the bad commit through an exact-SHA validator exception;
+- repair CI `37631046558` passed;
+- the unclaimed approval was revoked;
+- final reapproval commit `f6f8bcf82b41bb1b8feb9a5b2088527dc3768022` passed CI `37631919214`.
+
+Final authorization remains max1 GPU / max4 live episodes with all frozen exclusions unchanged.

@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-RESET-001A is the unique next DRAFT; NOT_AUTHORIZED.
+Mode: EXP-RESET-001A APPROVED_FOR_CODEX; next actor CODEX; awaiting valid Executor claim.
 
 ## Latest PI decision
 
@@ -202,3 +202,18 @@ Status: PI_REVIEW / NOT_AUTHORIZED
 Budget: max 1 GPU, max 4 live ObjectNav episodes; offline replay only beyond that.
 
 The treatment patch must not be committed into the B0 execution branch. Per the established research-loop protocol, handoff evidence itself must still be published to `research-loop` for PI review; this is the only intended exception to the user instruction "do not commit/push."
+
+
+## 2026-10-07 — EXP-RESET-001A final approval
+
+Authoritative approval HEAD before documentation maintenance: `f6f8bcf82b41bb1b8feb9a5b2088527dc3768022`.
+Approval CI `37631919214` completed successfully.
+
+Current budget:
+- max GPU: 1;
+- max live ObjectNav episodes: 4;
+- offline replay only within frozen P1/P2 scope.
+
+A prior approval commit `bb2a10792e615153485fa16e00f67040e6478612` failed history validation because its timestamp regressed relative to the staging parent. No claim or experiment execution occurred. The incident is preserved append-only, the unclaimed approval was revoked, and the experiment was re-approved only after the repair CI passed.
+
+Executor must claim the latest green research-loop HEAD and wait for claim CI before execution.
