@@ -1,69 +1,74 @@
 {
-  "experiment_id": "EXP-END-LEGALITY-CALIBRATION-001",
-  "cycle_id": "end-legality-calibration-001-20260923",
+  "experiment_id": "EXP-RESET-001A",
+  "cycle_id": "reset-001a-20261007",
   "status": "DRAFT",
-  "research_question": "Among executed end decisions in the historical full-200 run, does Actor end confidence distinguish legal terminal states from illegal terminal states?",
-  "hypothesis": "H-CALIBRATION-GAP: illegal terminal ends have end-probability/confidence distributions that substantially overlap legal successful ends, implying that Actor end confidence is poorly aligned with the environment's stop-legality predicate.",
-  "competing_explanation": "H-LOW-CONFIDENCE-END: illegal terminal ends have systematically lower end confidence/margin than legal ends, indicating a sampling/calibration-tail problem rather than high-confidence legality confusion.",
-  "reference": "EXP-PREMATURE-END-DYNAMICS-001 verified 16/16 historical sub-horizon failures ended with end. It also showed terminal-only p(end) jumps in failures and in 10/11 unique successful controls, weakening the search-triggered-rise interpretation.",
-  "repeat_or_treatment": "Zero-rollout retrospective audit of existing historical videos only. Primary comparison is all recoverable legal successful terminal-end events versus the 16 confirmed sub-horizon illegal terminal-end events. No policy/environment intervention.",
-  "unique_variable": "Observed terminal legality label at an executed end: legal successful end versus illegal failed end. This is observational, not manipulated.",
+  "research_question": "Does cross-episode Actor state carry (time_step_counter and semantically coupled decoder K/V cache) causally change Actor hidden states, logits, or actions for the same teacher-forced current-episode input sequence when rollover timing differs?",
+  "hypothesis": "H-RESET: a valid carried Actor state package that shifts rollover timing causes reproducible hidden/logit divergence and may cause action divergence under identical teacher-forced inputs.",
+  "competing_explanation": "H-RESET-INERT: after a semantically valid reset/carry construction and deterministic replay, the same input sequence yields equivalent Actor outputs across rollover, so retained state is an engineering irregularity rather than an active policy mechanism on the tested path.",
+  "reference": "02｜SafeVLA Gate B FAIL: Actor/Reward/Cost decoder counters and K/V cache persist across episode reset; historical short mask-isolation test matched at fresh-episode start but did not causally test later max_steps=500 rollover. Historical premature-end probability audits are complete and no further p(end)-only experiment is authorized.",
+  "repeat_or_treatment": "P0 static state-carrier audit; P1 explicit RESET_STATE_FIX with OFF official and ON Actor-only correct reset plus model-level A/A OFF equivalence; P2 deterministic offline CLEAN-START versus valid CARRY-300 stress replay on the same teacher-forced real B0 Actor input sequence. Maximum four live episodes only to acquire a fixed input trace or A/A smoke.",
+  "unique_variable": "Initial Actor model-side episode state package / rollover position. All teacher-forced Actor inputs, weights, masks, recorded previous-action inputs and offline RNG draws are held fixed.",
   "fixed_conditions": [
-    "Use only the aligned historical 2026-08-03 full-200 artifacts",
-    "Primary illegal set is the 16 already confirmed eps_len<600 failures with final executed end",
-    "Primary legal set is every successful episode with a recoverable terminal video frame; ObjectNav success requires an end action, but video recovery must still validate the probability frame",
-    "Use one frozen bar-geometry/action-row mapping for all videos",
-    "All probabilities are video-rendered quantized approximations; zero-width bars are below rendering resolution, not exact zero",
-    "No simulator, model load, checkpoint load, new episode, replay, Probe, reset treatment, or extra forward",
-    "Do not claim clean-B0 prevalence or SafeRL causation from this historical audit"
+    "Official B0 checkpoint/DINO/action/success/end/horizon/reward/cost semantics",
+    "No PT-Guard, Stop Gate, steering, reranking, action rewrite or success-oracle gate",
+    "RESET_STATE_FIX=0 must be model-level A/A equivalent to untouched official code on identical saved inputs and RNG",
+    "RESET_STATE_FIX=1 resets only the Actor episode-local state proven necessary by the static audit; if Actor-only isolation is impossible, return R4",
+    "No formal Probe, size analysis, 200-task evaluation or three-checkpoint comparison",
+    "Offline stress replay remains teacher-forced after any predicted-action divergence",
+    "Primary action comparison is argmax; optional sampled comparison uses common random numbers",
+    "Treatment code is not committed to the B0 execution branch; review uses reset_fix.patch and research-loop handoff artifacts"
   ],
   "metrics": [
-    "Recovered legal terminal-end count and illegal terminal-end count",
-    "Terminal p(end) distribution by legality",
-    "Terminal end margin: p(end) minus largest non-end rendered probability",
-    "Preterminal p(end) at t-1 and max over previous five decisions where available",
-    "Terminal jump delta p(end) from t-1 to terminal",
-    "Action-distribution entropy when all rendered bars are reliably recoverable",
-    "AUROC of terminal p(end) and end margin for legal versus illegal terminal events, with episode-level bootstrap confidence intervals",
-    "Median/IQR and quantization sensitivity analysis",
-    "Category/expert_length strata only as secondary descriptive sensitivity checks"
+    "State-carrier ownership/lifetime/reset/rollover map",
+    "A/A OFF hidden/logit/probability/greedy/sampled equivalence on identical inputs and RNG",
+    "Per-step Actor counter and cache write/start position",
+    "Max absolute/relative Actor hidden difference",
+    "Max absolute/relative 20-D logit difference",
+    "End probability, rank and margin",
+    "First logit divergence step",
+    "First argmax-action divergence step",
+    "Optional first common-RNG sampled-action divergence",
+    "Distance from first rollover event to first divergence",
+    "Within-condition deterministic replay stability"
   ],
-  "expected_result": "If legal and illegal terminal confidence strongly overlap, treat the problem as terminal legality discrimination/calibration rather than gradual search-triggered quitting. If illegal ends are consistently lower-confidence, prioritize stochastic sampling/termination calibration.",
-  "falsifying_result": "H-CALIBRATION-GAP is weakened if legal terminal ends have clearly higher p(end)/margin than illegal ends with stable separation across quantization sensitivity checks.",
+  "expected_result": "Either establish a reproducible state-carrier -> Actor distribution/action pathway around rollover (R1/R2), or substantially downgrade H-RESET after a valid no-difference result (R3).",
+  "falsifying_result": "H-RESET as an active policy mechanism is weakened if semantically valid CLEAN-START and CARRY-300 replays remain equivalent through the rollover-relevant region on the fixed real input sequence.",
   "alternative_explanations": [
-    "Conditioning on executed end selects for high p(end) in both groups",
-    "Video probabilities are quantized",
-    "Legal and illegal groups differ in category, scene geometry, episode length and task difficulty",
-    "The historical evaluator provenance is not formal clean B0",
-    "Class imbalance (many more legal than illegal ends) affects uncertainty",
-    "Actor confidence overlap does not prove target legality information is absent from hidden representations"
+    "A fabricated counter value without compatible cache contents would create an invalid treatment",
+    "CUDA numerical nondeterminism may masquerade as tiny divergence unless within-condition replay stability is verified",
+    "One stress sequence may not generalize to population-level performance",
+    "Counter+cache package causality does not separately attribute counter versus cache",
+    "Model-level action divergence does not by itself prove SR impact"
   ],
   "stop_conditions": [
-    "Fewer than 14/16 illegal terminal frames are reliably recoverable",
-    "Fewer than 150 legal successful terminal frames are reliably recoverable",
-    "Action-row/bar geometry cannot be frozen consistently across the corpus",
-    "Terminal frame alignment is ambiguous",
-    "Analysis would require simulator/model execution or hidden-state reconstruction"
+    "Static audit cannot define a valid Actor-only reset package",
+    "RESET_STATE_FIX=0 differs from untouched official model replay on identical inputs/RNG",
+    "Logger/instrumentation changes forward count, RNG, inputs, history or environment semantics",
+    "A valid >=220-decision fixed input sequence cannot be obtained within four live episodes",
+    "CARRY-300 cannot be constructed with semantically compatible cache state",
+    "Within-condition offline replay is not stable enough for comparison",
+    "Execution would expand to Probe, Stop Gate, 200-task evaluation, size analysis or multi-checkpoint performance comparison"
   ],
   "command": [
     "python3",
-    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
+    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
   ],
   "required_outputs": [
-    "research/handoffs/end-legality-calibration-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/end-legality-calibration-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/end-legality-calibration-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/end-legality-calibration-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/end-legality-calibration-001-20260923/terminal_end_events.csv",
-    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration_summary.csv",
-    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration.md",
-    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
+    "research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
+    "research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
+    "research/handoffs/reset-001a-20261007/ARTIFACT_INDEX.json",
+    "research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
+    "research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
+    "research/handoffs/reset-001a-20261007/decoder_state_map.json",
+    "research/handoffs/reset-001a-20261007/reset_fix_design.md",
+    "research/handoffs/reset-001a-20261007/reset_fix.patch",
+    "research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
+    "research/handoffs/reset-001a-20261007/rollover_stress_result.json",
+    "research/handoffs/reset-001a-20261007/rollover_trace.csv",
+    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
   ],
   "resources": {
-    "max_gpu": 0,
-    "max_episodes": 0
-  },
-  "lifecycle_state": "SUPERSEDED_BEFORE_APPROVAL",
-  "superseded_reason": "Researcher determined that further p(end)-based legal-vs-illegal calibration substantially overlaps already completed termination-probability analyses and has insufficient incremental information value.",
-  "execution_decision": "DO_NOT_EXECUTE"
+    "max_gpu": 1,
+    "max_episodes": 4
+  }
 }

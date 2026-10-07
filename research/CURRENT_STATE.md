@@ -1,13 +1,17 @@
 # Current State
 
-Updated: 2026-09-24（Asia/Shanghai）
-Mode: PI_REVIEW. No experiment is currently authorized for execution.
+Updated: 2026-10-07（Asia/Shanghai）
+Mode: PI_REVIEW. EXP-RESET-001A is the unique next DRAFT; NOT_AUTHORIZED.
 
 ## Latest PI decision
 
-`EXP-END-LEGALITY-CALIBRATION-001` is **SUPERSEDED BEFORE APPROVAL / NOT EXECUTED** by explicit researcher decision.
+The researcher restored the original 02｜SafeVLA Gate-B ordering and supplied the Cycle-2 causal design. The previous probability-only end-legality draft remains superseded and unexecuted.
 
-Reason: the proposed legal-vs-illegal terminal `p(end)` calibration repeats an evidence layer that has already been explored. The completed termination-dynamics work already established the relevant `p(end)` behavior sufficiently for the current mainline; another probability-only audit is not expected to materially change the research state.
+The unique next DRAFT is `EXP-RESET-001A`: first audit the actual Actor decoder state carrier, then verify an explicit OFF/ON reset switch, then run a teacher-forced rollover stress test on identical Actor inputs. The experiment tests only `state carry -> Actor hidden/logit/action change`; it does not test SR impact.
+
+Two design safeguards were added during PI review:
+1. because accepted B0 is stochastic and same-seed runs are not bitwise trajectory-reproducible, A/A OFF equivalence is judged primarily on identical saved Actor inputs plus identical RNG/common random numbers, not on whole live-trajectory equality;
+2. `counter=300` may not be fabricated with an incompatible cache. CARRY-300 must be a semantically valid state package, produced by a valid warm-up replay if cache/counter are coupled.
 
 ## Preserved facts
 
@@ -20,7 +24,11 @@ Reason: the proposed legal-vs-illegal terminal `p(end)` calibration repeats an e
 
 ## Current research direction
 
-Do not spend another cycle on `p(end)` description or reproduction. The next experiment has **not yet been selected or authorized**. The next design should move to a deeper mechanism layer, while respecting the existing H-RESET gate before formal hidden-state interpretation.
+Gate B is now the only mainline blocker. Do not reopen H2, size measurement, additional p(end)-only audits, broad Probe work, Stop Gate or 200-task performance evaluation before `EXP-RESET-001A` is reviewed.
+
+If R1/R2: decide whether a very small paired behavior test is justified.
+If R3: immediately downgrade H-RESET and return to exploration / perception / representation / readout / SafeRL attribution.
+If R4: repair the experiment only; do not interpret the hypothesis.
 
 ## Control State
 
@@ -184,3 +192,13 @@ This was historical CPU-only video/table analysis: 0 GPU, 0 episodes, 0 simulato
 Handoff: [RESULT_SUMMARY.md](handoffs/premature-end-dynamics-001-20260923/RESULT_SUMMARY.md), [analysis](handoffs/premature-end-dynamics-001-20260923/premature_end_analysis.md), [artifact index](handoffs/premature-end-dynamics-001-20260923/ARTIFACT_INDEX.json). Claim a5045c5255b67f3e0f1d4f559d2d6078f70f9544 and its green CI preceded execution. Frozen designs and claim/authorization identity are preserved.
 
 Next actor PI. One proposal follows the frozen LATE_RISE branch: review a matched hard-task SafeVLA versus comparable non-safety/base-policy causal comparison, with comparability and confounds explicitly controlled. This proposal is not approved or executed. Gate B remains unresolved for future hidden-state interpretation. No next experiment or PI acknowledgement is self-issued. Executor STOP after publication.
+
+
+## 2026-10-07 — PI Cycle 2 staged from user-provided Gate-B plan
+
+Current experiment: `EXP-RESET-001A`
+Cycle: `reset-001a-20261007`
+Status: PI_REVIEW / NOT_AUTHORIZED
+Budget: max 1 GPU, max 4 live ObjectNav episodes; offline replay only beyond that.
+
+The treatment patch must not be committed into the B0 execution branch. Per the established research-loop protocol, handoff evidence itself must still be published to `research-loop` for PI review; this is the only intended exception to the user instruction "do not commit/push."

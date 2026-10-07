@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "state_version": 33,
-  "cycle_id": "end-legality-calibration-001-20260923",
-  "experiment_id": "EXP-END-LEGALITY-CALIBRATION-001",
+  "state_version": 34,
+  "cycle_id": "reset-001a-20261007",
+  "experiment_id": "EXP-RESET-001A",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
@@ -16,19 +16,23 @@
     "approved_at_utc": null,
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 4
   },
   "required_outputs": [
-    "research/handoffs/end-legality-calibration-001-20260923/RESULT_SUMMARY.md",
-    "research/handoffs/end-legality-calibration-001-20260923/RUN_MANIFEST.json",
-    "research/handoffs/end-legality-calibration-001-20260923/ARTIFACT_INDEX.json",
-    "research/handoffs/end-legality-calibration-001-20260923/REVIEW_NOTES.md",
-    "research/handoffs/end-legality-calibration-001-20260923/terminal_end_events.csv",
-    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration_summary.csv",
-    "research/handoffs/end-legality-calibration-001-20260923/legality_calibration.md",
-    "research/handoffs/end-legality-calibration-001-20260923/analyze_end_legality.py"
+    "research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
+    "research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
+    "research/handoffs/reset-001a-20261007/ARTIFACT_INDEX.json",
+    "research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
+    "research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
+    "research/handoffs/reset-001a-20261007/decoder_state_map.json",
+    "research/handoffs/reset-001a-20261007/reset_fix_design.md",
+    "research/handoffs/reset-001a-20261007/reset_fix.patch",
+    "research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
+    "research/handoffs/reset-001a-20261007/rollover_stress_result.json",
+    "research/handoffs/reset-001a-20261007/rollover_trace.csv",
+    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-09-24T12:52:00+00:00"
+  "updated_at_utc": "2026-10-07T13:32:00+00:00"
 }

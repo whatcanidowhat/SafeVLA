@@ -522,3 +522,24 @@ Control implication:
 - no execution;
 - no GPU/episode/model/simulator work;
 - no successor experiment is authorized by this supersession alone.
+
+
+## 2026-10-07 — DEC-RESET-001A-STAGE：恢复02 Gate-B并转化为可证伪因果实验
+
+User-provided Cycle-2 decision:
+Gate A/C are sufficient for the audited scope; Gate B remains the blocker because model-side Actor/Reward/Cost counter and K/V cache survive episode reset. This cycle tests only whether cross-episode state carry changes Actor decisions.
+
+PI accepted the three-task structure:
+1. P0 complete decoder state-carrier audit;
+2. P1 explicit `RESET_STATE_FIX` OFF/ON design with OFF A/A protection and Actor-only treatment;
+3. P2 rollover stress test under identical teacher-forced inputs, reporting first logit/action divergence.
+
+PI methodological corrections:
+- Existing B0 stochastic evaluation is not bitwise reproducible across ordinary same-seed live reruns, so OFF-mode A/A is defined primarily on identical saved Actor inputs + synchronized RNG/common random numbers. A live smoke may be reported but cannot be the sole equality criterion.
+- A raw `counter=300` with an incompatible empty/stale cache is not a valid treatment. P0 must determine the coupled reset semantics; CARRY-300 must be built as a valid Actor state package (e.g. warm-up replay + official boundary semantics) or the experiment is R4.
+- After predicted actions diverge, P2 remains teacher-forced; divergent predictions are not fed back, preserving the single-variable input comparison.
+- Treatment source changes stay local and are reviewed via `reset_fix.patch`; B0 branch is not modified. Research-loop handoff publication remains required by the established control protocol.
+
+Outcome classes remain R1/R2/R3/R4. No SR claim, Probe, Stop Gate, 200-task run, safety-metric redefinition, size analysis or multi-checkpoint comparison is part of 001A.
+
+Status remains DRAFT / PI_REVIEW / NOT_AUTHORIZED pending explicit approval.

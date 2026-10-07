@@ -213,3 +213,13 @@ Budget: 0 GPU / 0 episode.
 | EXP-END-LEGALITY-CALIBRATION-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Researcher judged further p(end)-based legal-vs-illegal calibration to duplicate already completed probability/termination analyses and provide insufficient incremental information |
 
 No successor experiment is authorized by this decision.
+
+
+## 2026-10-07 — PI Cycle 2 Reset Gate
+
+| Experiment ID | Status | Role |
+| --- | --- | --- |
+| EXP-END-LEGALITY-CALIBRATION-001 | SUPERSEDED BEFORE APPROVAL / NOT EXECUTED | Probability-only follow-up retained as historical draft |
+| EXP-RESET-001A | DRAFT / NOT_AUTHORIZED | Causal Gate-B test: Actor state carry / rollover -> hidden/logit/action difference under identical teacher-forced inputs |
+
+Budget: max1 GPU, max4 live episodes, no benchmark run. Treatment patch is local-only; handoff evidence is published to research-loop.
