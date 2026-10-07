@@ -67,6 +67,45 @@ LEGACY_PREMATURE_NEW_EXPERIMENT = "EXP-PREMATURE-END-DYNAMICS-001"
 # No execution authorization or research execution was present. A following commit restores the exact
 # full parent tree plus the intended acknowledgement files. Preserve history and exempt only this SHA.
 LEGACY_SPARSE_ACK_COMMIT = "0d91c85df9cd5be8ac9de9d1ab3b6f10cc4a9d5d"
+# Narrow append-only exception for the 2026-10-07 EXP-RESET-001A approval timestamp typo.
+# The approval commit used a timestamp five minutes earlier than its PI_REVIEW parent.
+# No Executor claim or research execution occurred; only this exact commit is exempted.
+LEGACY_RESET001A_BAD_APPROVAL_COMMIT = "bb2a10792e615153485fa16e00f67040e6478612"
+LEGACY_RESET001A_PARENT = "30148b4a4b850cc5f6764844c1415c1d0a229f5a"
+
+
+
+def validate_legacy_reset001a_bad_approval(view, old_view, sha):
+    require(sha == LEGACY_RESET001A_BAD_APPROVAL_COMMIT, "reset001a legacy sha mismatch")
+    require(old_view is not None and old_view.ref == LEGACY_RESET001A_PARENT,
+            "reset001a legacy parent mismatch")
+    n = validate_snapshot(view)
+    o = old_view.data(STATE)
+    require(o["experiment_id"] == n["experiment_id"] == "EXP-RESET-001A",
+            "reset001a experiment mismatch")
+    require(o["cycle_id"] == n["cycle_id"] == "reset-001a-20261007",
+            "reset001a cycle mismatch")
+    require(o["state_version"] == 34 and n["state_version"] == 35,
+            "reset001a state version mismatch")
+    require(o["status"] == "PI_REVIEW" and n["status"] == "APPROVED_FOR_CODEX",
+            "reset001a transition mismatch")
+    require(n["next_actor"] == "CODEX"
+            and n["instruction_commit"] is None
+            and n["claim_id"] is None,
+            "reset001a approval must remain unclaimed")
+    require(n["authorization"]["status"] == "APPROVED"
+            and n["authorization"]["approved_by"] == "PI"
+            and n["authorization"]["max_gpu"] == 1
+            and n["authorization"]["max_episodes"] == 4,
+            "reset001a approval metadata mismatch")
+    require(n["reviewed_result_commit"] == o["reviewed_result_commit"],
+            "reset001a approval fabricated review receipt")
+    require(n["required_outputs"] == o["required_outputs"]
+            and n["execution_worktree"] == o["execution_worktree"],
+            "reset001a execution scope changed")
+    require(utc(n["updated_at_utc"]) < utc(o["updated_at_utc"]),
+            "reset001a exception must cover the known timestamp regression only")
+    return n
 
 
 def _legacy_smalltarget_review(s):
@@ -521,6 +560,8 @@ def validate_history(root, head="HEAD"):
         raw_state = v.data(STATE)
         if sha == LEGACY_SPARSE_ACK_COMMIT:
             n = validate_legacy_sparse_ack(v, old_view, sha)
+        elif sha == LEGACY_RESET001A_BAD_APPROVAL_COMMIT:
+            n = validate_legacy_reset001a_bad_approval(v, old_view, sha)
         elif sha in LEGACY_PREMATURE_STAGING_COMMITS:
             n = validate_legacy_premature_staging(v, old_view, sha)
         elif _legacy_smalltarget_review(raw_state):
