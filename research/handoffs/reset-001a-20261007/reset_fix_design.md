@@ -1,0 +1,8 @@
+# RESET_STATE_FIX design frozen before capture
+
+Only the episode-boundary reset method is changed in the review patch. OFF is the exact original reset path; ON first resets only the root Actor counter and root decoder K/V, then executes original rollout bookkeeping. No branch-critic reset, action selection change, simulator query, forward addition or weight change occurs.
+The patch is not applied to any B0 source checkout. The exact patched reset method is AST-loaded into the offline harness. Live capture uses untouched official reset. OFF A/A uses original versus patched reset and the same captured Actor encoder outputs, observation fields, previous-action tensors, masks, root forward implementation, weights and common RNG. Both hidden outputs and 20-D raw logits, probabilities, greedy/sample/history selections are checked. Reconstructed decoder input must match captured input exactly.
+
+Tolerance predeclared: abs=1e-5, rel=1e-5 for float outputs; exact equality for actions/history and reconstructed input. Within-condition replay must pass twice. Metrics include raw maxima even below tolerance. Sampling is optional CRN categorical sampling, with the original selection/history code statically unchanged. No stochastic trajectory equivalence claim.
+
+CLEAN calls patched reset ON; CARRY replays 300 decisions and calls original reset. Warmup wraps a recorded sequence with an official boundary only if fewer than 300 inputs were captured. No divergent prediction feeds back: recorded previous actions remain fixed. Warmup is a synthetic offline valid history, not a claim of 300 live decisions from an independent episode.

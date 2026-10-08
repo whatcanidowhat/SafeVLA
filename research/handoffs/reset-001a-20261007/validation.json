@@ -1,0 +1,20 @@
+{
+  "manifest_identity": true,
+  "budget": true,
+  "source_preservation": true,
+  "status": "AWAITING_PI_REVIEW",
+  "read_only_cpu_validation": true,
+  "raw_replays_validated": true,
+  "trace_matches_raw": true,
+  "csv_float32_roundtrip_exact": true,
+  "captured_sampled_returned_history_next_input_chain_exact": true,
+  "forward_counts": {
+    "actor": 784,
+    "reward": 784,
+    "cost": 784,
+    "top": 784
+  },
+  "classification": "R1",
+  "decisions": 600,
+  "validation": "PASS"
+}

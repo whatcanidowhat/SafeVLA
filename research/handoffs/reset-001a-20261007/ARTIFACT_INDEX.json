@@ -1,0 +1,303 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
+      "sha256": "c147805c81048d268ca3847fd14093ea1251bd0629cfdacb240166512b832698",
+      "size": 3755,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
+      "sha256": "2c10144e3d93c3dc239d3015f5fe3962281e6c8b5f5411e527a910ed539d8559",
+      "size": 1513,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
+      "sha256": "bdf5e13c30bdfc410df43fc88214eca998c3acd033fdf59ce044a2097896eb04",
+      "size": 18357,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "aa_off_equivalence.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
+      "git_path": "research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
+      "sha256": "f7e76691b66f31565c960d47feb649982176f6954f4da4cf8797d91539e69f0a",
+      "size": 716,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "capture_plan.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/capture_plan.json",
+      "git_path": "research/handoffs/reset-001a-20261007/capture_plan.json",
+      "sha256": "e6839716b13d557c42c17b76670d9b2ba2b73a7d0891212b7aa9eb9aae3ff944",
+      "size": 2233,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "compact_reset_trace.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/compact_reset_trace.py",
+      "git_path": "research/handoffs/reset-001a-20261007/compact_reset_trace.py",
+      "sha256": "51866043dcb6b9b90bfb8bfca615058b4f222a1dc84b2369812819d145a9163d",
+      "size": 1255,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "decoder_reset_audit.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
+      "git_path": "research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
+      "sha256": "9434ee27a9a2ad2c07002f3de0a8a21ec87da84608a77c35fa5cce6b9470be4c",
+      "size": 2313,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "decoder_state_map.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/decoder_state_map.json",
+      "git_path": "research/handoffs/reset-001a-20261007/decoder_state_map.json",
+      "sha256": "6489dd430fda9bd6c46585194388d06e8ec8e4b378e5f489aba3febdd9928f1f",
+      "size": 2674,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "dino_source_sha256.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/dino_source_sha256.json",
+      "git_path": "research/handoffs/reset-001a-20261007/dino_source_sha256.json",
+      "sha256": "b06086f5d790194e2c74f4a4bee42ef7b23a14c2d3bf010ff64e639ff44a8f08",
+      "size": 17531,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "episode_manifest.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/episode_manifest.json",
+      "git_path": "research/handoffs/reset-001a-20261007/episode_manifest.json",
+      "sha256": "2aff529ab95e24583dbb1457f3d57c85df2a505cb0a7058724d622794c5ab3bd",
+      "size": 4653,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "execution_events.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/execution_events.txt",
+      "git_path": "research/handoffs/reset-001a-20261007/execution_events.txt",
+      "sha256": "2bbb384ad19edbb77844616cbd1a8a5ae5d0d9c47bfbfb137e4d4455898ae314",
+      "size": 1213,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "forward_counts.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/forward_counts.json",
+      "git_path": "research/handoffs/reset-001a-20261007/forward_counts.json",
+      "sha256": "8b6e37bfeb0f08cdb67ef4ba3d8b73ec2bf63d00c25e881ca9b68015b09234fd",
+      "size": 65,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "launch_reset_001a.sh",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/launch_reset_001a.sh",
+      "git_path": "research/handoffs/reset-001a-20261007/launch_reset_001a.sh",
+      "sha256": "22e4c79e794f9cce73234a1a948890848385561545866f7202b280f74c43acb4",
+      "size": 457,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "load_events.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/load_events.json",
+      "git_path": "research/handoffs/reset-001a-20261007/load_events.json",
+      "sha256": "49d4cec42fade18a842cf504f123c57ac9a29e79418b4ddd753553d6b57e4f75",
+      "size": 531,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "reset_fix.patch",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/reset_fix.patch",
+      "git_path": "research/handoffs/reset-001a-20261007/reset_fix.patch",
+      "sha256": "bb695a85439751b86b7ec43605be5119b305f7b5751269938bbabc2f408c86a5",
+      "size": 615,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "reset_fix_design.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/reset_fix_design.md",
+      "git_path": "research/handoffs/reset-001a-20261007/reset_fix_design.md",
+      "sha256": "0b94f38c24c75949f21ca232f27b7dde8d201f9677d19cc432c75070167478b4",
+      "size": 1639,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "rollover_stress_result.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/rollover_stress_result.json",
+      "git_path": "research/handoffs/reset-001a-20261007/rollover_stress_result.json",
+      "sha256": "de0bc59f902aea09719c874142bf6c4bf24e8a4b37ae93b3f99a9edb9290be17",
+      "size": 2415,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "rollover_trace.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/rollover_trace.csv",
+      "git_path": "research/handoffs/reset-001a-20261007/rollover_trace.csv",
+      "sha256": "845b4b0370a98d0975c3bd942d15bb0bc82c4ad161ce5f2ddd6a45ae8fc2fe09",
+      "size": 760798,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "run_reset_001a.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/run_reset_001a.py",
+      "git_path": "research/handoffs/reset-001a-20261007/run_reset_001a.py",
+      "sha256": "7d33d6b8b87a88b2c09c619ab6283a0640f135fa9c94436fff25a301fb3a622f",
+      "size": 31315,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "runtime_module_paths.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/runtime_module_paths.json",
+      "git_path": "research/handoffs/reset-001a-20261007/runtime_module_paths.json",
+      "sha256": "7b8721cc814f287f9d125242a51cd35fdeb4cbc39f3563711778e15568206608",
+      "size": 129954,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "runtime_state_layout.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/runtime_state_layout.json",
+      "git_path": "research/handoffs/reset-001a-20261007/runtime_state_layout.json",
+      "sha256": "91bcccd2394ea67fdde01c9887412afb9c6dc4a692e55fea4808d37d447881dd",
+      "size": 488,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "selected_normalized_tasks.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/selected_normalized_tasks.json",
+      "git_path": "research/handoffs/reset-001a-20261007/selected_normalized_tasks.json",
+      "sha256": "bf9c7d860162367c7c498bc3dc31a8644b6adfc169e3063a7bf665f20c0bf3f1",
+      "size": 5129,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "source_sha256.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/source_sha256.json",
+      "git_path": "research/handoffs/reset-001a-20261007/source_sha256.json",
+      "sha256": "af71a4088e7e0692c854c0314b69db8886c025c7980e21f81c88d243d6b0f736",
+      "size": 11838,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "validate_reset_outputs.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/validate_reset_outputs.py",
+      "git_path": "research/handoffs/reset-001a-20261007/validate_reset_outputs.py",
+      "sha256": "9bb98652b21936a7b26ff9a2eaf5b5625f0fa671c66be6840b911a490a4d8e93",
+      "size": 4035,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "validation.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/validation.json",
+      "git_path": "research/handoffs/reset-001a-20261007/validation.json",
+      "sha256": "51638f75fbe562d2f0622ed05a17a2078f08e45fc33627be111fe07ba18ec2b0",
+      "size": 486,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "server/captured_actor_inputs.pt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/captured_actor_inputs.pt",
+      "sha256": "417e684e96563b043138d328776d693f05dc74bb7c074099dea39c3b5881500e",
+      "size": 7983634,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/offline_replays.pt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/offline_replays.pt",
+      "sha256": "3f00847c0ce5d63cf11c22ecc89e00afa8234031bab081483c0e9d870ec9bda5",
+      "size": 9332186,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/episodes.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/episodes.json",
+      "sha256": "5d64320d0ec48a35db3fb31cb31702f227e5a9a3faa57e8dd095291fddf7063a",
+      "size": 7614019,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/rollover_trace_full_precision.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/rollover_trace_full_precision.csv",
+      "sha256": "ef118b0fb546ba6a4fe1b32d28801cc9f97382f438887810414eaa69ac4b140d",
+      "size": 1159572,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/source_snapshot.tar.gz",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/source_snapshot.tar.gz",
+      "sha256": "0fb2e2db7197231028dec959a8a5c494e2288fffc1368471e9280023cccde899",
+      "size": 52435374,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/dino_source_snapshot.tar.gz",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/dino_source_snapshot.tar.gz",
+      "sha256": "e1f0777e38bc2c0041cda62b72a4b03b84b7bba1e9fde6ce9bf885eb0a6d4448",
+      "size": 167020,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/development.patch",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/development.patch",
+      "sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+      "size": 19363,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/development_HEAD.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/development_HEAD.txt",
+      "sha256": "123cd5355d066d90f4722ba9c5f07ea548f4357fd6adb4e1660f90cc8abf1873",
+      "size": 41,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/development_status.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/development_status.txt",
+      "sha256": "01f188c30fde15617af1c3b9d59d6bbd56c1b4194845269919e31639ab3a0071",
+      "size": 334,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/preparation_attempt1_executor.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/preparation_attempt1_executor.py",
+      "sha256": "543389beec3a0b620a06268ab173bbcc9cd3624682f1d8a6a671385a3d3d5193",
+      "size": 31074,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/preparation_attempt1.raw.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/preparation_attempt1.raw.log",
+      "sha256": "7f02c4c3ef64112a4ce04cc22d04d2ec1cea46e5de28ec59d04e73cc8f514dbc",
+      "size": 1926,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/model_phase_started.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/model_phase_started.json",
+      "sha256": "d9ba1d2c8ccaa90cbfd472c501965536634b44a5e5cf0ba85fc6ab71aa343474",
+      "size": 73,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/executor.prepared.raw.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/executor.prepared.raw.log",
+      "sha256": "2f4ec15e93a1120bd140e03f6c2f5e44fa43eec521333ec3505201ac5d9ad5e1",
+      "size": 119772,
+      "required_for_PI_review": false
+    },
+    {
+      "name": "server/executor.raw.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-001a-20261007/executor.raw.log",
+      "sha256": "7f02c4c3ef64112a4ce04cc22d04d2ec1cea46e5de28ec59d04e73cc8f514dbc",
+      "size": 1926,
+      "required_for_PI_review": false
+    }
+  ]
+}

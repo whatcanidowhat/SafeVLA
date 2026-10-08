@@ -1,0 +1,29 @@
+{
+  "hidden": {
+    "max_abs": 0.0,
+    "max_rel": 0.0,
+    "within_tolerance": true
+  },
+  "logits": {
+    "max_abs": 0.0,
+    "max_rel": 0.0,
+    "within_tolerance": true
+  },
+  "probs": {
+    "max_abs": 0.0,
+    "max_rel": 0.0,
+    "within_tolerance": true
+  },
+  "sampled_exact": true,
+  "greedy_exact": true,
+  "history_exact": true,
+  "pass": true,
+  "status": "PASS",
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "decisions": 600,
+  "reference": "exact original reset + original root forward",
+  "patched": "AST-extracted reset_fix.patch OFF + same original root forward",
+  "environment_path": "patch changes only reset; OFF branch performs no operation before original reset",
+  "input_reconstruction_exact": true
+}

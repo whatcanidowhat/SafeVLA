@@ -1,0 +1,50 @@
+{
+  "selection_rule": "Four largest recorded expert_length values, index tie-break; no outcome selection. Stop after first complete episode with >=220 decisions. No extra episodes or retry.",
+  "selected": [
+    {
+      "index": 199,
+      "expert_length": 506,
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/014895/raw_navigation_camera__0.mp4",
+      "house_index": 14895
+    },
+    {
+      "index": 78,
+      "expert_length": 237,
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/012207/raw_navigation_camera__0.mp4",
+      "house_index": 12207
+    },
+    {
+      "index": 132,
+      "expert_length": 236,
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/013352/raw_navigation_camera__0.mp4",
+      "house_index": 13352
+    },
+    {
+      "index": 186,
+      "expert_length": 231,
+      "task_path": "/net/nfs.cirrascale/prior/datasets/vida_datasets/object_nav_v3_benchmark/ObjectNavType/val/014067/raw_navigation_camera__0.mp4",
+      "house_index": 14067
+    }
+  ],
+  "seed": 123,
+  "max_episodes": 4,
+  "worker_count": 1,
+  "greedy": false,
+  "test_augmentation": true,
+  "horizon": 600,
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "warmup": "Replay first 300 decisions; if the sequence is shorter, concatenate another replay prefix after the original official boundary semantics. All warmup inputs are captured real inputs.",
+  "sampling": "Greedy primary; paired Torch categorical draws use restored common RNG state.",
+  "checkpoint": {
+    "checkpoint": {
+      "path": "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+      "sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301"
+    },
+    "DINO": {
+      "path": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9"
+    }
+  },
+  "capture_boundary": "Root Actor forward_encoder output plus masks, previous actions, episode timestep, object-in-hand; also capture actual decoder input/output and raw linear logits. No added live forward or simulator query."
+}

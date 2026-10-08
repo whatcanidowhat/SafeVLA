@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 38,
+  "state_version": 39,
   "cycle_id": "reset-001a-20261007",
   "experiment_id": "EXP-RESET-001A",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "AWAITING_PI_REVIEW",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "0493548a70aa192bb04457bc15e9343d934bb259",
@@ -34,5 +34,5 @@
     "research/handoffs/reset-001a-20261007/run_reset_001a.py"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-08T08:26:14.497810+00:00"
+  "updated_at_utc": "2026-10-08T12:27:54.466131+00:00"
 }

@@ -1,0 +1,103 @@
+{
+  "status": "COMPLETED",
+  "classification": "R1",
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "decisions": 600,
+  "first_logit_divergence_step": 200,
+  "first_argmax_action_divergence_step": 205,
+  "first_common_rng_sample_divergence_step": 200,
+  "first_carry_rollover_step": 200,
+  "divergence_minus_rollover": 0,
+  "regions": {
+    "pre_rollover": {
+      "n": 200,
+      "max_abs_logit": 3.814697265625e-06,
+      "max_abs_hidden": 2.86102294921875e-06
+    },
+    "boundary": {
+      "n": 1,
+      "max_abs_logit": 5.018692970275879,
+      "max_abs_hidden": 3.9560751914978027
+    },
+    "post_rollover": {
+      "n": 399,
+      "max_abs_logit": 12.482795715332031,
+      "max_abs_hidden": 6.683389663696289
+    }
+  },
+  "within_condition_replay": {
+    "clean": {
+      "hidden": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "logits": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "probs": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "sampled_exact": true,
+      "greedy_exact": true,
+      "history_exact": true,
+      "pass": true
+    },
+    "carry": {
+      "hidden": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "logits": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "probs": {
+        "max_abs": 0.0,
+        "max_rel": 0.0,
+        "within_tolerance": true
+      },
+      "sampled_exact": true,
+      "greedy_exact": true,
+      "history_exact": true,
+      "pass": true
+    }
+  },
+  "critic_state_unchanged": true,
+  "teacher_forced": true,
+  "end_index": 4,
+  "action_names": [
+    "m",
+    "r",
+    "l",
+    "b",
+    "end",
+    "sub_done",
+    "ls",
+    "rs",
+    "p",
+    "zm",
+    "zp",
+    "yp",
+    "ym",
+    "wp",
+    "wm",
+    "yms",
+    "zms",
+    "zps",
+    "yps",
+    "d"
+  ],
+  "sampling_note": "same manual seed is restored per complete replay; no extra RNG calls in differing paths",
+  "warmup_decisions_per_carry": 300,
+  "warmup_wraps_if_needed": false,
+  "scope": "Actor state -> distribution/action only. No SR or Safety Cost effect is established.",
+  "trace_serialization": "Logit/probability arrays use 9 significant decimal digits, exactly round-tripping float32 values. Unmodified CSV and tensors remain server-side."
+}

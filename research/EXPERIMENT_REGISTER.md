@@ -232,3 +232,21 @@ Budget: max1 GPU, max4 live episodes, no benchmark run. Treatment patch is local
 | EXP-RESET-001A | APPROVED_FOR_CODEX / awaiting claim | max1 GPU; max4 live episodes; bounded offline replay |
 
 The failed timestamp approval was never claimed. The valid approval is the later green reapproval.
+
+
+## 2026-10-08 — EXP-RESET-001A executor handoff
+
+Status: AWAITING_PI_REVIEW; classification: R1; next_actor: PI.
+
+Outcome: **R1**. A/A OFF passed; both offline conditions passed repeat stability.
+Fixed real input sequence: 600 decisions. CARRY first rollover: local step 200 (zero based).
+First logit divergence above declared tolerance: 200.
+First argmax divergence: 205.
+First common-RNG sampled-action divergence: 200.
+Before/boundary/after maxima: `{"pre_rollover": {"n": 200, "max_abs_logit": 3.814697265625e-06, "max_abs_hidden": 2.86102294921875e-06}, "boundary": {"n": 1, "max_abs_logit": 5.018692970275879, "max_abs_hidden": 3.9560751914978027}, "post_rollover": {"n": 399, "max_abs_logit": 12.482795715332031, "max_abs_hidden": 6.683389663696289}}`.
+
+A valid Actor carry package reproducibly changes the policy distribution and at least one decision under the tested identical current inputs. This supports the state-carry-to-Actor-decision pathway; it does not establish SR or Safety Cost impact.
+
+Claim `c4ab4b395817f439a0239514f3469480aa0d8500` was recovered without generating a replacement, and CI 37752169988 passed before execution. Budget used: 1 GPU / 3 live episodes started / 3 completed. Original tracked development changes and frozen NEXT_EXPERIMENT files are preserved.
+
+Handoff: [RESULT_SUMMARY.md](handoffs/reset-001a-20261007/RESULT_SUMMARY.md). Required outputs and CPU validation are included. Executor STOP after publication; no successor approved.

@@ -1,0 +1,15 @@
+--- a/architecture/models/allenact_transformer_models/inference_agent.py
++++ b/architecture/models/allenact_transformer_models/inference_agent.py
+@@ -170,6 +170,12 @@
+         return agent
+ 
+     def reset(self):
++        if os.getenv("RESET_STATE_FIX", "0") == "1":
++            actor = self.actor_critic
++            actor.time_step_counter = 0
++            for layer in actor.decoder.layers:
++                layer.attention.cache_k.zero_()
++                layer.attention.cache_v.zero_()
+         if self.has_initialized:
+             self.rollout_storage.after_updates()
+         self.steps_taken_in_task = 0

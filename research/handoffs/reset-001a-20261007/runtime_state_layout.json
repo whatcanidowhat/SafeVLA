@@ -1,0 +1,46 @@
+{
+  "max_steps": 500,
+  "action_names": [
+    "m",
+    "r",
+    "l",
+    "b",
+    "end",
+    "sub_done",
+    "ls",
+    "rs",
+    "p",
+    "zm",
+    "zp",
+    "yp",
+    "ym",
+    "wp",
+    "wm",
+    "yms",
+    "zms",
+    "zps",
+    "yps",
+    "d"
+  ],
+  "independent_decoder_owners": true,
+  "cache_shapes_before_first_forward": [
+    [
+      0,
+      500,
+      8,
+      64
+    ],
+    [
+      0,
+      500,
+      8,
+      64
+    ],
+    [
+      0,
+      500,
+      8,
+      64
+    ]
+  ]
+}

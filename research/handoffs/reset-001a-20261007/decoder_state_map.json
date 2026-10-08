@@ -1,0 +1,52 @@
+{
+  "state_carriers": [
+    {
+      "state_carrier": "time_step_counter",
+      "owner_module": "root DinoLLAMATxNavActorCritic",
+      "lifetime": "model instance",
+      "episode_reset_now": "original agent reset leaves model-side counter and K/V unchanged",
+      "rollover_condition": ">=max_steps (500) before decoder, or sequence length >1",
+      "actor_effect_path": "sets cache write/read length and episode mask start",
+      "correct_reset_operation": "set root counter=0 at episode boundary"
+    },
+    {
+      "state_carrier": "cache_k",
+      "owner_module": "root.decoder.layers[*].attention",
+      "lifetime": "model instance; ordinary Tensor, not state_dict buffer",
+      "episode_reset_now": "original agent reset leaves model-side counter and K/V unchanged",
+      "rollover_condition": "prefix overwritten after counter rollover",
+      "actor_effect_path": "per-layer attention keys",
+      "correct_reset_operation": "zero root cache_k tensors, preserving shape/device/dtype"
+    },
+    {
+      "state_carrier": "cache_v",
+      "owner_module": "root.decoder.layers[*].attention",
+      "lifetime": "model instance; ordinary Tensor, not state_dict buffer",
+      "episode_reset_now": "original agent reset leaves model-side counter and K/V unchanged",
+      "rollover_condition": "prefix overwritten after counter rollover",
+      "actor_effect_path": "per-layer attention values",
+      "correct_reset_operation": "zero root cache_v tensors, preserving shape/device/dtype"
+    },
+    {
+      "state_carrier": "episode-local timestep / masks / previous action",
+      "owner_module": "InferenceAgentVIDA and rollout storage",
+      "lifetime": "episode",
+      "episode_reset_now": "original agent reset leaves model-side counter and K/V unchanged",
+      "rollover_condition": "independent of model counter",
+      "actor_effect_path": "time positional encoding, previous-action token, episode attention mask",
+      "correct_reset_operation": "retain original reset; no extra treatment change"
+    },
+    {
+      "state_carrier": "reward/cost branch state",
+      "owner_module": "critic_tsfm / c_critic_tsfm",
+      "lifetime": "independent model instances",
+      "episode_reset_now": "original agent reset leaves model-side counter and K/V unchanged",
+      "rollover_condition": "same formula, independently owned",
+      "actor_effect_path": "not used for Actor action distribution",
+      "correct_reset_operation": "do not change"
+    }
+  ],
+  "cache_shape": "[batch,500,8,64] per layer, 3 layers; runtime verified separately",
+  "actual_decoder": "training/online/third_party_models/llama/model.py",
+  "actor_only_reset_isolatable": true
+}

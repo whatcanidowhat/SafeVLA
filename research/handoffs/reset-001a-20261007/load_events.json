@@ -1,0 +1,23 @@
+[
+  {
+    "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+    "strict": true,
+    "missing": [],
+    "unexpected": [],
+    "nkeys": 175
+  },
+  {
+    "class": "dinov2.models.vision_transformer.DinoVisionTransformer",
+    "strict": true,
+    "missing": [],
+    "unexpected": [],
+    "nkeys": 175
+  },
+  {
+    "class": "architecture.models.allenact_transformer_models.separate_actor_critic.SafeDinoLLAMATxNavActorCriticSeparate",
+    "strict": false,
+    "missing": [],
+    "unexpected": [],
+    "nkeys": 417
+  }
+]

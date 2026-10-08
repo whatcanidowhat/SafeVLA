@@ -1,0 +1,11 @@
+2026-10-08T09:03:36.306841+00:00 Starting one bounded official B0 capture
+[10/08 17:06:01 INFO:] Using Controller commit id: 966bd7758586e05d18f6181f459c0e90ba318bec	[system.py: 200]
+[10/08 17:06:24 INFO:] 2026-10-08T09:06:24.226536+00:00 Capture episode 1 started	[system.py: 200]
+[10/08 17:17:48 INFO:] 2026-10-08T09:17:48.609454+00:00 Capture episode completed: 140 decisions	[system.py: 200]
+[10/08 17:18:16 INFO:] 2026-10-08T09:18:16.204683+00:00 Capture episode 2 started	[system.py: 200]
+[10/08 17:21:52 INFO:] 2026-10-08T09:21:52.913958+00:00 Capture episode completed: 44 decisions	[system.py: 200]
+[10/08 17:22:34 INFO:] 2026-10-08T09:22:34.410304+00:00 Capture episode 3 started	[system.py: 200]
+[10/08 18:41:00 INFO:] 2026-10-08T10:41:00.597067+00:00 Capture episode completed: 600 decisions	[system.py: 200]
+[10/08 18:41:01 INFO:] 2026-10-08T10:41:01.774073+00:00 Sufficient fixed sequence captured; remaining episodes not started	[system.py: 200]
+[10/08 18:41:02 INFO:] 2026-10-08T10:41:02.862553+00:00 Beginning offline A/A and rollover replay on 600 captured decisions	[system.py: 200]
+[10/08 18:41:41 INFO:] 2026-10-08T10:41:41.134931+00:00 Executor finished: AWAITING_PI_REVIEW	[system.py: 200]
