@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 37,
+  "state_version": 38,
   "cycle_id": "reset-001a-20261007",
   "experiment_id": "EXP-RESET-001A",
-  "status": "APPROVED_FOR_CODEX",
+  "status": "CODEX_RUNNING",
   "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": null,
+  "instruction_commit": "0493548a70aa192bb04457bc15e9343d934bb259",
   "reviewed_result_commit": "f79b3cfd19e8f537715d2c321e13885e7303ba1f",
-  "claim_id": null,
+  "claim_id": "24f414396c8f4ef39b34b179dee8c6fa",
   "authorization": {
     "status": "APPROVED",
     "approved_by": "PI",
@@ -33,6 +33,6 @@
     "research/handoffs/reset-001a-20261007/rollover_trace.csv",
     "research/handoffs/reset-001a-20261007/run_reset_001a.py"
   ],
-  "updated_by": "PI",
-  "updated_at_utc": "2026-10-07T13:51:40+00:00"
+  "updated_by": "CODEX",
+  "updated_at_utc": "2026-10-08T08:26:14.497810+00:00"
 }
