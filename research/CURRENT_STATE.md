@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: EXP-RESET-001A AWAITING_PI_REVIEW; next actor PI; executor stopped.
+Mode: PI_REVIEW. EXP-RESET-001A result independently reviewed and accepted as R1; no successor authorized.
 
 ## Latest PI decision
 
@@ -235,3 +235,33 @@ A valid Actor carry package reproducibly changes the policy distribution and at 
 Claim `c4ab4b395817f439a0239514f3469480aa0d8500` was recovered without generating a replacement, and CI 37752169988 passed before execution. Budget used: 1 GPU / 3 live episodes started / 3 completed. Original tracked development changes and frozen NEXT_EXPERIMENT files are preserved.
 
 Handoff: [RESULT_SUMMARY.md](handoffs/reset-001a-20261007/RESULT_SUMMARY.md). Required outputs and CPU validation are included. Executor STOP after publication; no successor approved.
+
+
+## 2026-10-08 — PI review of EXP-RESET-001A
+
+PI independently reviewed commit `2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6`, control CI 37777926111, required handoff artifacts, the state-carrier audit, OFF A/A evidence, reset patch, rollover result and serialized trace.
+
+Accepted result: **R1** within the frozen scope.
+
+The decisive causal pattern is not generic cross-episode token leakage. Before CARRY rollover, CLEAN and CARRY are numerically equivalent within the declared tolerance. When the carried Actor counter reaches 500 at current-episode local step 200, the official path resets its model-side position to zero while episode-local time remains 200. The decoder therefore stops addressing the current episode's earlier temporal context. Hidden/logit differences jump exactly at that boundary and later change Actor action preference.
+
+Evidence:
+- pre-rollover max abs logit difference = 3.8147e-06 (<1e-5 tolerance);
+- rollover-boundary max abs logit difference = 5.01869;
+- first argmax action divergence = local step 205;
+- post-rollover max abs logit difference = 12.4828;
+- OFF A/A exact on saved inputs/RNG; within-condition repeated replay exact;
+- no SR or Safety Cost claim is accepted.
+
+PI interpretation:
+`prior episode state -> rollover timing -> current-episode temporal-context truncation -> Actor distribution/action change` is now an established causal pathway for the tested stress trace.
+
+Not established:
+- population prevalence;
+- historical full-200 outcome impact;
+- low-SR category explanation;
+- premature-end causation;
+- SR/Safety Cost improvement from reset;
+- separate causal attribution of counter versus K/V contents.
+
+Next research question must be behavioral relevance under a small paired online treatment, not another broad Probe or probability-only audit.

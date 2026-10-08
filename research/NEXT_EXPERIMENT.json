@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-RESET-001A",
   "cycle_id": "reset-001a-20261007",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "research_question": "Does cross-episode Actor state carry (time_step_counter and semantically coupled decoder K/V cache) causally change Actor hidden states, logits, or actions for the same teacher-forced current-episode input sequence when rollover timing differs?",
   "hypothesis": "H-RESET: a valid carried Actor state package that shifts rollover timing causes reproducible hidden/logit divergence and may cause action divergence under identical teacher-forced inputs.",
   "competing_explanation": "H-RESET-INERT: after a semantically valid reset/carry construction and deterministic replay, the same input sequence yields equivalent Actor outputs across rollover, so retained state is an engineering irregularity rather than an active policy mechanism on the tested path.",

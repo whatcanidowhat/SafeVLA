@@ -250,3 +250,12 @@ A valid Actor carry package reproducibly changes the policy distribution and at 
 Claim `c4ab4b395817f439a0239514f3469480aa0d8500` was recovered without generating a replacement, and CI 37752169988 passed before execution. Budget used: 1 GPU / 3 live episodes started / 3 completed. Original tracked development changes and frozen NEXT_EXPERIMENT files are preserved.
 
 Handoff: [RESULT_SUMMARY.md](handoffs/reset-001a-20261007/RESULT_SUMMARY.md). Required outputs and CPU validation are included. Executor STOP after publication; no successor approved.
+
+
+## 2026-10-08 — EXP-RESET-001A PI review
+
+| Experiment ID | Status | Result | Accepted claim |
+| --- | --- | --- | --- |
+| EXP-RESET-001A | COMPLETED / PI ACKNOWLEDGED | R1 | Valid Actor carry/rollover state can causally alter Actor logits and action preference under identical teacher-forced current inputs |
+
+No SR, Safety Cost, premature-end, or population-level performance claim is accepted from 001A.

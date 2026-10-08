@@ -1,8 +1,8 @@
 # PI Cycle 2 — Reset state-carrier causal test
 
 Experiment ID: EXP-RESET-001A
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX
+Status: DRAFT
+Authorization: NOT_AUTHORIZED — PI acknowledged EXP-RESET-001A result
 Cycle ID: reset-001a-20261007
 
 ## Why this is now the unique next experiment

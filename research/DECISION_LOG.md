@@ -576,3 +576,20 @@ A valid Actor carry package reproducibly changes the policy distribution and at 
 Claim `c4ab4b395817f439a0239514f3469480aa0d8500` was recovered without generating a replacement, and CI 37752169988 passed before execution. Budget used: 1 GPU / 3 live episodes started / 3 completed. Original tracked development changes and frozen NEXT_EXPERIMENT files are preserved.
 
 Handoff: [RESULT_SUMMARY.md](handoffs/reset-001a-20261007/RESULT_SUMMARY.md). Required outputs and CPU validation are included. Executor STOP after publication; no successor approved.
+
+
+## 2026-10-08 — DEC-RESET-001A-RESULT：接受R1，H-RESET从实现疑点升级为Actor因果通路
+
+Accepted:
+- OFF A/A PASS；
+- CLEAN/CARRY各自重复replay完全稳定；
+- pre-rollover差异低于预注册容差；
+- CARRY在local step 200命中500 rollover，logit/hidden差异同一步突增；
+- first argmax divergence=205；
+- 同一teacher-forced输入下已证明Actor action preference可因state carrier/rollover不同而改变。
+
+Mechanistic refinement:
+当前证据更准确支持“前序episode长度改变当前episode何时发生temporal-context truncation”，而不是“模型直接读取了旧episode token”。旧episode cache在rollover前被mask；真正的大差异从rollover重置位置开始。
+
+Scope boundary:
+R1不等于SR下降，也不等于premature end由该bug导致。该trace中end概率会被显著扰动，但未成为argmax。下一步仅允许小规模paired behavior causal test，验证online trajectory/outcome relevance。
