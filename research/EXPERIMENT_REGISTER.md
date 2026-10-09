@@ -323,3 +323,12 @@ Primary mechanistic signature: OFF effective current-episode context 50 -> 1 at 
 | EXP-COUNTER-DRIFT-EARLYEND-001C | APPROVED_FOR_CODEX / awaiting claim | max1 GPU / max32 live target episodes | OFF context 50 -> 1 at local step 50 while ON continues to 51; measure Actor -> action -> trajectory -> termination drift |
 
 Official full-200 SR evaluation is outside this cycle.
+
+
+## 2026-10-09 — EXP-COUNTER-DRIFT-EARLYEND-001C unused approval revoked
+
+| Experiment ID | Latest status | Execution |
+| --- | --- | --- |
+| EXP-COUNTER-DRIFT-EARLYEND-001C | PI_REVIEW / REVOKED_UNCLAIMED / NOT_AUTHORIZED | No claim or live run known in checked GitHub/server scope; 0 GPU / 0 episodes in the review record. |
+
+The previously approved max1 GPU / 32 live episodes budget is historical, not executable. Separate 001D P1 staging follows only after revoke-control CI success.

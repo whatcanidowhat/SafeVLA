@@ -1,9 +1,11 @@
 # PI Cycle 4 — Controlled mid-episode context truncation on historical early-end tasks
 
 Experiment ID: EXP-COUNTER-DRIFT-EARLYEND-001C
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 32 live target episodes
+Status: DRAFT
+Authorization: REVOKED_UNCLAIMED / NOT_AUTHORIZED — historical budget 1 GPU / 32 episodes is no longer executable
 Cycle ID: counter-drift-earlyend-001c-20261009
+
+> PI decision 2026-10-09T15:06:04.210Z: unused 001C authorization revoked; no claim/episode was authorized thereafter. Scientific design is archived for provenance only, not an active experiment.
 
 ## Mechanism under test
 

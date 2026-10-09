@@ -687,3 +687,10 @@ Key design commitments:
 - no claim about exact historical worker attribution or official benchmark SR.
 
 Approval follows green staging CI 37880320418. Execution requires a fresh CODEX claim and green claim CI.
+
+
+## 2026-10-09 — PI revokes unclaimed EXP-COUNTER-DRIFT-EARLYEND-001C authorization
+
+User explicitly authorized revoking the unclaimed 001C approval and replacing it with a separately staged 001D P1 draft. Immediately before publishing the revoke commit, GitHub `research-loop` HEAD was verified as `0a152f88e8eaf78b32ea6b09124782db25e2c436` with state_version=47, status=APPROVED_FOR_CODEX, claim_id=null and instruction_commit=null. Earlier Codex P0 server scope audit found no known live activity; absence outside inspected scope was not established. This transition uses a non-force, stale-head-rejecting Git ref update; if any competing claim wins the race, publication must fail/stop.
+
+This commit transitions 001C to PI_REVIEW, state_version=48, NOT_AUTHORIZED, clears PI approval timestamps/identity and 001C active GPU/episode allowance to zero. Reviewed result identity, execution_worktree and required outputs are unchanged. 001C is **REVOKED BEFORE CLAIM / NOT_EXECUTED** (no 001C scientific result); prior approved design remains in Git history. No claim, model, GPU, simulator or episode is initiated. A distinct 001D P1 cycle may be registered only after this revoke commit passes control CI; P1 requires separate approval.

@@ -348,3 +348,8 @@ Authorization:
 - no full-200 benchmark or extra seed replication in this cycle.
 
 Executor must claim this latest green approval head and wait for claim CI before any experiment execution.
+
+
+## 2026-10-09 — PI revocation: EXP-COUNTER-DRIFT-EARLYEND-001C
+
+The user authorized an unclaimed-approval revocation to prepare the independent performance-oriented 001D P1 draft. The GitHub v47 state at the pre-publication check had instruction_commit=null and claim_id=null; prior bounded server review found no 001C runner. PI changed only the control protocol state to v48 PI_REVIEW/NOT_AUTHORIZED and returned the 001C design statuses to DRAFT. This does **not** constitute execution evidence, a research result, or P1 approval. Await revoke CI before publishing 001D.
