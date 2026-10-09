@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 43,
+  "state_version": 44,
   "cycle_id": "reset-earlyend-001b-20261009",
   "experiment_id": "EXP-RESET-EARLYEND-001B",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "BLOCKED",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
   "instruction_commit": "919f62294d1ebcbdff1035112e7cf8c1c4530737",
@@ -32,5 +32,5 @@
     "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-09T01:50:15.885268+00:00"
+  "updated_at_utc": "2026-10-09T02:06:57.407701+00:00"
 }

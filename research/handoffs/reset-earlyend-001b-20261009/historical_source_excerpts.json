@@ -1,0 +1,1288 @@
+[
+  {
+    "commit": "60bc54fbdedaf5745d0476c25321e808708273aa",
+    "path": "online_evaluation/online_evaluator_worker.py",
+    "sha256": "f601f16d9393e76ac79bc155fa740c1906f8634a0c32860183622b23a3419479",
+    "excerpts": [
+      {
+        "line": 82,
+        "text": "    finally:"
+      },
+      {
+        "line": 83,
+        "text": "        # Notify the logger that there's nothing else to read from this worker"
+      },
+      {
+        "line": 84,
+        "text": "        try:"
+      },
+      {
+        "line": 85,
+        "text": "            results_queue.put(None)"
+      },
+      {
+        "line": 86,
+        "text": "        except (KeyboardInterrupt, SystemExit):"
+      },
+      {
+        "line": 87,
+        "text": "            raise"
+      },
+      {
+        "line": 88,
+        "text": "        except:"
+      },
+      {
+        "line": 89,
+        "text": "            print("
+      },
+      {
+        "line": 90,
+        "text": "                f\"WARNING: Failed to put termination signal for worker {agent_input['worker_id']}\""
+      },
+      {
+        "line": 91,
+        "text": "            )"
+      },
+      {
+        "line": 92,
+        "text": "        # Regardless of whether there was an uncaught exception or the process finished, attempt to stop the controller."
+      },
+      {
+        "line": 93,
+        "text": "        worker.stop()"
+      },
+      {
+        "line": 94,
+        "text": ""
+      },
+      {
+        "line": 95,
+        "text": ""
+      },
+      {
+        "line": 96,
+        "text": "class OnlineEvaluatorWorker:"
+      },
+      {
+        "line": 97,
+        "text": "    def __init__("
+      },
+      {
+        "line": 98,
+        "text": "        self,"
+      },
+      {
+        "line": 99,
+        "text": "        gpu_device: int,"
+      },
+      {
+        "line": 100,
+        "text": "        houses: List[Dict[str, Any]],"
+      },
+      {
+        "line": 101,
+        "text": "        max_eps_len: int,"
+      },
+      {
+        "line": 103,
+        "text": "        skip_done: bool,"
+      },
+      {
+        "line": 104,
+        "text": "        logging_sensor: \"VideoLogging\","
+      },
+      {
+        "line": 105,
+        "text": "        outdir: str,"
+      },
+      {
+        "line": 106,
+        "text": "        worker_id: int,"
+      },
+      {
+        "line": 107,
+        "text": "        det_type: str,"
+      },
+      {
+        "line": 108,
+        "text": "        prob_randomize_lighting: float,"
+      },
+      {
+        "line": 109,
+        "text": "        prob_randomize_materials: float,"
+      },
+      {
+        "line": 110,
+        "text": "        prob_randomize_colors: float,"
+      },
+      {
+        "line": 111,
+        "text": "        seed: int = 0,"
+      },
+      {
+        "line": 112,
+        "text": "    ):"
+      },
+      {
+        "line": 113,
+        "text": "        self.controller = None"
+      },
+      {
+        "line": 114,
+        "text": "        self.gpu_device = gpu_device"
+      },
+      {
+        "line": 115,
+        "text": "        self.houses = houses"
+      },
+      {
+        "line": 116,
+        "text": "        self.pre_defined_max_steps = max_eps_len"
+      },
+      {
+        "line": 117,
+        "text": "        self.input_sensors = input_sensors"
+      },
+      {
+        "line": 118,
+        "text": "        self.skip_done = skip_done"
+      },
+      {
+        "line": 119,
+        "text": "        self.logging_sensor: \"VideoLogging\" = logging_sensor"
+      },
+      {
+        "line": 120,
+        "text": "        self.outdir = outdir"
+      },
+      {
+        "line": 121,
+        "text": "        self.worker_id = worker_id"
+      },
+      {
+        "line": 122,
+        "text": "        self.det_type = det_type"
+      },
+      {
+        "line": 123,
+        "text": "        self._cached_sensors = None"
+      },
+      {
+        "line": 124,
+        "text": "        self._task_sampler: Optional[MultiTaskSampler] = None"
+      },
+      {
+        "line": 125,
+        "text": "        self.prob_randomize_lighting = prob_randomize_lighting"
+      },
+      {
+        "line": 126,
+        "text": "        self.prob_randomize_materials = prob_randomize_materials"
+      },
+      {
+        "line": 127,
+        "text": "        self.prob_randomize_colors = prob_randomize_colors"
+      },
+      {
+        "line": 128,
+        "text": "        self.seed = seed"
+      },
+      {
+        "line": 129,
+        "text": "        self._shadow_logger: Optional[ShadowPredictorLogger] = None"
+      },
+      {
+        "line": 130,
+        "text": "        if shadow_predictor_enabled():"
+      },
+      {
+        "line": 131,
+        "text": "            self._shadow_logger = ShadowPredictorLogger("
+      },
+      {
+        "line": 132,
+        "text": "                outdir=default_shadow_logdir(outdir),"
+      },
+      {
+        "line": 133,
+        "text": "                worker_id=worker_id,"
+      },
+      {
+        "line": 134,
+        "text": "                enabled=True,"
+      },
+      {
+        "line": 135,
+        "text": "            )"
+      },
+      {
+        "line": 136,
+        "text": ""
+      },
+      {
+        "line": 137,
+        "text": "    def get_house(self, sample):"
+      },
+      {
+        "line": 138,
+        "text": "        house_idx = int(sample[\"house_id\"])"
+      },
+      {
+        "line": 139,
+        "text": "        return self.houses[house_idx], house_idx"
+      },
+      {
+        "line": 140,
+        "text": ""
+      },
+      {
+        "line": 141,
+        "text": "    def get_agent_starting_position(self, sample):"
+      },
+      {
+        "line": 142,
+        "text": "        x, y, z = sample[\"observations\"][\"initial_agent_location\"][:3]"
+      },
+      {
+        "line": 143,
+        "text": "        y = 0.9009921550750732  # Brute force correction for old pickup task samples"
+      },
+      {
+        "line": 144,
+        "text": "        return dict(x=x, y=y, z=z)"
+      },
+      {
+        "line": 229,
+        "text": "            raise"
+      },
+      {
+        "line": 230,
+        "text": "        except:"
+      },
+      {
+        "line": 231,
+        "text": "            print("
+      },
+      {
+        "line": 232,
+        "text": "                f\"WARNING: worker {self.worker_id} failed to stop with non-None task_sampler\""
+      },
+      {
+        "line": 233,
+        "text": "            )"
+      },
+      {
+        "line": 234,
+        "text": "        finally:"
+      },
+      {
+        "line": 235,
+        "text": "            self._task_sampler = None"
+      },
+      {
+        "line": 236,
+        "text": ""
+      },
+      {
+        "line": 237,
+        "text": "    @property"
+      },
+      {
+        "line": 238,
+        "text": "    def task_sampler(self) -> MultiTaskSampler:"
+      },
+      {
+        "line": 239,
+        "text": "        if self._task_sampler is None:"
+      },
+      {
+        "line": 240,
+        "text": "            task_args = get_core_task_args(max_steps=self.pre_defined_max_steps)"
+      },
+      {
+        "line": 241,
+        "text": ""
+      },
+      {
+        "line": 242,
+        "text": "            add_extra_sensors_to_task_args(task_args, self.get_extra_sensors())"
+      },
+      {
+        "line": 243,
+        "text": "            controller_args = {"
+      },
+      {
+        "line": 281,
+        "text": "        return self._task_sampler"
+      },
+      {
+        "line": 282,
+        "text": ""
+      },
+      {
+        "line": 283,
+        "text": "    def evaluate_on_task("
+      },
+      {
+        "line": 284,
+        "text": "        self, task: AbstractSPOCTask, agent: AbstractAgent, worker_id: int"
+      },
+      {
+        "line": 285,
+        "text": "    ):"
+      },
+      {
+        "line": 286,
+        "text": "        goal = task.task_info[\"natural_language_spec\"]"
+      },
+      {
+        "line": 287,
+        "text": "        # task_path points out the episode's origin (i.e., which task, episode id, streaming id)"
+      },
+      {
+        "line": 288,
+        "text": "        task_path = \"/\".join(task.task_info[\"eval_info\"][\"task_path\"].split(\"/\")[-4:])"
+      },
+      {
+        "line": 289,
+        "text": "        all_frames = []"
+      },
+      {
+        "line": 290,
+        "text": "        all_video_frames = []"
+      },
+      {
+        "line": 291,
+        "text": "        agent.reset()"
+      },
+      {
+        "line": 292,
+        "text": "        action_list = agent.get_action_list()"
+      },
+      {
+        "line": 293,
+        "text": ""
+      },
+      {
+        "line": 294,
+        "text": "        all_actions = []"
+      },
+      {
+        "line": 295,
+        "text": ""
+      },
+      {
+        "line": 318,
+        "text": "                    \"sample_id\": sample_id,"
+      },
+      {
+        "line": 319,
+        "text": "                    \"task_path\": task_path,"
+      },
+      {
+        "line": 320,
+        "text": "                    \"goal\": goal,"
+      },
+      {
+        "line": 321,
+        "text": "                    \"worker_id\": worker_id,"
+      },
+      {
+        "line": 322,
+        "text": "                }"
+      },
+      {
+        "line": 323,
+        "text": "            )"
+      },
+      {
+        "line": 324,
+        "text": ""
+      },
+      {
+        "line": 325,
+        "text": "        with torch.no_grad():"
+      },
+      {
+        "line": 326,
+        "text": "            while len(all_actions) < task.max_steps:"
+      },
+      {
+        "line": 327,
+        "text": "                eps_idx += 1"
+      },
+      {
+        "line": 328,
+        "text": "                observations = task.get_observations()"
+      },
+      {
+        "line": 329,
+        "text": "                observations = {"
+      },
+      {
+        "line": 330,
+        "text": "                    k: v for k, v in observations.items() if k in self.input_sensors"
+      },
+      {
+        "line": 331,
+        "text": "                }"
+      },
+      {
+        "line": 332,
+        "text": ""
+      },
+      {
+        "line": 734,
+        "text": "        results_queue: mp.Queue,"
+      },
+      {
+        "line": 735,
+        "text": "        tasks_list: List[Dict[str, Any]],"
+      },
+      {
+        "line": 736,
+        "text": "    ):"
+      },
+      {
+        "line": 737,
+        "text": "        verbose = platform.system() == \"Darwin\""
+      },
+      {
+        "line": 738,
+        "text": ""
+      },
+      {
+        "line": 739,
+        "text": "        send_videos_back = True"
+      },
+      {
+        "line": 740,
+        "text": ""
+      },
+      {
+        "line": 741,
+        "text": "        self.task_sampler.task_spec_sampler = TaskSpecQueue(tasks_queue)"
+      },
+      {
+        "line": 742,
+        "text": "        num_tasks = 0"
+      },
+      {
+        "line": 743,
+        "text": "        while True:"
+      },
+      {
+        "line": 744,
+        "text": "            try:"
+      },
+      {
+        "line": 745,
+        "text": "                task = self.task_sampler.next_task()"
+      },
+      {
+        "line": 746,
+        "text": "                if self.pre_defined_max_steps == -1:"
+      },
+      {
+        "line": 747,
+        "text": "                    task.max_steps = MAX_EPISODE_LEN_PER_TASK["
+      },
+      {
+        "line": 748,
+        "text": "                        task.task_info[\"task_type\"]"
+      },
+      {
+        "line": 757,
+        "text": ""
+      },
+      {
+        "line": 758,
+        "text": "            except EmptyQueueError:"
+      },
+      {
+        "line": 759,
+        "text": "                print("
+      },
+      {
+        "line": 760,
+        "text": "                    f\"Terminating worker {self.worker_id}: No houses left in house_tasks.\""
+      },
+      {
+        "line": 761,
+        "text": "                )"
+      },
+      {
+        "line": 762,
+        "text": "                break"
+      },
+      {
+        "line": 763,
+        "text": ""
+      },
+      {
+        "line": 764,
+        "text": "            if verbose:"
+      },
+      {
+        "line": 765,
+        "text": "                print(f\"Sample {num_tasks}\")"
+      },
+      {
+        "line": 766,
+        "text": ""
+      },
+      {
+        "line": 767,
+        "text": "            sample_result = self.evaluate_on_task("
+      },
+      {
+        "line": 768,
+        "text": "                task=task, agent=agent, worker_id=self.worker_id"
+      },
+      {
+        "line": 769,
+        "text": "            )"
+      },
+      {
+        "line": 770,
+        "text": ""
+      },
+      {
+        "line": 771,
+        "text": "            task_info = {**task.task_info, **task.task_info[\"eval_info\"]}"
+      },
+      {
+        "line": 772,
+        "text": "            del task_info[\"eval_info\"]"
+      },
+      {
+        "line": 773,
+        "text": "            to_log = dict("
+      },
+      {
+        "line": 774,
+        "text": "                iter=num_tasks,"
+      },
+      {
+        "line": 775,
+        "text": "                task_type=task_info[\"task_type\"],"
+      },
+      {
+        "line": 776,
+        "text": "                worker_id=self.worker_id,"
+      },
+      {
+        "line": 777,
+        "text": "                sample_id=task_info[\"sample_id\"],"
+      },
+      {
+        "line": 778,
+        "text": "                metrics=sample_result[\"metrics\"],"
+      },
+      {
+        "line": 779,
+        "text": "                agent_path=sample_result[\"agent_path\"],"
+      },
+      {
+        "line": 780,
+        "text": "            )"
+      },
+      {
+        "line": 781,
+        "text": "            if verbose:"
+      },
+      {
+        "line": 782,
+        "text": "                print(to_log)"
+      },
+      {
+        "line": 783,
+        "text": ""
+      },
+      {
+        "line": 784,
+        "text": "            video_table_data = None"
+      },
+      {
+        "line": 785,
+        "text": "            if send_videos_back and task_info[\"needs_video\"]:"
+      },
+      {
+        "line": 786,
+        "text": "                flag = ("
+      },
+      {
+        "line": 787,
+        "text": "                    \"Success\" if sample_result[\"metrics\"][\"success\"] > 0.1 else \"Failed\""
+      },
+      {
+        "line": 842,
+        "text": "                    },"
+      },
+      {
+        "line": 843,
+        "text": "                }"
+      },
+      {
+        "line": 844,
+        "text": ""
+      },
+      {
+        "line": 845,
+        "text": "            results_queue.put((to_log, video_table_data))"
+      },
+      {
+        "line": 846,
+        "text": "            num_tasks += 1"
+      },
+      {
+        "line": 847,
+        "text": ""
+      },
+      {
+        "line": 848,
+        "text": "        print(f\"Worker {self.worker_id} processed {num_tasks} tasks\")"
+      }
+    ]
+  },
+  {
+    "commit": "60bc54fbdedaf5745d0476c25321e808708273aa",
+    "path": "online_evaluation/online_evaluator.py",
+    "sha256": "e878e5c27512080ddbe9858e16dedb186d3be52b99abf83fea92ed57dbdafee3",
+    "excerpts": [
+      {
+        "line": 116,
+        "text": "    table = None"
+      },
+      {
+        "line": 117,
+        "text": ""
+      },
+      {
+        "line": 118,
+        "text": "    total_metric_aggregators_dict = {}"
+      },
+      {
+        "line": 119,
+        "text": "    contributing_workers = set()"
+      },
+      {
+        "line": 120,
+        "text": "    for result in all_workers_results:"
+      },
+      {
+        "line": 121,
+        "text": "        metric_values = result[0][\"metrics\"]"
+      },
+      {
+        "line": 122,
+        "text": "        tab_data = result[1]"
+      },
+      {
+        "line": 123,
+        "text": "        contributing_workers.add(result[0][\"worker_id\"])"
+      },
+      {
+        "line": 124,
+        "text": "        merge_current_metric_to_metric_aggregate_dict("
+      },
+      {
+        "line": 125,
+        "text": "            total_metric_aggregators_dict, metric_values"
+      },
+      {
+        "line": 126,
+        "text": "        )"
+      },
+      {
+        "line": 127,
+        "text": ""
+      },
+      {
+        "line": 128,
+        "text": "        if tab_data is not None:"
+      },
+      {
+        "line": 129,
+        "text": "            if table is None:"
+      },
+      {
+        "line": 130,
+        "text": "                columns = [k for k in tab_data.keys()]"
+      },
+      {
+        "line": 131,
+        "text": "                table = wandb.Table(columns=columns)"
+      },
+      {
+        "line": 132,
+        "text": "            row = []"
+      },
+      {
+        "line": 133,
+        "text": "            for k in columns:"
+      },
+      {
+        "line": 134,
+        "text": "                if k not in tab_data:"
+      },
+      {
+        "line": 135,
+        "text": "                    item_to_add = -1"
+      },
+      {
+        "line": 136,
+        "text": "                else:"
+      },
+      {
+        "line": 137,
+        "text": "                    item_to_add = tab_data[k]"
+      },
+      {
+        "line": 138,
+        "text": "                row.append(item_to_add)"
+      },
+      {
+        "line": 139,
+        "text": "            table.add_data(*row)"
+      },
+      {
+        "line": 140,
+        "text": "    if upload_video:"
+      },
+      {
+        "line": 141,
+        "text": "        wandb.log({f\"VideoTable/{task_type}\": table})"
+      },
+      {
+        "line": 142,
+        "text": ""
+      },
+      {
+        "line": 143,
+        "text": "    all_objects = set("
+      },
+      {
+        "line": 144,
+        "text": "        ["
+      },
+      {
+        "line": 145,
+        "text": "            o.split(\"/\")[1]"
+      },
+      {
+        "line": 146,
+        "text": "            for o in total_metric_aggregators_dict.keys()"
+      },
+      {
+        "line": 147,
+        "text": "            if o.startswith(\"extra/\")"
+      },
+      {
+        "line": 148,
+        "text": "        ]"
+      },
+      {
+        "line": 149,
+        "text": "    )"
+      },
+      {
+        "line": 150,
+        "text": "    all_metrics = set("
+      },
+      {
+        "line": 151,
+        "text": "        ["
+      },
+      {
+        "line": 152,
+        "text": "            o.split(\"/\")[2]"
+      },
+      {
+        "line": 187,
+        "text": "    metrics_to_log += [\"total_size\"]"
+      },
+      {
+        "line": 188,
+        "text": "    metric_values += [total_metric_aggregators_dict[metrics_to_log[0]].size()]"
+      },
+      {
+        "line": 189,
+        "text": "    metrics_to_log += [\"num_workers\"]"
+      },
+      {
+        "line": 190,
+        "text": "    metric_values += [len(contributing_workers)]"
+      },
+      {
+        "line": 191,
+        "text": "    aggrgeated_result_metrics_table = wandb.Table(columns=metrics_to_log)"
+      },
+      {
+        "line": 192,
+        "text": "    aggrgeated_result_metrics_table.add_data(*metric_values)"
+      },
+      {
+        "line": 193,
+        "text": "    if upload_per_task:"
+      },
+      {
+        "line": 194,
+        "text": "        wandb.log({f\"AggregatedResults/{task_type}\": aggrgeated_result_metrics_table})"
+      },
+      {
+        "line": 195,
+        "text": "    return metrics_to_log, metric_values"
+      },
+      {
+        "line": 196,
+        "text": ""
+      },
+      {
+        "line": 197,
+        "text": ""
+      },
+      {
+        "line": 198,
+        "text": "class OnlineEvaluatorManager:"
+      },
+      {
+        "line": 199,
+        "text": "    def __init__("
+      },
+      {
+        "line": 200,
+        "text": "        self,"
+      },
+      {
+        "line": 201,
+        "text": "        dataset_path=\"/data/datasets\","
+      },
+      {
+        "line": 202,
+        "text": "        dataset_type=\"object_nav_v0.3\","
+      },
+      {
+        "line": 203,
+        "text": "        max_eps_len=-1,"
+      },
+      {
+        "line": 204,
+        "text": "        eval_set_size=None,"
+      },
+      {
+        "line": 205,
+        "text": "        eval_subset=\"val\","
+      },
+      {
+        "line": 495,
+        "text": "        self.log_benchmark_stat()"
+      },
+      {
+        "line": 496,
+        "text": ""
+      },
+      {
+        "line": 497,
+        "text": "        # Initializing the workers"
+      },
+      {
+        "line": 498,
+        "text": "        for worker_id in range(self.num_workers):"
+      },
+      {
+        "line": 499,
+        "text": "            gpu_device = self.gpu_devices[worker_id % len(self.gpu_devices)]"
+      },
+      {
+        "line": 500,
+        "text": "            worker_to_gpu[worker_id] = gpu_device"
+      },
+      {
+        "line": 501,
+        "text": ""
+      },
+      {
+        "line": 502,
+        "text": "            worker_args = {"
+      },
+      {
+        "line": 503,
+        "text": "                \"gpu_device\": gpu_device,"
+      },
+      {
+        "line": 504,
+        "text": "                \"houses\": self.houses,"
+      },
+      {
+        "line": 505,
+        "text": "                \"max_eps_len\": self.max_eps_len,"
+      },
+      {
+        "line": 506,
+        "text": "                \"input_sensors\": self.input_sensors,"
+      },
+      {
+        "line": 507,
+        "text": "                \"skip_done\": self.skip_done,"
+      },
+      {
+        "line": 508,
+        "text": "                \"logging_sensor\": self.logging_sensor,"
+      },
+      {
+        "line": 509,
+        "text": "                \"outdir\": self.outdir,"
+      },
+      {
+        "line": 510,
+        "text": "                \"worker_id\": worker_id,"
+      },
+      {
+        "line": 511,
+        "text": "                \"det_type\": self.det_type,"
+      },
+      {
+        "line": 512,
+        "text": "                \"prob_randomize_lighting\": self.prob_randomize_lighting,"
+      },
+      {
+        "line": 513,
+        "text": "                \"prob_randomize_materials\": self.prob_randomize_materials,"
+      },
+      {
+        "line": 514,
+        "text": "                \"prob_randomize_colors\": self.prob_randomize_colors,"
+      },
+      {
+        "line": 515,
+        "text": "                \"seed\": self.seed,"
+      },
+      {
+        "line": 516,
+        "text": "            }"
+      },
+      {
+        "line": 517,
+        "text": ""
+      },
+      {
+        "line": 518,
+        "text": "            self.workers[worker_id] = self.WorkerType("
+      },
+      {
+        "line": 519,
+        "text": "                **worker_args,"
+      },
+      {
+        "line": 520,
+        "text": "            )"
+      },
+      {
+        "line": 521,
+        "text": ""
+      },
+      {
+        "line": 522,
+        "text": "        max_len = max([len(vs) for vs in self.eval_samples.values()])"
+      },
+      {
+        "line": 523,
+        "text": "        inds = list(range(max_len))"
+      },
+      {
+        "line": 524,
+        "text": ""
+      },
+      {
+        "line": 525,
+        "text": "        # Put all tasks and samples in the queue"
+      },
+      {
+        "line": 526,
+        "text": "        tasks_queue = mp.Queue()"
+      },
+      {
+        "line": 527,
+        "text": "        tasks_list = []"
+      },
+      {
+        "line": 528,
+        "text": "        timestamp = int(datetime.now().timestamp())"
+      },
+      {
+        "line": 529,
+        "text": "        dt = datetime.fromtimestamp(timestamp)"
+      },
+      {
+        "line": 565,
+        "text": "                timestamp=timestamp,"
+      },
+      {
+        "line": 566,
+        "text": "            )"
+      },
+      {
+        "line": 567,
+        "text": "        else:"
+      },
+      {
+        "line": 568,
+        "text": "            for worker_id in self.workers:"
+      },
+      {
+        "line": 569,
+        "text": "                print(f\"Starting worker {worker_id}\")"
+      },
+      {
+        "line": 570,
+        "text": ""
+      },
+      {
+        "line": 571,
+        "text": "                proc = mp.Process("
+      },
+      {
+        "line": 572,
+        "text": "                    target=start_worker,"
+      },
+      {
+        "line": 573,
+        "text": "                    args=("
+      },
+      {
+        "line": 574,
+        "text": "                        self.workers[worker_id],"
+      },
+      {
+        "line": 575,
+        "text": "                        agent_class,"
+      },
+      {
+        "line": 576,
+        "text": "                        agent_input,"
+      },
+      {
+        "line": 577,
+        "text": "                        worker_to_gpu[worker_id],"
+      },
+      {
+        "line": 578,
+        "text": "                        tasks_queue,"
+      },
+      {
+        "line": 579,
+        "text": "                        results_queue,"
+      },
+      {
+        "line": 580,
+        "text": "                        tasks_list,"
+      },
+      {
+        "line": 581,
+        "text": "                        timestamp,"
+      },
+      {
+        "line": 582,
+        "text": "                    ),"
+      },
+      {
+        "line": 583,
+        "text": "                )"
+      },
+      {
+        "line": 584,
+        "text": ""
+      },
+      {
+        "line": 585,
+        "text": "                procs.append(proc)"
+      },
+      {
+        "line": 586,
+        "text": "                proc.start()"
+      },
+      {
+        "line": 587,
+        "text": ""
+      },
+      {
+        "line": 588,
+        "text": "        self.join_processes_and_log(procs, results_queue, num_tasks_per_type)"
+      },
+      {
+        "line": 591,
+        "text": "        new_found_results = 0"
+      },
+      {
+        "line": 592,
+        "text": "        while True:"
+      },
+      {
+        "line": 593,
+        "text": "            try:"
+      },
+      {
+        "line": 594,
+        "text": "                task_metrics_video_info = results_queue.get(timeout=10)"
+      },
+      {
+        "line": 595,
+        "text": "            except EmptyQueueError:"
+      },
+      {
+        "line": 596,
+        "text": "                # No more results to read for now - exit"
+      },
+      {
+        "line": 597,
+        "text": "                break"
+      },
+      {
+        "line": 598,
+        "text": ""
+      },
+      {
+        "line": 599,
+        "text": "            if task_metrics_video_info is None:"
+      },
+      {
+        "line": 600,
+        "text": "                self.num_ended_workers += 1"
+      },
+      {
+        "line": 601,
+        "text": "                continue"
+      },
+      {
+        "line": 602,
+        "text": ""
+      },
+      {
+        "line": 603,
+        "text": "            metrics_info, video_info = task_metrics_video_info"
+      },
+      {
+        "line": 604,
+        "text": "            task_type = metrics_info[\"task_type\"]"
+      },
+      {
+        "line": 605,
+        "text": ""
+      },
+      {
+        "line": 762,
+        "text": "            if \"extra/\" not in m and \"for_video_table/\" not in m"
+      },
+      {
+        "line": 763,
+        "text": "        ]"
+      },
+      {
+        "line": 764,
+        "text": "        columns = [\"task_type\"] + [\"extra_tag\"] + metrics_to_log"
+      },
+      {
+        "line": 765,
+        "text": "        aggrgeated_result_metrics_table = self.wandb.Table(columns=columns)"
+      },
+      {
+        "line": 766,
+        "text": "        total_results = 0"
+      },
+      {
+        "line": 767,
+        "text": "        for task_type, results in all_tasks_aggregated_results.items():"
+      },
+      {
+        "line": 768,
+        "text": "            total_results += len(results)"
+      },
+      {
+        "line": 769,
+        "text": "            metrics_to_log, metric_values = results"
+      },
+      {
+        "line": 770,
+        "text": "            metric_dict = {"
+      },
+      {
+        "line": 771,
+        "text": "                metrics_to_log[i]: metric_values[i] for i in range(len(metrics_to_log))"
+      },
+      {
+        "line": 772,
+        "text": "            }"
+      },
+      {
+        "line": 773,
+        "text": "            this_row = []"
+      },
+      {
+        "line": 774,
+        "text": "            for col in columns:"
+      },
+      {
+        "line": 775,
+        "text": "                if col == \"task_type\":"
+      },
+      {
+        "line": 776,
+        "text": "                    this_row.append(task_type)"
+      },
+      {
+        "line": 782,
+        "text": "                    this_row.append(-1)"
+      },
+      {
+        "line": 783,
+        "text": "                    print(\"missing metric\", col, \"for task\", task_type)"
+      },
+      {
+        "line": 784,
+        "text": ""
+      },
+      {
+        "line": 785,
+        "text": "            aggrgeated_result_metrics_table.add_data(*this_row)"
+      },
+      {
+        "line": 786,
+        "text": ""
+      },
+      {
+        "line": 787,
+        "text": "        print(\"\\nAggregated results\")"
+      },
+      {
+        "line": 788,
+        "text": "        print(aggrgeated_result_metrics_table.get_dataframe())"
+      },
+      {
+        "line": 789,
+        "text": ""
+      },
+      {
+        "line": 790,
+        "text": "        if upload:"
+      },
+      {
+        "line": 791,
+        "text": "            self.wandb.log({f\"FullAggregatedResults\": aggrgeated_result_metrics_table})"
+      },
+      {
+        "line": 792,
+        "text": "            print("
+      },
+      {
+        "line": 793,
+        "text": "                f\"Uploading results from {total_results} tasks out of {self.num_tasks_in_queue} emitted.\""
+      },
+      {
+        "line": 794,
+        "text": "            )"
+      }
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+sub_house_id,task_key,historical_end_step_0based,worker_id,worker_local_order,counter_start,rollover_local_step,exposure,included_primary,paired_execution,reason
+0,ObjectNavType/val/000420/raw_navigation_camera__0.mp4,7,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+3,ObjectNavType/val/001730/raw_navigation_camera__0.mp4,52,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+4,ObjectNavType/val/001852/raw_navigation_camera__0.mp4,186,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+6,ObjectNavType/val/002986/raw_navigation_camera__0.mp4,46,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+13,ObjectNavType/val/008224/raw_navigation_camera__0.mp4,178,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+24,ObjectNavType/val/010248/raw_navigation_camera__0.mp4,376,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+46,ObjectNavType/val/013943/raw_navigation_camera__0.mp4,183,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+55,ObjectNavType/val/011295/raw_navigation_camera__0.mp4,1,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+68,ObjectNavType/val/012479/raw_navigation_camera__0.mp4,15,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+87,ObjectNavType/val/013623/raw_navigation_camera__0.mp4,135,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+110,ObjectNavType/val/013458/raw_navigation_camera__0.mp4,98,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+117,ObjectNavType/val/013975/raw_navigation_camera__0.mp4,180,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+125,ObjectNavType/val/014286/raw_navigation_camera__0.mp4,196,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+175,ObjectNavType/val/013708/raw_navigation_camera__0.mp4,130,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+176,ObjectNavType/val/014702/raw_navigation_camera__0.mp4,449,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence
+196,ObjectNavType/val/014568/raw_navigation_camera__0.mp4,112,,,,,UNKNOWN,False,NOT_STARTED,Original task-to-worker assignment and worker-local order/counter not present in inspected persisted evidence

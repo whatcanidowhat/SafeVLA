@@ -1,0 +1,47 @@
+{
+  "cycle_id": "reset-earlyend-001b-20261009",
+  "experiment_id": "EXP-RESET-EARLYEND-001B",
+  "instruction_commit": "919f62294d1ebcbdff1035112e7cf8c1c4530737",
+  "claim_id": "279393e2f8a44f58b71c01ced81f0bbe",
+  "status": "BLOCKED",
+  "result_class": "B4",
+  "claim_commit": "fd3a11bbc5bb6ef365f3f1edc68e1e6a9888264c",
+  "claim_ci_run_id": 37872063939,
+  "claim_ci_conclusion": "success",
+  "started_at_utc": "2026-10-09T02:05:52.684414+00:00",
+  "finished_at_utc": "2026-10-09T02:05:53.323893+00:00",
+  "command": [
+    "/home/amax/.conda/envs/safevla/bin/python",
+    "/nvme2/user/qyy/SafeVLA/research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
+  ],
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "policy_checkpoint_loads": 0,
+  "simulator_starts": 0,
+  "policy_forwards": 0,
+  "eligible_cases": 16,
+  "unknown_exposure_cases": 16,
+  "reconstructable_cases": 0,
+  "paired_cases_started": 0,
+  "stages": {
+    "P0": "BLOCKED",
+    "P1": "NOT_STARTED",
+    "online_comparison": "NOT_STARTED"
+  },
+  "stopping_reason": "No early-stop case has reconstructable worker-local counter state",
+  "budget": {
+    "status": "APPROVED",
+    "approved_by": "PI",
+    "approved_at_utc": "2026-10-09T01:45:00+00:00",
+    "expires_at_utc": "2026-10-10T01:45:00+00:00",
+    "scope": "RESEARCH_EXPERIMENT",
+    "max_gpu": 1,
+    "max_episodes": 40
+  },
+  "runtime_provenance": "runtime_provenance.json",
+  "design_sha256": {
+    "NEXT_EXPERIMENT.md": "9f4ac5e95dff3b2ad8924f4bddee7997040e9573db8f7d60c3c8d88b5751ca7c",
+    "NEXT_EXPERIMENT.json": "adb190ea38fd00b35171b05868eb15dc4ddf77253d900293c0f6b2e55c2fce67"
+  }
+}

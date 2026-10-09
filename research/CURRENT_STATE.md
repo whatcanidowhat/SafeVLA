@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: EXP-RESET-EARLYEND-001B APPROVED_FOR_CODEX; next actor CODEX; awaiting valid claim.
+Mode: EXP-RESET-EARLYEND-001B BLOCKED (B4); next actor PI; executor stopped.
 
 ## Latest PI decision
 
@@ -291,3 +291,24 @@ Frozen authorization:
 - no Probe, Stop/Oracle Gate, checkpoint comparison or 200-task benchmark.
 
 Executor must claim the latest green research-loop HEAD and wait for claim CI before execution.
+
+
+## 2026-10-09 — EXP-RESET-EARLYEND-001B executor handoff
+
+Status: BLOCKED; decision B4; next actor PI. P0 verified all 16 historical failed
+sub-horizon terminal-end cases. Historical worker-local counter_start is UNKNOWN
+for all 16: original retained tables, raw W&B journal and logs do not persist the
+task-to-worker ordered mapping. Do not infer counters from global completion order.
+The approved P0 stop condition applies; P1 and online comparisons were NOT_STARTED.
+Budget used: 0 GPU, 0 live episodes, 0 policy loads, 0 simulator starts.
+
+This is missing historical state evidence, not a no-effect result. B1/B2/B3 cannot
+be evaluated; accepted 001A R1 remains unchanged. Frozen designs and approval are
+preserved. The unique claim fd3a11bbc5bb6ef365f3f1edc68e1e6a9888264c passed control
+CI 37872063939 before P0. No replacement claim or automatic retry was generated.
+
+Handoff: [RESULT_SUMMARY.md](handoffs/reset-earlyend-001b-20261009/RESULT_SUMMARY.md).
+Required outputs include explicit empty NOT_STARTED paired tables and hashed audit
+evidence. PI next action: decide whether an authentic worker-local ordered log can
+be recovered; otherwise review a new design under a fresh approval. Executor STOP
+after publication; no successor is approved and no PI acknowledgement is authored.

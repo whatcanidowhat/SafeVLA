@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "scientific_status": "BLOCKED",
+  "checks": [
+    "200 unique historical rows",
+    "all 16 failed end cases matched",
+    "16 terminal action traces checked",
+    "16 original video hashes matched",
+    "no persisted worker mapping found in specified scope",
+    "all counter fields missing rather than invented",
+    "paired CSV and Parquet have zero rows",
+    "tracked development diff unchanged"
+  ],
+  "resource_use": {
+    "gpu": 0,
+    "episodes": 0
+  }
+}
