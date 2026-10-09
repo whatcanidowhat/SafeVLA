@@ -1,63 +1,73 @@
 {
-  "experiment_id": "EXP-RESET-EARLYEND-001B",
-  "cycle_id": "reset-earlyend-001b-20261009",
+  "experiment_id": "EXP-COUNTER-DRIFT-EARLYEND-001C",
+  "cycle_id": "counter-drift-earlyend-001c-20261009",
   "status": "DRAFT",
-  "research_question": "On historical unsuccessful sub-horizon end cases, does Actor-only reset of the cross-episode counter/KV state causally change early termination behavior under paired target episodes?",
-  "hypothesis": "H-RESET-EARLYEND: rollover-exposed historical early-stop tasks will show online action/termination differences when the identical valid carry package is cleared at the target-episode boundary.",
-  "competing_explanation": "H-NO-EARLYEND-EFFECT / H-OTHER: the 001A rollover mechanism may not materially explain premature end, and some early stops may occur before rollover exposure.",
-  "reference": "EXP-RESET-001A accepted R1 at result commit 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6; PI acknowledgement 3e4165122b89d6233ab1f42b2dbc5815ae44d29c.",
-  "repeat_or_treatment": "One common-random-number paired online run per historically confirmed failed-end case with reconstructable rollover exposure. OFF retains the valid Actor carry package; ON clears Actor counter+KV at the target boundary. Up to four UNEXPOSED negative-control pairs.",
-  "unique_variable": "Actor episode-boundary state carry retained versus cleared; same pre-boundary carry package, target task, environment initialization, weights, critics, sampling and augmentation RNG.",
+  "research_question": "Does cross-episode root Actor counter drift cause premature decoder rollover and mid-episode current-context truncation that changes Actor outputs, actions, online trajectories, or termination outcomes on all 16 confirmed historical premature failed-end ObjectNav tasks?",
+  "hypothesis": "H1/H2/H3: with one fixed valid CARRY-450, OFF and ON remain equivalent before local step 50; OFF then exhibits an effective current-episode context collapse from 50 to 1 while ON continues to 51, causing hidden/logit divergence and, in a subset of tasks, action/trajectory and termination divergence.",
+  "competing_explanation": "The verified context collapse may perturb representation/distribution without materially affecting executed behavior or premature termination; very-early termination may be driven by a separate calibration/exploration/readout mechanism.",
+  "reference": "EXP-RESET-001A accepted R1 at 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6. EXP-RESET-EARLYEND-001B closed B4 because original four-worker counter histories were not reconstructable; no online treatment ran.",
+  "repeat_or_treatment": "Build one semantically valid CARRY-450 from the first 450 captured sequential Actor inputs of the accepted 600-step donor task sub_house_id=132/house=13352, then clone it for every target pair. OFF uses official reset and retains Actor state; ON applies the reviewed root-Actor counter+KV reset. Run all 16 target tasks once per condition with common-random-number pairing.",
+  "unique_variable": "Root Actor episode-boundary temporal state retained versus cleared. All target/environment/checkpoint/evaluator/sampling conditions remain fixed within each pair.",
   "fixed_conditions": [
-    "Only cases with success=false, eps_len<600 and confirmed final executed end are eligible",
-    "Historical worker-local counter_start must be reconstructed; UNKNOWN excluded from primary causal analysis",
-    "Valid carry package required; no fabricated counter with incompatible cache",
-    "Actor-only reset package from 001A; critics untouched",
-    "Same task/scene/initial state and common random numbers within each pair",
-    "No Probe, Stop Gate, Oracle Gate, checkpoint comparison or benchmark-wide run"
+    "Fixed donor: EXP-RESET-001A sub_house_id=132, house=13352, 600 captured decisions; use first 450 sequential captured Actor inputs",
+    "CARRY-450 must be produced by 450 real sequential Actor forwards; never fabricate counter=450 with incompatible cache",
+    "All 16 confirmed historical failed-end targets are run; no outcome-based dropping",
+    "OFF official reset retains root Actor counter/KV; ON clears only root Actor counter/KV after the same official reset",
+    "Reward critic and cost critic are not treatment variables",
+    "Same task specification, scene, initial pose, horizon=600, success/end semantics and action mapping within pair",
+    "Same pair-start RNG state, sampling protocol and augmentation protocol; instrumentation consumes no RNG and adds no Actor forward",
+    "Pre-rollover local steps 0..49 must remain paired-equivalent for primary causal interpretation",
+    "Actual mask/address semantics must verify OFF context 50->1 at step 50 and ON context=51",
+    "No Probe, Stop/Oracle Gate, checkpoint comparison, size intervention or full-200 benchmark"
   ],
   "metrics": [
-    "historical_end_step, counter_start, rollover_local_step",
-    "first online action divergence step",
-    "OFF/ON failed_end, end_step, success, episode length",
-    "official Safety Cost descriptive only",
-    "p(end), end rank/margin around rollover and executed end",
-    "UNEXPOSED negative-control pre-rollover equivalence"
+    "counter_before/counter_after, decoder start_pos, rollover event, cache read prefix and effective_current_episode_context_len at every decision",
+    "complete per-step runtime action logits and probabilities, argmax/sample/executed action, runtime-resolved end index, p_end/end_rank/end_margin",
+    "L1/L2/L3 raw hidden vectors server-side plus paired max-abs/L2/cosine summaries",
+    "Actor input hashes and paired_identical_input flag",
+    "pose/observation trajectory trace and first pose divergence",
+    "t_context, t_hidden_L1/L2/L3, t_logit, t_argmax, t_sample, t_exec, t_pose",
+    "OFF/ON failed_end, end_step, success, episode length and official Safety Cost",
+    "rescue/regression/unchanged/validity-fail classification for all 16 targets"
   ],
-  "expected_result": "Directly determine whether the already-proven rollover mechanism changes premature-end behavior on historical early-stop tasks, without claiming overall SR effect.",
-  "falsifying_result": "If rollover-exposed paired tasks do not change termination behavior and negative controls behave as expected, H-RESET is downgraded as an explanation of premature end despite remaining a real Actor mechanism.",
+  "expected_result": "If the mechanism is behaviorally relevant, valid pairs remain equivalent before step 50, OFF alone shows the predicted 50-to-1 context collapse at step 50, Actor hidden/logits diverge under still-identical inputs, and at least a subset subsequently changes action/trajectory or termination outcome.",
+  "falsifying_result": "If the context collapse is verified but valid pairs show no meaningful action/trajectory/termination change, the counter-drift mechanism is downgraded as an explanation of premature termination; if only hidden/logits change, classify as representation/policy-only effect.",
   "alternative_explanations": [
-    "Historical worker assignment/counter reconstruction may be incomplete",
-    "A single paired seed per task is a screening result, not a population-rate estimate",
-    "Task stochasticity may make historical failure itself non-reproducible",
-    "Reset may alter trajectory after rollover without changing end behavior",
-    "Premature end may arise from exploration, Actor calibration, sampling, representation/readout or safety optimization instead"
+    "Very-early failed ends may be independent of counter rollover and arise from termination calibration or exploration",
+    "After the first executed-action divergence, later logit differences are partly caused by divergent observations and cannot be attributed directly to reset",
+    "A single paired run per task is a controlled screening result, not a population or official benchmark SR estimate",
+    "The treatment resets counter and KV together; this experiment does not separately estimate counter-only versus KV-content causal contributions",
+    "Simulator or augmentation nondeterminism could invalidate a pair if pre-rollover equivalence fails"
   ],
   "stop_conditions": [
-    "No early-stop case has reconstructable worker-local counter state",
-    "Valid carry package cannot be constructed",
-    "Common-random-number pairing or task initialization cannot be matched",
-    "UNEXPOSED controls diverge before rollover without explained implementation cause",
-    "Execution would expand to Probe, Stop Gate, 200-task benchmark or checkpoint comparison"
+    "Valid CARRY-450 cannot be reconstructed from the accepted donor capture",
+    "OFF does not produce the predicted local-step-50 effective-context collapse or ON unexpectedly rolls over",
+    "Target initialization or common-random-number pairing cannot be verified",
+    "Executed action/pose diverges before local step 50 without an explained and accepted validity cause",
+    "Instrumentation adds model forwards, consumes RNG, mutates state or changes evaluator semantics",
+    "Treatment changes critic state or any variable beyond root Actor episode-boundary counter/KV",
+    "Execution would exceed 1 GPU or 32 live target episodes or expand to full-200 evaluation"
   ],
   "command": [
     "python3",
-    "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
+    "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py"
   ],
   "required_outputs": [
-    "research/handoffs/reset-earlyend-001b-20261009/RESULT_SUMMARY.md",
-    "research/handoffs/reset-earlyend-001b-20261009/RUN_MANIFEST.json",
-    "research/handoffs/reset-earlyend-001b-20261009/ARTIFACT_INDEX.json",
-    "research/handoffs/reset-earlyend-001b-20261009/REVIEW_NOTES.md",
-    "research/handoffs/reset-earlyend-001b-20261009/earlyend_case_manifest.csv",
-    "research/handoffs/reset-earlyend-001b-20261009/counter_exposure_audit.csv",
-    "research/handoffs/reset-earlyend-001b-20261009/paired_episode_results.csv",
-    "research/handoffs/reset-earlyend-001b-20261009/paired_step_trace.parquet",
-    "research/handoffs/reset-earlyend-001b-20261009/analysis.md",
-    "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
+    "research/handoffs/counter-drift-earlyend-001c-20261009/RESULT_SUMMARY.md",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/RUN_MANIFEST.json",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/ARTIFACT_INDEX.json",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/REVIEW_NOTES.md",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/donor_state_manifest.json",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/target_case_manifest.csv",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/paired_episode_results.csv",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/divergence_summary.csv",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/trace_index.json",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/analysis.md",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py",
+    "research/handoffs/counter-drift-earlyend-001c-20261009/validate_outputs.py"
   ],
   "resources": {
     "max_gpu": 1,
-    "max_episodes": 40
+    "max_episodes": 32
   }
 }

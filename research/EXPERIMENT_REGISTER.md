@@ -305,3 +305,12 @@ after publication; no successor is approved and no PI acknowledgement is authore
 | Experiment ID | Status | Result | Resource use |
 | --- | --- | --- | --- |
 | EXP-RESET-EARLYEND-001B | PI ACKNOWLEDGED / CLOSED | B4 historical counter provenance unreconstructable | 0 GPU / 0 live episodes |
+
+
+## 2026-10-09 — EXP-COUNTER-DRIFT-EARLYEND-001C staged
+
+| Experiment ID | Status | Budget | Question |
+| --- | --- | --- | --- |
+| EXP-COUNTER-DRIFT-EARLYEND-001C | DRAFT / NOT_AUTHORIZED | max1 GPU / 32 live target episodes | Does controlled mid-episode current-context truncation causally change Actor/trajectory/termination behavior on all 16 confirmed historical early-end tasks? |
+
+Primary mechanistic signature: OFF effective current-episode context 50 -> 1 at local step 50; ON continues to 51.

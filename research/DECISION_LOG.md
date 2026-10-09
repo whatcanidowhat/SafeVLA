@@ -652,3 +652,20 @@ after publication; no successor is approved and no PI acknowledgement is authore
 Accepted B4. The historical shared multiprocessing queue makes worker-local predecessor order scheduling-dependent, and retained artifacts do not preserve the per-task worker_id/iter mapping needed to recover original Actor counter_start. No B1/B2/B3 conclusion was tested.
 
 001B is closed without retry. The next cycle must use a fresh cycle_id and controlled carry-state intervention; no historical worker-order inference is permitted.
+
+
+## 2026-10-09 — DEC-COUNTER-DRIFT-001C-DESIGN：将主问题改为“中途当前上下文截断”
+
+After 001B B4, PI and researcher refined the mechanism.
+
+The main claim is no longer cross-episode token contamination. Accepted 001A evidence shows old-episode tokens are masked before rollover; the defect is unsynchronized episode-local and model-side clocks. A carried counter can reach 500 inside a new episode and abruptly stop addressing that episode's previously accumulated context.
+
+Design decision:
+- one fixed valid CARRY-450 from accepted 001A donor sub132;
+- all 16 historical failed-end tasks;
+- OFF official reset vs ON root-Actor counter+KV reset;
+- predicted OFF context collapse at local step 50: 50 -> 1, while ON context becomes 51;
+- complete per-step Actor output and trajectory logging without extra forwards;
+- max1 GPU / 32 live target episodes.
+
+Historical worker order is no longer required or inferred.

@@ -319,3 +319,15 @@ after publication; no successor is approved and no PI acknowledgement is authore
 PI independently reviewed blocked result commit `8acdb18f12a83d3e9ca3711313337f4ca232ae21` and accepts B4 as an evidence-provenance limitation: the original four-worker task-to-worker order and worker-local counter history cannot be reconstructed from retained evidence. No online paired treatment ran (0 GPU / 0 episodes). This does not refute EXP-RESET-001A R1.
 
 Decision: do not retry 001B or guess historical worker order. The next experiment will use a fresh cycle and a controlled valid carry state to test mid-episode context truncation directly on all 16 confirmed historical failed-end tasks.
+
+
+## 2026-10-09 — EXP-COUNTER-DRIFT-EARLYEND-001C staged
+
+Fresh cycle `counter-drift-earlyend-001c-20261009` replaces the closed 001B historical-attribution design.
+
+Mechanism under test:
+`cross-episode Actor counter drift -> premature model rollover -> current-episode effective-context collapse -> Actor/action/trajectory/termination change`.
+
+The controlled carry is fixed at CARRY-450 from the accepted 001A 600-step donor capture. This places the OFF rollover at target local step 50, after 50 current-episode tokens have accumulated. The primary mechanistic variable is effective current-episode context length: OFF must show 50 -> 1 at the boundary while ON continues to 51.
+
+All 16 confirmed historical failed-end tasks are retained. Full per-decision Actor outputs and trajectory state are mandatory evidence. Current state is DRAFT / NOT_AUTHORIZED pending approval commit.
