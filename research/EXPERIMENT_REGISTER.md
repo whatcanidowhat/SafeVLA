@@ -341,3 +341,8 @@ The previously approved max1 GPU / 32 live episodes budget is historical, not ex
 | EXP-ACTOR-RESET-FULL200-001D | PI_REVIEW / NOT_AUTHORIZED / NOT_EXECUTED | New `actor-reset-full200-p1-20261009` engineering validity gate: OFF/OFF A/A 5+5 tasks and isolated offline logger/reset invariants; proposed max1 GPU/10 episodes; P2 400-episode A/B is not authorized. |
 
 Previous 001C unclaimed authorization was revoked in `e93a9cdff70fe537cfa377c2d1f63c7b432d45be` and revoke CI passed. P1 command/worktree/real task manifest remain unfrozen; any claim or run is prohibited pending separate PI approval.
+
+
+## 2026-10-09 — PI freezes EXP-ACTOR-RESET-FULL200-001D P1 engineering preflight for separate approval
+
+After P0 review and 001C unclaimed revocation, the PI registers concrete P1 command `/home/amax/.conda/envs/safevla/bin/python research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py`, proposed isolated worktree `/nvme2/user/qyy/SafeVLA_p1_001d`, singleworker OFF A/A (5+5) only, 1 GPU/10 episode proposed max, 6000 live step/2400 offline combined forward/8 GPU-hour/50GiB stop ceilings, deterministic identical-input logger gate <=1e-5, exact root Actor reset/non-target critic invariants, and official cost/source/manifest gates. This is state v50 PI_REVIEW / NOT_AUTHORIZED (0 active GPU/episode). The command will be implemented by the executor only after a distinct PI-approved commit, successful claim and claim CI. P2 200+200 is NOT AUTHORIZED.

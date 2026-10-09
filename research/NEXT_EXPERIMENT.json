@@ -5,8 +5,8 @@
   "research_question": "P1 engineering validity gate: Can the frozen one-worker SafeVLA ObjectNav protocol, passive raw Actor-logit/cost logging, and offline Actor-only reset be implemented and validated without changing accepted B0 online policy/environment behavior, before a separate full-200 SR/Safety Cost trial?",
   "hypothesis": "On identical saved Actor inputs and RNG state, adding the passive logger leaves original policy logits/probabilities, sampled/executed action, RNG, counter/K/V and model forward counts equivalent; offline ON boundary reset clears only root Actor counter/K/V and leaves reward/cost critic and other state unchanged; two independent OFF 5-task sessions have the same frozen task identities/order with all stochastic differences documented.",
   "competing_explanation": "Independent online stochastic replay and augmentation/initialization order may produce differences even in OFF/OFF runs; logger hooks, preprocessor state, action history or wrong critic reset may introduce unintended changes; time/cost aggregation could drift without detectable protocol assertions.",
-  "reference": "PI-reviewed 001D proposal and P0 evidence at GitHub commit 724a4b1db31c07dec3d69e5dc5f377ce1edd8eaf; accepted 001A R1 result at 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6; unclaimed 001C approval revoked by e93a9cdff70fe537cfa377c2d1f63c7b432d45be, successful control CI 37949189376.",
-  "repeat_or_treatment": "P1 online: run OFF baseline only on exact first five tasks from a reproducibly generated complete-200 manifest, twice in independent clean processes (5+5=10 live episodes). P1 offline: isolated exact-input/exact-RNG logger absent/present equivalence and root Actor reset OFF/ON boundary invariant tests, without simulator/live Actor extra forwards. No ON live test, no 200-task OFF/ON run, no new seeds.",
+  "reference": "PI-reviewed 001D proposal and P0 evidence at GitHub commit 724a4b1db31c07dec3d69e5dc5f377ce1edd8eaf; accepted 001A R1 result at 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6; unclaimed 001C approval revoked by e93a9cdff70fe537cfa377c2d1f63c7b432d45be, successful control CI 37949189376. P0 fully reviewed in PR #1 724a4b1d; 001C revocation e93a9cd and new P1 staging 249b373 passed control CI. Frozen plan for isolated copy of accepted B0, with no P2 work.",
+  "repeat_or_treatment": "P1 ONLY: independently initialize two OFF baseline single-worker sessions of the same five tasks (5+5 live episodes, horizon 600), selected as the first 5 from the original complete-200 seeded/shuffled manifest; logger equivalence and root Actor-only reset invariants tested exclusively using isolated offline state/input replay. Executor first implements bounded runner in isolated execution worktree and proves static gates, then runs exactly the frozen command one time after approved claim+green claim CI. No live ON episodes, no P2, no unplanned retry.",
   "unique_variable": "Online A/A tests logger/protocol reproducibility with no online policy treatment. Offline instrumentation A/A toggles passive logger only; separate offline state-invariant check changes only root Actor episode-boundary counter/K/V. These are distinct engineering gates, not claimed as one causal performance treatment.",
   "fixed_conditions": [
     "Accepted B0: PKU-Alignment/SafeVLA@2aa82559d272b5f888e53433e258914057f15bed plus previously PI-approved local DINO infrastructure adaptation; match accepted 001A code/checkpoint/DINO source hashes and runtime identity",
@@ -14,7 +14,12 @@
     "Official stochastic sampling, greedy=false, test augmentation enabled, no per-episode reseeding, unchanged sensors/action mapping, horizon=600, original success/end semantics",
     "Do not clear reward/cost critic, augmentation counter, environment, RNG or other policy state in ON offline test",
     "No additional policy forward, sampling, RNG draw or simulator/controller query by logging",
-    "Original worker metrics.cost pre-step aggregate and success >0.1 semantics remain the sole official outcomes; capture raw root actor.linear logits separately from normalized Categorical logits and critic values"
+    "Original worker metrics.cost pre-step aggregate and success >0.1 semantics remain the sole official outcomes; capture raw root actor.linear logits separately from normalized Categorical logits and critic values",
+    "Executor must construct a separate runtime snapshot at /nvme2/user/qyy/SafeVLA_p1_001d from accepted B0 rather than modifying original /nvme2/user/qyy/SafeVLA_baseline_clean or the development worktree; fail if path already contains unexpected content",
+    "Use /home/amax/.conda/envs/safevla/bin/python or fail on environment/runtime hash mismatch; only approved DINO local adaptation, all root model/checkpoint/DINO source SHA evidence verified at runtime",
+    "Record process entry Python/NumPy/PyTorch CPU+GPU seeds and RNG before model creation. Use pre-model seed 123 as an explicit P1 single-worker protocol choice for both OFF sessions; preserve evaluator-internal shuffle/seed calls and all later augmentation/RNG progression. Any difference versus official multiworker protocol must be disclosed, no per-episode reseed.",
+    "Logger equivalence numeric gate: under identical actual saved inputs/state/RNG, raw root Actor logits, final normalized policy logits, probabilities and next cache state must have maximum absolute difference <= 1e-5; mode/sample/forward calls and RNG state must agree exactly. Any non-identity after adding logger is a gate failure, not permissible drift.",
+    "Reset OFF/ON offline gate: only root Actor counter + every decoder-layer K/V may differ immediately at boundary; reward/cost critic temporal state, RNG and all non-target live model states must remain exact; cache tensors checked directly, not via state_dict alone"
   ],
   "metrics": [
     "P1 two independent OFF sessions: exact task IDs/order/spec digests, started/completed/missing, initial model/environment/RNG provenance, action/logit/trajectory agreement and divergence evidence",
@@ -24,7 +29,7 @@
     "Full 200-item source manifest/hash with first five indices, augmented preprocessor counters and import paths, runtime source/weights hashes",
     "Actual P1 GPU hours/peak capacity, files/bytes/hash/coverage for P2 planning"
   ],
-  "expected_result": "Task manifest identity/order passes both runs, all required source/checkpoint/DINO loads verify, same-input and same-RNG logger A/A is equivalent within a preregistered tight tolerance with identical action/state updates, ON offline changes root Actor temporal state only, metrics reconcile exactly and P1 outputs are complete. PI may then decide whether to authorize a separate P2 proposal.",
+  "expected_result": "Only if all strict runtime identity/manifest/metric/count/logging/critic invariants pass and two bounded OFF A/A runs complete (5+5) can P1 be handed back to PI for deciding whether to separately authorize P2. No result from this P1 establishes SR/Cost reset benefit.",
   "falsifying_result": "Any extra Actor/Critic forward, sampling, simulator query, logger-induced RNG/action/counter/cache change, critic change caused by ON reset, missing/corrupt task log/cost identity, source mismatch, or unexplainable A/A differences that make P2 inference unreliable invalidates P1 readiness. Stop and retain partial evidence.",
   "alternative_explanations": [
     "Same initial CLI seed does not guarantee model-build-time RNG equality or bitwise-identical stochastic online trajectories; report independent A/A divergence rather than attribute it to reset.",
@@ -38,9 +43,16 @@
     "Complete task manifest cannot be frozen and checked; any task skipped, reordered, duplicated or replaced",
     "Any extra model forward/sample/controller query, altered RNG/action/cache history, wrong critic modification, log failure, or official success/Cost aggregation change",
     "More than proposed 1 GPU concurrently, 10 live episodes, 6000 total live decisions, 2400 offline combination forwards, 8 GPU-hours, or 50GiB raw output if/when approved",
-    "Any attempt to run ON live treatment, 400-episode P2, additional seed or automatic retry without a fresh independent PI approval"
+    "Any attempt to run ON live treatment, 400-episode P2, additional seed or automatic retry without a fresh independent PI approval",
+    "Stop if an identical-input+RNG logger control exceeds max_abs logit/prob/cache tolerance 1e-5, or any stochastic/RNG/action/forward count differs. Report potential numerical nondeterminism, do not silently broaden tolerance.",
+    "Stop if actual original-B0 Cost aggregation differs from collected cost components even by a single component or terminal-time inclusion; do not substitute task.cumulative_cost.",
+    "Stop if more than 8 GPU-hours elapsed, 50GiB raw artifacts, 2400 offline combined policy forward calls, 6000 online decisions, or 10 episode initialization attempts occur. No retries/restarts or extension are preapproved.",
+    "Do not execute first online episode unless expected real 200-row manifest SHA/order is frozen and cross-checked, model checkpoint missing/unexpected keys are empty and source+Python+DINO identity matches accepted evidence."
   ],
-  "command": [],
+  "command": [
+    "/home/amax/.conda/envs/safevla/bin/python",
+    "research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py"
+  ],
   "required_outputs": [
     "research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
     "research/handoffs/actor-reset-full200-p1-20261009/RUN_MANIFEST.json",
@@ -51,7 +63,11 @@
     "research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
     "research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
     "research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
-    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json"
+    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py",
+    "research/handoffs/actor-reset-full200-p1-20261009/validate_p1_outputs.py",
+    "research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md"
   ],
   "resources": {
     "max_gpu": 1,

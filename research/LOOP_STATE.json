@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "state_version": 49,
+  "state_version": 50,
   "cycle_id": "actor-reset-full200-p1-20261009",
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": null,
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_p1_001d",
   "instruction_commit": null,
   "reviewed_result_commit": "8acdb18f12a83d3e9ca3711313337f4ca232ae21",
   "claim_id": null,
@@ -29,8 +29,12 @@
     "research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
     "research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
     "research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
-    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json"
+    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py",
+    "research/handoffs/actor-reset-full200-p1-20261009/validate_p1_outputs.py",
+    "research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-09T15:10:03.169Z"
+  "updated_at_utc": "2026-10-09T15:37:20.266Z"
 }

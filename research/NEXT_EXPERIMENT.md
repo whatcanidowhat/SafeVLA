@@ -31,9 +31,9 @@ Scientific priority for the overarching 001D study: improve SafeVLA ObjectNav Su
 
 - Simultaneous GPU: max 1; live episodes: **5+5 = 10**; live decisions: max **6000**.
 - Offline replay: max **2400 combined forward calls**; proposed hard limit **8 GPU-hours** and **50 GiB** raw artifacts.
-- `execution_worktree` stays null until a verified isolated B0 runtime snapshot is selected during further PI approval.
-- No experimental command is frozen or executable yet (`NEXT_EXPERIMENT.json.command=[]`).
-- All proposed ceilings are DRAFT only. Actual authorization currently grants **0 GPU / 0 episodes**.
+- Frozen isolated execution worktree: `/nvme2/user/qyy/SafeVLA_p1_001d`. Executor may create it from accepted B0 only after approved claim+green claim CI; the original B0 and development worktrees remain untouched.
+- Frozen execution entry (to be implemented in isolated worktree under the approved protocol only): `/home/amax/.conda/envs/safevla/bin/python research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py`. Currently **not executable** because PI_REVIEW/NOT_AUTHORIZED.
+- The proposed ceilings are **1 GPU / 10 live episodes / 6000 live decisions / 2400 offline combined forwards / 8 GPU-hours / 50GiB raw**. While PI_REVIEW, the active authorization remains **0 GPU / 0 episodes**.
 
 ## Required handoff artifacts if a later P1 is explicitly approved and run
 
@@ -54,5 +54,29 @@ Expected: two valid five-task OFF sessions plus input-matched deterministic logg
 
 Falsifying/blocking: logger changes any forward, RNG, action or context; ON affects reward/cost critic; wrong task order, source hashes, official metrics or missing evidence; budget exceeds limits.
 
-The PI must separately approve P1 and CODEX must claim a subsequently approved instruction commit with green claim CI before executing. P2 requires another distinct cycle and authorization.
+The PI must separately approve P1 and CODEX must claim a subsequently approved instruction commit with green claim CI before executing. The executor must then build the one-shot runner in the isolated worktree and abort before any live episode if source, weights, full manifest, original metrics, logger/critic isolation or numerical equivalence gate fails. P2 requires another distinct cycle and authorization.
 
+
+## PI-frozen P1 staging addendum (still NOT_AUTHORIZED)
+
+P1 **engineering** preflight is frozen for approval, not the P2 performance experiment. Build a separate snapshot in `/nvme2/user/qyy/SafeVLA_p1_001d`, preserving accepted official B0 `2aa82559d272b5f888e53433e258914057f15bed`, DINO infrastructure adaptation, checkpoint/data digests, and original stochastic evaluation. Use exactly two independently initialized **OFF** single-worker, five-task sessions from the original complete 200-task manifest order (`shuffle=true, seed=123`, task horizon 600). Never introduce live ON or additional episode trials.
+
+Launcher initialization policy for this single-worker research protocol: set Python/NumPy/PyTorch CPU+GPU RNG seed=123 at each new process start *before* model construction, record RNG provenance, and preserve original evaluator shuffle/augmentation/sampling code and later state evolution. This is an explicit protocol choice, not a claim of bitwise equivalence to official 8-worker evaluation. Separate processes per OFF session; no per-episode reseeding.
+
+Offline checks use independent model/cache snapshots and bounded saved real Actor inputs. Compare logger disabled/enabled with matched input/state/RNG: raw root `actor.linear` logits vs normalized categorical logits/probs clearly separated; max_abs numerical difference <= **1e-5** for relevant float outputs/state, mode/sample/executed action and RNG/forward/sample counts identical. Independently verify OFF versus ON episode-boundary reset changes root Actor counter and per-layer K/V only; reward/cost critic counter/K/V and other non-target state exact; no extra live forward, sampler RNG draw, or controller query. Capture official worker `metrics.cost` and five components with original pre-step accounting, success with official threshold/boolean semantics. Missing source/import/action/metric identity is STOP, not a silent fallback.
+
+STOP on any source/checkpoint/DINO/TaskSpec order drift, extra forward/sample/query, critic alteration, logger numerical/treatment contamination, failed metric reconciliation, missing output, > 1 concurrent GPU, > 10 live episode initialization attempts, > 6000 live steps, > 2400 offline combined forward calls, > 8 GPU-hours or > 50GiB raw. No automatic retry, new seed, restart/continuation, P2 or additional task. Preserve partial error evidence and handoff for PI review.
+
+Executable command **once and only after** authorization+claim CI:
+
+```
+/home/amax/.conda/envs/safevla/bin/python research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py
+```
+
+Required additional outputs:
+- `research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py`
+- `research/handoffs/actor-reset-full200-p1-20261009/validate_p1_outputs.py`
+- `research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md`
+- `research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md`
+
+All implementation paths and runtime code hashes must be archived; any deviation needs a new PI decision before execution. The P2 200+200 A/B budget is not approved.
