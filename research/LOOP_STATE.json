@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 42,
+  "state_version": 43,
   "cycle_id": "reset-earlyend-001b-20261009",
   "experiment_id": "EXP-RESET-EARLYEND-001B",
-  "status": "APPROVED_FOR_CODEX",
+  "status": "CODEX_RUNNING",
   "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": null,
+  "instruction_commit": "919f62294d1ebcbdff1035112e7cf8c1c4530737",
   "reviewed_result_commit": "2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6",
-  "claim_id": null,
+  "claim_id": "279393e2f8a44f58b71c01ced81f0bbe",
   "authorization": {
     "status": "APPROVED",
     "approved_by": "PI",
@@ -31,6 +31,6 @@
     "research/handoffs/reset-earlyend-001b-20261009/analysis.md",
     "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
   ],
-  "updated_by": "PI",
-  "updated_at_utc": "2026-10-09T01:45:00+00:00"
+  "updated_by": "CODEX",
+  "updated_at_utc": "2026-10-09T01:50:15.885268+00:00"
 }
