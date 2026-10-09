@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-RESET-EARLYEND-001B is the unique next DRAFT; direct historical early-end test.
+Mode: EXP-RESET-EARLYEND-001B APPROVED_FOR_CODEX; next actor CODEX; awaiting valid claim.
 
 ## Latest PI decision
 
@@ -276,3 +276,18 @@ New unique DRAFT: `EXP-RESET-EARLYEND-001B`.
 Key design gate: not every sub-horizon failure is automatically rollover-exposed. The audit must confirm final executed `end` and reconstruct worker-local Actor counter at episode start. Historical early ends occurring before the calculated rollover are negative controls and cannot be explained by H-RESET in that run.
 
 Primary causal comparison is paired OFF vs ON on the exact historical target task, starting from the same valid carry package and common random numbers. OFF retains Actor counter/KV; ON clears the Actor package only. No Probe or benchmark-wide evaluation is part of this screening cycle.
+
+
+## 2026-10-09 — EXP-RESET-EARLYEND-001B approved
+
+User/PI explicitly approved the direct historical early-end paired reset test after draft CI `37870566672` passed.
+
+Frozen authorization:
+- max GPU: 1;
+- max live ObjectNav episodes: 40;
+- historical exposure audit first;
+- only confirmed failed-end cases with reconstructable worker-local counter state may enter the primary paired analysis;
+- OFF retains the valid Actor carry package; ON clears only the reviewed Actor counter+K/V reset package;
+- no Probe, Stop/Oracle Gate, checkpoint comparison or 200-task benchmark.
+
+Executor must claim the latest green research-loop HEAD and wait for claim CI before execution.

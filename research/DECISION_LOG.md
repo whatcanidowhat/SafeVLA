@@ -609,3 +609,18 @@ Treatment:
 
 Budget:
 max1 GPU / max40 live episodes。当前仅DRAFT / NOT_AUTHORIZED。
+
+
+## 2026-10-09 — PI批准 EXP-RESET-EARLYEND-001B
+
+User explicitly approved `EXP-RESET-EARLYEND-001B`.
+
+The approved design is unchanged from the green draft `c0aa9feac39e56ca45c6485a88b7f5636973a18d`:
+- first reconstruct historical failed-end eligibility and worker-local rollover exposure;
+- treat UNEXPOSED historical early ends as negative controls;
+- paired online OFF/ON target episodes use the same valid pre-boundary carry package and common random numbers;
+- OFF preserves Actor carry; ON clears only Actor counter+K/V using the reviewed 001A reset package;
+- max1 GPU / max40 live episodes;
+- no benchmark-wide SR claim.
+
+Authorization is executable only after a valid claim and green claim CI.

@@ -268,3 +268,12 @@ No SR, Safety Cost, premature-end, or population-level performance claim is acce
 | EXP-RESET-EARLYEND-001B | DRAFT / NOT_AUTHORIZED | Paired online test of Actor reset on historical premature failed-end tasks, with rollover-exposure audit and UNEXPOSED negative controls |
 
 No overall benchmark-SR claim is authorized.
+
+
+## 2026-10-09 — EXP-RESET-EARLYEND-001B approved
+
+| Experiment ID | Status | Budget | Purpose |
+| --- | --- | --- | --- |
+| EXP-RESET-EARLYEND-001B | APPROVED_FOR_CODEX / awaiting claim | max1 GPU / max40 live episodes | Direct paired online test of whether the proven Actor reset/rollover mechanism changes historical premature failed-end behavior |
+
+No overall SR improvement claim is authorized by this screening cycle.
