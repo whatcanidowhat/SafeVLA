@@ -1,8 +1,8 @@
 # PI Cycle 3 — Direct early-termination paired behavior test
 
 Experiment ID: EXP-RESET-EARLYEND-001B
-Status: APPROVED
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 40 live ObjectNav episodes
+Status: DRAFT
+Authorization: NOT_AUTHORIZED — PI acknowledged B4; this cycle will not be retried.
 Cycle ID: reset-earlyend-001b-20261009
 
 ## Why this experiment now

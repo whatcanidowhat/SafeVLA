@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: EXP-RESET-EARLYEND-001B BLOCKED (B4); next actor PI; executor stopped.
+Mode: PI_REVIEW. EXP-RESET-EARLYEND-001B B4 acknowledged; no execution authorized.
 
 ## Latest PI decision
 
@@ -312,3 +312,10 @@ Required outputs include explicit empty NOT_STARTED paired tables and hashed aud
 evidence. PI next action: decide whether an authentic worker-local ordered log can
 be recovered; otherwise review a new design under a fresh approval. Executor STOP
 after publication; no successor is approved and no PI acknowledgement is authored.
+
+
+## 2026-10-09 — PI acknowledgement of EXP-RESET-EARLYEND-001B
+
+PI independently reviewed blocked result commit `8acdb18f12a83d3e9ca3711313337f4ca232ae21` and accepts B4 as an evidence-provenance limitation: the original four-worker task-to-worker order and worker-local counter history cannot be reconstructed from retained evidence. No online paired treatment ran (0 GPU / 0 episodes). This does not refute EXP-RESET-001A R1.
+
+Decision: do not retry 001B or guess historical worker order. The next experiment will use a fresh cycle and a controlled valid carry state to test mid-episode context truncation directly on all 16 confirmed historical failed-end tasks.

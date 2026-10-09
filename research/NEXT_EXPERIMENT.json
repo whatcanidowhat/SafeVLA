@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-RESET-EARLYEND-001B",
   "cycle_id": "reset-earlyend-001b-20261009",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "research_question": "On historical unsuccessful sub-horizon end cases, does Actor-only reset of the cross-episode counter/KV state causally change early termination behavior under paired target episodes?",
   "hypothesis": "H-RESET-EARLYEND: rollover-exposed historical early-stop tasks will show online action/termination differences when the identical valid carry package is cleared at the target-episode boundary.",
   "competing_explanation": "H-NO-EARLYEND-EFFECT / H-OTHER: the 001A rollover mechanism may not materially explain premature end, and some early stops may occur before rollover exposure.",

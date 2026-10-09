@@ -645,3 +645,10 @@ Required outputs include explicit empty NOT_STARTED paired tables and hashed aud
 evidence. PI next action: decide whether an authentic worker-local ordered log can
 be recovered; otherwise review a new design under a fresh approval. Executor STOP
 after publication; no successor is approved and no PI acknowledgement is authored.
+
+
+## 2026-10-09 — PI acknowledge EXP-RESET-EARLYEND-001B B4
+
+Accepted B4. The historical shared multiprocessing queue makes worker-local predecessor order scheduling-dependent, and retained artifacts do not preserve the per-task worker_id/iter mapping needed to recover original Actor counter_start. No B1/B2/B3 conclusion was tested.
+
+001B is closed without retry. The next cycle must use a fresh cycle_id and controlled carry-state intervention; no historical worker-order inference is permitted.

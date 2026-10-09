@@ -298,3 +298,10 @@ Required outputs include explicit empty NOT_STARTED paired tables and hashed aud
 evidence. PI next action: decide whether an authentic worker-local ordered log can
 be recovered; otherwise review a new design under a fresh approval. Executor STOP
 after publication; no successor is approved and no PI acknowledgement is authored.
+
+
+## 2026-10-09 — EXP-RESET-EARLYEND-001B closed
+
+| Experiment ID | Status | Result | Resource use |
+| --- | --- | --- | --- |
+| EXP-RESET-EARLYEND-001B | PI ACKNOWLEDGED / CLOSED | B4 historical counter provenance unreconstructable | 0 GPU / 0 live episodes |
