@@ -1,7 +1,7 @@
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
-Mode: PI_REVIEW. EXP-RESET-001A result independently reviewed and accepted as R1; no successor authorized.
+Mode: PI_REVIEW. EXP-RESET-EARLYEND-001B is the unique next DRAFT; direct historical early-end test.
 
 ## Latest PI decision
 
@@ -265,3 +265,14 @@ Not established:
 - separate causal attribution of counter versus K/V contents.
 
 Next research question must be behavioral relevance under a small paired online treatment, not another broad Probe or probability-only audit.
+
+
+## 2026-10-09 — Mainline narrowed to direct early-end test
+
+Researcher requested the most direct follow-up: validate the reset effect on historical premature-end cases themselves.
+
+New unique DRAFT: `EXP-RESET-EARLYEND-001B`.
+
+Key design gate: not every sub-horizon failure is automatically rollover-exposed. The audit must confirm final executed `end` and reconstruct worker-local Actor counter at episode start. Historical early ends occurring before the calculated rollover are negative controls and cannot be explained by H-RESET in that run.
+
+Primary causal comparison is paired OFF vs ON on the exact historical target task, starting from the same valid carry package and common random numbers. OFF retains Actor counter/KV; ON clears the Actor package only. No Probe or benchmark-wide evaluation is part of this screening cycle.

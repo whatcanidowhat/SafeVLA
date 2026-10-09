@@ -1,74 +1,63 @@
 {
-  "experiment_id": "EXP-RESET-001A",
-  "cycle_id": "reset-001a-20261007",
+  "experiment_id": "EXP-RESET-EARLYEND-001B",
+  "cycle_id": "reset-earlyend-001b-20261009",
   "status": "DRAFT",
-  "research_question": "Does cross-episode Actor state carry (time_step_counter and semantically coupled decoder K/V cache) causally change Actor hidden states, logits, or actions for the same teacher-forced current-episode input sequence when rollover timing differs?",
-  "hypothesis": "H-RESET: a valid carried Actor state package that shifts rollover timing causes reproducible hidden/logit divergence and may cause action divergence under identical teacher-forced inputs.",
-  "competing_explanation": "H-RESET-INERT: after a semantically valid reset/carry construction and deterministic replay, the same input sequence yields equivalent Actor outputs across rollover, so retained state is an engineering irregularity rather than an active policy mechanism on the tested path.",
-  "reference": "02｜SafeVLA Gate B FAIL: Actor/Reward/Cost decoder counters and K/V cache persist across episode reset; historical short mask-isolation test matched at fresh-episode start but did not causally test later max_steps=500 rollover. Historical premature-end probability audits are complete and no further p(end)-only experiment is authorized.",
-  "repeat_or_treatment": "P0 static state-carrier audit; P1 explicit RESET_STATE_FIX with OFF official and ON Actor-only correct reset plus model-level A/A OFF equivalence; P2 deterministic offline CLEAN-START versus valid CARRY-300 stress replay on the same teacher-forced real B0 Actor input sequence. Maximum four live episodes only to acquire a fixed input trace or A/A smoke.",
-  "unique_variable": "Initial Actor model-side episode state package / rollover position. All teacher-forced Actor inputs, weights, masks, recorded previous-action inputs and offline RNG draws are held fixed.",
+  "research_question": "On historical unsuccessful sub-horizon end cases, does Actor-only reset of the cross-episode counter/KV state causally change early termination behavior under paired target episodes?",
+  "hypothesis": "H-RESET-EARLYEND: rollover-exposed historical early-stop tasks will show online action/termination differences when the identical valid carry package is cleared at the target-episode boundary.",
+  "competing_explanation": "H-NO-EARLYEND-EFFECT / H-OTHER: the 001A rollover mechanism may not materially explain premature end, and some early stops may occur before rollover exposure.",
+  "reference": "EXP-RESET-001A accepted R1 at result commit 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6; PI acknowledgement 3e4165122b89d6233ab1f42b2dbc5815ae44d29c.",
+  "repeat_or_treatment": "One common-random-number paired online run per historically confirmed failed-end case with reconstructable rollover exposure. OFF retains the valid Actor carry package; ON clears Actor counter+KV at the target boundary. Up to four UNEXPOSED negative-control pairs.",
+  "unique_variable": "Actor episode-boundary state carry retained versus cleared; same pre-boundary carry package, target task, environment initialization, weights, critics, sampling and augmentation RNG.",
   "fixed_conditions": [
-    "Official B0 checkpoint/DINO/action/success/end/horizon/reward/cost semantics",
-    "No PT-Guard, Stop Gate, steering, reranking, action rewrite or success-oracle gate",
-    "RESET_STATE_FIX=0 must be model-level A/A equivalent to untouched official code on identical saved inputs and RNG",
-    "RESET_STATE_FIX=1 resets only the Actor episode-local state proven necessary by the static audit; if Actor-only isolation is impossible, return R4",
-    "No formal Probe, size analysis, 200-task evaluation or three-checkpoint comparison",
-    "Offline stress replay remains teacher-forced after any predicted-action divergence",
-    "Primary action comparison is argmax; optional sampled comparison uses common random numbers",
-    "Treatment code is not committed to the B0 execution branch; review uses reset_fix.patch and research-loop handoff artifacts"
+    "Only cases with success=false, eps_len<600 and confirmed final executed end are eligible",
+    "Historical worker-local counter_start must be reconstructed; UNKNOWN excluded from primary causal analysis",
+    "Valid carry package required; no fabricated counter with incompatible cache",
+    "Actor-only reset package from 001A; critics untouched",
+    "Same task/scene/initial state and common random numbers within each pair",
+    "No Probe, Stop Gate, Oracle Gate, checkpoint comparison or benchmark-wide run"
   ],
   "metrics": [
-    "State-carrier ownership/lifetime/reset/rollover map",
-    "A/A OFF hidden/logit/probability/greedy/sampled equivalence on identical inputs and RNG",
-    "Per-step Actor counter and cache write/start position",
-    "Max absolute/relative Actor hidden difference",
-    "Max absolute/relative 20-D logit difference",
-    "End probability, rank and margin",
-    "First logit divergence step",
-    "First argmax-action divergence step",
-    "Optional first common-RNG sampled-action divergence",
-    "Distance from first rollover event to first divergence",
-    "Within-condition deterministic replay stability"
+    "historical_end_step, counter_start, rollover_local_step",
+    "first online action divergence step",
+    "OFF/ON failed_end, end_step, success, episode length",
+    "official Safety Cost descriptive only",
+    "p(end), end rank/margin around rollover and executed end",
+    "UNEXPOSED negative-control pre-rollover equivalence"
   ],
-  "expected_result": "Either establish a reproducible state-carrier -> Actor distribution/action pathway around rollover (R1/R2), or substantially downgrade H-RESET after a valid no-difference result (R3).",
-  "falsifying_result": "H-RESET as an active policy mechanism is weakened if semantically valid CLEAN-START and CARRY-300 replays remain equivalent through the rollover-relevant region on the fixed real input sequence.",
+  "expected_result": "Directly determine whether the already-proven rollover mechanism changes premature-end behavior on historical early-stop tasks, without claiming overall SR effect.",
+  "falsifying_result": "If rollover-exposed paired tasks do not change termination behavior and negative controls behave as expected, H-RESET is downgraded as an explanation of premature end despite remaining a real Actor mechanism.",
   "alternative_explanations": [
-    "A fabricated counter value without compatible cache contents would create an invalid treatment",
-    "CUDA numerical nondeterminism may masquerade as tiny divergence unless within-condition replay stability is verified",
-    "One stress sequence may not generalize to population-level performance",
-    "Counter+cache package causality does not separately attribute counter versus cache",
-    "Model-level action divergence does not by itself prove SR impact"
+    "Historical worker assignment/counter reconstruction may be incomplete",
+    "A single paired seed per task is a screening result, not a population-rate estimate",
+    "Task stochasticity may make historical failure itself non-reproducible",
+    "Reset may alter trajectory after rollover without changing end behavior",
+    "Premature end may arise from exploration, Actor calibration, sampling, representation/readout or safety optimization instead"
   ],
   "stop_conditions": [
-    "Static audit cannot define a valid Actor-only reset package",
-    "RESET_STATE_FIX=0 differs from untouched official model replay on identical inputs/RNG",
-    "Logger/instrumentation changes forward count, RNG, inputs, history or environment semantics",
-    "A valid >=220-decision fixed input sequence cannot be obtained within four live episodes",
-    "CARRY-300 cannot be constructed with semantically compatible cache state",
-    "Within-condition offline replay is not stable enough for comparison",
-    "Execution would expand to Probe, Stop Gate, 200-task evaluation, size analysis or multi-checkpoint performance comparison"
+    "No early-stop case has reconstructable worker-local counter state",
+    "Valid carry package cannot be constructed",
+    "Common-random-number pairing or task initialization cannot be matched",
+    "UNEXPOSED controls diverge before rollover without explained implementation cause",
+    "Execution would expand to Probe, Stop Gate, 200-task benchmark or checkpoint comparison"
   ],
   "command": [
     "python3",
-    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
+    "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
   ],
   "required_outputs": [
-    "research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
-    "research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
-    "research/handoffs/reset-001a-20261007/ARTIFACT_INDEX.json",
-    "research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
-    "research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
-    "research/handoffs/reset-001a-20261007/decoder_state_map.json",
-    "research/handoffs/reset-001a-20261007/reset_fix_design.md",
-    "research/handoffs/reset-001a-20261007/reset_fix.patch",
-    "research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
-    "research/handoffs/reset-001a-20261007/rollover_stress_result.json",
-    "research/handoffs/reset-001a-20261007/rollover_trace.csv",
-    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
+    "research/handoffs/reset-earlyend-001b-20261009/RESULT_SUMMARY.md",
+    "research/handoffs/reset-earlyend-001b-20261009/RUN_MANIFEST.json",
+    "research/handoffs/reset-earlyend-001b-20261009/ARTIFACT_INDEX.json",
+    "research/handoffs/reset-earlyend-001b-20261009/REVIEW_NOTES.md",
+    "research/handoffs/reset-earlyend-001b-20261009/earlyend_case_manifest.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/counter_exposure_audit.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/paired_episode_results.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/paired_step_trace.parquet",
+    "research/handoffs/reset-earlyend-001b-20261009/analysis.md",
+    "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
   ],
   "resources": {
     "max_gpu": 1,
-    "max_episodes": 4
+    "max_episodes": 40
   }
 }

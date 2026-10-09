@@ -593,3 +593,19 @@ Mechanistic refinement:
 
 Scope boundary:
 R1不等于SR下降，也不等于premature end由该bug导致。该trace中end概率会被显著扰动，但未成为argmax。下一步仅允许小规模paired behavior causal test，验证online trajectory/outcome relevance。
+
+
+## 2026-10-09 — DEC-RESET-EARLYEND-001B-DRAFT：直接在早退案例验证H-RESET行为影响
+
+User decision: “我想直接在早退案例上面验证，直接看有无影响。”
+
+PI agrees and narrows the generic 001B plan into `EXP-RESET-EARLYEND-001B`.
+
+Critical safeguard:
+先做historical exposure audit。只有确认最终执行失败end、且worker-local counter可重建的case进入主分析。若historical end发生在其calculated rollover之前，则该case在原run中不能由rollover解释，转为UNEXPOSED negative control。
+
+Treatment:
+同一个合法pre-boundary Actor carry package分叉为OFF(官方保留)和ON(仅清Actor counter+KV)，目标task/environment与common RNG完全配对。首次动作分叉后两条online trajectory自然独立演化，这是本轮要测的行为因果效应。
+
+Budget:
+max1 GPU / max40 live episodes。当前仅DRAFT / NOT_AUTHORIZED。

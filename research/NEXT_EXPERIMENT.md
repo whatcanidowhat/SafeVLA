@@ -1,291 +1,206 @@
-# PI Cycle 2 — Reset state-carrier causal test
+# PI Cycle 3 — Direct early-termination paired behavior test
 
-Experiment ID: EXP-RESET-001A
+Experiment ID: EXP-RESET-EARLYEND-001B
 Status: DRAFT
-Authorization: NOT_AUTHORIZED — PI acknowledged EXP-RESET-001A result
-Cycle ID: reset-001a-20261007
+Authorization: NOT_AUTHORIZED
+Cycle ID: reset-earlyend-001b-20261009
 
-## Why this is now the unique next experiment
+## Why this experiment now
 
-The project has finished the historical premature-end probability audit and explicitly rejected further probability-only end-legality work as low incremental value. The unresolved blocker from 02｜SafeVLA研究 is Gate B:
+EXP-RESET-001A established R1: a valid Actor carry/rollover state changes hidden states, logits and action preference under identical teacher-forced current inputs. It did not establish online behavioral relevance or premature-end causation.
 
-- Gate A is sufficient for the audited checkpoint/runtime/action/logger path.
-- Gate C is sufficient for the audited end/success timing path.
-- Gate B remains FAIL because model-side Actor/Reward-Critic/Cost-Critic `time_step_counter` and decoder K/V cache survive episode reset.
-- A short historical control showed that old cache was masked at a fresh episode start, but did not test later cumulative rollover.
-- Actor is the action-producing branch, so hidden-state / Probe / readout claims remain confounded until Actor-side reset carry is causally bounded.
+The researcher now prioritizes the most direct question:
 
-This cycle asks only:
+> On historical premature failed-end tasks, does resetting the Actor state carrier actually change early termination behavior?
 
-> Does cross-episode model-side state carry actually change Actor decisions?
-
-It does not test SR impact yet.
+This experiment therefore targets historical early-stop cases directly instead of running a generic behavior sample.
 
 ## Research question
 
-In the official SafeVLA inference implementation, can retained Actor `time_step_counter / decoder K-V cache` cause the **same teacher-forced episode input sequence** to produce different Actor hidden states, logits, or actions solely because the episode starts from a different valid model-side history position?
+For historical ObjectNav sub-horizon failures whose final executed action is an unsuccessful `end`, does the Actor-only episode reset treatment alter:
+1. whether the episode prematurely ends,
+2. when it ends,
+3. whether it succeeds,
+when the task/environment and pre-episode carry package are paired?
 
-## Current fact vs open claim
+## Hypothesis
 
-Established:
-`cross-episode model-side state retention exists`.
+H-RESET-EARLYEND:
+For cases that are temporally exposed to the 500-step rollover before their historical failed `end`, clearing Actor counter+K/V at the target-episode boundary will causally alter the trajectory and reduce or delay failed early termination in at least a subset of cases.
 
-Not established:
-`state retention -> Actor policy change -> navigation/SR change`.
+## Competing explanations
 
-This experiment tests only the first arrow:
-`state retention -> Actor hidden/logit/action difference`.
+H-NO-EARLYEND-EFFECT:
+Reset rollover changes policy distributions in stress replay but does not materially affect premature-end outcomes on historical early-stop tasks.
 
-## P0 — Complete decoder state-carrier audit
+H-OTHER:
+Some historical early stops occur before any rollover could influence the episode; those cases must be explained by other mechanisms such as termination calibration, exploration, sampling, representation/readout, or safety-training effects.
 
-Before implementing any reset treatment, statically audit the root Actor decoder and document:
+## P0 — Historical exposure audit (0 GPU / 0 episode)
 
-- where `time_step_counter` is owned and updated;
-- K-cache owner, tensor shape and lifetime;
-- V-cache owner, tensor shape and lifetime;
-- cache write index / `start_pos` semantics;
-- attention-mask interaction with cached positions;
-- exact rollover condition and code path around `max_steps=500`;
-- whether any official reset/cache-clear API exists;
-- whether Actor / Reward Critic / Cost Critic each own independent counters/caches or share state;
-- whether clearing only `time_step_counter=0` is semantically valid;
-- the minimal correct Actor-only episode reset package.
+Start from the aligned historical full-200 run.
 
-### P0 decision gate
+Eligibility for an "early-stop case":
+- success == false;
+- eps_len < task horizon 600;
+- final executed environment action is confirmed as `end`.
+Do not infer premature end from eps_len alone.
 
-Do **not** assume that "counter=0" alone is a valid reset.
+For every eligible case, reconstruct the **worker-local** model counter at target-episode start from the original 4-worker execution order/logs if possible.
 
-If code shows counter and cache position/content are semantically coupled, the treatment must reset the coupled Actor state together. If a correct Actor-only reset cannot be defined without changing shared state used by other branches, return R4 / BLOCKED.
+Using the exact 001A runtime rule, compute:
+`rollover_local_step = 500 - counter_start` when counter_start > 0, else 500.
 
-### P0 outputs
+Classify:
+- EXPOSED: rollover_local_step < historical_end_step;
+- BOUNDARY: rollover_local_step == historical_end_step;
+- UNEXPOSED: historical_end_step < rollover_local_step;
+- UNKNOWN: worker-local counter cannot be reconstructed.
 
-- `decoder_reset_audit.md`
-- `decoder_state_map.json`
+Scientific implication:
+- UNEXPOSED cases are negative controls: the rollover mechanism cannot explain that historical early end before its observed end step.
+- UNKNOWN cases cannot support a historical-rollover causal claim and are excluded from the primary paired analysis.
 
-The state map must contain at least:
+If worker-local order/counter cannot be reconstructed for any case, return BLOCKED rather than inventing start counters.
 
-`state_carrier | owner_module | lifetime | episode_reset_now | rollover_condition | actor_effect_path | correct_reset_operation`.
+## P1 — Paired target-episode construction
 
-## P1 — Single-variable RESET_STATE_FIX treatment design
+For each EXPOSED/BOUNDARY case, reconstruct a semantically valid Actor carry package at the historical `counter_start`:
+- never assign a counter with incompatible empty/stale cache;
+- use a deterministic offline warm-up sequence to populate the Actor K/V state to the required counter position;
+- prior-episode cache content is allowed only as masked carry history; no target-task observation may be consumed during warm-up.
 
-Implement an explicit switch:
+At the target episode boundary clone the same valid carry package into two conditions:
 
-`RESET_STATE_FIX=0`
-- reference/control;
-- official behavior;
-- no Actor state reset beyond the original code path.
+CONTROL / OFF:
+- keep the official Actor carry state;
+- original episode reset semantics.
 
-`RESET_STATE_FIX=1`
-- treatment;
-- at episode boundary, reset only the **Actor decision branch** episode-local state identified by P0 as necessary and sufficient.
+TREATMENT / ON:
+- start from the identical pre-boundary carry package;
+- apply the 001A reviewed Actor-only reset package: root Actor counter=0 plus zero root Actor K/V;
+- critics remain untouched.
 
-Do not reset Reward/Cost critic state in 001A unless P0 proves Actor state is physically shared and cannot be isolated. If shared reset is unavoidable, stop as R4 rather than pretending the Actor effect is identified.
+Then initialize the exact same historical target task/environment state.
 
-Frozen conditions:
-- checkpoint;
-- local DINO resource;
-- success/end semantics;
-- horizon;
-- reward/cost definitions;
+## Single variable
+
+The only treatment variable at target-episode start is:
+`Actor state carry retained` vs `Actor state carry cleared`.
+
+Fixed:
+- B0 weights/checkpoint/DINO;
+- task specification, scene, initial agent state;
+- success/end/horizon/reward/cost definitions;
 - action mapping;
-- stochastic/greedy mode;
-- augmentation;
-- task inputs;
-- environment semantics;
-- policy forward count.
+- augmentation protocol;
+- simulator semantics;
+- critic states;
+- sampling protocol.
 
-No Stop Gate, PT-Guard, steering, reranking, action rewrite, success-oracle gate, Probe, size analysis or benchmark rerun.
+## Randomness control
 
-### A/A OFF protection
+Use one predeclared common-random-number paired run per eligible historical case for this screening experiment.
 
-Because accepted B0 is stochastic and historical same-seed repeats are not bitwise trajectory-identical, **live trajectory equality is not by itself a valid A/A criterion**.
+Within a pair:
+- same environment seed;
+- same augmentation RNG sequence;
+- same categorical sampling random-number stream;
+- no extra policy forward.
 
-The primary A/A test must therefore use the **same captured Actor input tensors + the same RNG state/common random numbers** to compare:
-- untouched official reference implementation;
-- patched implementation with `RESET_STATE_FIX=0`.
+After the first action divergence, the two environments may naturally diverge; this is the intended online treatment effect. Continue each branch normally. Do not teacher-force after divergence in this online experiment.
 
-Require exact/declared-tolerance equivalence for:
-- Actor hidden output;
-- full action logits/probabilities;
-- sampled action under the same RNG draw;
-- greedy action;
-- selected action/history update logic.
+Because this is one paired screen per case, do not make a population-rate claim from a single switched episode. Any promising outcome becomes a replication target for a later fixed-seed confirmation.
 
-Also statically verify that the OFF branch does not alter the environment call path. If an additional live smoke is run, report it only as a smoke; do not require two stochastic trajectories to be bitwise identical.
+## Negative controls
 
-Any model-level A/A difference -> R4 / STOP.
+Include up to four deterministic UNEXPOSED cases, prioritizing the shortest historical end steps.
 
-### P1 outputs
+Prediction from 001A:
+before their historical end point, OFF and ON should remain behaviorally identical if the reset effect acts only through rollover timing.
 
-- `reset_fix_design.md`
-- `reset_fix.patch`
-- `aa_off_equivalence.json`
+If UNEXPOSED controls diverge before their calculated rollover, treat that as a treatment-validity warning and return INVALID/BLOCKED unless explained.
 
-Treatment code may exist locally for execution, but must not be committed into the B0 execution branch. The patch is the review artifact. Research-loop handoff artifacts are still published normally for PI review.
+## Primary metrics
 
-## P2 — Rollover stress test
+Per pair:
+- historical_end_step;
+- reconstructed counter_start;
+- calculated rollover_local_step;
+- first online action divergence step;
+- OFF failed_end (yes/no);
+- ON failed_end (yes/no);
+- OFF/ON end_step;
+- OFF/ON success;
+- OFF/ON episode length;
+- OFF/ON official Safety Cost (descriptive only, unchanged metric);
+- OFF/ON target-encounter-before-end if passively available;
+- `p(end)`, end rank and margin in a ±10-step window around rollover and around any executed end.
 
-The purpose is to expose the rollover mechanism under a fixed input sequence, not to estimate benchmark performance.
+## Primary causal contrasts
 
-### Fixed test sequence
+1. **Early-end switch**
+   - OFF = failed `end`, ON = no failed `end` at the paired comparison point / episode outcome differs.
 
-Acquire or recover one real B0 Actor-decoder input sequence long enough to observe at least 220 local decisions after the synthetic episode boundary. Prefer existing raw/captured evidence if it contains exact Actor inputs; otherwise a bounded read-only B0 capture is allowed.
+2. **End timing**
+   - `delta_end_step = end_step_ON - end_step_OFF` when both end unsuccessfully.
 
-Live budget:
-- maximum 4 ObjectNav episodes total;
-- only for obtaining a sufficiently long fixed Actor-input sequence and/or one A/A smoke;
-- no performance conclusion from these episodes.
+3. **Success switch**
+   - OFF failure -> ON success, or the reverse.
 
-If a valid >=220-decision test sequence cannot be obtained within the budget, return BLOCKED.
+4. **Trajectory divergence timing**
+   - whether first action divergence occurs at/after the calculated rollover.
 
-### Two offline conditions
+## Decision rules
 
-Condition A — CLEAN-START
-- episode starts with Actor counter=0;
-- Actor cache reset according to the P0-defined correct operation.
-
-Condition B — CARRY-300
-- episode starts from a **valid** Actor state carrier corresponding to 300 prior decisions;
-- if cache contents are required for semantic validity, create this state by replaying a fixed 300-step warm-up prefix through the Actor and then applying the official episode-boundary semantics that retain Actor state;
-- do not fabricate `counter=300` with an incompatible empty/stale cache.
-
-Then feed the exact same teacher-forced test sequence to A and B:
-- identical Actor decoder input tensors;
-- identical episode-local `time_step`;
-- identical masks;
-- identical recorded previous-action inputs;
-- identical weights;
-- identical augmentation result already embedded in saved Actor inputs.
-
-Once action outputs diverge, **do not feed divergent predicted actions back**. Continue teacher-forcing the frozen recorded inputs so the only variable remains initial model-side state.
-
-### Sampling comparison
-
-Primary action comparison: argmax/greedy action from the logits.
-
-Optional stochastic comparison: use a synchronized common-random-number stream for both conditions so any sampled-action difference is attributable to the changed distribution rather than a different RNG draw.
-
-### Per-step record
-
-Record:
-- local_timestep;
-- Actor `time_step_counter`;
-- cache write/start position;
-- full action logits/probabilities;
-- runtime-resolved `end` index;
-- `policy_end_prob`;
-- end rank and end-vs-next margin;
-- argmax action;
-- common-RNG sampled action if reported;
-- max absolute and relative hidden-state difference;
-- max absolute and relative logit difference.
-
-Report:
-- `first_logit_divergence_step`;
-- `first_argmax_action_divergence_step`;
-- optional first common-RNG sampled-action divergence;
-- relation of divergence to the first rollover event.
-
-## P2 validity requirement
-
-Before comparing A vs B, repeat each offline condition at least twice and require deterministic replay within declared numerical tolerance.
-
-If the same condition is not replay-stable, return R4.
-
-## Primary metric
-
-[
-\Delta z_t = \max_i |z^A_{t,i} - z^B_{t,i}|
-]
-
-Evaluate separately:
-- pre-rollover-relevant region;
-- rollover boundary;
-- post-rollover region.
-
-## Result classification
-
-### R1 — Strong support for H-RESET
-
-A valid initial-state difference:
-`different Actor carry state -> different rollover timing -> same teacher-forced inputs produce reproducible logit divergence -> argmax/common-RNG action divergence`.
+### B1 — Direct behavioral relevance supported
+At least two independent EXPOSED/BOUNDARY cases show reproducible-in-pair action divergence at/after rollover and a changed termination outcome (failed-end status, materially shifted end step, or success switch), while UNEXPOSED negative controls remain identical before their rollover.
 
 Allowed conclusion:
-> Model-side episode-state rollover can cause prior episode history to change the Actor decision for an otherwise identical current input sequence.
+> Actor reset/rollover has direct online behavioral relevance for at least a subset of historical premature-end tasks.
 
-Not allowed:
-> It lowers SR.
+Not yet allowed:
+> reset fix improves benchmark SR overall.
 
-Next cycle: small fixed-episode paired behavioral causal test with B0 retained as control.
-
-### R2 — Distribution effect only
-
-Reproducible hidden/logit difference, but no argmax/common-RNG action divergence in the tested sequence.
+### B2 — Trajectory effect without termination effect
+Exposed pairs diverge online after rollover, but failed-end outcome/timing remains essentially unchanged.
 
 Conclusion:
-> The state carrier changes the policy distribution, but behavioral impact is not yet shown.
+> H-RESET affects navigation behavior but is not yet shown to explain premature termination.
 
-H-RESET remains open but lower priority; next step is only a small paired behavior test if effect size justifies it.
-
-### R3 — No meaningful difference
-
-After genuinely crossing the rollover-relevant boundary, A and B remain equivalent within predeclared tolerance.
+### B3 — No early-end effect
+Eligible exposed pairs remain behaviorally equivalent through the relevant end window, or treatment does not change end behavior.
 
 Conclusion:
-> H-RESET is substantially downgraded as a performance-bottleneck explanation for the tested path.
+> H-RESET remains a real Actor mechanism from 001A but is downgraded as an explanation of historical premature end. Return mainline to termination/exploration/readout hypotheses.
 
-Gate B remains an engineering semantics irregularity, but mainline returns immediately to:
-- H-EXPLORATION;
-- H-PERCEPTION;
-- H-REPRESENTATION;
-- H-READOUT;
-- H-SAFEQUIT / safety-optimization attribution.
+### B4 — Invalid / unreconstructable
+Historical worker-local counter state cannot be recovered; carry package cannot be built validly; pair randomization is not synchronized; UNEXPOSED controls diverge before rollover without explanation; or instrumentation changes policy semantics.
 
-### R4 — Invalid treatment / invalid replay
+Do not interpret mechanism.
 
-Examples:
-- clearing counter alone corrupts cache semantics;
-- Actor-only reset is not isolatable;
-- `RESET_STATE_FIX=0` differs from official model-level replay;
-- logger adds an extra forward or changes inputs/RNG;
-- fixed inputs cannot be paired;
-- replay is not deterministic enough for interpretation.
-
-Conclusion: experiment invalid. Fix the experiment; do not interpret H-RESET.
-
-## Explicitly excluded
-
-- formal layer-wise Probe;
-- Oracle illegal-end gate;
-- Stop Gate;
-- 200-task evaluation;
-- Safety metric redefinition;
-- physical-size method;
-- IL/RL/Safe-aligned three-checkpoint comparison;
-- online clean-reset treatment used for performance claims.
-
-## Resources
+## Resource budget
 
 - max GPU: 1;
-- max live ObjectNav episodes: 4;
-- offline replay/model forwards: allowed only for P1/P2;
-- no full benchmark.
+- max live ObjectNav episodes: 40;
+  - primary: at most 16 eligible early-stop cases × 2 conditions = 32;
+  - negative controls: at most 4 cases × 2 conditions = 8;
+- no 200-task benchmark;
+- no Probe;
+- no Stop/Oracle gate;
+- no checkpoint comparison.
 
 ## Required outputs
 
-- `research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md`
-- `research/handoffs/reset-001a-20261007/RUN_MANIFEST.json`
-- `research/handoffs/reset-001a-20261007/ARTIFACT_INDEX.json`
-- `research/handoffs/reset-001a-20261007/REVIEW_NOTES.md`
-- `research/handoffs/reset-001a-20261007/decoder_reset_audit.md`
-- `research/handoffs/reset-001a-20261007/decoder_state_map.json`
-- `research/handoffs/reset-001a-20261007/reset_fix_design.md`
-- `research/handoffs/reset-001a-20261007/reset_fix.patch`
-- `research/handoffs/reset-001a-20261007/aa_off_equivalence.json`
-- `research/handoffs/reset-001a-20261007/rollover_stress_result.json`
-- `research/handoffs/reset-001a-20261007/rollover_trace.csv`
-- `research/handoffs/reset-001a-20261007/run_reset_001a.py`
+- `research/handoffs/reset-earlyend-001b-20261009/RESULT_SUMMARY.md`
+- `research/handoffs/reset-earlyend-001b-20261009/RUN_MANIFEST.json`
+- `research/handoffs/reset-earlyend-001b-20261009/ARTIFACT_INDEX.json`
+- `research/handoffs/reset-earlyend-001b-20261009/REVIEW_NOTES.md`
+- `research/handoffs/reset-earlyend-001b-20261009/earlyend_case_manifest.csv`
+- `research/handoffs/reset-earlyend-001b-20261009/counter_exposure_audit.csv`
+- `research/handoffs/reset-earlyend-001b-20261009/paired_episode_results.csv`
+- `research/handoffs/reset-earlyend-001b-20261009/paired_step_trace.parquet`
+- `research/handoffs/reset-earlyend-001b-20261009/analysis.md`
+- `research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py`
 
-After handoff publication, STOP. PI will judge only:
-1. whether the treatment is truly single-variable;
-2. whether model-side state carry actually changes Actor behavior.
+After handoff publication, STOP. Any replication or broader benchmark test requires a new PI cycle.

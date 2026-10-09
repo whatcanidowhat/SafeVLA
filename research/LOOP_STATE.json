@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 40,
-  "cycle_id": "reset-001a-20261007",
-  "experiment_id": "EXP-RESET-001A",
+  "state_version": 41,
+  "cycle_id": "reset-earlyend-001b-20261009",
+  "experiment_id": "EXP-RESET-EARLYEND-001B",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA",
-  "instruction_commit": "0493548a70aa192bb04457bc15e9343d934bb259",
+  "instruction_commit": null,
   "reviewed_result_commit": "2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6",
-  "claim_id": "24f414396c8f4ef39b34b179dee8c6fa",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
     "approved_by": null,
@@ -17,22 +17,20 @@
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 1,
-    "max_episodes": 4
+    "max_episodes": 40
   },
   "required_outputs": [
-    "research/handoffs/reset-001a-20261007/RESULT_SUMMARY.md",
-    "research/handoffs/reset-001a-20261007/RUN_MANIFEST.json",
-    "research/handoffs/reset-001a-20261007/ARTIFACT_INDEX.json",
-    "research/handoffs/reset-001a-20261007/REVIEW_NOTES.md",
-    "research/handoffs/reset-001a-20261007/decoder_reset_audit.md",
-    "research/handoffs/reset-001a-20261007/decoder_state_map.json",
-    "research/handoffs/reset-001a-20261007/reset_fix_design.md",
-    "research/handoffs/reset-001a-20261007/reset_fix.patch",
-    "research/handoffs/reset-001a-20261007/aa_off_equivalence.json",
-    "research/handoffs/reset-001a-20261007/rollover_stress_result.json",
-    "research/handoffs/reset-001a-20261007/rollover_trace.csv",
-    "research/handoffs/reset-001a-20261007/run_reset_001a.py"
+    "research/handoffs/reset-earlyend-001b-20261009/RESULT_SUMMARY.md",
+    "research/handoffs/reset-earlyend-001b-20261009/RUN_MANIFEST.json",
+    "research/handoffs/reset-earlyend-001b-20261009/ARTIFACT_INDEX.json",
+    "research/handoffs/reset-earlyend-001b-20261009/REVIEW_NOTES.md",
+    "research/handoffs/reset-earlyend-001b-20261009/earlyend_case_manifest.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/counter_exposure_audit.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/paired_episode_results.csv",
+    "research/handoffs/reset-earlyend-001b-20261009/paired_step_trace.parquet",
+    "research/handoffs/reset-earlyend-001b-20261009/analysis.md",
+    "research/handoffs/reset-earlyend-001b-20261009/run_reset_earlyend_001b.py"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-08T12:52:00+00:00"
+  "updated_at_utc": "2026-10-09T01:40:00+00:00"
 }

@@ -259,3 +259,12 @@ Handoff: [RESULT_SUMMARY.md](handoffs/reset-001a-20261007/RESULT_SUMMARY.md). Re
 | EXP-RESET-001A | COMPLETED / PI ACKNOWLEDGED | R1 | Valid Actor carry/rollover state can causally alter Actor logits and action preference under identical teacher-forced current inputs |
 
 No SR, Safety Cost, premature-end, or population-level performance claim is accepted from 001A.
+
+
+## 2026-10-09 — Direct early-end reset test draft
+
+| Experiment ID | Status | Role |
+| --- | --- | --- |
+| EXP-RESET-EARLYEND-001B | DRAFT / NOT_AUTHORIZED | Paired online test of Actor reset on historical premature failed-end tasks, with rollover-exposure audit and UNEXPOSED negative controls |
+
+No overall benchmark-SR claim is authorized.
