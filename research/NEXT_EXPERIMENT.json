@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
   "cycle_id": "actor-reset-full200-p1-20261009",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "P1 engineering validity gate: Can the frozen one-worker SafeVLA ObjectNav protocol, passive raw Actor-logit/cost logging, and offline Actor-only reset be implemented and validated without changing accepted B0 online policy/environment behavior, before a separate full-200 SR/Safety Cost trial?",
   "hypothesis": "On identical saved Actor inputs and RNG state, adding the passive logger leaves original policy logits/probabilities, sampled/executed action, RNG, counter/K/V and model forward counts equivalent; offline ON boundary reset clears only root Actor counter/K/V and leaves reward/cost critic and other state unchanged; two independent OFF 5-task sessions have the same frozen task identities/order with all stochastic differences documented.",
   "competing_explanation": "Independent online stochastic replay and augmentation/initialization order may produce differences even in OFF/OFF runs; logger hooks, preprocessor state, action history or wrong critic reset may introduce unintended changes; time/cost aggregation could drift without detectable protocol assertions.",
