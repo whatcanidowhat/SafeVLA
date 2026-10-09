@@ -1,73 +1,60 @@
 {
-  "experiment_id": "EXP-COUNTER-DRIFT-EARLYEND-001C",
-  "cycle_id": "counter-drift-earlyend-001c-20261009",
+  "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
+  "cycle_id": "actor-reset-full200-p1-20261009",
   "status": "DRAFT",
-  "research_question": "Does cross-episode root Actor counter drift cause premature decoder rollover and mid-episode current-context truncation that changes Actor outputs, actions, online trajectories, or termination outcomes on all 16 confirmed historical premature failed-end ObjectNav tasks?",
-  "hypothesis": "H1/H2/H3: with one fixed valid CARRY-450, OFF and ON remain equivalent before local step 50; OFF then exhibits an effective current-episode context collapse from 50 to 1 while ON continues to 51, causing hidden/logit divergence and, in a subset of tasks, action/trajectory and termination divergence.",
-  "competing_explanation": "The verified context collapse may perturb representation/distribution without materially affecting executed behavior or premature termination; very-early termination may be driven by a separate calibration/exploration/readout mechanism.",
-  "reference": "EXP-RESET-001A accepted R1 at 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6. EXP-RESET-EARLYEND-001B closed B4 because original four-worker counter histories were not reconstructable; no online treatment ran.",
-  "repeat_or_treatment": "Build one semantically valid CARRY-450 from the first 450 captured sequential Actor inputs of the accepted 600-step donor task sub_house_id=132/house=13352, then clone it for every target pair. OFF uses official reset and retains Actor state; ON applies the reviewed root-Actor counter+KV reset. Run all 16 target tasks once per condition with common-random-number pairing.",
-  "unique_variable": "Root Actor episode-boundary temporal state retained versus cleared. All target/environment/checkpoint/evaluator/sampling conditions remain fixed within each pair.",
+  "research_question": "P1 engineering validity gate: Can the frozen one-worker SafeVLA ObjectNav protocol, passive raw Actor-logit/cost logging, and offline Actor-only reset be implemented and validated without changing accepted B0 online policy/environment behavior, before a separate full-200 SR/Safety Cost trial?",
+  "hypothesis": "On identical saved Actor inputs and RNG state, adding the passive logger leaves original policy logits/probabilities, sampled/executed action, RNG, counter/K/V and model forward counts equivalent; offline ON boundary reset clears only root Actor counter/K/V and leaves reward/cost critic and other state unchanged; two independent OFF 5-task sessions have the same frozen task identities/order with all stochastic differences documented.",
+  "competing_explanation": "Independent online stochastic replay and augmentation/initialization order may produce differences even in OFF/OFF runs; logger hooks, preprocessor state, action history or wrong critic reset may introduce unintended changes; time/cost aggregation could drift without detectable protocol assertions.",
+  "reference": "PI-reviewed 001D proposal and P0 evidence at GitHub commit 724a4b1db31c07dec3d69e5dc5f377ce1edd8eaf; accepted 001A R1 result at 2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6; unclaimed 001C approval revoked by e93a9cdff70fe537cfa377c2d1f63c7b432d45be, successful control CI 37949189376.",
+  "repeat_or_treatment": "P1 online: run OFF baseline only on exact first five tasks from a reproducibly generated complete-200 manifest, twice in independent clean processes (5+5=10 live episodes). P1 offline: isolated exact-input/exact-RNG logger absent/present equivalence and root Actor reset OFF/ON boundary invariant tests, without simulator/live Actor extra forwards. No ON live test, no 200-task OFF/ON run, no new seeds.",
+  "unique_variable": "Online A/A tests logger/protocol reproducibility with no online policy treatment. Offline instrumentation A/A toggles passive logger only; separate offline state-invariant check changes only root Actor episode-boundary counter/K/V. These are distinct engineering gates, not claimed as one causal performance treatment.",
   "fixed_conditions": [
-    "Fixed donor: EXP-RESET-001A sub_house_id=132, house=13352, 600 captured decisions; use first 450 sequential captured Actor inputs",
-    "CARRY-450 must be produced by 450 real sequential Actor forwards; never fabricate counter=450 with incompatible cache",
-    "All 16 confirmed historical failed-end targets are run; no outcome-based dropping",
-    "OFF official reset retains root Actor counter/KV; ON clears only root Actor counter/KV after the same official reset",
-    "Reward critic and cost critic are not treatment variables",
-    "Same task specification, scene, initial pose, horizon=600, success/end semantics and action mapping within pair",
-    "Same pair-start RNG state, sampling protocol and augmentation protocol; instrumentation consumes no RNG and adds no Actor forward",
-    "Pre-rollover local steps 0..49 must remain paired-equivalent for primary causal interpretation",
-    "Actual mask/address semantics must verify OFF context 50->1 at step 50 and ON context=51",
-    "No Probe, Stop/Oracle Gate, checkpoint comparison, size intervention or full-200 benchmark"
+    "Accepted B0: PKU-Alignment/SafeVLA@2aa82559d272b5f888e53433e258914057f15bed plus previously PI-approved local DINO infrastructure adaptation; match accepted 001A code/checkpoint/DINO source hashes and runtime identity",
+    "Single worker / one persistent Agent per session, ObjectNavType minival, 200-row frozen manifest generated by original shuffle=true seed=123 path; P1 consumes only the same first five tasks in each independent OFF session",
+    "Official stochastic sampling, greedy=false, test augmentation enabled, no per-episode reseeding, unchanged sensors/action mapping, horizon=600, original success/end semantics",
+    "Do not clear reward/cost critic, augmentation counter, environment, RNG or other policy state in ON offline test",
+    "No additional policy forward, sampling, RNG draw or simulator/controller query by logging",
+    "Original worker metrics.cost pre-step aggregate and success >0.1 semantics remain the sole official outcomes; capture raw root actor.linear logits separately from normalized Categorical logits and critic values"
   ],
   "metrics": [
-    "counter_before/counter_after, decoder start_pos, rollover event, cache read prefix and effective_current_episode_context_len at every decision",
-    "complete per-step runtime action logits and probabilities, argmax/sample/executed action, runtime-resolved end index, p_end/end_rank/end_margin",
-    "L1/L2/L3 raw hidden vectors server-side plus paired max-abs/L2/cosine summaries",
-    "Actor input hashes and paired_identical_input flag",
-    "pose/observation trajectory trace and first pose divergence",
-    "t_context, t_hidden_L1/L2/L3, t_logit, t_argmax, t_sample, t_exec, t_pose",
-    "OFF/ON failed_end, end_step, success, episode length and official Safety Cost",
-    "rescue/regression/unchanged/validity-fail classification for all 16 targets"
+    "P1 two independent OFF sessions: exact task IDs/order/spec digests, started/completed/missing, initial model/environment/RNG provenance, action/logit/trajectory agreement and divergence evidence",
+    "Captured policy forward, sample, decoder reset counts and original worker cost/success exact reconciliation",
+    "Offline logger absent/present identical-input+RNG comparisons of original raw logits, normalized logits/probabilities, sampled actions, history, RNG/counter/cache and forward counts",
+    "Offline ON root counter and per-layer K/V zero evidence, reward/cost critic counter/K/V and all non-target state invariant evidence",
+    "Full 200-item source manifest/hash with first five indices, augmented preprocessor counters and import paths, runtime source/weights hashes",
+    "Actual P1 GPU hours/peak capacity, files/bytes/hash/coverage for P2 planning"
   ],
-  "expected_result": "If the mechanism is behaviorally relevant, valid pairs remain equivalent before step 50, OFF alone shows the predicted 50-to-1 context collapse at step 50, Actor hidden/logits diverge under still-identical inputs, and at least a subset subsequently changes action/trajectory or termination outcome.",
-  "falsifying_result": "If the context collapse is verified but valid pairs show no meaningful action/trajectory/termination change, the counter-drift mechanism is downgraded as an explanation of premature termination; if only hidden/logits change, classify as representation/policy-only effect.",
+  "expected_result": "Task manifest identity/order passes both runs, all required source/checkpoint/DINO loads verify, same-input and same-RNG logger A/A is equivalent within a preregistered tight tolerance with identical action/state updates, ON offline changes root Actor temporal state only, metrics reconcile exactly and P1 outputs are complete. PI may then decide whether to authorize a separate P2 proposal.",
+  "falsifying_result": "Any extra Actor/Critic forward, sampling, simulator query, logger-induced RNG/action/counter/cache change, critic change caused by ON reset, missing/corrupt task log/cost identity, source mismatch, or unexplainable A/A differences that make P2 inference unreliable invalidates P1 readiness. Stop and retain partial evidence.",
   "alternative_explanations": [
-    "Very-early failed ends may be independent of counter rollover and arise from termination calibration or exploration",
-    "After the first executed-action divergence, later logit differences are partly caused by divergent observations and cannot be attributed directly to reset",
-    "A single paired run per task is a controlled screening result, not a population or official benchmark SR estimate",
-    "The treatment resets counter and KV together; this experiment does not separately estimate counter-only versus KV-content causal contributions",
-    "Simulator or augmentation nondeterminism could invalidate a pair if pre-rollover equivalence fails"
+    "Same initial CLI seed does not guarantee model-build-time RNG equality or bitwise-identical stochastic online trajectories; report independent A/A divergence rather than attribute it to reset.",
+    "The preprocessor may change augmentation after 500 steps and carry stochastic state across tasks; do not reset it outside registered treatment.",
+    "Actor raw logits are not Categorical normalized logits nor critic logits; official worker cost excludes some terminal-step accumulation depending on code timing, and must not be silently corrected.",
+    "Successful P1 is an engineering gate and does not establish any SR or Safety Cost reset effect."
   ],
   "stop_conditions": [
-    "Valid CARRY-450 cannot be reconstructed from the accepted donor capture",
-    "OFF does not produce the predicted local-step-50 effective-context collapse or ON unexpectedly rolls over",
-    "Target initialization or common-random-number pairing cannot be verified",
-    "Executed action/pose diverges before local step 50 without an explained and accepted validity cause",
-    "Instrumentation adds model forwards, consumes RNG, mutates state or changes evaluator semantics",
-    "Treatment changes critic state or any variable beyond root Actor episode-boundary counter/KV",
-    "Execution would exceed 1 GPU or 32 live target episodes or expand to full-200 evaluation"
+    "No new CODEX claim or experiment execution while status=PI_REVIEW/NOT_AUTHORIZED; wait for independent PI approval and green claim CI",
+    "Source/checkpoint/DINO/dataset identities, runtime module imports or action/sensor mapping do not match accepted B0",
+    "Complete task manifest cannot be frozen and checked; any task skipped, reordered, duplicated or replaced",
+    "Any extra model forward/sample/controller query, altered RNG/action/cache history, wrong critic modification, log failure, or official success/Cost aggregation change",
+    "More than proposed 1 GPU concurrently, 10 live episodes, 6000 total live decisions, 2400 offline combination forwards, 8 GPU-hours, or 50GiB raw output if/when approved",
+    "Any attempt to run ON live treatment, 400-episode P2, additional seed or automatic retry without a fresh independent PI approval"
   ],
-  "command": [
-    "python3",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py"
-  ],
+  "command": [],
   "required_outputs": [
-    "research/handoffs/counter-drift-earlyend-001c-20261009/RESULT_SUMMARY.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/RUN_MANIFEST.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/ARTIFACT_INDEX.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/REVIEW_NOTES.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/donor_state_manifest.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/target_case_manifest.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/paired_episode_results.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/divergence_summary.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/trace_index.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/analysis.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/validate_outputs.py"
+    "research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json"
   ],
   "resources": {
     "max_gpu": 1,
-    "max_episodes": 32
+    "max_episodes": 10
   }
 }

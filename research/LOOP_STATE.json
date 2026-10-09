@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "state_version": 48,
-  "cycle_id": "counter-drift-earlyend-001c-20261009",
-  "experiment_id": "EXP-COUNTER-DRIFT-EARLYEND-001C",
+  "state_version": 49,
+  "cycle_id": "actor-reset-full200-p1-20261009",
+  "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA",
+  "execution_worktree": null,
   "instruction_commit": null,
   "reviewed_result_commit": "8acdb18f12a83d3e9ca3711313337f4ca232ae21",
   "claim_id": null,
@@ -20,19 +20,17 @@
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/counter-drift-earlyend-001c-20261009/RESULT_SUMMARY.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/RUN_MANIFEST.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/ARTIFACT_INDEX.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/REVIEW_NOTES.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/donor_state_manifest.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/target_case_manifest.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/paired_episode_results.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/divergence_summary.csv",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/trace_index.json",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/analysis.md",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py",
-    "research/handoffs/counter-drift-earlyend-001c-20261009/validate_outputs.py"
+    "research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-full200-p1-20261009/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
+    "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-09T15:06:04.210Z"
+  "updated_at_utc": "2026-10-09T15:10:03.169Z"
 }

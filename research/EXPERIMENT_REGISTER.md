@@ -332,3 +332,12 @@ Official full-200 SR evaluation is outside this cycle.
 | EXP-COUNTER-DRIFT-EARLYEND-001C | PI_REVIEW / REVOKED_UNCLAIMED / NOT_AUTHORIZED | No claim or live run known in checked GitHub/server scope; 0 GPU / 0 episodes in the review record. |
 
 The previously approved max1 GPU / 32 live episodes budget is historical, not executable. Separate 001D P1 staging follows only after revoke-control CI success.
+
+
+## 2026-10-09 — EXP-ACTOR-RESET-FULL200-001D P1 staged
+
+| Experiment ID | State | Proposed scope |
+| --- | --- | --- |
+| EXP-ACTOR-RESET-FULL200-001D | PI_REVIEW / NOT_AUTHORIZED / NOT_EXECUTED | New `actor-reset-full200-p1-20261009` engineering validity gate: OFF/OFF A/A 5+5 tasks and isolated offline logger/reset invariants; proposed max1 GPU/10 episodes; P2 400-episode A/B is not authorized. |
+
+Previous 001C unclaimed authorization was revoked in `e93a9cdff70fe537cfa377c2d1f63c7b432d45be` and revoke CI passed. P1 command/worktree/real task manifest remain unfrozen; any claim or run is prohibited pending separate PI approval.
