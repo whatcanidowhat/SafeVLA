@@ -1,8 +1,8 @@
 # PI Cycle 4 — Controlled mid-episode context truncation on historical early-end tasks
 
 Experiment ID: EXP-COUNTER-DRIFT-EARLYEND-001C
-Status: DRAFT
-Authorization: NOT_AUTHORIZED
+Status: APPROVED
+Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 32 live target episodes
 Cycle ID: counter-drift-earlyend-001c-20261009
 
 ## Mechanism under test

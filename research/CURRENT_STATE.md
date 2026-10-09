@@ -331,3 +331,20 @@ Mechanism under test:
 The controlled carry is fixed at CARRY-450 from the accepted 001A 600-step donor capture. This places the OFF rollover at target local step 50, after 50 current-episode tokens have accumulated. The primary mechanistic variable is effective current-episode context length: OFF must show 50 -> 1 at the boundary while ON continues to 51.
 
 All 16 confirmed historical failed-end tasks are retained. Full per-decision Actor outputs and trajectory state are mandatory evidence. Current state is DRAFT / NOT_AUTHORIZED pending approval commit.
+
+
+## 2026-10-09 — EXP-COUNTER-DRIFT-EARLYEND-001C approved
+
+User/PI explicitly approved the frozen 001C design after mechanism clarification. Staging commit `d44c19efe3cf61f2dc418340d73dfc7f59c34a0a` passed control CI run `37880320418`.
+
+Authorization:
+- max 1 GPU;
+- exactly the planned 32 live target episodes maximum;
+- fixed CARRY-450 donor from accepted 001A capture;
+- all 16 target tasks paired OFF/ON;
+- pre-rollover equivalence gate;
+- effective current-episode context length is a primary mechanistic variable;
+- complete per-decision Actor output and trajectory evidence is mandatory;
+- no full-200 benchmark or extra seed replication in this cycle.
+
+Executor must claim this latest green approval head and wait for claim CI before any experiment execution.

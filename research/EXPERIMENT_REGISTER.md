@@ -314,3 +314,12 @@ after publication; no successor is approved and no PI acknowledgement is authore
 | EXP-COUNTER-DRIFT-EARLYEND-001C | DRAFT / NOT_AUTHORIZED | max1 GPU / 32 live target episodes | Does controlled mid-episode current-context truncation causally change Actor/trajectory/termination behavior on all 16 confirmed historical early-end tasks? |
 
 Primary mechanistic signature: OFF effective current-episode context 50 -> 1 at local step 50; ON continues to 51.
+
+
+## 2026-10-09 — EXP-COUNTER-DRIFT-EARLYEND-001C approved
+
+| Experiment ID | Status | Budget | Frozen primary signature |
+| --- | --- | --- | --- |
+| EXP-COUNTER-DRIFT-EARLYEND-001C | APPROVED_FOR_CODEX / awaiting claim | max1 GPU / max32 live target episodes | OFF context 50 -> 1 at local step 50 while ON continues to 51; measure Actor -> action -> trajectory -> termination drift |
+
+Official full-200 SR evaluation is outside this cycle.

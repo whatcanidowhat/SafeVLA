@@ -669,3 +669,21 @@ Design decision:
 - max1 GPU / 32 live target episodes.
 
 Historical worker order is no longer required or inferred.
+
+
+## 2026-10-09 — PI批准 EXP-COUNTER-DRIFT-EARLYEND-001C
+
+User explicitly approved the controlled context-truncation design.
+
+Frozen causal target:
+`cross-episode counter drift -> premature rollover -> current-episode context collapse -> Actor/action/trajectory/termination effect`.
+
+Key design commitments:
+- CARRY-450, not CARRY-499, so OFF accumulates 50 target-episode tokens before rollover;
+- actual runtime must verify OFF effective context 50 -> 1 at local step 50 and ON context=51;
+- all 16 historical failed-end tasks run as paired OFF/ON (32 live target episodes max);
+- full logits/probabilities and L1/L2/L3 hidden outputs captured from existing Actor forwards, plus pose/trajectory and divergence timing;
+- any pre-rollover action/pose divergence is a validity failure for the context-truncation causal claim;
+- no claim about exact historical worker attribution or official benchmark SR.
+
+Approval follows green staging CI 37880320418. Execution requires a fresh CODEX claim and green claim CI.

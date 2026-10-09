@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-COUNTER-DRIFT-EARLYEND-001C",
   "cycle_id": "counter-drift-earlyend-001c-20261009",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "Does cross-episode root Actor counter drift cause premature decoder rollover and mid-episode current-context truncation that changes Actor outputs, actions, online trajectories, or termination outcomes on all 16 confirmed historical premature failed-end ObjectNav tasks?",
   "hypothesis": "H1/H2/H3: with one fixed valid CARRY-450, OFF and ON remain equivalent before local step 50; OFF then exhibits an effective current-episode context collapse from 50 to 1 while ON continues to 51, causing hidden/logit divergence and, in a subset of tasks, action/trajectory and termination divergence.",
   "competing_explanation": "The verified context collapse may perturb representation/distribution without materially affecting executed behavior or premature termination; very-early termination may be driven by a separate calibration/exploration/readout mechanism.",
