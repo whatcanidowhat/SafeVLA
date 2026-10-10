@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "state_version": 55,
+  "state_version": 56,
   "cycle_id": "actor-reset-full200-p1-20261009",
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
-  "status": "INVALID",
+  "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_p1_001d",
   "instruction_commit": "67c42b0fd7d485fdaa9fe5687099537c2c28035a",
-  "reviewed_result_commit": "8acdb18f12a83d3e9ca3711313337f4ca232ae21",
+  "reviewed_result_commit": "a137eafbb5931190b68ff042a5b0c9e34dbfd68d",
   "claim_id": "b19afa0bbe1b4957b22ce081a44ee3e0",
   "authorization": {
-    "status": "APPROVED",
-    "approved_by": "PI",
-    "approved_at_utc": "2026-10-10T01:30:05.821Z",
-    "expires_at_utc": "2026-10-12T01:30:05.821Z",
+    "status": "NOT_AUTHORIZED",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 1,
-    "max_episodes": 10
+    "max_gpu": 0,
+    "max_episodes": 0
   },
   "required_outputs": [
     "research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
@@ -35,6 +35,6 @@
     "research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md",
     "research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md"
   ],
-  "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-10T07:17:07.127678+00:00"
+  "updated_by": "PI",
+  "updated_at_utc": "2026-10-10T09:43:20.815Z"
 }

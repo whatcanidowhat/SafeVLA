@@ -1,9 +1,9 @@
 # PI Cycle — EXP-ACTOR-RESET-FULL200-001D P1 preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-full200-p1-20261009
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 10 live episodes. Expires 2026-10-12T01:30:05.821Z. No execution before green claim CI.
+Authorization: NOT_AUTHORIZED — P1 completed INVALID and PI acknowledged; historical frozen protocol only; no new claim/execution.
 
 ## Decision and scientific purpose
 
@@ -18,7 +18,7 @@ Scientific priority for the overarching 001D study: improve SafeVLA ObjectNav Su
 - Accepted 001A R1: https://github.com/whatcanidowhat/SafeVLA/tree/2f7864ae2c3a4761932aa4d1fedd6b6d5b3388c6/research/handoffs/reset-001a-20261007
 - Prior 001C: revoked without claim or experiment; preserved in control Git history.
 
-## P1 approved protocol — executable only after green CODEX claim CI
+## Prior P1 protocol (historical; terminal INVALID / not executable)
 
 1. **Frozen identity and complete manifest**: isolate accepted official B0 `PKU-Alignment/SafeVLA@2aa82559d272b5f888e53433e258914057f15bed` plus approved local DINO loader, preserve source/weight/import hashes, and use exactly the original complete 200-task minival selection/shuffle semantics with `seed=123`. Export and validate a full 200-task TaskSpec manifest before any online run; then select its original first 5 ordered tasks.
 2. **Online OFF/OFF only**: two independent clean one-worker OFF sessions, five tasks each (max **10 total live episodes**, horizon 600). Keep original stochastic sampling, `greedy=false`, `test_augmentation=true`, original success/cost logic and time/history behavior. No ON live run; no full200 experiment or additional seeds.
@@ -27,7 +27,7 @@ Scientific priority for the overarching 001D study: improve SafeVLA ObjectNav Su
 5. **Audit gates**: verify initial RNG/model-build/augmentation identity and origins; check full task ordering, A/A discrepancy sources, logger equivalence (tight declared tolerances), forward/sample count, official cost aggregation and output coverage. Stochastic online A/A need not be bitwise identical; unexplained divergence must block P2 interpretation.
 6. **Failure policy**: retain partial evidence and STOP on any identity, instrumentation, cost, action or resource mismatch. No hidden retries, task replacement, silent fixes, model/simulator restart or partial-session continuation.
 
-## Approved P1 budget (hard ceilings; no automatic retry or P2)
+## Historical P1 authorized ceilings (now inactive; no automatic retry or P2)
 
 - Simultaneous GPU: max 1; live episodes: **5+5 = 10**; live decisions: max **6000**.
 - Offline replay: max **2400 combined forward calls**; proposed hard limit **8 GPU-hours** and **50 GiB** raw artifacts.
@@ -88,3 +88,11 @@ User direction: P0 review and control CI are complete; permit Codex to execute t
 ## 2026-10-10 — Reissued unclaimed P1 authorization (48h from renewal)
 
 PI explicitly reauthorizes the exact previously frozen EXP-ACTOR-RESET-FULL200-001D P1 protocol after the unused approval was cleanly revoked at `f2f352480e0b908b1ac95677a9aa9570e883e228` (control CI 38013257402 SUCCESS). **No experiment, task identity, workload, code target, worktree, command, scientific question, active treatment, output requirements, or maximum budget has been changed.** Active permission: max1 GPU/10 live episodes (2 independent OFF sessions, 5+5), 6000 live steps, 2400 offline forwards, 8 GPU-hours, 50GiB raw cap; expiration `2026-10-12T01:30:05.821Z`. No live ON, P2, additional seeds, retries or automatic continuation. Claim only this green renewed approval SHA after CI; wait for green claim CI before executing. PI is not claiming or starting any run.
+
+## 2026-10-10 — PI formal acknowledgement of P1 INVALID
+
+PI independently reviewed terminal result commit `a137eafbb5931190b68ff042a5b0c9e34dbfd68d`, CI #38034324471 SUCCESS, required 14 artifacts, reported actual traceback, implementation code lines 71–75/165–171 and original frozen Llama attention lazy cache allocation lines 279–284. Executor harness `restore_temporal()` used in-place cache `copy_()` across a zero-batch initial snapshot `[0,500,8,64]` and a post-first-forward allocated cache `[1,500,8,64]`. This is a **harness shape/lifecycle defect**, not an observed logger-equivalence failure, reset-effect test, or baseline-model defect.
+
+PI accepts `INVALID / n=0 online episodes / one offline Actor forward / no reruns`. The 200-row task manifest was generated but online original-loader verification was NOT_REACHED. Actor/critic reset invariants and Logger A/A were NOT_REACHED; SR and official Safety Cost NOT_MEASURED. P1 FAIL and P2 NOT_AUTHORIZED. This acknowledgement terminates the claimed cycle for scientific purposes and removes live execution authorization. The historical instruction_commit/claim_id are retained only for provenance. This P1 cycle must never be claimed a second time.
+
+**PI recommendation (DRAFT, not authorized):** a fresh cycle with a minimal isolated snapshot-restoration patch that restores shape/dtype/device and tensor values by clone/reassignment of the attention cache attributes, preceded by a CPU-only lazy zero-batch→one-batch→zero-batch lifecycle regression test. Confirm zero-batch cache restoration and identical-input+RNG twin-forward equivalence without touching accepted B0 source, then gated offline logger and reset invariants and only thereafter a separately authorized online OFF/OFF prefix. No expanded budget, additional seed, live ON or P2 without an explicit separate PI approval.
