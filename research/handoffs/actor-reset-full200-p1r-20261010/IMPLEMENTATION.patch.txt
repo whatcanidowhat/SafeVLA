@@ -1,0 +1,177 @@
+--- prior_P1/run_p1_preflight.py
++++ P1R/run_p1r_preflight.py
+@@ -1,13 +1,13 @@
+ """001D P1 one-shot supervisor and isolated child phases. No live ON, no retry."""
+ import csv,datetime,gzip,hashlib,importlib.metadata,json,os,random,signal,subprocess,sys,time,traceback,types
+ from pathlib import Path
+-R=Path('/nvme2/user/qyy/SafeVLA_p1_001d')
+-O=R/'research/handoffs/actor-reset-full200-p1-20261009'
+-W=R/'research/runs/actor-reset-full200-p1-20261009'
++R=Path('/nvme2/user/qyy/SafeVLA_p1r_001d')
++O=R/'research/handoffs/actor-reset-full200-p1r-20261010'
++W=R/'research/runs/actor-reset-full200-p1r-20261010'
+ C=Path('/nvme2/user/qyy/SafeVLA_loop_control_p1_renewal_20261010')
+ D=Path('/nvme2/user/qyy/SafeVLA')
+-CLAIM='334e80351ff6cb2cfb0dac166fa7227ae055a5bd'
+-CLAIM_ID='b19afa0bbe1b4957b22ce081a44ee3e0'
++CLAIM='d35f645cabf45bfb2ad4c3dffa548cdd7da7c8e5'
++CLAIM_ID='fa92b7b37bb6457383ea4f3f19fa1b8b'
+ ATOL=1e-5
+ def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+ def sha(p):
+@@ -41,7 +41,73 @@
+  assert not os.environ.get('ACTION_DICT'),'Unexpected action override'
+  os.chdir(R);sys.path.insert(0,str(R))
+ 
++def restore_temporal(b,s):
++ b.time_step_counter=s[0]
++ for layer,(k,v) in zip(b.decoder.layers,s[1]):
++  layer.attention.cache_k=k.clone()
++  layer.attention.cache_v=v.clone()
++
++def cpu_gate():
++ configure();os.environ['CUDA_VISIBLE_DEVICES']='';start=time.monotonic()
++ with (W/'cpu.started').open('x') as marker:marker.write(now())
++ report={'phase':'cpu','status':'RUNNING','gpu_count':0,'initialization_attempts':0,'episodes_started':0,'episodes_completed':0,'online_decisions':0,'offline_combined_forwards':0,'offline_root_forwards':0,'started_at':now(),'cases':[]}
++ dump(W/'cpu.json',report)
++ try:
++  verify_identity()
++  import numpy as np,torch
++  from training.online.third_party_models.llama.model import Attention,ModelArgs
++  assert not torch.cuda.is_initialized()
++  random.seed(123);np.random.seed(123);torch.manual_seed(123)
++  torch.set_num_threads(1)
++  def th(t):return hashlib.sha256(str((tuple(t.shape),str(t.dtype),str(t.device))).encode()+t.detach().contiguous().numpy().tobytes()).hexdigest()
++  def snapshot(b):return (b.time_step_counter,[(a.attention.cache_k.clone(),a.attention.cache_v.clone()) for a in b.decoder.layers])
++  def info(s):return {'counter':s[0],'layers':[{'k_shape':list(k.shape),'v_shape':list(v.shape),'dtype':str(k.dtype),'device':str(k.device),'k_hash':th(k),'v_hash':th(v)} for k,v in s[1]]}
++  def exact(b,s):return info(snapshot(b))==info(s)
++  def rng():return (random.getstate(),np.random.get_state(),torch.get_rng_state().clone())
++  def rngset(s):random.setstate(s[0]);np.random.set_state(s[1]);torch.set_rng_state(s[2])
++  def rh():
++   s=rng();return hashlib.sha256(repr(s[0]).encode()+repr(s[1]).encode()+s[2].numpy().tobytes()).hexdigest()
++  def weights(b):return [[th(t) for t in x.attention.state_dict().values()] for x in b.decoder.layers]
++  for dtype in [torch.float32,torch.float64]:
++   args=ModelArgs(dim=512,n_layers=3,n_heads=8,n_kv_heads=8,max_batch_size=0,max_seq_len=500)
++   b=types.SimpleNamespace(time_step_counter=0,decoder=types.SimpleNamespace(layers=[types.SimpleNamespace(attention=Attention(args).to(dtype=dtype).eval()) for _ in range(3)]))
++   x=torch.arange(512,dtype=dtype).reshape(1,1,512)/512
++   before_weights=weights(b)
++   def step():
++    out=x
++    for layer in b.decoder.layers:out=layer.attention(out,b.time_step_counter,None)
++    b.time_step_counter+=1
++    return out.clone()
++   with torch.no_grad():
++    for case in ['empty','allocated']:
++     saved=snapshot(b);saved_info=info(saved);original_rng=rng();initial_rng=rh()
++     if case=='empty':assert all(list(k.shape)==[0,500,8,64] for k,v in saved[1]) and saved[0]==0
++     else:assert all(list(k.shape)==[1,500,8,64] for k,v in saved[1]) and saved[0]==1
++     y=step();after=snapshot(b);after_rng=rh()
++     stale=[(l.attention.cache_k,l.attention.cache_v) for l in b.decoder.layers];stale_hashes=[(th(k),th(v)) for k,v in stale]
++     restore_temporal(b,saved)
++     assert exact(b,saved) and info(saved)==saved_info and rh()==after_rng
++     for layer,(k,v),(oldk,oldv) in zip(b.decoder.layers,saved[1],stale):
++      assert layer.attention.cache_k is not k and layer.attention.cache_v is not v
++      assert layer.attention.cache_k is not oldk and layer.attention.cache_v is not oldv
++      if k.numel():assert layer.attention.cache_k.data_ptr()!=k.data_ptr() and layer.attention.cache_v.data_ptr()!=v.data_ptr()
++     restored=info(snapshot(b));rngset(original_rng);assert rh()==initial_rng
++     yy=step()
++     assert torch.equal(y,yy) and exact(b,after) and rh()==after_rng
++     assert info(saved)==saved_info and [(th(k),th(v)) for k,v in stale]==stale_hashes
++     assert weights(b)==before_weights
++     report['cases'].append({'dtype':str(dtype),'case':case,'before':saved_info,'after_first':info(after),'restored':restored,'after_repeated':info(snapshot(b)),'output_max_abs':(y-yy).abs().max().item(),'output_hash':th(y),'rng_exact':True,'snapshot_immutable':True,'no_alias':True,'stale_references_unchanged':True,'weights_unchanged':True,'attention_calls':6})
++     dump(W/'cpu.json',report)
++  assert len(report['cases'])==4 and not torch.cuda.is_initialized()
++  report.update(status='PASS',real_attention_source=str(R/'training/online/third_party_models/llama/model.py'),real_attention_source_sha256=sha(R/'training/online/third_party_models/llama/model.py'),cuda_initialized=False,attention_calls=24,scope='Three genuine Attention modules per dtype, same 512/8/64/500 dimensions; deterministic CPU fixture weights, no policy checkpoint or simulator. Two forwards per lifecycle case, four cases, three layers =24 calls.')
++ except BaseException as e:
++  report.update(status='INVALID',error=type(e).__name__+': '+str(e));(W/'cpu.error.txt').write_text(traceback.format_exc());traceback.print_exc()
++ finally:
++  report.update(finished_at=now(),elapsed_seconds=time.monotonic()-start);dump(W/'cpu.json',report);note('Gate A '+report['status'])
++ return 0 if report['status']=='PASS' else 2
++
+ def child(phase):
++ assert jread(W/'cpu.json')['status']=='PASS','Gate A required'
+  configure();started=time.monotonic();f=verify_identity()
+  with (W/(phase+'.started')).open('x') as marker:marker.write(now())
+  import numpy as np, torch
+@@ -70,9 +136,6 @@
+   walk(kwargs,'');return h.hexdigest()
+  def caches(b):return [(l.attention.cache_k.clone(),l.attention.cache_v.clone()) for l in b.decoder.layers]
+  def save_temporal(b):return (b.time_step_counter,caches(b))
+- def restore_temporal(b,s):
+-  b.time_step_counter=s[0]
+-  for l,(k,v) in zip(b.decoder.layers,s[1]):l.attention.cache_k.copy_(k);l.attention.cache_v.copy_(v)
+  def same_temporal(b,s):return b.time_step_counter==s[0] and all(torch.equal(l.attention.cache_k,k) and torch.equal(l.attention.cache_v,v) for l,(k,v) in zip(b.decoder.layers,s[1]))
+  def root_reset(root):
+   root.time_step_counter=0
+@@ -176,6 +239,7 @@
+      cachemax=max(cachemax,max((l.attention.cache_v-v).abs().max().item() for l,(k,v) in zip(root.decoder.layers,after[1])))
+      exact=all(torch.equal(a[k],b[k]) for k in ['sample','mode','history']) and a['counter']==b['counter'] and rha==rnghash() and counta==countb
+      steps.append({'step':i,**delta,'cache_max_abs':cachemax,'exact_discrete_rng_counts':exact,'start_pos':a['start_pos']})
++     dump(W/'logger_pairs_partial.json',steps)
+      assert max(delta.values())<=ATOL and cachemax<=ATOL and exact,'Logger equivalence failure'
+      if temporal[0]>=500:rollovers.append(i)
+      if i%100==0:budget();dump(W/'offline_progress.json',{'completed_input_pairs':i+1,'root_forwards':report['offline_root_forwards']});note('Offline input pairs '+str(i+1))
+@@ -194,7 +258,7 @@
+     assert root.time_step_counter==0 and all(torch.count_nonzero(l.attention.cache_k)==0 and torch.count_nonzero(l.attention.cache_v)==0 for l in root.decoder.layers)
+     assert all(same_temporal(b,s) for b,s in zip(critics,crit)) and state_digest(root)==weights and non_target_digest(root)==other and rnghash()==rh and augmentation(agent)==aug
+    dump(W/'logger_equivalence.json',{'status':'PASS','atol':ATOL,'pairs':600,'root_forwards':1200,'combined_forwards':0,'rollover_steps':rollovers,'steps':steps,'scope':'Actual saved root Actor encoder-output boundary; exact original Base.forward. Common read-only oracle observer in both arms; passive Logger toggled only. No visual frontend or simulator equivalence claim.'})
+-   dump(W/'reset_invariants.json',{'status':'PASS','root_before_counter':actor_before[0],'root_after_counter':0,'root_all_KV_zero':True,'critic_counter_KV_exact':True,'weights_buffers_exact':True,'rng_exact':True,'augmentation_exact':True,'critic_fixture':'Nonzero isolated engineering sentinel state; never forwarded, not a scientific carry history','root_fixture':'600 sequential saved real Actor inputs using original root forward; no fabricated root counter'})
++   dump(W/'reset_invariants.json',{'status':'PASS','root_before_counter':actor_before[0],'root_after_counter':0,'root_all_KV_zero':True,'critic_counter_KV_exact':True,'weights_buffers_exact':True,'rng_exact':True,'augmentation_exact':True,'critic_cache_shapes':[[list(k.shape),list(v.shape)] for branch in crit for k,v in branch[1]],'critic_fixture':'Isolated counter/fill sentinels; cache shapes recorded explicitly; empty tensors are not nonzero carry histories','root_fixture':'600 sequential saved real Actor inputs using original root forward; no fabricated root counter'})
+    report.update(status='PASS',logger_gate='PASS',reset_gate='PASS')
+   else:
+    assert phase in ['off_a','off_b'];assert jread(W/'offline.json')['status']=='PASS'
+@@ -285,19 +349,22 @@
+  assert datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(state['authorization']['expires_at_utc'].replace('Z','+00:00'))
+  with (W/'launch.json').open('x') as f:json.dump({'epoch':time.time(),'started_at':now(),'one_shot':True},f)
+  m={k:state[k] for k in ['cycle_id','experiment_id','instruction_commit','claim_id']}
+- m.update(status='RUNNING',claim_commit=CLAIM,claim_ci=38016589200,command=[sys.executable,str(Path(__file__).resolve().relative_to(R))],gpu_count=0,episodes_started=0,episodes_completed=0,started_at=now(),phases=[],no_live_ON=True,execution_worktree=str(R),runner_sha256=sha(__file__),manifest_sha256=sha(O/'TASK_MANIFEST.csv'))
++ m.update(status='RUNNING',claim_commit=CLAIM,claim_ci=38045418732,command=[sys.executable,str(Path(__file__).resolve().relative_to(R))],gpu_count=0,episodes_started=0,episodes_completed=0,started_at=now(),phases=[],no_live_ON=True,execution_worktree=str(R),runner_sha256=sha(__file__),manifest_sha256=sha(O/'TASK_MANIFEST.csv'))
+  dump(O/'RUN_MANIFEST.json',m)
+  try:
+   verify_identity()
+-  # Device availability check does not allocate; only this one GPU is ever visible.
+-  q=subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode().splitlines()
+-  free={int(x.split(',')[0]):int(x.split(',')[1]) for x in q};m['initial_free_gpu_mib']=free.get(0,0)
+-  # Three checkpoint-size copies plus 1 GiB headroom; this is a capacity gate,
+-  # not a reservation or guarantee against other users' concurrent allocations.
+-  minimum=3*Path(jread(W/'frozen_identity.json')['resources']['checkpoint']['path']).stat().st_size/1024**2+1024
+-  assert free.get(0,0)>minimum,'GPU0 insufficient free capacity: BLOCKED'
+-  for phase in ['offline','off_a','off_b']:
+-   budget();note('Starting bounded phase '+phase);m['gpu_count']=1;dump(O/'RUN_MANIFEST.json',m)
++  gates={'A':'NOT_STARTED','B':'NOT_STARTED','C':'NOT_STARTED'};dump(O/'GATE_STATUS.json',gates)
++  for phase in ['cpu','offline','off_a','off_b']:
++   gate='A' if phase=='cpu' else ('B' if phase=='offline' else 'C')
++   gates[gate]='RUNNING';dump(O/'GATE_STATUS.json',gates)
++   budget();note('Starting bounded phase '+phase)
++   if phase=='offline':
++    q=subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode().splitlines()
++    free={int(x.split(',')[0]):int(x.split(',')[1]) for x in q};m['initial_free_gpu_mib']=free.get(0,0)
++    minimum=3*Path(jread(W/'frozen_identity.json')['resources']['checkpoint']['path']).stat().st_size/1024**2+1024
++    assert free.get(0,0)>minimum,'GPU0 insufficient free capacity: BLOCKED'
++   if phase!='cpu':m['gpu_count']=1
++   dump(O/'RUN_MANIFEST.json',m)
+    remaining=8*3600-(time.time()-jread(W/'launch.json')['epoch'])
+    with (W/(phase+'.stdout.log')).open('x') as log:
+     proc=subprocess.Popen([sys.executable,'-B',str(Path(__file__).resolve()),'--phase',phase],cwd=R,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+@@ -309,6 +376,7 @@
+      raise RuntimeError('8 GPU-hour ceiling reached')
+    result=jread(W/(phase+'.json')) if (W/(phase+'.json')).exists() else {'phase':phase,'status':'INVALID','error':'Child terminated before report initialization; inspect stdout','initialization_attempts':0,'episodes_completed':0}
+    result['exit_code']=code;m['phases'].append(result);m['episodes_started']=sum(x['initialization_attempts'] for x in m['phases']);m['episodes_completed']=sum(x['episodes_completed'] for x in m['phases']);dump(O/'RUN_MANIFEST.json',m)
++   gates[gate]=result['status'] if phase!='off_a' or result['status']!='PASS' else 'RUNNING';dump(O/'GATE_STATUS.json',gates)
+    assert code==0 and result['status']=='PASS','Phase failed: '+phase+' '+result.get('error','')
+   a=jread(W/'off_a.episodes.json');b=jread(W/'off_b.episodes.json');contrasts=[]
+   for x,y in zip(a,b):
+@@ -322,11 +390,11 @@
+   dump(W/'aa_result.json',aa);m['status']='AWAITING_PI_REVIEW' if aa['status']=='PASS' else 'BLOCKED'
+   if aa['status']!='PASS':m['error']='Independent online A/A divergence requires PI assessment before P2; no effect interpretation'
+  except BaseException as e:
+-  traceback.print_exc();m['status']='INVALID' if m['gpu_count'] else 'BLOCKED';m['error']=type(e).__name__+': '+str(e);(W/'supervisor.error.txt').write_text(traceback.format_exc())
++  traceback.print_exc();m['status']='INVALID' if m['phases'] else 'BLOCKED';m['error']=type(e).__name__+': '+str(e);(W/'supervisor.error.txt').write_text(traceback.format_exc())
+  finally:
+   m['finished_at']=now();m['source_unchanged']=all(sha(R/n)==h for n,h in jread(W/'frozen_identity.json')['source'].items());dump(O/'RUN_MANIFEST.json',m)
+   note('P1 terminal '+m['status'])
+ 
+ if __name__=='__main__':
+- if len(sys.argv)==3 and sys.argv[1]=='--phase':sys.exit(child(sys.argv[2]))
++ if len(sys.argv)==3 and sys.argv[1]=='--phase':sys.exit(cpu_gate() if sys.argv[2]=='cpu' else child(sys.argv[2]))
+  assert len(sys.argv)==1;supervisor()

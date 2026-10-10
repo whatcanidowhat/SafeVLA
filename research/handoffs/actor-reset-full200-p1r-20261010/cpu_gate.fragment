@@ -1,0 +1,64 @@
+def restore_temporal(b,s):
+ b.time_step_counter=s[0]
+ for layer,(k,v) in zip(b.decoder.layers,s[1]):
+  layer.attention.cache_k=k.clone()
+  layer.attention.cache_v=v.clone()
+
+def cpu_gate():
+ configure();os.environ['CUDA_VISIBLE_DEVICES']='';start=time.monotonic()
+ with (W/'cpu.started').open('x') as marker:marker.write(now())
+ report={'phase':'cpu','status':'RUNNING','gpu_count':0,'initialization_attempts':0,'episodes_started':0,'episodes_completed':0,'online_decisions':0,'offline_combined_forwards':0,'offline_root_forwards':0,'started_at':now(),'cases':[]}
+ dump(W/'cpu.json',report)
+ try:
+  verify_identity()
+  import numpy as np,torch
+  from training.online.third_party_models.llama.model import Attention,ModelArgs
+  assert not torch.cuda.is_initialized()
+  random.seed(123);np.random.seed(123);torch.manual_seed(123)
+  torch.set_num_threads(1)
+  def th(t):return hashlib.sha256(str((tuple(t.shape),str(t.dtype),str(t.device))).encode()+t.detach().contiguous().numpy().tobytes()).hexdigest()
+  def snapshot(b):return (b.time_step_counter,[(a.attention.cache_k.clone(),a.attention.cache_v.clone()) for a in b.decoder.layers])
+  def info(s):return {'counter':s[0],'layers':[{'k_shape':list(k.shape),'v_shape':list(v.shape),'dtype':str(k.dtype),'device':str(k.device),'k_hash':th(k),'v_hash':th(v)} for k,v in s[1]]}
+  def exact(b,s):return info(snapshot(b))==info(s)
+  def rng():return (random.getstate(),np.random.get_state(),torch.get_rng_state().clone())
+  def rngset(s):random.setstate(s[0]);np.random.set_state(s[1]);torch.set_rng_state(s[2])
+  def rh():
+   s=rng();return hashlib.sha256(repr(s[0]).encode()+repr(s[1]).encode()+s[2].numpy().tobytes()).hexdigest()
+  def weights(b):return [[th(t) for t in x.attention.state_dict().values()] for x in b.decoder.layers]
+  for dtype in [torch.float32,torch.float64]:
+   args=ModelArgs(dim=512,n_layers=3,n_heads=8,n_kv_heads=8,max_batch_size=0,max_seq_len=500)
+   b=types.SimpleNamespace(time_step_counter=0,decoder=types.SimpleNamespace(layers=[types.SimpleNamespace(attention=Attention(args).to(dtype=dtype).eval()) for _ in range(3)]))
+   x=torch.arange(512,dtype=dtype).reshape(1,1,512)/512
+   before_weights=weights(b)
+   def step():
+    out=x
+    for layer in b.decoder.layers:out=layer.attention(out,b.time_step_counter,None)
+    b.time_step_counter+=1
+    return out.clone()
+   with torch.no_grad():
+    for case in ['empty','allocated']:
+     saved=snapshot(b);saved_info=info(saved);original_rng=rng();initial_rng=rh()
+     if case=='empty':assert all(list(k.shape)==[0,500,8,64] for k,v in saved[1]) and saved[0]==0
+     else:assert all(list(k.shape)==[1,500,8,64] for k,v in saved[1]) and saved[0]==1
+     y=step();after=snapshot(b);after_rng=rh()
+     stale=[(l.attention.cache_k,l.attention.cache_v) for l in b.decoder.layers];stale_hashes=[(th(k),th(v)) for k,v in stale]
+     restore_temporal(b,saved)
+     assert exact(b,saved) and info(saved)==saved_info and rh()==after_rng
+     for layer,(k,v),(oldk,oldv) in zip(b.decoder.layers,saved[1],stale):
+      assert layer.attention.cache_k is not k and layer.attention.cache_v is not v
+      assert layer.attention.cache_k is not oldk and layer.attention.cache_v is not oldv
+      if k.numel():assert layer.attention.cache_k.data_ptr()!=k.data_ptr() and layer.attention.cache_v.data_ptr()!=v.data_ptr()
+     restored=info(snapshot(b));rngset(original_rng);assert rh()==initial_rng
+     yy=step()
+     assert torch.equal(y,yy) and exact(b,after) and rh()==after_rng
+     assert info(saved)==saved_info and [(th(k),th(v)) for k,v in stale]==stale_hashes
+     assert weights(b)==before_weights
+     report['cases'].append({'dtype':str(dtype),'case':case,'before':saved_info,'after_first':info(after),'restored':restored,'after_repeated':info(snapshot(b)),'output_max_abs':(y-yy).abs().max().item(),'output_hash':th(y),'rng_exact':True,'snapshot_immutable':True,'no_alias':True,'stale_references_unchanged':True,'weights_unchanged':True,'attention_calls':6})
+     dump(W/'cpu.json',report)
+  assert len(report['cases'])==4 and not torch.cuda.is_initialized()
+  report.update(status='PASS',real_attention_source=str(R/'training/online/third_party_models/llama/model.py'),real_attention_source_sha256=sha(R/'training/online/third_party_models/llama/model.py'),cuda_initialized=False,attention_calls=24,scope='Three genuine Attention modules per dtype, same 512/8/64/500 dimensions; deterministic CPU fixture weights, no policy checkpoint or simulator. Two forwards per lifecycle case, four cases, three layers =24 calls.')
+ except BaseException as e:
+  report.update(status='INVALID',error=type(e).__name__+': '+str(e));(W/'cpu.error.txt').write_text(traceback.format_exc());traceback.print_exc()
+ finally:
+  report.update(finished_at=now(),elapsed_seconds=time.monotonic()-start);dump(W/'cpu.json',report);note('Gate A '+report['status'])
+ return 0 if report['status']=='PASS' else 2

@@ -1,0 +1,1013 @@
+{
+  "phase": "cpu",
+  "status": "PASS",
+  "gpu_count": 0,
+  "initialization_attempts": 0,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "online_decisions": 0,
+  "offline_combined_forwards": 0,
+  "offline_root_forwards": 0,
+  "started_at": "2026-10-10T14:08:37.461085+00:00",
+  "cases": [
+    {
+      "dtype": "torch.float32",
+      "case": "empty",
+      "before": {
+        "counter": 0,
+        "layers": [
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          }
+        ]
+      },
+      "after_first": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "3b6470ab2f33710da4e9a0f4dd8e534fb17d967b0c5c50d1dfc0430156fc3632",
+            "v_hash": "133f748863ad7b47544bdd29fbfe2e0d7fd53908ca611a8ce4bd650a27856f16"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "0ba50de6fe1c3b8d08701d8c189346a0368de0494c8c33cf6d99c66897b07ec7",
+            "v_hash": "ff25c100fe21e0f9e9bad9553c47567ea197f58c3947898e83d5292de1010792"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "b5f2282681139fc2ce5742b3cb6f5296ae746da31c1e33c6723a7c1481249390",
+            "v_hash": "79326576a7d233135ffaae77a80ce15104148da8206a849f4a6649a59e4bd199"
+          }
+        ]
+      },
+      "restored": {
+        "counter": 0,
+        "layers": [
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          }
+        ]
+      },
+      "after_repeated": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "3b6470ab2f33710da4e9a0f4dd8e534fb17d967b0c5c50d1dfc0430156fc3632",
+            "v_hash": "133f748863ad7b47544bdd29fbfe2e0d7fd53908ca611a8ce4bd650a27856f16"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "0ba50de6fe1c3b8d08701d8c189346a0368de0494c8c33cf6d99c66897b07ec7",
+            "v_hash": "ff25c100fe21e0f9e9bad9553c47567ea197f58c3947898e83d5292de1010792"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "b5f2282681139fc2ce5742b3cb6f5296ae746da31c1e33c6723a7c1481249390",
+            "v_hash": "79326576a7d233135ffaae77a80ce15104148da8206a849f4a6649a59e4bd199"
+          }
+        ]
+      },
+      "output_max_abs": 0.0,
+      "output_hash": "fa52499355ab59c36d5cc9013d5c219ab884d231a30e17a6248098ab5c8679a1",
+      "rng_exact": true,
+      "snapshot_immutable": true,
+      "no_alias": true,
+      "stale_references_unchanged": true,
+      "weights_unchanged": true,
+      "attention_calls": 6
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "allocated",
+      "before": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "3b6470ab2f33710da4e9a0f4dd8e534fb17d967b0c5c50d1dfc0430156fc3632",
+            "v_hash": "133f748863ad7b47544bdd29fbfe2e0d7fd53908ca611a8ce4bd650a27856f16"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "0ba50de6fe1c3b8d08701d8c189346a0368de0494c8c33cf6d99c66897b07ec7",
+            "v_hash": "ff25c100fe21e0f9e9bad9553c47567ea197f58c3947898e83d5292de1010792"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "b5f2282681139fc2ce5742b3cb6f5296ae746da31c1e33c6723a7c1481249390",
+            "v_hash": "79326576a7d233135ffaae77a80ce15104148da8206a849f4a6649a59e4bd199"
+          }
+        ]
+      },
+      "after_first": {
+        "counter": 2,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "7e0e9494f2bc625701f132522e978b04846d2ac70270ebe6f432e65a5e921cbb",
+            "v_hash": "6a34d57dc27a2ee1fecce97e64cd7f1755a83d7d1d5a0060d800feab39189d8f"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "11e8ef19bd5f87713cdf509071538c800ffd74dc076435371b16ff0d0ffa977f",
+            "v_hash": "f2e17936fb317a3db8616d0cdcc80eba5cce3bf6d10bb20c9593e3d9f9c71f49"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "ed9dfa8b938ff8c340960d346f380ba13cc442e95868cd40a0749f9f95802c16",
+            "v_hash": "d970f0ae9b340260cdfed059e54ee114576a42ab36960d8f6f96b22af1ca7077"
+          }
+        ]
+      },
+      "restored": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "3b6470ab2f33710da4e9a0f4dd8e534fb17d967b0c5c50d1dfc0430156fc3632",
+            "v_hash": "133f748863ad7b47544bdd29fbfe2e0d7fd53908ca611a8ce4bd650a27856f16"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "0ba50de6fe1c3b8d08701d8c189346a0368de0494c8c33cf6d99c66897b07ec7",
+            "v_hash": "ff25c100fe21e0f9e9bad9553c47567ea197f58c3947898e83d5292de1010792"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "b5f2282681139fc2ce5742b3cb6f5296ae746da31c1e33c6723a7c1481249390",
+            "v_hash": "79326576a7d233135ffaae77a80ce15104148da8206a849f4a6649a59e4bd199"
+          }
+        ]
+      },
+      "after_repeated": {
+        "counter": 2,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "7e0e9494f2bc625701f132522e978b04846d2ac70270ebe6f432e65a5e921cbb",
+            "v_hash": "6a34d57dc27a2ee1fecce97e64cd7f1755a83d7d1d5a0060d800feab39189d8f"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "11e8ef19bd5f87713cdf509071538c800ffd74dc076435371b16ff0d0ffa977f",
+            "v_hash": "f2e17936fb317a3db8616d0cdcc80eba5cce3bf6d10bb20c9593e3d9f9c71f49"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "ed9dfa8b938ff8c340960d346f380ba13cc442e95868cd40a0749f9f95802c16",
+            "v_hash": "d970f0ae9b340260cdfed059e54ee114576a42ab36960d8f6f96b22af1ca7077"
+          }
+        ]
+      },
+      "output_max_abs": 0.0,
+      "output_hash": "be0ad623fe8ccbe1f0f8533db7a912a25de5e421471c6b0f9084ad27788b6679",
+      "rng_exact": true,
+      "snapshot_immutable": true,
+      "no_alias": true,
+      "stale_references_unchanged": true,
+      "weights_unchanged": true,
+      "attention_calls": 6
+    },
+    {
+      "dtype": "torch.float64",
+      "case": "empty",
+      "before": {
+        "counter": 0,
+        "layers": [
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          }
+        ]
+      },
+      "after_first": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "41bbb010aeca8d77c387dbd1a69d1a9324aee8213e9c0ef32b731df9cbe9385a",
+            "v_hash": "fbb7e87e9891ab4daa2d22bed2b063a6b570f0c42d2c8dd5e799358be69d6f72"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "c45b2b6e726606586582e98b51e8c21e523b29d21e7ef31f587ad845a3a6c9c9",
+            "v_hash": "e24fa3ecf2c1572197e0bb13b5acfae211bae80ae311f0dbadf6477808d52068"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "ec1845f2acc8d2109c9af35b3fe3b6a7f226f1019bcd5045380b8bd0d7aaebc1",
+            "v_hash": "72f644486a4488831d521d02e40a67d4d3173ffb904f2a245c04120672b887cb"
+          }
+        ]
+      },
+      "restored": {
+        "counter": 0,
+        "layers": [
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          },
+          {
+            "k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float32",
+            "device": "cpu",
+            "k_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1",
+            "v_hash": "48752b0739731b538e3c1b5dd7d8e79f0677d92dbce374f31aadca141044c8e1"
+          }
+        ]
+      },
+      "after_repeated": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "41bbb010aeca8d77c387dbd1a69d1a9324aee8213e9c0ef32b731df9cbe9385a",
+            "v_hash": "fbb7e87e9891ab4daa2d22bed2b063a6b570f0c42d2c8dd5e799358be69d6f72"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "c45b2b6e726606586582e98b51e8c21e523b29d21e7ef31f587ad845a3a6c9c9",
+            "v_hash": "e24fa3ecf2c1572197e0bb13b5acfae211bae80ae311f0dbadf6477808d52068"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "ec1845f2acc8d2109c9af35b3fe3b6a7f226f1019bcd5045380b8bd0d7aaebc1",
+            "v_hash": "72f644486a4488831d521d02e40a67d4d3173ffb904f2a245c04120672b887cb"
+          }
+        ]
+      },
+      "output_max_abs": 0.0,
+      "output_hash": "3d55acfbaa5bc8e2dd47321d63af6c3b3c616042f341b91396cac1d4d52984cc",
+      "rng_exact": true,
+      "snapshot_immutable": true,
+      "no_alias": true,
+      "stale_references_unchanged": true,
+      "weights_unchanged": true,
+      "attention_calls": 6
+    },
+    {
+      "dtype": "torch.float64",
+      "case": "allocated",
+      "before": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "41bbb010aeca8d77c387dbd1a69d1a9324aee8213e9c0ef32b731df9cbe9385a",
+            "v_hash": "fbb7e87e9891ab4daa2d22bed2b063a6b570f0c42d2c8dd5e799358be69d6f72"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "c45b2b6e726606586582e98b51e8c21e523b29d21e7ef31f587ad845a3a6c9c9",
+            "v_hash": "e24fa3ecf2c1572197e0bb13b5acfae211bae80ae311f0dbadf6477808d52068"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "ec1845f2acc8d2109c9af35b3fe3b6a7f226f1019bcd5045380b8bd0d7aaebc1",
+            "v_hash": "72f644486a4488831d521d02e40a67d4d3173ffb904f2a245c04120672b887cb"
+          }
+        ]
+      },
+      "after_first": {
+        "counter": 2,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "819b658441012b78937a59dfecd344e1285f19085cc359d5fa111ba4d8ff4618",
+            "v_hash": "3fbba2529debd8d2802f32daa6841d52c222e7e0b5d603ff406add989a4b2773"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "fbb731d109b98a8d21138fe2ea5e7c3211661aa1b1a5e92a4ca41429e148225a",
+            "v_hash": "222b330b1fc54361e52799abe39fcc27dfeb1f9ba2562a419461ba6de8532d28"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "2db493ce535db7a3e8405c62f281361eaa48512f27eae2b168e68419fe4d9765",
+            "v_hash": "a2c8c328bdc5cbc4dc73efd7d528bdb2cb7363657f96ebea15cf0be5516f79cf"
+          }
+        ]
+      },
+      "restored": {
+        "counter": 1,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "41bbb010aeca8d77c387dbd1a69d1a9324aee8213e9c0ef32b731df9cbe9385a",
+            "v_hash": "fbb7e87e9891ab4daa2d22bed2b063a6b570f0c42d2c8dd5e799358be69d6f72"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "c45b2b6e726606586582e98b51e8c21e523b29d21e7ef31f587ad845a3a6c9c9",
+            "v_hash": "e24fa3ecf2c1572197e0bb13b5acfae211bae80ae311f0dbadf6477808d52068"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "ec1845f2acc8d2109c9af35b3fe3b6a7f226f1019bcd5045380b8bd0d7aaebc1",
+            "v_hash": "72f644486a4488831d521d02e40a67d4d3173ffb904f2a245c04120672b887cb"
+          }
+        ]
+      },
+      "after_repeated": {
+        "counter": 2,
+        "layers": [
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "819b658441012b78937a59dfecd344e1285f19085cc359d5fa111ba4d8ff4618",
+            "v_hash": "3fbba2529debd8d2802f32daa6841d52c222e7e0b5d603ff406add989a4b2773"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "fbb731d109b98a8d21138fe2ea5e7c3211661aa1b1a5e92a4ca41429e148225a",
+            "v_hash": "222b330b1fc54361e52799abe39fcc27dfeb1f9ba2562a419461ba6de8532d28"
+          },
+          {
+            "k_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "v_shape": [
+              1,
+              500,
+              8,
+              64
+            ],
+            "dtype": "torch.float64",
+            "device": "cpu",
+            "k_hash": "2db493ce535db7a3e8405c62f281361eaa48512f27eae2b168e68419fe4d9765",
+            "v_hash": "a2c8c328bdc5cbc4dc73efd7d528bdb2cb7363657f96ebea15cf0be5516f79cf"
+          }
+        ]
+      },
+      "output_max_abs": 0.0,
+      "output_hash": "3d55acfbaa5bc8e2dd47321d63af6c3b3c616042f341b91396cac1d4d52984cc",
+      "rng_exact": true,
+      "snapshot_immutable": true,
+      "no_alias": true,
+      "stale_references_unchanged": true,
+      "weights_unchanged": true,
+      "attention_calls": 6
+    }
+  ],
+  "real_attention_source": "/nvme2/user/qyy/SafeVLA_p1r_001d/training/online/third_party_models/llama/model.py",
+  "real_attention_source_sha256": "f12e1f97b83b58cf8cb99b500e4afbda7e5a7daf048c3065095d0dedaf5ab69c",
+  "cuda_initialized": false,
+  "attention_calls": 24,
+  "scope": "Three genuine Attention modules per dtype, same 512/8/64/500 dimensions; deterministic CPU fixture weights, no policy checkpoint or simulator. Two forwards per lifecycle case, four cases, three layers =24 calls.",
+  "finished_at": "2026-10-10T14:08:41.717675+00:00",
+  "elapsed_seconds": 4.256786049343646
+}

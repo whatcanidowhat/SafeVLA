@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/run_p1r_preflight.py", line 365, in supervisor
+    assert free.get(0,0)>minimum,'GPU0 insufficient free capacity: BLOCKED'
+AssertionError: GPU0 insufficient free capacity: BLOCKED

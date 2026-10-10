@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "cases": 4,
+  "attention_calls": 24,
+  "all_layer_hashes_reconciled": true,
+  "no_cuda": true,
+  "no_GPU_child_markers": true,
+  "scope": "Read-only validation of recorded evidence, not a gate rerun"
+}

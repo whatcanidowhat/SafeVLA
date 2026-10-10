@@ -1,0 +1,30 @@
+{
+  "run_p1r_preflight.py": {
+    "sha256": "8e8ad97070070657e1745fa683b0a0ff31c91294d9d9511479bb389b9c683428",
+    "size": 32177
+  },
+  "validate_p1r_outputs.py": {
+    "sha256": "306ea753ad708bae29c436d0bed94ae6daa03dbeeacb6928370b22ceb13dd391",
+    "size": 3072
+  },
+  "TASK_MANIFEST.csv": {
+    "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "size": 53334
+  },
+  "FROZEN_PROTOCOL.md": {
+    "sha256": "12c9448e1ff210aa21dd23439f22f94294d90dfa1755caf4c0db36fec478d600",
+    "size": 10287
+  },
+  "IMPLEMENTATION_DIFF.md": {
+    "sha256": "53ab0f3eb74a889870cbd8c1a9b4826e728b27e8fed113b3d3325755111c283f",
+    "size": 1560
+  },
+  "IMPLEMENTATION.patch.txt": {
+    "sha256": "a469a02bda6fdefdc3c9c28e16d2b26e02f5a759fa827fda79407c59b7c20810",
+    "size": 14735
+  },
+  "LOGIT_AND_COST_SCHEMA.md": {
+    "sha256": "3e588998fed7ea56607ec89dccc2ec1735a0168444086f9215c7f48e7c3e1196",
+    "size": 1603
+  }
+}

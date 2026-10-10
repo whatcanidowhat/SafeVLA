@@ -1,0 +1,11 @@
+{
+  "A": "PASS",
+  "B": "NOT_STARTED",
+  "C": "NOT_STARTED",
+  "terminal_status": "BLOCKED",
+  "blocking_stage": "pre-Gate-B resource availability",
+  "reason": "AssertionError: GPU0 insufficient free capacity: BLOCKED",
+  "gpu_child_started": false,
+  "online_child_started": false,
+  "machine_gate_status_at_exit": "GATE_STATUS_AT_EXIT.json"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED_BEFORE_GPU",
+  "gpu_count": 0,
+  "gpu_hours": 0,
+  "policy_checkpoint_loads": 0,
+  "cpu_fixture_Attention_instances": 6,
+  "cpu_attention_calls": 24,
+  "offline_combined_forwards": 0,
+  "offline_root_policy_forwards": 0,
+  "online_decisions": 0,
+  "episode_initialization_attempts": 0,
+  "episodes_completed": 0,
+  "simulator_launches": 0,
+  "initial_free_gpu0_mib": 3954,
+  "frozen_capacity_minimum_mib_strictly_greater_than": 6823.390767097473,
+  "capacity_formula": "3 * checkpoint file size / 2^20 +1024 MiB (inherited P1 conservative guard, not measured model minimum)",
+  "supervisor_elapsed_seconds": 11.144158,
+  "raw_bytes": 336683,
+  "online_memory_runtime": "NOT_MEASURED",
+  "recommendation": "PI review CPU pass and arrange GPU0 headroom before separately approving a fresh cycle; unchanged maxima1 GPU/10 starts/6000 online decisions/2400 offline combined calls/8GPUh/50GiB. No new execution or retry authorized by this recommendation."
+}

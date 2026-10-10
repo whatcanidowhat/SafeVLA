@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "AA_VALIDATION.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/AA_VALIDATION.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/AA_VALIDATION.md",
+      "sha256": "b03a6910997cfbd0ca1c45b271e6cf0a3a4f879915ce057c83e139034bdfc52b",
+      "size": 343,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CACHE_LIFECYCLE_CPU.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/CACHE_LIFECYCLE_CPU.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/CACHE_LIFECYCLE_CPU.md",
+      "sha256": "118cb2928d8ebac0a912d89f2d5a3cbb0c761127aa55a973c238b2e3829b282a",
+      "size": 1730,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CPU_EVIDENCE_RECONCILIATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/CPU_EVIDENCE_RECONCILIATION.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/CPU_EVIDENCE_RECONCILIATION.json",
+      "sha256": "e8d99d8118741b2a92c62b00b1ae457d6ce23ec13eab2b70df9219071c29271c",
+      "size": 226,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CPU_VALIDATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/CPU_VALIDATION.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/CPU_VALIDATION.json",
+      "sha256": "e1558f565b78f739db9742b77aef30ebeb5ee2c53dafe720c9e9ab632fd1cbe0",
+      "size": 118,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_PROTOCOL.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/FROZEN_PROTOCOL.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/FROZEN_PROTOCOL.md",
+      "sha256": "12c9448e1ff210aa21dd23439f22f94294d90dfa1755caf4c0db36fec478d600",
+      "size": 10287,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "GATE_STATUS.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS.json",
+      "sha256": "abad60a849e9bb3760f908822ae0d532846673860a329d56890918a3ab159a93",
+      "size": 346,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "GATE_STATUS_AT_EXIT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS_AT_EXIT.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS_AT_EXIT.json",
+      "sha256": "a8585a4e20ff3aac15d10799b86127fe803f6a44e98bb24dab8f8350b8e81406",
+      "size": 58,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "IMPLEMENTATION.patch.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/IMPLEMENTATION.patch.txt",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/IMPLEMENTATION.patch.txt",
+      "sha256": "a469a02bda6fdefdc3c9c28e16d2b26e02f5a759fa827fda79407c59b7c20810",
+      "size": 14735,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "IMPLEMENTATION_DIFF.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/IMPLEMENTATION_DIFF.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/IMPLEMENTATION_DIFF.md",
+      "sha256": "53ab0f3eb74a889870cbd8c1a9b4826e728b27e8fed113b3d3325755111c283f",
+      "size": 1560,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "LOGGER_EQUIVALENCE.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/LOGGER_EQUIVALENCE.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/LOGGER_EQUIVALENCE.md",
+      "sha256": "7307c561708e02d3de1e6b968a03ec33e2347e7b5c4d10d13e037d7c56d3e0af",
+      "size": 348,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "LOGIT_AND_COST_SCHEMA.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/LOGIT_AND_COST_SCHEMA.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/LOGIT_AND_COST_SCHEMA.md",
+      "sha256": "3e588998fed7ea56607ec89dccc2ec1735a0168444086f9215c7f48e7c3e1196",
+      "size": 1603,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "P1R_RESOURCE_PROFILE.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/P1R_RESOURCE_PROFILE.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/P1R_RESOURCE_PROFILE.json",
+      "sha256": "041cc389d4f953f7ccae38fe5ec3209d7a024964429740798141849b6bf18a36",
+      "size": 976,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESET_INVARIANTS.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/RESET_INVARIANTS.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/RESET_INVARIANTS.md",
+      "sha256": "596faac1e670aa5f7aa0a0b7841d926e10802017c6421ad7447e94f4dd210039",
+      "size": 462,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/RESULT_SUMMARY.md",
+      "sha256": "722a13c652767ce35d60daef05b71bc1c844a78f609116ebf2335830aa3cefe0",
+      "size": 2682,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/REVIEW_NOTES.md",
+      "sha256": "33b8945cf2fa87ffd795fb483de44f112622276291c114d844ee2f07d1c64fa9",
+      "size": 1348,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/RUN_MANIFEST.json",
+      "sha256": "568fae57224a1855f6900ee495d3809a109631ead0d3e8d84ad2518ecc479013",
+      "size": 32713,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST_AT_EXIT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/RUN_MANIFEST_AT_EXIT.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/RUN_MANIFEST_AT_EXIT.json",
+      "sha256": "15ed25afbbda4371c8d076e676a5f8c0e9ab34a68932eb30987c33251e4471f3",
+      "size": 32399,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_MANIFEST.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/TASK_MANIFEST.csv",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_SPECS.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/TASK_SPECS.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/TASK_SPECS.json",
+      "sha256": "66047908785b0bf6ee621159145fd4b76b69b7cc170b3361df6cfb9005fd805a",
+      "size": 237465,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "cpu.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/cpu.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/cpu.json",
+      "sha256": "7bc8ff787313c3ebabfc65cf75c00c73f7b101a1cf82f26bdbfee63bb80a7c22",
+      "size": 27257,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "cpu_gate.fragment",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/cpu_gate.fragment",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/cpu_gate.fragment",
+      "sha256": "5cc8eb646933c24c4a32b9b778ab45a8916e56e5ba37fd3cb725949de7c06e9e",
+      "size": 4902,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "dino_source_sha256.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/dino_source_sha256.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/dino_source_sha256.json",
+      "sha256": "b06086f5d790194e2c74f4a4bee42ef7b23a14c2d3bf010ff64e639ff44a8f08",
+      "size": 17531,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "frozen_identity.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/frozen_identity.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/frozen_identity.json",
+      "sha256": "088f2974e2aff5042a9e11fed7fb84495871f2e80ed1161a0af78919abdd32d3",
+      "size": 13581,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "implementation_freeze.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/implementation_freeze.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/implementation_freeze.json",
+      "sha256": "be20dfdde13b561ca04d104fe8bd83904dc3f62d6b53bcae96a1943a89b8321c",
+      "size": 939,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "launch.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/launch.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/launch.json",
+      "sha256": "af78e0860ec4b5900c65097eee62292c02f94b4ad9026af0471a56505af286fc",
+      "size": 97,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "preservation_check.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/preservation_check.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/preservation_check.json",
+      "sha256": "df5e984b1058f3cd35d62efbae54469dc6500a524afb2738ea072a66b7aa88a2",
+      "size": 517,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "prior_p1_preservation.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/prior_p1_preservation.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/prior_p1_preservation.json",
+      "sha256": "ad721ab9dc1761b99e1ba478ac30c1b946e571753be00cf3b02be3ac66dab252",
+      "size": 17056,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "run_p1r_preflight.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/run_p1r_preflight.py",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/run_p1r_preflight.py",
+      "sha256": "8e8ad97070070657e1745fa683b0a0ff31c91294d9d9511479bb389b9c683428",
+      "size": 32177,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "supervisor.error.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/supervisor.error.txt",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/supervisor.error.txt",
+      "sha256": "8808c0b881ad8d9b2b0d3ccd77e77f19b39effd0b4376ac0171da54fefb5eaea",
+      "size": 307,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "validate_p1r_outputs.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/handoffs/actor-reset-full200-p1r-20261010/validate_p1r_outputs.py",
+      "git_path": "research/handoffs/actor-reset-full200-p1r-20261010/validate_p1r_outputs.py",
+      "sha256": "306ea753ad708bae29c436d0bed94ae6daa03dbeeacb6928370b22ceb13dd391",
+      "size": 3072,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "cpu.stdout.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1r_001d/research/runs/actor-reset-full200-p1r-20261010/cpu.stdout.log",
+      "sha256": "29800fe6c65706ee4ffe428188a29c4f042a68a295e2e7e2a7ea7d7ef2fdb0a7",
+      "size": 45,
+      "required_for_PI_review": false,
+      "access": "Optional raw stdout on server; structured gate report/error are shared"
+    }
+  ]
+}

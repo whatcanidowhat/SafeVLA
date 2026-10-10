@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 59,
+  "state_version": 60,
   "cycle_id": "actor-reset-full200-p1r-20261010",
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D-P1R",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "BLOCKED",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_p1r_001d",
   "instruction_commit": "224e266795abc854b16bead5179715e6dabbd0c2",
@@ -38,5 +38,5 @@
     "research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS.json"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-10T10:29:37.408246+00:00"
+  "updated_at_utc": "2026-10-10T14:11:24.373235+00:00"
 }
