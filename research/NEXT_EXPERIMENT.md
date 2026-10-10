@@ -1,13 +1,13 @@
 # PI Cycle — 001D P1R: shape-aware cache recovery and gated engineering preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D-P1R
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-full200-p1r-20261010
-Authorization: NOT_AUTHORIZED — PI_REVIEW, 0 active GPU / 0 episodes (staging only)
+Authorization: APPROVED_FOR_CODEX — max 1 GPU / 10 initiated live episodes; approval expires 2026-10-12T10:10:15.465Z; executor must claim and await green claim CI.
 
 ## Decision and scope
 
-User explicitly approved PI proposal to register a **fresh P1R** cycle and, after green control CI, authorize Codex for sequential Gate A/B/C execution within the original P1 resource ceilings. This stage commit **does not grant execution**. Prior P1 cycle `actor-reset-full200-p1-20261009` is terminal INVALID and may never be claimed or retried.
+User explicitly approved PI proposal to register a **fresh P1R** cycle and, after green control CI, authorize Codex for sequential Gate A/B/C execution within the original P1 resource ceilings. This approval **does not itself start execution**. Codex must first claim this exact green approval HEAD, publish the unique claim and wait for green claim CI. Prior P1 cycle `actor-reset-full200-p1-20261009` is terminal INVALID and may never be claimed or retried.
 
 Accepted old handoff `a137eafbb5931190b68ff042a5b0c9e34dbfd68d`, PI acknowledgement `45b942ec2c3980401b5b06b85977318b9297a5ae`, control CI #38042403557 SUCCESS. Technical root: original runner's `restore_temporal()` used `.copy_()` from pre-first-forward cache [0,500,8,64] into lazily allocated [1,500,8,64] tensor; original B0 Llama Attention code creates cache on the first single-step forward. Neither SR nor official Safety Cost was measured in P1.
 
@@ -36,9 +36,9 @@ Accepted old handoff `a137eafbb5931190b68ff042a5b0c9e34dbfd68d`, PI acknowledgem
 
 ## Budget, isolated worktree, one-shot handoff
 
-- Active in draft: **0 GPU / 0 episodes**. Proposed hard upper bounds only after independent PI approval: **1 GPU, 10 live episode starts (5+5), 6000 online steps, 2400 offline combined forwards, 8 GPU-hours, 50 GiB raw outputs**. Do not shift unused old P1 budget or re-use old claim.
+- **Approved hard upper bounds (only after successful claim CI): 1 GPU, 10 live episode starts (5+5), 6000 online steps, 2400 offline combined forwards, 8 GPU-hours, 50 GiB raw outputs**. Do not shift unused old P1 budget or re-use old claim.
 - New execution worktree: `/nvme2/user/qyy/SafeVLA_p1r_001d` (ensure fresh/empty, separate from `/nvme2/user/qyy/SafeVLA_p1_001d`, baseline and development trees).
-- Frozen one-shot entry (must be implemented in the new isolated worktree and vetted against this exact instruction; do not execute before green approval+claim CI):
+- Frozen one-shot entry (must be implemented in new isolated worktree; executable only after successful CODEX claim and green claim CI):
 
 ```bash
 /home/amax/.conda/envs/safevla/bin/python research/handoffs/actor-reset-full200-p1r-20261010/run_p1r_preflight.py
@@ -63,8 +63,14 @@ Accepted old handoff `a137eafbb5931190b68ff042a5b0c9e34dbfd68d`, PI acknowledgem
   - `research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS.json`
 - Runtime evidence source hashes, complete stderr/partial traces, actual episode budgets and artifact hashes are mandatory. Do not fabricate passing results.
 - P2 OFF200/ON200 remains **NOT_AUTHORIZED**. Completion of P1R never auto-approves it.
-- If authorized later, Codex follows `research/HANDOFF_PROTOCOL.md`: ensure latest approval green, atomic claim with `scripts/research_loop_claim.py`, verify claim CI green, one command, publish terminal handoff, STOP.
+- Under this approval, Codex follows `research/HANDOFF_PROTOCOL.md`: ensure latest approval green, atomic claim with `scripts/research_loop_claim.py`, verify claim CI green, one command with sequential failure gates, publish terminal handoff, STOP.
 
 ## PI decision
 
 P1R is a narrow engineering recovery trial, **not a new scientific hypothesis about SR**. Accepted 001A mechanistic evidence is unchanged. No PI or Executor may treat the prior invalid run as a P1 PASS or a performance observation.
+
+## 2026-10-10 — PI formal approval of P1R (one gated execution only)
+
+After staging commit `82d595cc179b00e1c1f6cc0437bb9fc9e082af34` passed research-loop-validate CI #38043747983, the PI explicitly authorizes P1R under the user-approved scope. **Approval state version 58, next_actor CODEX, APPROVED_FOR_CODEX; claim_id=null and instruction_commit=null in the approval commit.** Timestamp `2026-10-10T10:10:15.465Z`, expires `2026-10-12T10:10:15.465Z` (48h). Executor must fetch the current control branch, claim exactly this approval commit, and obtain successful claim CI before using GPU or attempting any model, simulator, offline validation or episodes under this cycle.
+
+Allowed: CPU Gate A shape-aware cache lifecycle (0 GPU) → GPU Gate B same-input logger/Actor-reset/critic invariants → Gate C two independent OFF 5-task sessions (10 starts max); every gate is fail-closed, no retries or reauthorization implicit. Only isolated runner snapshot-restoration logic and CPU gate instrumentation may change; B0 source must be byte preserved. Hard caps: 1 GPU, 10 episode starts, 6000 live decisions, 2400 offline combined forward calls, 8 GPU-hours, 50GiB raw outputs. No ON live, no full200 P2, no extra seed/target or hidden smoke. On terminal gate failure, publish INVALID/BLOCKED with NOT_STARTED evidence and STOP. On success, publish review handoff and STOP; PI must independently review P1R before any further authorization.

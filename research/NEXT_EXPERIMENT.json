@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D-P1R",
   "cycle_id": "actor-reset-full200-p1r-20261010",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "Does a shape-aware, isolated runner-only cache-snapshot restore repair the P1 INVALID lazy zero-batch->one-batch Llama attention cache lifecycle, enabling the already-approved P1 logger/Actor-reset engineering validity gates without changing accepted B0, task protocol, official SR or Safety Cost?",
   "hypothesis": "Changing only isolated harness restore_temporal to shape-aware clone/attribute rebind permits exact restoration of zero-batch and allocated K/V snapshots (dtype/device/value, all root layers) on CPU. After Gate A, offline logger absent/present paired replay shows <=1e-5 differences in original raw and normalized logits, probs and cache with identical RNG/sample/mode/action/call counts, and OFF/ON boundary reset changes root Actor counter+K/V only. Then two identical 5-task OFF sessions pass original-loader manifest and official metrics gates or yield an explicitly explained A/A difference.",
   "competing_explanation": "The copy_-shape failure is a runner lifecycle problem but the runner may have additional latent issues (cache aliasing/dtype/device, saved-input reconciliation, logger behavior, augmentation, task queue, initial RNG or official cost timing); a fixed shape error alone cannot establish P1 readiness. Online stochastic divergence may persist even with valid logger.",
