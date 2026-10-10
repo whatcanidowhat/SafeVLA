@@ -1,9 +1,9 @@
 # PI Cycle — EXP-ACTOR-RESET-FULL200-001D P1 preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-full200-p1-20261009
-Authorization: NOT_AUTHORIZED — prior unused P1 approval revoked solely for PI-requested renewal; no claim/GPU/episodes until new approval and claim CI.
+Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 10 live episodes. Expires 2026-10-12T01:30:05.821Z. No execution before green claim CI.
 
 ## Decision and scientific purpose
 
@@ -83,8 +83,8 @@ All implementation paths and runtime code hashes must be archived; any deviation
 
 ## P1 explicit PI authorization decision
 
-User direction: P0 review and control CI are complete; permit Codex to execute the *P1 engineering preflight* rather than repeat P0. Approval commit grants **only** the frozen 5+5 OFF A/A online tasks and isolated offline logger/reset invariants. Active authorization: 1 simultaneous GPU and at most 10 initiated live episodes; execution ceiling 6000 decisions, 2400 offline combined forwards, 8 GPU-hours and 50GiB raw artifacts; expires 2026-10-11T15:41:29.332Z. No P2, no live ON, no retries or added seeds. Approval is permission to claim; it is **not** a claim or a launched experiment. Codex must fetch latest research-loop, claim exact green approval HEAD with claim CI and stop after publishing required handoff evidence.
+User direction: P0 review and control CI are complete; permit Codex to execute the *P1 engineering preflight* rather than repeat P0. Approval commit grants **only** the frozen 5+5 OFF A/A online tasks and isolated offline logger/reset invariants. Active authorization: 1 simultaneous GPU and at most 10 initiated live episodes; execution ceiling 6000 decisions, 2400 offline combined forwards, 8 GPU-hours and 50GiB raw artifacts; expires 2026-10-12T01:30:05.821Z. No P2, no live ON, no retries or added seeds. Approval is permission to claim; it is **not** a claim or a launched experiment. Codex must fetch latest research-loop, claim exact green approval HEAD with claim CI and stop after publishing required handoff evidence.
 
-## 2026-10-10 — PI-requested renewal, interim safe review state
+## 2026-10-10 — Reissued unclaimed P1 authorization (48h from renewal)
 
-PI requested a fresh authorization window on 2026-10-10. Original P1 grant remained valid and was unclaimed at the verified parent `5609f3fbb456c23f8645800ff46b5371cc294d47`. This intermediate commit revokes **only the unclaimed execution permission**, changing state_version 51 -> 52; it does not change experiment identity, scope, protocol, output paths, resource proposal or research conclusions. All previous granted rights are inactive until the next separate PI approval passes CI. No claim or execution.
+PI explicitly reauthorizes the exact previously frozen EXP-ACTOR-RESET-FULL200-001D P1 protocol after the unused approval was cleanly revoked at `f2f352480e0b908b1ac95677a9aa9570e883e228` (control CI 38013257402 SUCCESS). **No experiment, task identity, workload, code target, worktree, command, scientific question, active treatment, output requirements, or maximum budget has been changed.** Active permission: max1 GPU/10 live episodes (2 independent OFF sessions, 5+5), 6000 live steps, 2400 offline forwards, 8 GPU-hours, 50GiB raw cap; expiration `2026-10-12T01:30:05.821Z`. No live ON, P2, additional seeds, retries or automatic continuation. Claim only this green renewed approval SHA after CI; wait for green claim CI before executing. PI is not claiming or starting any run.
