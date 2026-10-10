@@ -1,9 +1,9 @@
 # PI Cycle — EXP-ACTOR-RESET-FULL200-001D P1 preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-full200-p1-20261009
-Authorization: APPROVED_FOR_CODEX — RESEARCH_EXPERIMENT / max 1 GPU / max 10 live episodes. Expires 2026-10-11T15:41:29.332Z. No execution before green claim CI.
+Authorization: NOT_AUTHORIZED — prior unused P1 approval revoked solely for PI-requested renewal; no claim/GPU/episodes until new approval and claim CI.
 
 ## Decision and scientific purpose
 
@@ -84,3 +84,7 @@ All implementation paths and runtime code hashes must be archived; any deviation
 ## P1 explicit PI authorization decision
 
 User direction: P0 review and control CI are complete; permit Codex to execute the *P1 engineering preflight* rather than repeat P0. Approval commit grants **only** the frozen 5+5 OFF A/A online tasks and isolated offline logger/reset invariants. Active authorization: 1 simultaneous GPU and at most 10 initiated live episodes; execution ceiling 6000 decisions, 2400 offline combined forwards, 8 GPU-hours and 50GiB raw artifacts; expires 2026-10-11T15:41:29.332Z. No P2, no live ON, no retries or added seeds. Approval is permission to claim; it is **not** a claim or a launched experiment. Codex must fetch latest research-loop, claim exact green approval HEAD with claim CI and stop after publishing required handoff evidence.
+
+## 2026-10-10 — PI-requested renewal, interim safe review state
+
+PI requested a fresh authorization window on 2026-10-10. Original P1 grant remained valid and was unclaimed at the verified parent `5609f3fbb456c23f8645800ff46b5371cc294d47`. This intermediate commit revokes **only the unclaimed execution permission**, changing state_version 51 -> 52; it does not change experiment identity, scope, protocol, output paths, resource proposal or research conclusions. All previous granted rights are inactive until the next separate PI approval passes CI. No claim or execution.
