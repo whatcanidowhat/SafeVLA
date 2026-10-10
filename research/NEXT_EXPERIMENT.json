@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D-P1R2",
   "cycle_id": "actor-reset-full200-p1r2-20261010",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "Can independently verified P1R CPU cache-lifecycle PASS be carried forward and remaining SafeVLA 001D logger/reset engineering and OFF/OFF five-task reproducibility gates be completed within a fair four-GPU shared-lab queue, without changing accepted B0, authorized scientific metrics, or Safety Cost?",
   "hypothesis": "Bounded scheduler polls physical GPUs 0-3 read-only, safely selects a non-occupied homogeneous-compatible GPU satisfying original conservative free>6823.390767 MiB gate, releases only its own short-lived GPU hold and preserves a single mapped logical cuda:0 device across Gate B and OFF A/A Gate C. Matched saved-input actor replay/logger is equivalent <=1e-5, Actor-only reset leaves critic untouched, and offline-gated OFF/OFF 5+5 online assessment preserves original TaskSpec order, SR and Safety Cost.",
   "competing_explanation": "Foreign shared-lab workloads, load-race at hold release, heterogeneous GPU or compute usage can invalidate capacity readiness. Offline logger/caches, model RNG, adaptation or online evaluator metrics may independently fail. A/A stochastic differences need audit, and this engineering test cannot estimate live actor ON effect.",

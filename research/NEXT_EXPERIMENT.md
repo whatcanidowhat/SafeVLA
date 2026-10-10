@@ -1,9 +1,9 @@
 # PI Cycle — 001D P1R2: four-GPU shared queue, offline logger and OFF/OFF preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D-P1R2
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-full200-p1r2-20261010
-Authorization: NOT_AUTHORIZED — PI_REVIEW, 0 active GPU/episodes; no queue, model or episode before independent authorization and successful CODEX claim CI.
+Authorization: APPROVED_FOR_CODEX — 1 concurrent GPU / max10 live starts; approval expires 2026-10-12T15:59:28.150Z; no queue, model or episode before green CODEX claim CI.
 
 ## Rationale and approvals
 
@@ -42,7 +42,7 @@ Scope is a NEW, one-shot P1R2 cycle: **reuse accepted Gate A evidence, queue saf
 ```
 
 - Environment knobs above control GPU queue/hold only, never scientific sampling parameters. Manual user Bash startup is allowed **after** CODEX claim and claim CI; user manual start must not bypass the run's one-shot lock or Python supervisor verification. Neither this DRAFT nor approved-by-PI label permits direct running until those gates pass.
-- **Active in draft = 0 GPU / 0 live episodes. Proposed maximum after PI approval = 1 concurrent GPU / 10 live starts / 6000 online decisions / 2400 offline combined forwards / 8h experiment GPU ceiling / max 12h queue / 50GiB raw artifacts.**
+- **Approved hard maxima after claim CI = 1 concurrent GPU / 10 live starts / 6000 online decisions / 2400 offline combined forwards / 8h experiment GPU ceiling / max 12h queue / 50GiB raw artifacts.**
 - Original GPU free guard >6823.390767 MiB remains strict. If time/foreign PID/OOM/capacity violates guard, preserve evidence and STOP without restarting launched experiment, switching GPU, or altering B0.
 - All required Git handoff files (also terminal BLOCKED/INVALID, with NOT_STARTED gates):
   - `research/handoffs/actor-reset-full200-p1r2-20261010/RESULT_SUMMARY.md`
@@ -67,4 +67,10 @@ Scope is a NEW, one-shot P1R2 cycle: **reuse accepted Gate A evidence, queue saf
 
 ## PI decision
 
-**Proposal staged, no execution yet.** Any actual task needs a second green approval control commit followed by CODEX's unique claim and green claim CI. Reusing old P1R/P1 claim IDs is forbidden.
+**PI has formally approved the proposal in this control transition, not launched execution.** Actual task still requires this exact approval commit green CI, CODEX's unique atomic claim and green claim CI, followed by one manually triggered or Codex-triggered frozen runner execution. Reusing old P1R/P1 claim IDs is forbidden.
+
+## 2026-10-10 — PI-approved P1R2 4-GPU queue and user manual launcher option
+
+User authorized automatic candidate GPUs 0,1,2,3 and permitted strictly bounded own-PID GPU hold, with a non-negotiable prohibition on killing/interrupting any third-party process. Staging commit `18ff34b8944b76c1f576631ac9789340de9bdd9b` validated green CI #38065577601. This approval moves control v62→v63, `APPROVED_FOR_CODEX`, active max1 GPU/10 live starts, `claim_id=null` and `instruction_commit=null` until CODEX claims this exact approved commit. Approval UTC `2026-10-10T15:59:28.150Z`, expiry UTC `2026-10-12T15:59:28.150Z`.
+
+No queue/model process may start before approval CI and separate claim CI SUCCESS. The launcher may be invoked manually by the user **after** Codex has implemented and hash-verified the isolated P1R2 runner in `/nvme2/user/qyy/SafeVLA_p1r2_001d` and the unique control claim has passed CI. Manual Bash launch does not waive exclusive launch marker, provenance, 12h queue timeout, 8h GPU experiment time cap, 10 episode cap, single-card identity across both OFF sessions or mandatory terminal evidence. Run only the frozen `run_p1r2_preflight.py` command; do not run development `scripts/eval.sh` as evaluator, do not launch P2, do not kill others' GPU processes, and do not auto-retry any launched model/episode.
