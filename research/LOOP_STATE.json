@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "state_version": 60,
+  "state_version": 61,
   "cycle_id": "actor-reset-full200-p1r-20261010",
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D-P1R",
-  "status": "BLOCKED",
+  "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_p1r_001d",
   "instruction_commit": "224e266795abc854b16bead5179715e6dabbd0c2",
-  "reviewed_result_commit": "a137eafbb5931190b68ff042a5b0c9e34dbfd68d",
+  "reviewed_result_commit": "b65cb07d87dc3321f79b89d9b1ffcde0ff2e1db3",
   "claim_id": "fa92b7b37bb6457383ea4f3f19fa1b8b",
   "authorization": {
-    "status": "APPROVED",
-    "approved_by": "PI",
-    "approved_at_utc": "2026-10-10T10:10:15.465Z",
-    "expires_at_utc": "2026-10-12T10:10:15.465Z",
+    "status": "NOT_AUTHORIZED",
+    "approved_by": null,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 1,
-    "max_episodes": 10
+    "max_gpu": 0,
+    "max_episodes": 0
   },
   "required_outputs": [
     "research/handoffs/actor-reset-full200-p1r-20261010/RESULT_SUMMARY.md",
@@ -37,6 +37,6 @@
     "research/handoffs/actor-reset-full200-p1r-20261010/LOGIT_AND_COST_SCHEMA.md",
     "research/handoffs/actor-reset-full200-p1r-20261010/GATE_STATUS.json"
   ],
-  "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-10T14:11:24.373235+00:00"
+  "updated_by": "PI",
+  "updated_at_utc": "2026-10-10T15:34:26.676Z"
 }

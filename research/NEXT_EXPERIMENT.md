@@ -1,9 +1,9 @@
 # PI Cycle — 001D P1R: shape-aware cache recovery and gated engineering preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D-P1R
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-full200-p1r-20261010
-Authorization: APPROVED_FOR_CODEX — max 1 GPU / 10 initiated live episodes; approval expires 2026-10-12T10:10:15.465Z; executor must claim and await green claim CI.
+Authorization: NOT_AUTHORIZED — P1R terminal BLOCKED was PI-reviewed; old claim is historical only. No GPU, model or Episode approved.
 
 ## Decision and scope
 
@@ -13,7 +13,7 @@ Accepted old handoff `a137eafbb5931190b68ff042a5b0c9e34dbfd68d`, PI acknowledgem
 
 **Allowed correction:** in a new isolated runner only, restore complete K/V cache tensor snapshots by shape/dtype/device/value-preserving clone/attribute rebind; restore root counter coherently. Do not modify model Attention.forward, accepted B0, reward/cost critics, action mapping, simulator, checkpoint, official metric definitions, or the failed P1 execution worktree.
 
-## Gate A — CPU cache lifecycle (must PASS before any GPU)
+## Historical P1R Gate A — CPU cache lifecycle (executed, PASS)
 
 - Use real frozen B0 Llama Attention/cache code where possible, with real zero-batch initial state.
 - Test `[0,500,8,64] -> first single-step forward -> [1,500,8,64] -> restore [0,500,8,64] -> repeat same forward`.
@@ -74,3 +74,15 @@ P1R is a narrow engineering recovery trial, **not a new scientific hypothesis ab
 After staging commit `82d595cc179b00e1c1f6cc0437bb9fc9e082af34` passed research-loop-validate CI #38043747983, the PI explicitly authorizes P1R under the user-approved scope. **Approval state version 58, next_actor CODEX, APPROVED_FOR_CODEX; claim_id=null and instruction_commit=null in the approval commit.** Timestamp `2026-10-10T10:10:15.465Z`, expires `2026-10-12T10:10:15.465Z` (48h). Executor must fetch the current control branch, claim exactly this approval commit, and obtain successful claim CI before using GPU or attempting any model, simulator, offline validation or episodes under this cycle.
 
 Allowed: CPU Gate A shape-aware cache lifecycle (0 GPU) → GPU Gate B same-input logger/Actor-reset/critic invariants → Gate C two independent OFF 5-task sessions (10 starts max); every gate is fail-closed, no retries or reauthorization implicit. Only isolated runner snapshot-restoration logic and CPU gate instrumentation may change; B0 source must be byte preserved. Hard caps: 1 GPU, 10 episode starts, 6000 live decisions, 2400 offline combined forward calls, 8 GPU-hours, 50GiB raw outputs. No ON live, no full200 P2, no extra seed/target or hidden smoke. On terminal gate failure, publish INVALID/BLOCKED with NOT_STARTED evidence and STOP. On success, publish review handoff and STOP; PI must independently review P1R before any further authorization.
+
+## 2026-10-10 — PI formal acknowledgement of P1R BLOCKED / CPU Gate A PASS
+
+PI independently reviewed the GitHub terminal result `b65cb07d87dc3321f79b89d9b1ffcde0ff2e1db3` (Control CI #38059077767 SUCCESS), required 16 handoff outputs, CPU lifecycle evidence, original machine-exit artifacts, resource profile, and runner/preservation reports. Gate A **PASS** only for genuine frozen CPU Attention lifecycle: four empty/allocated x float32/float64 cases over three layers, 24 Attention calls, matched output max_abs 0 with exact shape/dtype/device/value/counter/RNG/weights/alias checks. This is NOT an online-model, CUDA logger, or critic-preservation PASS.
+
+GPU0 free **3954 MiB** failed frozen conservative strict >**6823.390767 MiB** available-capacity guard (`3 * checkpoint bytes + 1024 MiB`); no GPU child spawned, no CUDA OOM observed, no simulator, 0 online episodes. Gate B and C remain NOT_STARTED, original 200-task online-loader cross-check NOT_REACHED. Official Success Rate and Safety Cost remain NOT_MEASURED. B0 112 tracked files and old P1 149 files verified unchanged.
+
+Runner's raw exit `INVALID`/pre-child `B=RUNNING` status artifacts remain preserved. PI accepts terminal `BLOCKED` classification because the actual failure is a pre-allocation resource assertion; this is not evidence of model or logger numerical failure. No hidden retry or alternate GPU is approved, and the conservative capacity guard is NOT relaxed by this decision.
+
+PI acknowledges **BLOCKED→PI_REVIEW**, state_version 61, binds `reviewed_result_commit=b65cb07d87dc3321f79b89d9b1ffcde0ff2e1db3`, removes active authorization timestamps and GPU/episode budget, and returns NEXT_EXPERIMENT.json/md to DRAFT. Prior `instruction_commit` and `claim_id` stay for provenance only and must never be reused. Prior P1R cycle is terminal, cannot be auto-resumed or re-claimed.
+
+Any next experimental attempt requires (1) an independently measured new GPU0 free-memory reading satisfying the unchanged gate without terminating or interfering with other work, (2) a **fresh unused** cycle, isolated worktree and own claim/CI after independent PI approval; (3) at most the original one-GPU/ten-episode engineering limits unless separately discussed. Reuse Gate A CPU evidence as accepted engineering provenance; Gates B and C still need empirical validation. P2 OFF200+ON200 remains NOT_AUTHORIZED.
