@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "AA_VALIDATION.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/AA_VALIDATION.md",
+      "sha256": "8663d3abbb98ffc4b29cbeabce25942950926bac4cf3f0983854519faf8b91ad",
+      "size": 434,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CPU_VALIDATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/CPU_VALIDATION.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/CPU_VALIDATION.json",
+      "sha256": "390a0bd9fa77fc170fa6d7111fb5c669fc97af23af0634769c3e300a1a133e61",
+      "size": 118,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_PROTOCOL.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/FROZEN_PROTOCOL.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/FROZEN_PROTOCOL.md",
+      "sha256": "c24e99b516bfd41b75fd181d77fe165ca222a9eccd4340bada73ecb7d200f774",
+      "size": 3621,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "IMPLEMENTATION_DIFF.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/IMPLEMENTATION_DIFF.md",
+      "sha256": "e4f7b18a526359ea749895f8a662586a0d3a53378c1cc1f782a8b5458f8f3252",
+      "size": 2227,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "LOGGER_EQUIVALENCE.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/LOGGER_EQUIVALENCE.md",
+      "sha256": "756a455e2928d8a88f205ed6dc9ad69ea8af4ac835898239aa4dc12ffb66eb6f",
+      "size": 684,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "LOGIT_AND_COST_SCHEMA.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md",
+      "sha256": "3e588998fed7ea56607ec89dccc2ec1735a0168444086f9215c7f48e7c3e1196",
+      "size": 1603,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "P1_RESOURCE_PROFILE.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/P1_RESOURCE_PROFILE.json",
+      "sha256": "9de4611f061bf0df6cdd2fa1cc370f16fc034c3f19560c971e2a0803e66623e2",
+      "size": 1058,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESET_INVARIANTS.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/RESET_INVARIANTS.md",
+      "sha256": "2a27dcae54c1d7f3ec27bbc79c477e59eda9e62df8b4ce53ffc75b3ce681541d",
+      "size": 508,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/RESULT_SUMMARY.md",
+      "sha256": "8e9b29c8c7713e933fb4b9d0a671c60e1f1dbfd11329a0659b8747693ac2e7fd",
+      "size": 3232,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/REVIEW_NOTES.md",
+      "sha256": "e1c11c414543cb322dcce409132b350f4e8e75f849888f11669418a361d09201",
+      "size": 1578,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/RUN_MANIFEST.json",
+      "sha256": "c96569825534ea02cc0eab007baddea9ba01be17f805410634f6db89905d4cd5",
+      "size": 11780,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_MANIFEST.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/TASK_MANIFEST.csv",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_SPECS.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/TASK_SPECS.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/TASK_SPECS.json",
+      "sha256": "66047908785b0bf6ee621159145fd4b76b69b7cc170b3361df6cfb9005fd805a",
+      "size": 237465,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "dino_source_sha256.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/dino_source_sha256.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/dino_source_sha256.json",
+      "sha256": "b06086f5d790194e2c74f4a4bee42ef7b23a14c2d3bf010ff64e639ff44a8f08",
+      "size": 17531,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "frozen_identity.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/frozen_identity.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/frozen_identity.json",
+      "sha256": "b2004af051a87f91ae06a746df6128a3c8b4a9661c8f8245d54188406c381518",
+      "size": 13581,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "implementation_freeze.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/implementation_freeze.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/implementation_freeze.json",
+      "sha256": "4bc8e90bc26ff3c9ca2a83eddceed5e91b47f08bb96e009ac1fd92666846d685",
+      "size": 799,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "launch.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/launch.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/launch.json",
+      "sha256": "f0d6a65fe25c09f58387f35927c817e9ab6e8e7c0f369c2c2d8b10ec6e407261",
+      "size": 97,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "offline.error.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/offline.error.txt",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/offline.error.txt",
+      "sha256": "8b5eb8de5f57492d7eb29c4d77a61c8f5e3b5cdf55c5ea792cf04ff6e352664c",
+      "size": 572,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "offline.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/offline.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/offline.json",
+      "sha256": "85e477cbaf63e2899e1af967a9fc8ad6d9782d4412c92d5cbaf6c703b3530a39",
+      "size": 10055,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "offline.stdout.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/runs/actor-reset-full200-p1-20261009/offline.stdout.log",
+      "sha256": "a2eba1eaa06384982ea3f0fd9807bf141e478d8b2b3d27e19da52983002cec39",
+      "size": 47089,
+      "required_for_PI_review": false,
+      "access": "Optional server-only stdout; full error traceback and runtime reports are shared separately"
+    },
+    {
+      "name": "preservation_check.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/preservation_check.json",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/preservation_check.json",
+      "sha256": "55780d789a37856ad7926a4aefd80edb3cc3b5052be0596efca3d905c9c2d743",
+      "size": 781,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "run_p1_preflight.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py",
+      "sha256": "82339bc9aac45af1d9232f3d6a44b34d4c92b93e8a1163ff2df45980090cae1a",
+      "size": 27002,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "supervisor.error.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/supervisor.error.txt",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/supervisor.error.txt",
+      "sha256": "745b474b903f0a6f8014da95b5230fec89d85faa31ed2a66a5e306befc223414",
+      "size": 405,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "validate_p1_outputs.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/validate_p1_outputs.py",
+      "git_path": "research/handoffs/actor-reset-full200-p1-20261009/validate_p1_outputs.py",
+      "sha256": "f9aba7a60dcbd665c93ce36e4e776d7f935196b564702e7ff551f3f6d9e4d2b7",
+      "size": 2945,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "historical_captured_actor_inputs.pt",
+      "server_path": "/nvme2/user/qyy/SafeVLA/research/runs/EXP-RESET-001A/execution_20261008/captured_actor_inputs.pt",
+      "sha256": "417e684e96563b043138d328776d693f05dc74bb7c074099dea39c3b5881500e",
+      "size": 7983634,
+      "required_for_PI_review": false,
+      "access": "server-only historical tensor; not uploaded"
+    }
+  ]
+}

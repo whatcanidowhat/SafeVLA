@@ -1,0 +1,26 @@
+{
+  "FROZEN_PROTOCOL.md": {
+    "sha256": "c24e99b516bfd41b75fd181d77fe165ca222a9eccd4340bada73ecb7d200f774",
+    "size": 3621
+  },
+  "IMPLEMENTATION_DIFF.md": {
+    "sha256": "e4f7b18a526359ea749895f8a662586a0d3a53378c1cc1f782a8b5458f8f3252",
+    "size": 2227
+  },
+  "LOGIT_AND_COST_SCHEMA.md": {
+    "sha256": "3e588998fed7ea56607ec89dccc2ec1735a0168444086f9215c7f48e7c3e1196",
+    "size": 1603
+  },
+  "run_p1_preflight.py": {
+    "sha256": "82339bc9aac45af1d9232f3d6a44b34d4c92b93e8a1163ff2df45980090cae1a",
+    "size": 27002
+  },
+  "validate_p1_outputs.py": {
+    "sha256": "f9aba7a60dcbd665c93ce36e4e776d7f935196b564702e7ff551f3f6d9e4d2b7",
+    "size": 2945
+  },
+  "TASK_MANIFEST.csv": {
+    "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "size": 53334
+  }
+}

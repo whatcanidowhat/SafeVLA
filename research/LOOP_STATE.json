@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 54,
+  "state_version": 55,
   "cycle_id": "actor-reset-full200-p1-20261009",
   "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "INVALID",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_p1_001d",
   "instruction_commit": "67c42b0fd7d485fdaa9fe5687099537c2c28035a",
@@ -36,5 +36,5 @@
     "research/handoffs/actor-reset-full200-p1-20261009/LOGIT_AND_COST_SCHEMA.md"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-10T02:14:59.060215+00:00"
+  "updated_at_utc": "2026-10-10T07:17:07.127678+00:00"
 }

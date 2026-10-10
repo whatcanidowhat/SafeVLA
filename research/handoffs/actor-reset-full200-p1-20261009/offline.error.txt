@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py", line 169, in child
+    restore_temporal(root,temporal);rngset(rs);cb=dict(counts)
+  File "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py", line 75, in restore_temporal
+    for l,(k,v) in zip(b.decoder.layers,s[1]):l.attention.cache_k.copy_(k);l.attention.cache_v.copy_(v)
+RuntimeError: output with shape [1, 500, 8, 64] doesn't match the broadcast shape [0, 500, 8, 64]

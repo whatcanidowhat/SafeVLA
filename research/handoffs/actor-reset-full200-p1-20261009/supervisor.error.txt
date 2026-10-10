@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/nvme2/user/qyy/SafeVLA_p1_001d/research/handoffs/actor-reset-full200-p1-20261009/run_p1_preflight.py", line 312, in supervisor
+    assert code==0 and result['status']=='PASS','Phase failed: '+phase+' '+result.get('error','')
+AssertionError: Phase failed: offline RuntimeError: output with shape [1, 500, 8, 64] doesn't match the broadcast shape [0, 500, 8, 64]

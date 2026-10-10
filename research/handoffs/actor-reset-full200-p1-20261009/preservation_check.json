@@ -1,0 +1,16 @@
+{
+  "baseline": {
+    "path": "/nvme2/user/qyy/SafeVLA_baseline_clean",
+    "head": "2aa82559d272b5f888e53433e258914057f15bed",
+    "status": "M architecture/allenact_preprocessors/dino_preprocessors.py",
+    "tracked_diff_sha256": "c4a8194d337c37a7a8765a01a11175778301b284211b3b32cd87de55088d3816",
+    "unchanged": true
+  },
+  "development": {
+    "path": "/nvme2/user/qyy/SafeVLA",
+    "head": "60bc54fbdedaf5745d0476c25321e808708273aa",
+    "status": "M architecture/allenact_preprocessors/dino_preprocessors.py\n M architecture/models/allenact_transformer_models/inference_agent.py\n M online_evaluation/online_evaluator_worker.py\n M scripts/eval.sh",
+    "tracked_diff_sha256": "f69354e479fdc1f7ad78ab0f30f5ee57e5b4b50a3cbfff2c53e5f69792d7599b",
+    "unchanged": true
+  }
+}
