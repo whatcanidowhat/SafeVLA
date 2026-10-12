@@ -1,81 +1,65 @@
 {
-  "experiment_id": "EXP-ACTOR-RESET-FULL200-001D-P1R2",
-  "cycle_id": "actor-reset-full200-p1r2-20261010",
+  "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-001",
+  "cycle_id": "actor-reset-off200-on200-20261012",
   "status": "DRAFT",
-  "research_question": "Can independently verified P1R CPU cache-lifecycle PASS be carried forward and remaining SafeVLA 001D logger/reset engineering and OFF/OFF five-task reproducibility gates be completed within a fair four-GPU shared-lab queue, without changing accepted B0, authorized scientific metrics, or Safety Cost?",
-  "hypothesis": "Bounded scheduler polls physical GPUs 0-3 read-only, safely selects a non-occupied homogeneous-compatible GPU satisfying original conservative free>6823.390767 MiB gate, releases only its own short-lived GPU hold and preserves a single mapped logical cuda:0 device across Gate B and OFF A/A Gate C. Matched saved-input actor replay/logger is equivalent <=1e-5, Actor-only reset leaves critic untouched, and offline-gated OFF/OFF 5+5 online assessment preserves original TaskSpec order, SR and Safety Cost.",
-  "competing_explanation": "Foreign shared-lab workloads, load-race at hold release, heterogeneous GPU or compute usage can invalidate capacity readiness. Offline logger/caches, model RNG, adaptation or online evaluator metrics may independently fail. A/A stochastic differences need audit, and this engineering test cannot estimate live actor ON effect.",
-  "reference": "P1 INVALID a137eafbb5931190b68ff042a5b0c9e34dbfd68d; P1R BLOCKED handoff b65cb07d87dc3321f79b89d9b1ffcde0ff2e1db3, Gate A CPU PASS, accepted by PI cb579ffdc10c86999be68600e788d938cdb7a89c / CI 38064189115 SUCCESS. P1R resource guard was free3954 MiB <strict 6823.390767 MiB on GPU0, no GPU used. Existing own development scripts/eval.sh at baseline-experiment 60bc54fbdedaf5745d0476c25321e808708273aa implements GPU waiting/hold but also has incompatible evaluation defaults; reuse scheduling ideas only.",
-  "repeat_or_treatment": "New claimed single-attempt P1R2. CPU Gate A evidence from P1R is **accepted provenance**, not rerun; independently hash-verify real Attention code, P1R CPU evidence, cache restore patch and immutable B0/old outputs. Pre-Gate B wait in CPU-only supervisory process: candidate physical GPUs 0,1,2,3, poll no foreign compute process and memory.used<=4000 MiB and util<=30%, original unchanged memory.free>6823.390767MiB, three consecutive qualifying observations at 30sec intervals, bounded max12h wait and earlier authorization expiry. Permit short-lived optional single-GPU 4096MiB hold owned by launcher for <=120s while staging; release and reap own hold PID before launching official experiment child, immediately recheck; on race requeue without GPU policy forward/episode, but never restart a launched Gate. Pin selected physical GPU throughout B and C, mapped CUDA_VISIBLE_DEVICES=physical-id and logical cuda:0/--gpu_devices 0. Gate B GPU offline 600 paired saved Actor input logger comparisons and Actor-only reset/Critic invariants. Only after B PASS, Gate C OFF one-worker 5 original tasks in two separate processes, max10 live init attempts. No P2 or ON live.",
-  "unique_variable": "Only scheduler behavior is new relative to P1R: fixed allowable physical GPU index set {0,1,2,3}, bounded safe wait/no-foreign-process+capacity checks, optional short-lived only-self-owned memory hold, selected GPU remapping and separate queue/experiment clocks. Preserve P1R shape-aware K/V restore, frozen B0 source, Actor/critic internals and scientific tests. No changes to action selection, shuffle, seed, augmentation, cost accounting, episode count or stop semantics.",
+  "research_question": "On the same ordered 200 original ObjectNavType minival TaskSpecs, does reset of only root Actor time_step_counter and per-layer K/V caches at Episode boundaries change official Success Rate, observed five-part Safety Cost and logged every-step raw Actor logits relative to accepted unchanged OFF baseline?",
+  "hypothesis": "Episode-boundary Actor-only ON reset prevents unintended carry-over of root Actor temporal cache/counter and changes subsequent Actor output distributions, with potential SR/Cost/early-END/oscillation differences; no directional guarantee is assumed.",
+  "competing_explanation": "Stochastic action sampling and trajectory divergence, test augmentation/THOR stochasticity, logger/runtime integration issues or non-Actor execution differences can contribute. Online equal episode/time-step logits comparisons are descriptive if observations differ; not isolated same-input causal attribution.",
+  "reference": "PI explicitly directed skip GPU logger equivalence, proceed to formal OFF200+ON200 with full logits on 2026-10-12. Logger development feature/p2-actor-logits-logger-20261012 commit bb71a65609f59e961049029805ec16c06be7240a: 22 recorded CPU tests PASS, 12 AST syntax PASS, real GPU Logger equivalence NOT_RUN_PI_WAIVED. Accepted B0 2aa82559d272b5f888e53433e258914057f15bed and local DINO adaptation. P1R Gate A CPU PASS; P1R2 approved at a88d5ab... never claimed, revoked by 763d7e76b72248b968f4f5d564185221da11d5b8. No old claim/budget reused.",
+  "repeat_or_treatment": "Single fresh P2 cycle. Prepare isolated clean execution worktree based on bb71a656...; CODEX implements minimal explicit PI-waiver gating/launcher only, no fabricated GPU PASS. After PI-approved green CI and unique CODEX claim+green claim CI, CPU-only bounded read-only GPU queue selects one free physical device 0,1,2,3. Sequential separate processes OFF200 then, only if OFF complete and validated, ON200 on same physical GPU. Each group exactly original ordered 200 TaskSpecs with persistent one-worker Actor, complete per-policy-step root raw logits and metadata, independent directories. End and report; no retries, no extra online/offline gates.",
+  "unique_variable": "Only per-Episode root Actor time_step_counter and decoder attention K/V reset ON vs original OFF; Critic counters/cache, model weights, scheduler, augmentation, seed, task order, logger and all other code/metrics remain unchanged across OFF and ON. Both have logger enabled identically; waiver is identical across groups.",
   "fixed_conditions": [
-    "Accepted B0 source 112 hashes + approved local DINO adaptation, policy checkpoint SHA256 05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301, DINO weights SHA256 b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9; isolated source module roots and Python/dependency identity all verified",
-    "Do not re-run prior terminal claimed P1 or P1R. New empty isolated worktree /nvme2/user/qyy/SafeVLA_p1r2_001d. CPU PASS provenance anchored to b65cb07d... Gate A genuine B0 3 Attention layers, four shape/dtype cases, 24 forward calls, output max_abs 0; preserve existing CPU fixture and restore implementation code hash",
-    "Use only original P1R shape-aware K/V clone/rebind implementation; no editing B0, prior P1/P1R handoffs, model internals, metric or evaluation logic. Stop if GPU-specific cache replay reveals a new bug; don't silently patch and resume.",
-    "Scheduler is only a resource acquisition wrapper; do not invoke scripts/eval.sh itself because default greedy/shuffle and native online evaluation args diverge from P1R2 protocol. Do not use 'eval $cmd' or shell-concatenate user arguments.",
-    "Candidate physical GPU ids exactly 0,1,2,3, select only one compatible device with expected CUDA and sufficient capacity. Explicit GPU identity UUID, name, logical/physical mapping, memory total/free/used/utilization and foreign PID snapshot logged; no switching physical GPU after first model forward or across OFF A/A sessions.",
-    "Queue is CPU-only with no CUDA imports/model weights/simulator/episodes. Before selection, no foreign compute process, gpu used<=4000MiB, utilization<=30%, free>6823.390767MiB; three consecutive stable 30s polls, max 12h wait; terminate queue without experiment if PI authorization expired or queue timeout.",
-    "Optional GPU_HOLD_ENABLED=1 only when shared-lab norms permit: one owner-spawned hold PID at chosen GPU, <=4096MiB memory, <=120 seconds, no CPU/GPU heavyweight busy-loop, bound/verify UUID/index, trap EXIT/INT/TERM, kill/wait only that exact recorded live child PID (and only own processes). Never kill/restart other people's processes, run pkill/killall, issue nvidia-smi --gpu-reset, or use sudo/control other jobs.",
-    "Before launching Gate B child, release only own hold process and verify it exited, immediately re-check selected physical GPU no foreign compute and free>6823.390767MiB; if race/busy, enter bounded waiting again while still within one attempt and BEFORE any GPU Actor/model child forward. After model starts, no automatic restart or GPU selection failover.",
-    "Map chosen physical GPU with CUDA_VISIBLE_DEVICES=<id> (single element) into ALL Gate B/C children; torch.cuda device 0 represents selected physical card, original --gpu_devices 0 continues to mean local mapped device. Do not hardcode physical 0 in runner; verify child startup reports matching GPU UUID and torch.cuda.device_count=1.",
-    "Queue_wait_seconds measured independently from experiment_elapsed_seconds. Experiment time hard cap 8h starts at model/GPU phase launch, excludes prior waiting. Queue maximum12h separate, but no waiting/launch after authorization expiry; no budget carried between attempts. Preserve all timestamps and intervals.",
-    "Offline Gate B exactly original 001A capture sha417e684e96563b043138d328776d693f05dc74bb7c074099dea39c3b5881500e, 600 pairs input matched same RNG and layer K/V, raw root actor logits/distribution/probs/cache max_abs<=1e-5, action/sampler/RNG/forward counts exact; root Actor-only counter/KV reset without critic or augmentation modification",
-    "Gate C two independent OFF-only one-worker persistent-Agent 5-task sessions, 200-row original frozen manifest SHA256 8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0, source indices127,103,16,6,50; original loader cross-check before episodes; seed123 shuffle=true, greedy=false, test_augmentation=true, horizon600; exact official pre-step five-component Safety Cost and SR success>0.1",
-    "Only noninvasive instrumentation; do not add model forward, RNG draw, simulator/controller query, per-task reseed, silent retry, new seed or ON intervention. If original offline/online metrics/cost mismatch stop and retain partial evidence."
+    "Use accepted B0 policy checkpoint SHA256 05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301; DINO weights SHA256 b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9; source B0 identity SHA 2aa82559d272b5f888e53433e258914057f15bed plus separately approved local DINO adapter; proposed P2 logger implementation base bb71a65609f59e961049029805ec16c06be7240a; any minimal permitted waiver/launcher edits must be committed, hashed and separately identified. B0 and prior claims/outputs remain untouched.",
+    "ObjectNavType, minival, eval_set_size=200, 200-row TaskSpec SHA256 8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0, exact original ordering; source indices first five127,103,16,6,50; recompute and check before model construction; no alternate subset.",
+    "num_workers=1 in same process, one persistent Agent across Episodes in each group; two independent process/model init; seed=123, shuffle=true, greedy=false, test_augmentation=true, max original task horizon 600, official evaluator action mapping, actual success and five-part Safety Cost collected pre-step. No extra sampling/forward/logger model query, no per-episode manual reseed.",
+    "ON reset only root Actor counter and every root attention K/V at each Episode boundary; no critic/Cost Critic reset, RNG/augmentation reset, additional model forward; OFF does not change original B0 Actor lifecycle. Both groups share logger and exact code. Verify per-boundary root/critic snapshots using existing passive Logger; do not run separately staged GPU logger equality tests.",
+    "Record all original raw Actor logits each actual decision, normalized logits, probabilities, stochastic sampled action, final executed action, task ID, episode/step, boundary Actor/critic states, complete original official metrics and 5-part cost; lossless storage and strict validator. Loss of row, changed B0, metrics drift or incomplete phase => STOP and preserve partial raw evidence.",
+    "Approved PI waiver: GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED; deliberately skip 600-saved-input GPU logger-off/on comparison, and do not require/report PASS or generate forged equivalence JSON. Engineer only minimal explicit waiver and standalone sequential runner in new isolated development worktree, CPU static/unit tests okay; no GPU preflight or test Episode.",
+    "One physical GPU from 0,1,2,3, no foreign compute processes, used<=4000 MiB, util<=30%, free>6823.390767 MiB, 3 stable polls spaced 30s, queue max12h before first model import; no user jobs killed, no sudo/pkill/killall/GPU reset. GPU hold OFF by default; if group conventions explicitly allow, only <=4096MiB <=120s self-spawned hold, release self exact PID before running. No switch after first GPU policy forward; physical→logical mapping verified, simulator renderer GPU mapping recorded.",
+    "Sequential OFF and ON both on same physical GPU; if OFF fails/incomplete/over budget, ON NOT_STARTED. No retry, resume, second seed, different tasks, alternate GPU after start, hidden smoke tests or fake metrics. With failure report BLOCKED/INVALID/ABORTED and hand off real artifacts for PI review.",
+    "Max 1 GPU concurrent, max 400 live Episode starts, max 240000 live policy decisions, 168h total actual experiment GPU wall-time budget (excluding <=12h queue), max 100GiB combined research artifacts and official outputs, approval expires as hard stop; stop/record once a cap is reached, never auto-extend."
   ],
   "metrics": [
-    "GPU queue candidate 0-3 poll logs and user process detection, selected UUID/physical/logical mapping, timestamp and free/used/util, stability count, optional hold PID own-process lifecycle memory cap and<=120s duration, race-release verification and 12h queue timeout vs 8h experiment GPU clock",
-    "P1R Gate A accepted provenance CPU hashes and tests; no GPU/online claim from prior CPU only",
-    "Gate B 600 paired saved inputs exact logits/prob/KV counters<=1e-5, exact actions, sample and rng/forward counts; actor-only boundary reset and critic/other state preserved",
-    "Gate C 200 TaskSpecs exact order and first 5 source indices, 2 independent OFF five-task sessions official success and 5-part cost reconciliation and trajectories/A/A variation",
-    "Budget one selected physical GPU max, 10 episode initialization attempts, 6000 online decisions, 2400 offline combined policy forwards, 8h experiment clock plus separate max12h queue clock and 50GiB raw output, no budget transfer",
-    "Full status/stop evidence of queue wait, Gate B and Gate C, GPU memory pressure and source/weight preservation."
+    "official overall OFF and ON n=200 SR, cost sum/mean/SD/quantiles, Delta SR and Delta observed Safety Cost; per-task pair and five components danger/corner/blind/fragile/critical",
+    "per decision full raw root actor logits exact dtype/shape/action indices, normalized logits and action probabilities, end probability and entropy; decision vs executed action and first divergence; 200 TaskSpec order verification and complete log hashes",
+    "boundary root Actor cache/counter and critic unchanged snapshots, no extra forward/sampling/controller queries in logger code; real-runtime invariants and fail-closed alerts, NOT a separate GPU equivalence test",
+    "per-task action entropy, end-action/early stopping, repeated action/ABA oscillation proxies and JS divergence; label differing-observation online comparisons as descriptive, not causal same-input",
+    "runtime provenance including GPU UUID/physical/logical, checkpoint/DINO/source hashes, Python deps/seed/manifest, per-group start/end/exit, budget counters, stderr/partial evidence and chain of control approval/claim/CI"
   ],
-  "expected_result": "After bounded CPU-only queue safely selects one compatible idle card, 600 logger pairs and root-Actor-only/critic isolated reset invariants pass, then two independent unchanged OFF five-task sessions complete with official source/metrics and audit trail. Hand evidence to PI for P2 decision only, not SR/Cost ON effect claim.",
-  "falsifying_result": "No safe capacity until 12h wait or grant expiry, foreign compute process after hold release, selected GPU mismatch, queue memory reservation violation, clock overrun or aggressive interference, unexplainable logger/critic/online metric mismatch, or incomplete task/control. Preserve evidence and mark BLOCKED/INVALID; no new on-the-fly repair or retry.",
+  "expected_result": "Two validated 200-episode independent OFF and Actor-only ON runs with complete lossless per-decision root logits and official SR/observed Safety Cost, aligned task IDs/manifest and cautious paired descriptive comparison; or bounded partial failure with honest status. No assumed direction of improvement.",
+  "falsifying_result": "Actor-only ON reset has no reliable SR/Cost change or deteriorates it; paired logits differences can be driven by divergent trajectories/stochasticity. Any implementation identity, task, metrics, output integrity, GPU safety or budget guard failure invalidates/blocks scientific inference and stops further episode starts.",
   "alternative_explanations": [
-    "GPU0 pre-Gate B block on previous P1R was only instantaneous capacity scarcity, not proof that the model needs 6823MiB or a GPU failure.",
-    "Legacy eval.sh queue/hold is an implementation reference, not a scientifically valid full P1R2 evaluator; its greedy=true and typo shuffle=flase defaults must not be inherited.",
-    "Hold process is a courtesy lock only, not real exclusive GPU reservation; other users may still schedule work. Race handling must be fail-closed and non-destructive.",
-    "CPU Attention lifecycle PASS is limited to fixture weights and CPU; CUDA cache, logger, critic, official metrics unverified.",
-    "OFF/OFF stochastic independent sessions may diverge without reset treatment, and should not be interpreted as causal reset success/failure."
+    "Logged ON/OFF logits differ because actions and later observations diverge; time-matched step is not identical-input proof.",
+    "Stochastic policy action sampling despite same seed, test augmentation and simulator rendering create residual variability; do not claim same trajectories.",
+    "No GPU Logger equivalence test was done by deliberate PI waiver; logger-side noninterference remains a limitation, not a passing result.",
+    "Slow real per-step storage may affect wall time, and shared GPU rendering/resource races may cause failures; no aggressive process control."
   ],
   "stop_conditions": [
-    "Never start queue, model or GPU until independent new P1R2 approved commit CI SUCCESS and unique Executor claim+claim CI SUCCESS",
-    "Queue timeout after 12 hours, approval expiration, no GPU0-3 compatible/free under strict original free>6823.390767MiB, or foreign-process interference; classify BLOCKED, preserve logs, no retry",
-    "No kill/killall/pkill/sudo/nvidia-smi reset or interrupt of any non-owned process; optional own GPU hold must be removed before model start and at any exit; failure to release => STOP",
-    "GPU hold >4096MiB or >120 seconds, queue busy-loop or model initialized in waiting process, invalid UUID/physical mapping or any fallback that chooses a card not in {0,1,2,3}; STOP",
-    "Any logger abs diff>1e-5 or action/RNG/call-count mismatch, critic/augmentation/weights mutation, B0 source diff, invalid saved input; STOP before episodes",
-    "Any original full-200 manifest/TaskSpec reorder or missing task, official SR/Cost component timing mismatch, altered sampling/augmentation/greedy settings, inability to keep two OFF sessions on same chosen GPU; STOP",
-    "Resource hard caps 1 simultaneous GPU, 10 live episodes, 6000 live decisions, 2400 offline policy forwards, 8 GPU-hours excluding queue wait, 50GiB output; no auto-rerun after launched GPU stage",
-    "No P2 OFF200/ON200 or ON live, no unapproved further modifications; stop with evidence handoff once Gate C completes or any stop condition hits."
+    "Until PI approved control commit CI SUCCESS and unique CODEX claim+claim CI SUCCESS, zero simulator/model/GPU/episode starts; no reuse P1R2 prior approval or old claim.",
+    "Hard waiver may ONLY substitute for separate 600-pair GPU Logger equivalence gate. Never bypass checkpoint, manifest, source, action mapping, output-integrity, GPU occupancy, controls or stop conditions; report waiver truthfully.",
+    "User GPU processes unaffected; CPU-only queue 0-3 max12h, stable 3x30s, no foreign PIDs, used<=4000MiB util<=30%, free>6823.390767MiB. No heavy CUDA or simulator init while queuing; keep same GPU after first forward.",
+    "At most 1 concurrent GPU, 400 episode init attempts, 240000 online policy decisions, 168h actual GPU run, 100GiB disk, effective authorization deadline; at cap STOP, don't rerun.",
+    "Any partial/incomplete OFF, artifact loss, action/TaskSpec mismatch, source/weight mismatch, illegal critic reset, logger numerical/runtime exception or officially incorrect cost => STOP, ON NOT_STARTED. Any ON error preserves OFF and all ON partial artifacts, no reruns.",
+    "No claim of causal same-observation logits effects from online divergent observations. Hand back C result to PI then STOP; never self-approve or execute next cycle."
   ],
   "command": [
-    "/home/amax/.conda/envs/safevla/bin/python",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/run_p1r2_preflight.py"
+    "bash",
+    "diagnostics/actor_logits/run_p2_full400.sh"
   ],
   "required_outputs": [
-    "research/handoffs/actor-reset-full200-p1r2-20261010/RESULT_SUMMARY.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/RUN_MANIFEST.json",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/REVIEW_NOTES.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/TASK_MANIFEST.csv",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/AA_VALIDATION.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/LOGGER_EQUIVALENCE.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/RESET_INVARIANTS.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/P1R2_RESOURCE_PROFILE.json",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/run_p1r2_preflight.py",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/validate_p1r2_outputs.py",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/GATE_A_PROVENANCE.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/GPU_QUEUE_REPORT.json",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/GPU_QUEUE_LOG.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/IMPLEMENTATION_DIFF.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/LOGIT_AND_COST_SCHEMA.md",
-    "research/handoffs/actor-reset-full200-p1r2-20261010/GATE_STATUS.json"
+    "research/handoffs/actor-reset-off200-on200-20261012/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-off200-on200-20261012/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-off200-on200-20261012/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/LOGGER_WAIVER.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-off200-on200-20261012/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/VALIDATION_SUMMARY.md",
+    "research/handoffs/actor-reset-off200-on200-20261012/GPU_QUEUE_REPORT.json"
   ],
   "resources": {
     "max_gpu": 1,
-    "max_episodes": 10
+    "max_episodes": 400
   }
 }
