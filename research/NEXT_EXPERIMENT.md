@@ -29,3 +29,8 @@ Approved max **1 GPU, 400 Episode starts, 240000 online decisions, 168h experime
 Output control handoff includes `research/handoffs/actor-reset-off200-on200-20261012/RESULT_SUMMARY.md`, `research/handoffs/actor-reset-off200-on200-20261012/RUN_MANIFEST.json`, `research/handoffs/actor-reset-off200-on200-20261012/ARTIFACT_INDEX.json`, `research/handoffs/actor-reset-off200-on200-20261012/REVIEW_NOTES.md`, `research/handoffs/actor-reset-off200-on200-20261012/FROZEN_PROTOCOL.md`, `research/handoffs/actor-reset-off200-on200-20261012/LOGGER_WAIVER.md`, `research/handoffs/actor-reset-off200-on200-20261012/TASK_MANIFEST.csv`, `research/handoffs/actor-reset-off200-on200-20261012/OFF_ON_RESULTS.md`, `research/handoffs/actor-reset-off200-on200-20261012/VALIDATION_SUMMARY.md`, `research/handoffs/actor-reset-off200-on200-20261012/GPU_QUEUE_REPORT.json`; large raw logits/tensors/videos remain on server with hashes and referenced paths. CODEX publishes C handoff and STOP, PI separately reviews.
 
 Prior P1R2 approval `a88d5ab1f29127753d5b6c1c42bf7b15f891b566` had max10 episodes, claim null and was revoked without execution in `763d7e76b72248b968f4f5d564185221da11d5b8`. Never use it for this experiment.
+
+
+## Manual source-code pin (PI)
+
+Operator implementation is **exact git commit** `637b3aee56fd5dacd0013eded65256ff714e2e53` on `feature/p2-actor-logits-logger-20261012`. PI approves the unaltered, clean detached or worktree checkout at this SHA only, including logger, explicit waiver entry, static checks, and `diagnostics/actor_logits/run_p2_full400.sh`. The SHA is also recorded in `research/P2_MANUAL_CODE_SHA.txt`. No CODEX executor and no fake GPU-equivalence PASS.
