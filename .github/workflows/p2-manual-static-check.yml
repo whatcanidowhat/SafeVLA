@@ -1,0 +1,33 @@
+name: p2-manual-static-check
+on:
+  push:
+    branches: [feature/p2-actor-logits-logger-20261012]
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Python AST parse without importing model or GPU
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          paths = [Path('diagnostics/actor_logits/evaluate.py'),
+                   Path('diagnostics/actor_logits/logger.py'),
+                   Path('diagnostics/actor_logits/manifest.py'),
+                   Path('diagnostics/actor_logits/storage.py'),
+                   Path('diagnostics/actor_logits/reset.py'),
+                   Path('diagnostics/actor_logits/validate.py'),
+                   Path('diagnostics/actor_logits/analyze.py')]
+          for p in paths:
+              ast.parse(p.read_text(), filename=str(p))
+          print('P2_MANUAL_STATIC_PY_PASS files='+str(len(paths)))
+          PY
+      - name: Shell parser check only, no GPU or subprocess evaluation
+        run: bash -n diagnostics/actor_logits/run_p2_full400.sh
