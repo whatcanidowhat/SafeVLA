@@ -1,9 +1,9 @@
 # PI Cycle — 001D P1R2: four-GPU shared queue, offline logger and OFF/OFF preflight
 
 Experiment ID: EXP-ACTOR-RESET-FULL200-001D-P1R2
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-full200-p1r2-20261010
-Authorization: APPROVED_FOR_CODEX — 1 concurrent GPU / max10 live starts; approval expires 2026-10-12T15:59:28.150Z; no queue, model or episode before green CODEX claim CI.
+Authorization: REVOKED by PI before claim; 0 episodes; superseded by pending full400 experiment.
 
 ## Rationale and approvals
 
