@@ -268,13 +268,21 @@ class InferenceAgentVIDA(InferenceAgent):
 
         agent_input = self.rollout_storage.agent_input_for_next_step()
 
+        actor_logger = getattr(self, "actor_logits_logger", None)
+        if actor_logger is not None:
+            actor_logger.begin_decision(agent_input)
+
         actor_critic_output, self.memory = cast(
             Tuple[ActorCriticOutput[DistributionType], Optional[Memory]],
             self.actor_critic(**agent_input),
         )
 
+        if actor_logger is not None:
+            actor_logger.note_sampling_call("sample")
         action = actor_critic_output.distributions.sample()
 
+        if actor_logger is not None:
+            actor_logger.note_sampling_call("mode")
         action_greedy = actor_critic_output.distributions.mode()
 
         # NOTE: Last action flat is always stochastic
@@ -293,4 +301,8 @@ class InferenceAgentVIDA(InferenceAgent):
             action_str = self.get_action_list()[
                 su.action_list(self.actor_critic.action_space, self.last_action_flat)[0]
             ]
+        if actor_logger is not None:
+            actor_logger.policy_result(
+                actor_critic_output, action, action_greedy, self.last_action_flat, action_str
+            )
         return action_str, actor_critic_output.distributions.probs[0][0]

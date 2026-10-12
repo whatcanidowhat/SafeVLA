@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, List, Optional, Sequence, Union, cast
 
 import gym
@@ -102,9 +103,25 @@ class DinoViTPreprocessor(Preprocessor):
     @property
     def vit(self) -> DinoViTEmbedder:
         if self._vit is None:
-            self._vit = DinoViTEmbedder(
-                model=torch.hub.load("facebookresearch/dinov2", self.dino_model_type),
-            ).to(self.device)
+            local_repo = os.environ.get("DINOV2_REPO")
+            local_checkpoint = os.environ.get("DINOV2_CKPT")
+            if local_repo is not None or local_checkpoint is not None:
+                if not local_repo or not local_checkpoint:
+                    raise ValueError("Set both DINOV2_REPO and DINOV2_CKPT")
+                if not os.path.isdir(local_repo):
+                    raise FileNotFoundError(local_repo)
+                if not os.path.isfile(local_checkpoint):
+                    raise FileNotFoundError(local_checkpoint)
+                model = torch.hub.load(
+                    local_repo, self.dino_model_type, source="local", pretrained=False
+                )
+                model.load_state_dict(
+                    torch.load(local_checkpoint, map_location="cpu", weights_only=True),
+                    strict=True,
+                )
+            else:
+                model = torch.hub.load("facebookresearch/dinov2", self.dino_model_type)
+            self._vit = DinoViTEmbedder(model=model).to(self.device)
             for module in self._vit.modules():
                 if "BatchNorm" in type(module).__name__:
                     module.momentum = 0.0

@@ -1,0 +1,78 @@
+{
+  "scope": "Development deliverables; excludes this index itself",
+  "files": {
+    "architecture/models/allenact_transformer_models/inference_agent.py": {
+      "sha256": "69016c0e2f1d4807eefef8465e00dec2f1920973c51cacd96113822979401e75",
+      "bytes": 10874
+    },
+    "online_evaluation/online_evaluator_worker.py": {
+      "sha256": "c2a6a39cc7ef0fd4638823bec9d3a3641770f318b15a0053455519713cbb0363",
+      "bytes": 27687
+    },
+    "architecture/allenact_preprocessors/dino_preprocessors.py": {
+      "sha256": "c522a81eec3169ce93c96104fd6d040f9e6943270c2d962390266318e77f7e7b",
+      "bytes": 9242
+    },
+    "diagnostics/actor_logits/CPU_TEST_RESULTS.txt": {
+      "sha256": "ca68030c1b8e43158fd78fbc8ceafbf23b0cebb5be34e41535f57b6c0f43f5e2",
+      "bytes": 1871
+    },
+    "diagnostics/actor_logits/LOGGER_INVARIANTS.md": {
+      "sha256": "44c6cd2a12d95fdc655618d50cdecdfa82384608816dfea5441348e63ae02138",
+      "bytes": 4138
+    },
+    "diagnostics/actor_logits/LOG_SCHEMA.md": {
+      "sha256": "e73fe58e13dd0b9f9dde7c4f0cd9bb9e2fabf50ec00b2c76cfd26fe95cfe792b",
+      "bytes": 5290
+    },
+    "diagnostics/actor_logits/PROPOSED_COMMANDS.md": {
+      "sha256": "07e837aaead285f4d264e0a964b5a3c7ff448bdd7320878d5034d441cd2a4717",
+      "bytes": 5225
+    },
+    "diagnostics/actor_logits/VALIDATION_SUMMARY.md": {
+      "sha256": "1d73730ad34afb85cc9bf7b01dbf2716104b98699b0138b3914531ae35142e2b",
+      "bytes": 5330
+    },
+    "diagnostics/actor_logits/__init__.py": {
+      "sha256": "9761eedb515716a75559d8b73f81623e86864346d6bbbcabac538635eedc6567",
+      "bytes": 82
+    },
+    "diagnostics/actor_logits/analyze.py": {
+      "sha256": "12134020a658cb8b882a1631739d8d729e6314951963ae9fc161fd17bff930d6",
+      "bytes": 5716
+    },
+    "diagnostics/actor_logits/evaluate.py": {
+      "sha256": "071631cceff99535edb6788696a01f0e416ab8a8e4733058074f3717fe80f5d9",
+      "bytes": 10977
+    },
+    "diagnostics/actor_logits/logger.py": {
+      "sha256": "ba2ebc425e24a86f2e1f2e962e3e83b08e4d06d4acbd4d7e7908168986907eb2",
+      "bytes": 12415
+    },
+    "diagnostics/actor_logits/manifest.py": {
+      "sha256": "2fe203a57db5806936229f314994563aab92a1833120b998f6036e54a8ca950e",
+      "bytes": 3533
+    },
+    "diagnostics/actor_logits/reference_identity.json": {
+      "sha256": "3e80fdc0d3ecb8a62d686de2ac35fc6cb0305cbf7c41c14ad8c01c83a94ca39a",
+      "bytes": 30703
+    },
+    "diagnostics/actor_logits/reset.py": {
+      "sha256": "6acce304f914b94082954a968250d58ca7cd80ef1ad7b99cef07b50dae0201d1",
+      "bytes": 242
+    },
+    "diagnostics/actor_logits/storage.py": {
+      "sha256": "d0874bbe6b4ad3a83237e6530310d115ef33aae3c2f2c7eebfd19c9c8cd0c5b9",
+      "bytes": 6398
+    },
+    "diagnostics/actor_logits/tests/test_logger.py": {
+      "sha256": "2d71b96e329b06e31a40a21f4b13ecba082d5d8b2dd8120f424c3878ad85c978",
+      "bytes": 19550
+    },
+    "diagnostics/actor_logits/validate.py": {
+      "sha256": "4e961aef80b87ae956c770de5392cbb163069d6eb0cab7ea1dc7b6fb23d3f18e",
+      "bytes": 8145
+    }
+  },
+  "total_indexed_bytes": 167418
+}

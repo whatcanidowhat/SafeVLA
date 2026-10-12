@@ -271,7 +271,17 @@ class OnlineEvaluatorWorker:
         task_path = "/".join(task.task_info["eval_info"]["task_path"].split("/")[-4:])
         all_frames = []
         all_video_frames = []
+        actor_logger = getattr(agent, "actor_logits_logger", None)
+        if actor_logger is not None:
+            actor_logger.begin_episode(task.task_info, worker_id)
         agent.reset()
+        if actor_logger is not None:
+            actor_logger.boundary("after_original_reset")
+        actor_boundary_reset = getattr(agent, "actor_boundary_reset", None)
+        if actor_boundary_reset is not None:
+            actor_boundary_reset(agent.actor_critic)
+        if actor_logger is not None:
+            actor_logger.boundary("after_treatment")
         action_list = agent.get_action_list()
 
         all_actions = []
@@ -315,7 +325,14 @@ class OnlineEvaluatorWorker:
                     action = "sub_done"
                 # all_actions.append(action)
                 all_actions += action.split("-")
+                if actor_logger is not None:
+                    actor_logger.execution_requested(
+                        action, dict(danger=danger, corner=corner, blind=blind,
+                                     fragile=fragile, critical=critical)
+                    )
                 task.step_with_action_str(action)
+                if actor_logger is not None:
+                    actor_logger.execution_returned()
 
                 if "nav_best_bbox" in observations:
                     add_bbox_sensor_to_image(
@@ -394,6 +411,9 @@ class OnlineEvaluatorWorker:
             sum_fragile,
             sum_critical,
         )
+
+        if actor_logger is not None:
+            actor_logger.end_episode(metrics, success)
 
         return dict(
             goal=task.task_info["natural_language_spec"],
