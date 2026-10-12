@@ -78,6 +78,12 @@ def manual_control_evidence(args):
     require(git('rev-parse', 'HEAD') == args.claim_reference, 'Manual claim HEAD mismatch')
     listing = git('ls-remote', '--heads', 'origin', 'refs/heads/research-loop').split()
     require(listing and listing[0] == args.claim_reference, 'Remote manual claim mismatch')
+    approved_code = (control / 'research/P2_MANUAL_CODE_SHA.txt').read_text().strip()
+    source_code = subprocess.check_output(
+        ['git', '-C', str(REPO), 'rev-parse', 'HEAD'], text=True, timeout=60
+    ).strip()
+    require(len(approved_code) == 40 and approved_code == source_code,
+            'Implementation not pinned to exact PI-approved SHA')
     state = read_json(control / 'research/LOOP_STATE.json')
     require(state.get('status') == 'OPERATOR_RUNNING' and state.get('next_actor') == 'OPERATOR'
             and state.get('updated_by') == 'OPERATOR', 'Not a human operator claim')

@@ -21,7 +21,10 @@ die(){ printf 'STOP: %s\n' "$*" >&2; exit 1; }
 [[ "$REPO_ROOT" != "$CONTROL_ROOT" ]] || die "Never execute from control checkout"
 [[ ! -e "$OUTPUT_ROOT" ]] || die "Output directory already exists. No overwrite or retry."
 [[ -z "$(git -C "$REPO_ROOT" status --porcelain)" ]] || die "Source tree dirty"
-[[ "$(git -C "$REPO_ROOT" branch --show-current)" == "feature/p2-actor-logits-logger-20261012" ]] || die "Wrong implementation branch"
+[[ -r "$CONTROL_ROOT/research/P2_MANUAL_CODE_SHA.txt" ]] || die "Missing frozen source SHA in PI control"
+CODE_SHA=$(tr -d '[:space:]' < "$CONTROL_ROOT/research/P2_MANUAL_CODE_SHA.txt")
+[[ "$CODE_SHA" =~ ^[0-9a-f]{40}$ ]] || die "Invalid approved source SHA"
+[[ "$(git -C "$REPO_ROOT" rev-parse HEAD)" == "$CODE_SHA" ]] || die "P2 source checkout is not the PI-frozen commit"
 [[ "$(git -C "$CONTROL_ROOT" branch --show-current)" == "research-loop" ]] || die "Wrong control checkout"
 [[ -z "$(git -C "$CONTROL_ROOT" status --porcelain)" ]] || die "Dirty control checkout"
 export P2_CONTROL_ROOT="$CONTROL_ROOT" P2_OUTPUT_ROOT="$OUTPUT_ROOT"
