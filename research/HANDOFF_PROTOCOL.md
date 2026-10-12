@@ -172,3 +172,10 @@ Local proxy port 7896 must still be available; verify connectivity before any mu
 not a service installed by bootstrap. The claim tool inherits proxy environment without recording full env or secrets.
 No proxy URL containing authentication may be persisted. A failed tunnel/fetch/push stops the claim; never bypass
 publication acknowledgement or claim CI. This transport setup alone does not approve or execute a task.
+
+
+## PI-authorized human-operator execution route (2026-10-12)
+
+The PI may switch an **unclaimed** approval to a human-operator route by first revoking to PI_REVIEW, then independently approving APPROVED_FOR_OPERATOR. State path: PI_REVIEW -> APPROVED_FOR_OPERATOR -> OPERATOR_RUNNING -> AWAITING_PI_REVIEW -> PI_REVIEW. A human operator must run **scripts/research_loop_manual_claim.py** from their authenticated, clean research-loop control checkout only after approval CI SUCCESS. The manual tool validates the exact HEAD and deadline, issues one atomic non-force unique claim, and NEVER starts the model. The operator waits for the distinct claim commit CI SUCCESS, verifies the exact remote claim HEAD, and then runs only the approved one-shot command in a separate isolated experiment tree. Any missing guard is STOP; never fake claims, success or GPU equivalence PASS.
+
+A human operator may return BLOCKED/INVALID/ABORTED or AWAITING_PI_REVIEW with real handoff artifacts, while PI owns the final review. If PI and operator are one human, record that plainly; CI enforces structural invariants but is not an independent scientific reviewer. The waiver GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED applies only to the explicitly approved experiment and is NOT a PASS. All budgets, local provenance, shared-GPU safety, no retries, and terminal evidence rules remain unchanged. The old CODEX-only route and its history remain valid and unchanged.

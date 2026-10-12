@@ -9,8 +9,8 @@
     "state_version": {"type": "integer", "minimum": 1},
     "cycle_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"},
     "experiment_id": {"type": "string", "pattern": "^EXP-[A-Z0-9-]+$"},
-    "status": {"enum": ["PI_REVIEW", "APPROVED_FOR_CODEX", "CODEX_RUNNING", "AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"]},
-    "next_actor": {"enum": ["PI", "CODEX"]},
+    "status": {"enum": ["PI_REVIEW", "APPROVED_FOR_CODEX", "CODEX_RUNNING", "APPROVED_FOR_OPERATOR", "OPERATOR_RUNNING", "AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"]},
+    "next_actor": {"enum": ["PI", "CODEX", "OPERATOR"]},
     "control_branch": {"const": "research-loop"},
     "execution_worktree": {"type": ["string", "null"], "pattern": "^/"},
     "instruction_commit": {"$ref": "#/$defs/commit"},
@@ -30,7 +30,7 @@
       }
     },
     "required_outputs": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string", "pattern": "^research/handoffs/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+$"}},
-    "updated_by": {"enum": ["PI", "CODEX", "CODEX_BOOTSTRAP"]},
+    "updated_by": {"enum": ["PI", "CODEX", "OPERATOR", "CODEX_BOOTSTRAP"]},
     "updated_at_utc": {"type": "string", "format": "date-time"}
   },
   "$defs": {"commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}}

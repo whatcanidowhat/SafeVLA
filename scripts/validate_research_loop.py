@@ -17,8 +17,16 @@ NEXT = "research/NEXT_EXPERIMENT.md"
 DESIGN = "research/NEXT_EXPERIMENT.json"
 BASE_OUTPUTS = {"RESULT_SUMMARY.md", "RUN_MANIFEST.json", "ARTIFACT_INDEX.json", "REVIEW_NOTES.md"}
 ACTOR = {"PI_REVIEW": "PI", "APPROVED_FOR_CODEX": "CODEX", "CODEX_RUNNING": "CODEX",
+         "APPROVED_FOR_OPERATOR": "OPERATOR", "OPERATOR_RUNNING": "OPERATOR",
          "AWAITING_PI_REVIEW": "PI", "BLOCKED": "PI", "INVALID": "PI", "ABORTED": "PI"}
 EDGES = {("PI_REVIEW", "APPROVED_FOR_CODEX"): "PI",
+         ("PI_REVIEW", "APPROVED_FOR_OPERATOR"): "PI",
+         ("APPROVED_FOR_OPERATOR", "PI_REVIEW"): "PI",
+         ("APPROVED_FOR_OPERATOR", "OPERATOR_RUNNING"): "OPERATOR",
+         ("OPERATOR_RUNNING", "AWAITING_PI_REVIEW"): "OPERATOR",
+         ("OPERATOR_RUNNING", "BLOCKED"): "OPERATOR",
+         ("OPERATOR_RUNNING", "INVALID"): "OPERATOR",
+         ("OPERATOR_RUNNING", "ABORTED"): "OPERATOR",
          ("APPROVED_FOR_CODEX", "PI_REVIEW"): "PI",
          ("APPROVED_FOR_CODEX", "CODEX_RUNNING"): "CODEX",
          ("CODEX_RUNNING", "AWAITING_PI_REVIEW"): "CODEX",
@@ -430,9 +438,9 @@ def validate_snapshot(view):
         require(utc(auth["expires_at_utc"]) > utc(auth["approved_at_utc"]), "approval expiration invalid")
         require(d["required_outputs"] == s["required_outputs"], "design outputs mismatch")
         require(d["resources"] == {"max_gpu": auth["max_gpu"], "max_episodes": auth["max_episodes"]}, "design resource mismatch")
-    if s["status"] == "APPROVED_FOR_CODEX":
+    if s["status"] in {"APPROVED_FOR_CODEX", "APPROVED_FOR_OPERATOR"}:
         require(s["instruction_commit"] is None and s["claim_id"] is None, "approval cannot pre-claim")
-    if s["status"] in {"CODEX_RUNNING", "AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"}:
+    if s["status"] in {"CODEX_RUNNING", "OPERATOR_RUNNING", "AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"}:
         require(s["instruction_commit"] and s["claim_id"], "missing instruction_commit / claim_id")
     if s["status"] in {"AWAITING_PI_REVIEW", "BLOCKED", "INVALID", "ABORTED"}:
         require(all(view.exists(x) and len(view.read(x)) > 0 for x in s["required_outputs"]), "handoff outputs incomplete")
@@ -472,10 +480,10 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
     require(edge in EDGES and n["updated_by"] == EDGES.get(edge), "illegal transition or actor")
     require(n["cycle_id"] == o["cycle_id"] and n["experiment_id"] == o["experiment_id"], "active cycle/experiment changed")
     require(n["control_branch"] == o["control_branch"], "control branch changed")
-    if edge == ("PI_REVIEW", "APPROVED_FOR_CODEX"):
+    if edge in {("PI_REVIEW", "APPROVED_FOR_CODEX"), ("PI_REVIEW", "APPROVED_FOR_OPERATOR")}:
         require(n["authorization"]["approved_by"] == "PI", "only PI approval is accepted")
         require(n["reviewed_result_commit"] == o["reviewed_result_commit"], "approval cannot fabricate review receipt")
-    elif edge == ("APPROVED_FOR_CODEX", "PI_REVIEW"):
+    elif edge in {("APPROVED_FOR_CODEX", "PI_REVIEW"), ("APPROVED_FOR_OPERATOR", "PI_REVIEW")}:
         require(o["instruction_commit"] is None and o["claim_id"] is None,
                 "PI may revoke only an unclaimed approval")
         require(n["authorization"]["status"] == "NOT_AUTHORIZED",
@@ -490,7 +498,7 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
                 and n["execution_worktree"] == o["execution_worktree"],
                 "revocation cannot change frozen execution paths")
         return
-    elif edge == ("APPROVED_FOR_CODEX", "CODEX_RUNNING"):
+    elif edge in {("APPROVED_FOR_CODEX", "CODEX_RUNNING"), ("APPROVED_FOR_OPERATOR", "OPERATOR_RUNNING")}:
         require(n["instruction_commit"] == parent_sha, "instruction_commit must equal pre-claim remote HEAD")
         require(old_view.read(DESIGN) == new_view.read(DESIGN) and old_view.read(NEXT) == new_view.read(NEXT), "claim changed PI instructions")
         require(n["authorization"] == o["authorization"], "claim changed authorization")
@@ -518,7 +526,7 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
     if edge not in {("AWAITING_PI_REVIEW", "PI_REVIEW"), ("BLOCKED", "PI_REVIEW"),
                     ("INVALID", "PI_REVIEW"), ("ABORTED", "PI_REVIEW")}:
         require(n["reviewed_result_commit"] == o["reviewed_result_commit"], "executor cannot acknowledge PI review")
-    if edge != ("PI_REVIEW", "APPROVED_FOR_CODEX"):
+    if edge not in {("PI_REVIEW", "APPROVED_FOR_CODEX"), ("PI_REVIEW", "APPROVED_FOR_OPERATOR")}:
         require(n["required_outputs"] == o["required_outputs"] and n["execution_worktree"] == o["execution_worktree"], "frozen execution conditions changed")
 
 
@@ -535,7 +543,7 @@ def audit_tree(view):
         files = git(view.root, "ls-files", "--cached", "--others", "--exclude-standard", "-z").decode().split("\0")
         files = sorted(set(filter(None, files)))
     allowed = {"AGENTS.md", ".gitignore", ".github/workflows/research-loop-validate.yml",
-               ".codex/skills/safevla-research-loop/SKILL.md", "scripts/research_loop_claim.py",
+               ".codex/skills/safevla-research-loop/SKILL.md", "scripts/research_loop_claim.py", "scripts/research_loop_manual_claim.py",
                "scripts/validate_research_loop.py", "scripts/test_research_loop.py"}
     for path in files:
         require(path in allowed or path.startswith("research/"), "outside control whitelist: " + path)
@@ -572,9 +580,9 @@ def validate_history(root, head="HEAD"):
             validate_transition(old_view, v, parent, bootstrap=parent is None)
             n = raw_state
         o = old_view.data(STATE) if parent else None
-        if n["status"] == "APPROVED_FOR_CODEX" and (not o or o["status"] != "APPROVED_FOR_CODEX"):
+        if n["status"] in {"APPROVED_FOR_CODEX", "APPROVED_FOR_OPERATOR"} and (not o or o["status"] != n["status"]):
             require(n["cycle_id"] not in used_cycles, "cycle already executed; PI must choose a new cycle")
-        if n["status"] == "CODEX_RUNNING" and (not o or o["status"] != "CODEX_RUNNING"):
+        if n["status"] in {"CODEX_RUNNING", "OPERATOR_RUNNING"} and (not o or o["status"] != n["status"]):
             require(n["cycle_id"] not in used_cycles, "cycle has already been claimed")
             used_cycles.add(n["cycle_id"])
     return len(commits)
