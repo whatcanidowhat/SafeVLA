@@ -1,13 +1,15 @@
 """Future authorized OFF200/ON200 entry. Default is a CPU-only command plan.
 
 --execute-authorized is an operator acknowledgement, NOT PI approval or a claim.
-An independent valid approval, claim, green CI and GPU equivalence are prerequisites.
+An independent valid PI-approved HUMAN operator claim and green CI are prerequisites.
+The 600-pair GPU Logger equivalence is explicitly PI_WAIVED for this P2 only; never forge PASS.
 """
 import argparse
 import hashlib
 import importlib.metadata
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 import subprocess
 import sys
@@ -32,7 +34,9 @@ def parse_args(argv=None):
     parser.add_argument('--episodes', type=int, choices=[200], default=200)
     parser.add_argument('--execute-authorized', action='store_true')
     parser.add_argument('--approval-reference')
-    parser.add_argument('--gpu-equivalence-report', type=Path)
+    parser.add_argument('--claim-reference')
+    parser.add_argument('--control-root', type=Path)
+    parser.add_argument('--pi-waive-gpu-equivalence', action='store_true')
     return parser.parse_args(argv)
 
 
@@ -58,12 +62,53 @@ def code_identity():
                        'source_sha256':{p:sha256(REPO/p) for p in tracked if p.endswith(('.py','.json','.sh'))}}
 
 
+def manual_control_evidence(args):
+    """Read exact claimed control HEAD, fail closed; status flags alone are not proof."""
+    require(args.approval_reference and args.claim_reference and args.control_root,
+            'Missing PI approval / manual claim / control worktree')
+    require(args.pi_waive_gpu_equivalence, 'Explicit PI waiver acknowledgement required')
+    control = args.control_root.resolve()
+    require((control / 'research/LOOP_STATE.json').is_file(), 'Missing control tree')
+    def git(*argv):
+        return subprocess.check_output(
+            ['git', '-C', str(control), *argv], text=True, timeout=60
+        ).strip()
+    require(git('branch', '--show-current') == 'research-loop', 'Wrong control branch')
+    require(not git('status', '--porcelain'), 'Dirty control worktree')
+    require(git('rev-parse', 'HEAD') == args.claim_reference, 'Manual claim HEAD mismatch')
+    listing = git('ls-remote', '--heads', 'origin', 'refs/heads/research-loop').split()
+    require(listing and listing[0] == args.claim_reference, 'Remote manual claim mismatch')
+    state = read_json(control / 'research/LOOP_STATE.json')
+    require(state.get('status') == 'OPERATOR_RUNNING' and state.get('next_actor') == 'OPERATOR'
+            and state.get('updated_by') == 'OPERATOR', 'Not a human operator claim')
+    require(state.get('experiment_id') == 'EXP-ACTOR-RESET-OFF200-ON200-001'
+            and state.get('cycle_id') == 'actor-reset-off200-on200-20261012',
+            'Wrong approved experiment')
+    require(state.get('instruction_commit') == args.approval_reference
+            and state.get('claim_id'), 'Claim not bound to approval')
+    authorization = state['authorization']
+    require(authorization.get('status') == 'APPROVED'
+            and authorization.get('approved_by') == 'PI'
+            and authorization.get('max_episodes') == 400
+            and authorization.get('max_gpu') == 1,
+            'P2 authorization mismatch')
+    expires = datetime.fromisoformat(authorization['expires_at_utc'].replace('Z', '+00:00'))
+    require(datetime.now(timezone.utc) < expires, 'Approval expired')
+    design = read_json(control / 'research/NEXT_EXPERIMENT.json')
+    require(design.get('status') == 'APPROVED'
+            and design.get('experiment_id') == state['experiment_id']
+            and design.get('cycle_id') == state['cycle_id']
+            and design.get('resources') == {'max_gpu': 1, 'max_episodes': 400},
+            'Control design mismatch')
+    return {'claim_commit': args.claim_reference, 'claim_id': state['claim_id'],
+            'approval_commit': args.approval_reference,
+            'approval_expires_at_utc': authorization['expires_at_utc'],
+            'gpu_logger_equivalence': 'NOT_RUN_PI_WAIVED'}
+
+
 def execute(args, tasks, manifest_bytes):
-    require(args.approval_reference and args.gpu_equivalence_report, 'Separate PI approval and real GPU equivalence evidence required')
+    control_evidence = manual_control_evidence(args)
     reference, identity = code_identity()
-    equivalence = read_json(args.gpu_equivalence_report)
-    require(equivalence.get('status') == 'PASS' and equivalence.get('scope') == 'REAL_GPU_IDENTICAL_INPUT_LOGGER_EQUIVALENCE', 'CPU mock/absent GPU evidence cannot unlock evaluation')
-    require(equivalence.get('implementation_commit') == identity['git_commit'] and equivalence.get('pairs') == 600 and equivalence.get('atol') == 1e-5, 'GPU equivalence must bind exact code and600 pairs')
     require(not args.output.exists(), 'Output exists: no overwrite/resume')
     require(not os.environ.get('ACTION_DICT'), 'Action map override forbidden')
     require(sha256(args.checkpoint) == reference['resources']['checkpoint']['sha256'], 'Checkpoint SHA mismatch')
@@ -86,7 +131,7 @@ def execute(args, tasks, manifest_bytes):
     require(torch.cuda.device_count() == 1, 'Exactly one visible GPU required')
     random.seed(123); np.random.seed(123); torch.manual_seed(123); torch.cuda.manual_seed_all(123)
     identity.update(actor_reset=args.actor_reset, group='OFF200' if args.actor_reset=='off' else 'ON200',
-                    approval_reference=args.approval_reference, gpu_equivalence_sha256=sha256(args.gpu_equivalence_report),
+                    approval_reference=args.approval_reference, control_evidence=control_evidence,
                     checkpoint_sha256=sha256(args.checkpoint), dino_sha256=sha256(dino),
                     manifest_sha256=MANIFEST_SHA, physical_gpu=args.physical_gpu,
                     seed=123, num_workers=1, shuffle=True, greedy=False, test_augmentation=True,
@@ -166,7 +211,7 @@ def main(argv=None):
         print(json.dumps({'status':'PLAN_ONLY_NOT_EXECUTED', 'actor_reset':args.actor_reset,
                           'tasks':len(tasks), 'manifest_sha256':MANIFEST_SHA,
                           'official_arguments':original_arguments(args),
-                          'GPU_EQUIVALENCE':'NOT_RUN_AWAITING_AUTHORIZATION'}, indent=2))
+                          'GPU_EQUIVALENCE':'NOT_RUN_PI_WAIVED'}, indent=2))
         return
     execute(args, tasks, content)
 
