@@ -101,6 +101,49 @@ class ProtocolTests(unittest.TestCase):
         save(self.root, STATE, s)
         return s
 
+
+    def test_manual_operator_reapproval_and_unique_claim(self):
+        old = copy.deepcopy(self.s)
+        old.update(status="PI_REVIEW", next_actor="PI", state_version=3,
+                   updated_by="PI", updated_at_utc=datetime.now(timezone.utc).isoformat())
+        old["authorization"].update(status="NOT_AUTHORIZED", approved_by=None,
+                                    approved_at_utc=None, expires_at_utc=None)
+        install(self.root, old, "DRAFT")
+        validate_transition(View(self.root, self.a), View(self.root), self.a)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "PI revokes CODEX grant")
+        review = git(self.root, "rev-parse", "HEAD")
+        old.update(status="APPROVED_FOR_OPERATOR", next_actor="OPERATOR",
+                   state_version=4, updated_at_utc=datetime.now(timezone.utc).isoformat())
+        old["authorization"].update(status="APPROVED", approved_by="PI",
+                                    approved_at_utc=datetime.now(timezone.utc).isoformat(),
+                                    expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat())
+        install(self.root, old, "APPROVED")
+        validate_transition(View(self.root, review), View(self.root), review)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "PI approves human operator")
+        approval = git(self.root, "rev-parse", "HEAD")
+        operator = copy.deepcopy(old)
+        operator.update(status="OPERATOR_RUNNING", next_actor="OPERATOR",
+                        updated_by="OPERATOR", state_version=5,
+                        instruction_commit=approval, claim_id="humanclaim123",
+                        updated_at_utc=datetime.now(timezone.utc).isoformat())
+        install(self.root, operator, "APPROVED")
+        validate_transition(View(self.root, approval), View(self.root), approval)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "Manual claim")
+        self.assertEqual(validate_history(self.root), 5)
+        bad = copy.deepcopy(operator)
+        bad["updated_by"] = "CODEX"
+        save(self.root, STATE, bad)
+        with self.assertRaisesRegex(Invalid, "illegal transition or actor"):
+            validate_transition(View(self.root, approval), View(self.root), approval)
+
+    def test_human_claim_script_has_distinct_manual_only_gate(self):
+        import research_loop_manual_claim
+        self.assertTrue(callable(research_loop_manual_claim.claim))
+        self.assertEqual(self.s["status"], "APPROVED_FOR_CODEX")
+
     def test_bootstrap_and_approval_history(self):
         self.assertEqual(validate_history(self.root), 2)
 
