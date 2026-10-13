@@ -1,7 +1,7 @@
 """Future authorized OFF200/ON200 entry. Default is a CPU-only command plan.
 
 --execute-authorized is an operator acknowledgement, NOT PI approval or a claim.
-An independent valid PI-approved human OPERATOR claim and green CI are prerequisites.
+An independent valid PI-approved CODEX claim and green CI are prerequisites.
 The 600-pair GPU Logger equivalence is explicitly PI_WAIVED for this P2 only; never forge PASS.
 """
 import argparse
@@ -62,7 +62,7 @@ def code_identity():
                        'source_sha256':{p:sha256(REPO/p) for p in tracked if p.endswith(('.py','.json','.sh'))}}
 
 
-def operator_control_evidence(args):
+def codex_control_evidence(args):
     """Read exact claimed control HEAD, fail closed; status flags alone are not proof."""
     require(args.approval_reference and args.claim_reference and args.control_root,
             'Missing PI approval / Codex claim / control worktree')
@@ -75,18 +75,18 @@ def operator_control_evidence(args):
         ).strip()
     require(git('branch', '--show-current') == 'research-loop', 'Wrong control branch')
     require(not git('status', '--porcelain'), 'Dirty control worktree')
-    require(git('rev-parse', 'HEAD') == args.claim_reference, 'Human claim HEAD mismatch')
+    require(git('rev-parse', 'HEAD') == args.claim_reference, 'CODEX claim HEAD mismatch')
     listing = git('ls-remote', '--heads', 'origin', 'refs/heads/research-loop').split()
-    require(listing and listing[0] == args.claim_reference, 'Remote human claim mismatch')
-    approved_code = (control / 'research/P2_MANUAL_CODE_SHA.txt').read_text().strip()
+    require(listing and listing[0] == args.claim_reference, 'Remote CODEX claim mismatch')
+    approved_code = (control / 'research/P2_CODE_SHA.txt').read_text().strip()
     source_code = subprocess.check_output(
         ['git', '-C', str(REPO), 'rev-parse', 'HEAD'], text=True, timeout=60
     ).strip()
     require(len(approved_code) == 40 and approved_code == source_code,
             'Implementation not pinned to exact PI-approved SHA')
     state = read_json(control / 'research/LOOP_STATE.json')
-    require(state.get('status') == 'OPERATOR_RUNNING' and state.get('next_actor') == 'OPERATOR'
-            and state.get('updated_by') == 'OPERATOR', 'Not a unique OPERATOR claim')
+    require(state.get('status') == 'CODEX_RUNNING' and state.get('next_actor') == 'CODEX'
+            and state.get('updated_by') == 'CODEX', 'Not a unique CODEX claim')
     require(state.get('experiment_id') == 'EXP-ACTOR-RESET-OFF200-ON200-002'
             and state.get('cycle_id') == 'actor-reset-off200-on200-20261013-retry1',
             'Wrong approved experiment')
@@ -113,7 +113,7 @@ def operator_control_evidence(args):
 
 
 def execute(args, tasks, manifest_bytes):
-    control_evidence = operator_control_evidence(args)
+    control_evidence = codex_control_evidence(args)
     reference, identity = code_identity()
     require(not args.output.exists(), 'Output exists: no overwrite/resume')
     require(not os.environ.get('ACTION_DICT'), 'Action map override forbidden')
