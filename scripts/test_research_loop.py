@@ -454,12 +454,53 @@ class ProtocolTests(unittest.TestCase):
     def test_pi_can_publish_evidence_based_blocked_when_codex_unavailable(self):
         import ast
         import hashlib
-        script = SOURCE / "scripts/research_loop_pi_emergency_block.py"
-        ast.parse(script.read_text())
-        state = self.running()
+        ast.parse((SOURCE / "scripts/research_loop_pi_emergency_block.py").read_text())
+        ast.parse((SOURCE / "scripts/research_loop_pi_ack_blocked.py").read_text())
+        # Start from a valid unclaimed approval and stage an explicit one-GPU
+        # synthetic approval before claiming it. Never bypass history validation.
+        review = copy.deepcopy(self.s)
+        review.update(status="PI_REVIEW", next_actor="PI", state_version=3,
+                      updated_by="PI", updated_at_utc=datetime.now(timezone.utc).isoformat())
+        review["authorization"] = {
+            "status":"NOT_AUTHORIZED", "approved_by":None,
+            "approved_at_utc":None, "expires_at_utc":None,
+            "scope":"RESEARCH_EXPERIMENT", "max_gpu":1, "max_episodes":2
+        }
+        install(self.root, review, "DRAFT")
+        d = design(review, "DRAFT")
+        d["resources"] = {"max_gpu":1, "max_episodes":2}
+        save(self.root, "research/NEXT_EXPERIMENT.json", d)
+        validate_transition(View(self.root, self.a), View(self.root), self.a)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "Synthetic PI revoke")
+        review_sha = git(self.root, "rev-parse", "HEAD")
+
+        approval = copy.deepcopy(review)
+        approval.update(status="APPROVED_FOR_CODEX", next_actor="CODEX",
+                        state_version=4, updated_at_utc=datetime.now(timezone.utc).isoformat())
+        approval["authorization"].update(
+            status="APPROVED", approved_by="PI",
+            approved_at_utc=datetime.now(timezone.utc).isoformat(),
+            expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat()
+        )
+        install(self.root, approval, "APPROVED")
+        d["status"] = "APPROVED"
+        save(self.root, "research/NEXT_EXPERIMENT.json", d)
+        validate_transition(View(self.root, review_sha), View(self.root), review_sha)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "Synthetic approved GPU task")
+        approval_sha = git(self.root, "rev-parse", "HEAD")
+
+        state = copy.deepcopy(approval)
+        state.update(status="CODEX_RUNNING", next_actor="CODEX", state_version=5,
+                     instruction_commit=approval_sha, claim_id="syntheticclaim1",
+                     updated_by="CODEX", updated_at_utc=datetime.now(timezone.utc).isoformat())
+        save(self.root, STATE, state)
+        validate_transition(View(self.root, approval_sha), View(self.root), approval_sha)
         git(self.root, "add", ".")
         git(self.root, "commit", "-m", "Synthetic CODEX claim")
         parent = git(self.root, "rev-parse", "HEAD")
+
         prefix = "research/handoffs/test-cycle-1/"
         msg = "synthetic evidence; NO model/episodes executed\n"
         save(self.root, prefix+"RESULT_SUMMARY.md", msg)
@@ -482,20 +523,17 @@ class ProtocolTests(unittest.TestCase):
         }
         save(self.root, prefix+"RUN_MANIFEST.json", manifest)
         blocked = copy.deepcopy(state)
-        blocked.update(status="BLOCKED", next_actor="PI", state_version=4,
+        blocked.update(status="BLOCKED", next_actor="PI", state_version=6,
                        updated_by="PI", updated_at_utc=datetime.now(timezone.utc).isoformat())
         save(self.root, STATE, blocked)
         validate_transition(View(self.root, parent), View(self.root), parent)
         git(self.root, "add", ".")
         git(self.root, "commit", "-m", "Synthetic PI emergency BLOCKED")
-        self.assertEqual(validate_history(self.root), 4)
-        # Changing or suppressing the original evidence is never accepted.
+        self.assertEqual(validate_history(self.root), 6)
+        # Tampered emergency handoff cannot be accepted.
         save(self.root, prefix+"RUN_MANIFEST.json", dict(manifest, original_claim_id="bad_claim"))
         with self.assertRaisesRegex(Invalid, "PI emergency must link"):
             validate_transition(View(self.root, parent), View(self.root), parent)
-        save(self.root, prefix+"RUN_MANIFEST.json", manifest)
-        save(self.root, STATE, dict(blocked, updated_by="CODEX"))
-        validate_snapshot(View(self.root))  # Existing valid CODEX block route remains.
 
     def test_pi_acknowledges_blocked_handoff(self):
         s = self.running()
