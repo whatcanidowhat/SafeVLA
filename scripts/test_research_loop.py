@@ -451,6 +451,52 @@ class ProtocolTests(unittest.TestCase):
         with self.assertRaises(Invalid):
             validate_transition(View(self.root, c), View(self.root), c)
 
+    def test_pi_can_publish_evidence_based_blocked_when_codex_unavailable(self):
+        import ast
+        import hashlib
+        script = SOURCE / "scripts/research_loop_pi_emergency_block.py"
+        ast.parse(script.read_text())
+        state = self.running()
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "Synthetic CODEX claim")
+        parent = git(self.root, "rev-parse", "HEAD")
+        prefix = "research/handoffs/test-cycle-1/"
+        msg = "synthetic evidence; NO model/episodes executed\n"
+        save(self.root, prefix+"RESULT_SUMMARY.md", msg)
+        save(self.root, prefix+"REVIEW_NOTES.md", "synthetic reason\n")
+        save(self.root, prefix+"ARTIFACT_INDEX.json", {"schema_version":"1.0", "artifacts":[{
+            "name":"summary", "server_path":"/synthetic/RESULT_SUMMARY.md",
+            "git_path":prefix+"RESULT_SUMMARY.md",
+            "sha256":hashlib.sha256(msg.encode()).hexdigest(),
+            "size":len(msg.encode()), "required_for_PI_review":True
+        }]})
+        manifest = {
+            **{k:state[k] for k in ["cycle_id","experiment_id","instruction_commit","claim_id"]},
+            "status":"BLOCKED", "handoff_actor":"PI",
+            "closure_reason":"CODEX_UNAVAILABLE_AND_RUNTIME_ERROR",
+            "original_claim_id":state["claim_id"], "gpu_count":1,
+            "episodes_started":1, "episodes_completed":0,
+            "failure_location":"end_episode", "failure_type":"TypeError",
+            "failure_message":"Unsupported JSON type: ndarray",
+            "command":["synthetic-no-execution"]
+        }
+        save(self.root, prefix+"RUN_MANIFEST.json", manifest)
+        blocked = copy.deepcopy(state)
+        blocked.update(status="BLOCKED", next_actor="PI", state_version=4,
+                       updated_by="PI", updated_at_utc=datetime.now(timezone.utc).isoformat())
+        save(self.root, STATE, blocked)
+        validate_transition(View(self.root, parent), View(self.root), parent)
+        git(self.root, "add", ".")
+        git(self.root, "commit", "-m", "Synthetic PI emergency BLOCKED")
+        self.assertEqual(validate_history(self.root), 4)
+        # Changing or suppressing the original evidence is never accepted.
+        save(self.root, prefix+"RUN_MANIFEST.json", dict(manifest, original_claim_id="bad_claim"))
+        with self.assertRaisesRegex(Invalid, "PI emergency must link"):
+            validate_transition(View(self.root, parent), View(self.root), parent)
+        save(self.root, prefix+"RUN_MANIFEST.json", manifest)
+        save(self.root, STATE, dict(blocked, updated_by="CODEX"))
+        validate_snapshot(View(self.root))  # Existing valid CODEX block route remains.
+
     def test_pi_acknowledges_blocked_handoff(self):
         s = self.running()
         git(self.root, "add", "."); git(self.root, "commit", "-m", "Synthetic claim")
