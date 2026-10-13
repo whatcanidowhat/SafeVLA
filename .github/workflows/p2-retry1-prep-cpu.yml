@@ -1,7 +1,7 @@
 name: p2-retry1-preparation-CPU-checks
 on:
   push:
-    branches: [feature/p2-ndarray-metrics-manual-retry-20261013]
+    branches: [feature/p2-ndarray-metrics-manual-retry-20261013, feature/p2-ndarray-metrics-codex-retry-20261013]
 permissions:
   contents: read
 jobs:
