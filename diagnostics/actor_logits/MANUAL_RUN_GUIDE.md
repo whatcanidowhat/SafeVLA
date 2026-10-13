@@ -1,15 +1,16 @@
-# Full-400 manual run: execution now routed via shell supervisor after a green human claim
+# P2 full400 CODEX executor — immutable science and explicit PI waiver
 
-The approved frozen plan is `OFF200 -> validate -> ON200 -> validate -> analyze`.
-The actual one-shot entry is `bash diagnostics/actor_logits/run_p2_full400.sh`.
-The script verifies exact manual OPERATOR_RUNNING claim in /nvme2/user/qyy/SafeVLA_loop_control,
-the corresponding GitHub control CI SUCCESS, freezes one shared physical GPU (0-3),
-checks source/weights/task identity through evaluate.py, and monitors deadline and output caps.
+Status: CODEX execution code candidate only. Do not launch before new PI control approval and a unique green CODEX claim CI.
 
-Environment:
-- `P2_OUTPUT_ROOT`: choose one **nonexistent** external results directory; if omitted script uses `/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012`.
-- `P2_CONTROL_ROOT`: default `/nvme2/user/qyy/SafeVLA_loop_control`.
-- `P2_PYTHON`: default `/home/amax/.conda/envs/safevla/bin/python`.
-- `HTTPS_PROXY`/`HTTP_PROXY`: retain your already working authenticated GitHub transport configuration for claim CI check.
-The runner is deliberately not compatible with the old --gpu-equivalence-report requirement.
-Never invent a PASS report, append to existing results, or run OFF and ON concurrently.
+Source pinned via `research/P2_CODE_SHA.txt` on the control branch. The accepted full-logging worktree uses the same OFF/ON evaluator and lossless logger, and only the actor-reset flag differs between the two official 200-Episode runs.
+
+This command does not perform the 600-pair GPU Logger equivalence test, by explicit PI waiver `NOT_RUN_PI_WAIVED`, and must never fabricate a PASS report.
+
+For the authorised Codex task:
+1. Read `research/LOOP_STATE.json`, `research/NEXT_EXPERIMENT.json`, `research/HANDOFF_PROTOCOL.md`, `research/P2_CODE_SHA.txt` on `research-loop`.
+2. In an unmodified control tree at approval HEAD, run `python scripts/research_loop_claim.py` EXACTLY ONCE. After push wait for distinct claim CI SUCCESS. If transport or CI fails, STOP and escalate to PI. Never self-approve or manually mark a claim.
+3. Use exact clean source commit in the frozen independent execution worktree and **record** all real local runtime provenance and GPU usage. Run `bash diagnostics/actor_logits/run_p2_full400.sh` once, on a single allowed shared physical GPU.
+4. The launcher waits CPU-only for eligible GPU 0-3; OFF200 first, validate all logits and original metrics, ON200 second only after OFF PASS; no retries or parallel sessions; respect authorization expiry, budgets and unknown GPU/report failures.
+5. Commit accurate small handoff evidence to the GitHub control branch, keep large logs on server with hashes, status `AWAITING_PI_REVIEW` or terminal failure status, then STOP.
+
+Do not execute from the `research-loop` control tree. Do not edit B0, the old result folders, renderer mapping, action selection, seed, 200 TaskSpec manifest or Critic state.
