@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-001",
   "cycle_id": "actor-reset-off200-on200-20261012",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "research_question": "On the same ordered 200 original ObjectNavType minival TaskSpecs, does reset of only root Actor time_step_counter and per-layer K/V caches at Episode boundaries change official Success Rate, observed five-part Safety Cost and logged every-step raw Actor logits relative to accepted unchanged OFF baseline?",
   "hypothesis": "Episode-boundary Actor-only ON reset prevents unintended carry-over of root Actor temporal cache/counter and changes subsequent Actor output distributions, with potential SR/Cost/early-END/oscillation differences; no directional guarantee is assumed.",
   "competing_explanation": "Stochastic action sampling and trajectory divergence, test augmentation/THOR stochasticity, logger/runtime integration issues or non-Actor execution differences can contribute. Online equal episode/time-step logits comparisons are descriptive if observations differ; not isolated same-input causal attribution.",

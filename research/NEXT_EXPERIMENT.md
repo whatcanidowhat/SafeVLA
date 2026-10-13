@@ -1,7 +1,7 @@
 # PI P2 formal experiment — OFF200 vs Actor-only ON200, full logits
 
 Experiment ID: EXP-ACTOR-RESET-OFF200-ON200-001
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-off200-on200-20261012
 
 ## Explicit PI direction (2026-10-12)
@@ -16,7 +16,7 @@ Cycle ID: actor-reset-off200-on200-20261012
 - Every live decision must have **lossless complete raw root Actor logits**, normalized logits, all action probabilities, sampled/executed action, task/episode/step and boundary root/critic state record. OFF and ON use identical Logger.
 - No extra GPU preflight, no 600-pair offline replay, no OFF/OFF mini run, no test Episode. A real OFF200 is first executable scientific session after valid control claim, then ON200 only after OFF complete/validated.
 
-Approval: DRAFT — awaiting PI reapproval for CODEX; OPERATOR unclaimed grant revoked and is no longer executable.
+Approval: APPROVED_FOR_CODEX — 1 GPU / 400 Episodes, CODEX claim + distinct green CI required; valid until 2026-10-27T03:02:52.436Z.
 
 ## CODEX execution and exact source (replacing human-operator route)
 
