@@ -477,7 +477,34 @@ def validate_transition(old_view, new_view, parent_sha, bootstrap=False):
         if n["cycle_id"] != o["cycle_id"]:
             require(n["instruction_commit"] is None and n["claim_id"] is None, "new cycle must be unclaimed")
         return
-    require(edge in EDGES and n["updated_by"] == EDGES.get(edge), "illegal transition or actor")
+    # A narrow, auditable PI recovery for a stranded CODEX claim with real evidence.
+    # It can only seal CODEX_RUNNING as terminal BLOCKED; no relaunch or new claim.
+    pi_emergency = (edge == ("CODEX_RUNNING", "BLOCKED")
+                    and n["updated_by"] == "PI"
+                    and o["next_actor"] == "CODEX"
+                    and o["claim_id"] and o["instruction_commit"])
+    require((edge in EDGES and n["updated_by"] == EDGES.get(edge)) or pi_emergency,
+            "illegal transition or actor")
+    if pi_emergency:
+        prefix = f"research/handoffs/{o['cycle_id']}/"
+        handoff = new_view.data(prefix + "RUN_MANIFEST.json")
+        require(handoff.get("handoff_actor") == "PI"
+                and handoff.get("closure_reason") == "CODEX_UNAVAILABLE_AND_RUNTIME_ERROR"
+                and handoff.get("original_claim_id") == o["claim_id"]
+                and handoff.get("instruction_commit") == o["instruction_commit"]
+                and handoff.get("status") == "BLOCKED"
+                and handoff.get("episodes_started", -1) >= 1
+                and handoff.get("episodes_completed", -1) >= 0
+                and handoff.get("episodes_completed", 0) <= handoff["episodes_started"]
+                and handoff.get("gpu_count") == 1
+                and handoff.get("failure_location") == "end_episode"
+                and handoff.get("failure_type") == "TypeError"
+                and handoff.get("failure_message") == "Unsupported JSON type: ndarray",
+                "PI emergency must link verified executor claim and genuine P2 failure")
+        require(n["authorization"] == o["authorization"]
+                and n["required_outputs"] == o["required_outputs"]
+                and n["execution_worktree"] == o["execution_worktree"],
+                "PI emergency cannot change frozen approval or execution paths")
     require(n["cycle_id"] == o["cycle_id"] and n["experiment_id"] == o["experiment_id"], "active cycle/experiment changed")
     require(n["control_branch"] == o["control_branch"], "control branch changed")
     if edge in {("PI_REVIEW", "APPROVED_FOR_CODEX"), ("PI_REVIEW", "APPROVED_FOR_OPERATOR")}:
@@ -544,7 +571,8 @@ def audit_tree(view):
         files = sorted(set(filter(None, files)))
     allowed = {"AGENTS.md", ".gitignore", ".github/workflows/research-loop-validate.yml",
                ".codex/skills/safevla-research-loop/SKILL.md", "scripts/research_loop_claim.py", "scripts/research_loop_manual_claim.py",
-               "scripts/validate_research_loop.py", "scripts/test_research_loop.py"}
+               "scripts/validate_research_loop.py", "scripts/test_research_loop.py",
+               "scripts/research_loop_pi_emergency_block.py"}
     for path in files:
         require(path in allowed or path.startswith("research/"), "outside control whitelist: " + path)
         if not view.ref:
