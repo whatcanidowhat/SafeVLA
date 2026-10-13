@@ -35,7 +35,7 @@ class MetricsNumpyJsonRegression(unittest.TestCase):
             self.assertEqual(actual["official"]["scalar_array"], 2.5)
             self.assertEqual(actual["official"]["eps_len"], 27)
             self.assertEqual(actual["summary"]["episode_order"], 0)
-            self.assertTrue(p.read_text().endswith("\\n"))
+            self.assertTrue(p.read_text().endswith("\n"))
 
     def test_ndarray_empty_and_nested(self):
         with TemporaryDirectory() as d:
