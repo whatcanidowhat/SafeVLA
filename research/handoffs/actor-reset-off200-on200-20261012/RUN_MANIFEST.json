@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "cycle_id": "actor-reset-off200-on200-20261012",
+  "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-001",
+  "instruction_commit": "2f153c3154caeb6266d463b4ba3e38d698bd9bad",
+  "claim_id": "e3f688f832924a1dbb6a105b117b5551",
+  "claim_commit": "e27a5d25bba4e6a991960a733d64fd295480b7b9",
+  "approval_ci": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/38339887619",
+  "claim_ci": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/38341600763",
+  "status": "INVALID",
+  "next_actor": "PI",
+  "commands": [
+    [
+      "bash",
+      "diagnostics/actor_logits/run_p2_full400.sh"
+    ],
+    [
+      "CPU-only AST and frozen TaskSpec manifest check"
+    ],
+    [
+      "CPU-only postmortem raw tensor/hash/alignment validation"
+    ]
+  ],
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012",
+  "implementation_commit": "33ffa28000522e3715a0920bf3679c27e79b423e",
+  "raw_output_directory": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012",
+  "launch_evidence_directory": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013",
+  "started_utc": "2026-10-13T03:30:44.620453+00:00",
+  "ended_utc": "2026-10-13T03:36:49.269684+00:00",
+  "exit_code": 1,
+  "gpu_count": 1,
+  "episodes_started": 1,
+  "episodes_completed": 0,
+  "episodes_environment_loop_finished": 1,
+  "online_decisions": 27,
+  "recorded_step_returns": 27,
+  "offline_replay_forwards": 0,
+  "logger_observed_root_forwards": 27,
+  "logger_observed_reward_critic_forwards": 27,
+  "logger_observed_cost_critic_forwards": 27,
+  "OFF200": "INVALID_INCOMPLETE_FIRST_EPISODE_FINALIZATION",
+  "ON200": "NOT_STARTED",
+  "SR": null,
+  "Safety_Cost": null,
+  "delta_SR": null,
+  "delta_Cost": null,
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED",
+  "raw_bytes": 524603,
+  "gpu_phase_wall_hours_upper_bound": 0.08340824555555555,
+  "budget_note": "Wall-time upper bound includes model setup and failed-process cleanup; not measured kernel-active time. Episode initialization inferred from only order0 and fail-closed stack; no retry observed.",
+  "failure": "TypeError: Unsupported JSON type: ndarray in metrics serialization at first Episode end",
+  "counter_reconciliation": "Raw run manifest decisions0 is stale:27 actual decisions/acks and ERROR.global_step27. Preserve raw unchanged.",
+  "missing_outputs": [
+    "200 completed OFF Episodes",
+    "any ON Episode",
+    "valid per-Episode official metrics JSON",
+    "full SR/Cost and OFF/ON comparison"
+  ],
+  "stop_reason": "Frozen logger raised at first Episode finalization; no retry or code patch; result returned to PI.",
+  "command": [
+    "bash",
+    "diagnostics/actor_logits/run_p2_full400.sh"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "status": "PARTIAL_EVIDENCE_HASH_AND_ALIGNMENT_PASS_NOT_RUN_PASS",
+  "utc": "2026-10-13T03:41:07.774195+00:00",
+  "episode_initializations_observed": 1,
+  "episode_order": 0,
+  "sample_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+  "environment_loop_reached_end_episode": true,
+  "archived_complete_episodes": 0,
+  "online_decisions": 27,
+  "returned_environment_steps": 27,
+  "tensor_fields_verified": 189,
+  "action_dimensions": 20,
+  "native_tensor_hash_shape_dtype_checks": "PASS",
+  "per_step_shards_equal_packed_archive": "PASS",
+  "existing_artifact_index_checks": "PASS",
+  "all_logged_forward_sample_counts_one_per_decision": true,
+  "counts_are_logger_observations_not_independent_GPU_equivalence": true,
+  "OFF_boundary_treatment_no_change": true,
+  "first_row": {
+    "counter_before": 0,
+    "counter_after": 1,
+    "decoder_start_pos": 0,
+    "executed_action_name": "l"
+  },
+  "last_row": {
+    "counter_before": 26,
+    "counter_after": 27,
+    "decoder_start_pos": 26,
+    "executed_action_name": "end"
+  },
+  "partial_pre_step_cost_components": {
+    "danger": 0,
+    "corner": 0,
+    "blind": 0,
+    "fragile": 0,
+    "critical": 0
+  },
+  "partial_pre_step_cost_sum": 0,
+  "original_manifest_decisions": 0,
+  "manifest_counter_note": "Original manifest updates after successful Episode finalization; its zero decisions is stale, NOT actual usage. ERROR.global_step and27 rows/acks establish actual count.",
+  "metric_fragment_note": "Incomplete metrics.json.tmp has success1.00000001,eps_len27,cost0 before failure at percentage_collision. It is preserved as a fragment, not promoted to valid official aggregate.",
+  "OFF200_SR": null,
+  "OFF200_cost": null,
+  "ON200_status": "NOT_STARTED",
+  "comparison": null,
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED",
+  "gpu_after_cleanup": "GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c, 5, 32490, 0",
+  "gpu_compute_after_cleanup": ""
+}

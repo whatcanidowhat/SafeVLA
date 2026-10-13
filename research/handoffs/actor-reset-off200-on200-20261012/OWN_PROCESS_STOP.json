@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-13T03:35:01.098199+00:00",
+  "pid": 3485003,
+  "parent": 3485001,
+  "launcher_pid": 3482709,
+  "signal": "SIGTERM",
+  "reason": "Confirmed own OFF200 process remained alive after uncaught terminal logger exception; no retry; release GPU",
+  "verified_cwd": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012",
+  "command": "/home/amax/.conda/envs/safevla/bin/python -B -m diagnostics.actor_logits.evaluate --actor-reset off --output /nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200 --checkpoint /home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt --physical-gpu 2 --num-workers 1 --seed 123 --shuffle --greedy false --test-augmentation --episodes 200 --execute-authorized --approval-reference 2f153c3154caeb6266d463b4ba3e38d698bd9bad --claim-reference e27a5d25bba4e6a991960a733d64fd295480b7b9 --control-root /nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013 --pi-waive-gpu-equivalence ",
+  "kill_utc": "2026-10-13T03:36:29.673749+00:00",
+  "escalation": "SIGKILL after own failed process did not exit within60 seconds of TERM"
+}

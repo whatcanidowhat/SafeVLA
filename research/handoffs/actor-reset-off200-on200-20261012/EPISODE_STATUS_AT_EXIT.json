@@ -1,0 +1,14 @@
+{
+  "status": "INCOMPLETE",
+  "episode_order": 0,
+  "sample_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+  "task_source_index": 127,
+  "raw_spec_sha256": "44398b47cda8d2c53c610c33deac2ac76d0b1ac5b57df0ba3b2700de8e48620e",
+  "goal": "go to an alarm clock",
+  "target_ids": {
+    "alarm_clock.n.01": [
+      "AlarmClock|4|5"
+    ]
+  },
+  "worker_id": 0
+}

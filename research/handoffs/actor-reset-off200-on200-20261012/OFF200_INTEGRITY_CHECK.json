@@ -1,0 +1,10 @@
+{
+  "status": "INCOMPLETE",
+  "problems": [
+    "ValueError: Run marked INCOMPLETE"
+  ],
+  "episodes_checked": 0,
+  "decisions_checked": 0,
+  "outcomes": null,
+  "scope": "Stored evidence integrity; NOT GPU equivalence validation"
+}

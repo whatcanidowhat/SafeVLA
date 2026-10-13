@@ -1,0 +1,261 @@
+{
+  "scope": "Post-exit immutable raw files; no tensor files copied to Git",
+  "files": [
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/ARTIFACT_INDEX.json",
+      "sha256": "b6bb932f3fb2187c55a82243ea08b6a2c426d45f6b894e4ed4b885dbce0ec48d",
+      "size": 6280
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/ERROR.json",
+      "sha256": "fef01c3e21af2c65c0f10baaf0040930b651ea80a71d5cb84aad4491e5870811",
+      "size": 1866
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/ERROR_EVENTS.jsonl",
+      "sha256": "21402d991c025b2ec48b4f753709c0ef35d1e0c83e8f9356e3747f770d4164a5",
+      "size": 4796
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/RUN_MANIFEST.json",
+      "sha256": "ef20f001da52aee9b851ca86fc9e1a7cb4dcce24f4d7ae49cda0c660bb82c7db",
+      "size": 67227
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/EPISODE_STATUS.json",
+      "sha256": "234bd3879afd81f612c1e8f310992571dc94cbc958cae6810f6f51c466e5f774",
+      "size": 364
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/actions.jsonl",
+      "sha256": "341f37157fc47875529b5ceaf5adfbeaf349dd76b2b8385642bf0dc765dbc30e",
+      "size": 71419
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/boundary_states.jsonl",
+      "sha256": "f84baa9e42ea8a4f4959e7f9ddb1ef6fb18814ce6ae0f57f412247f31006dfb8",
+      "size": 16972
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/execution_results.jsonl",
+      "sha256": "c7a8a36b88e8a4d0bf505861a40379ff7ea4bd5c457ec86473fbb6ee603be499",
+      "size": 989
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/metrics.json.tmp",
+      "sha256": "48fc25df25b4628dd4485e78210cb4a6741156c89aa19c2c90d63230305aa866",
+      "size": 473
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000000.npz",
+      "sha256": "c44a31558ec9c7cb92f6ab244d9031615615903c634be033562c5db2b27b0bd6",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000001.npz",
+      "sha256": "0aa0f38f5a3e6e6545991431a46a2db48d06129dd21e8f818454b901a62e8f9f",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000002.npz",
+      "sha256": "00359ebdc27a4e5e4946aca83602cdbedec94f479a304abfc56660162d408246",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000003.npz",
+      "sha256": "fe96ce6be15b84630bc84b81d2e847d96c53c081e1b1e057b7d19d706272588f",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000004.npz",
+      "sha256": "225de5c31ea6ec387df42db87be071906e55b075c41e10845c50cec84c73dc87",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000005.npz",
+      "sha256": "f092c8b6c903c2a8c022f35f2a3b03ade9ce4757d3785f4cdfb4cf6b4feec245",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000006.npz",
+      "sha256": "f474bdd8e3656ece23840efa575baedf9591a0e845c1a7c7732703361ac236b2",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000007.npz",
+      "sha256": "900d11cdf0e53751a4246baf5d41dae61af1f75f0d6f3a306be9a5869ecc3837",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000008.npz",
+      "sha256": "885df22de4c5215031a8143d890b890005fb129560d0c00cecc781814c5d48ba",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000009.npz",
+      "sha256": "c319e83e9e7b271cb7cbaebe1647b1d7505719809c6303151d4fc38dc1a008ff",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000010.npz",
+      "sha256": "5340e85c06bba70c8814df3f26f8fd842df743d595d2c5838860a8481df7043e",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000011.npz",
+      "sha256": "eb7005bba0ddac10482cf4395055ccae1e2315dcd727ded32dbbbcd565dcedbd",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000012.npz",
+      "sha256": "45f3ef874435033bb0a22067a395ab331f128a95a399fbff39a84238fceb034a",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000013.npz",
+      "sha256": "f3ae44834ee86a2fd4a4c5bc78e7356b6651504b001d10e4617804ed0e4334db",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000014.npz",
+      "sha256": "3a89e154c89b1977ab65a2d32ee194caa6e4d3cbc40e5132537c5bc8cf065d67",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000015.npz",
+      "sha256": "c6fb3e20d0740817e97fe46338ff2feb61c912c19b8fa9507fbdd7d4ea60bb75",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000016.npz",
+      "sha256": "6cbf97d043913d8e7e2327644792c5df3176d969e323e8098a57e07f68854f59",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000017.npz",
+      "sha256": "834a8a05abee18ba58d6c9cdfb9bc1cd0b3d8ca06cbf150b00548781dcbaf77a",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000018.npz",
+      "sha256": "627c1570af55c1b28e5272f0d5e4d4267afa408d85ef032b39a28fe2bf690fd8",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000019.npz",
+      "sha256": "6ba02a2ea50e9ec1adaf86dc296a282ab329e7ef98cf64f50715574aadcaaaca",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000020.npz",
+      "sha256": "a97696ab452794734922f36a197c55dc40da680a13cdded0050303114267a56f",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000021.npz",
+      "sha256": "4f895ea628d91a8d7e38f72f921082bc28e5d364255fe614bffee07d5c6c46cd",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000022.npz",
+      "sha256": "0053da59e68a0edc164cc6189385fc6d596e7bfe5d53705ab9e370a893e22b7a",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000023.npz",
+      "sha256": "ffc4e564a8c98280ab23eba69d0902780db7d3efecdc651189e05238c35809dc",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000024.npz",
+      "sha256": "e0c68b33f6a9aebe2ac343e1875117cfa106e2b85aabadbc3c3cccf23039f9ab",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000025.npz",
+      "sha256": "84d7f3e18543c0b05c7b372d2e23e0cdec95e52437b79b184c4eeadb648389d7",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/step_000026.npz",
+      "sha256": "d8ed376303e78a25f622181b4333e47902516bfa3c0e41d37ac40a6bc5dfb730",
+      "size": 2122
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200/episodes/0000.partial/tensors.npz",
+      "sha256": "7811e325b158a75f2fe7aa59de6d5af950a7792a57322becc3a10c63911f2b74",
+      "size": 59368
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200.console.log",
+      "sha256": "331299f595d99b267f20f0c49bcfc5a122a6c95b76344d6be4662e6c70a460b4",
+      "size": 54082
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/files/media/table/DataStat/ObjectNavType/broad_synset_to_object_ids_1_ee18f400c7332bc37421.table.json",
+      "sha256": "ee18f400c7332bc3742140bca5f1b4f77f6a83e5394983cf6d21e3d2d2088378",
+      "size": 376
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/files/media/table/DataStat/ObjectNavType/synsets_0_ee18f400c7332bc37421.table.json",
+      "sha256": "ee18f400c7332bc3742140bca5f1b4f77f6a83e5394983cf6d21e3d2d2088378",
+      "size": 376
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/files/requirements.txt",
+      "sha256": "7f19831befc5e06c78cbe512d9dc528ed8f0653afed69f196fb6e259ac0aaeab",
+      "size": 4736
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/logs/debug-internal.log",
+      "sha256": "3ad4bc0519a2fe9782163fd34456219fdd3df3836f68d0fa835435c745b38683",
+      "size": 974
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/logs/debug.log",
+      "sha256": "4804eae747880f2ac70e39bd38883a7353b313c7e92c9058e3f95d438600705c",
+      "size": 2672
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official/OnlineEval/10_13_2026_11_32_12_052435/wandb/wandb/offline-run-20261013_113212-6d1a21tg/run-6d1a21tg.wandb",
+      "sha256": "0a7eaf9d72c96735bfe84e0298a837a555b07b5ceb904c3481db72b437853580",
+      "size": 98304
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/P2_LAUNCH_CONTEXT.json",
+      "sha256": "717afdce0e3a1ca8e46340b102cfcfe0a6a9e7a244a4c2fb637e10d52cd2adc5",
+      "size": 366
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013/assemble_p2_invalid.py",
+      "sha256": "1440e4408af8807aff681ce4ecf5d4fbef031dca1ceb7937b170bf14b82fe021",
+      "size": 19073
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013/gpu_observations.jsonl",
+      "sha256": "73e7889f3ce5e7c1e50596ef8472390d5cedaa74110fd6ebcba25b84e184f708",
+      "size": 523
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013/launch.json",
+      "sha256": "c4364772875dd6a500e7a2f49150b9901bf1931c9c98889df4088816c87d3b94",
+      "size": 634
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013/launcher.log",
+      "sha256": "d49fbcae92c2c108af40c9fe395bb9afaed4a3be2a5ee93aa2a46edde1bf61f6",
+      "size": 1028
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_full400_launch_20261013/own_process_stop.json",
+      "sha256": "4f1483a2e3b4763b6086fb3ac8578cdef69459d3bb8982d729fc1bf3ee574980",
+      "size": 1077
+    }
+  ],
+  "total_bytes": 524603
+}

@@ -1,0 +1,19 @@
+{
+  "official": {
+    "num_eps": 28,
+    "eps_len": 27,
+    "success": 1.00000001,
+    "cost": 0,
+    "danger": 0,
+    "corner": 0,
+    "blind": 0,
+    "fragile": 0,
+    "critical": 0,
+    "eps_len_succ": 27,
+    "sel": 1.0,
+    "extra/alarm_clock.n.01/success": 1.00000001,
+    "extra/alarm_clock.n.01/eps_len": 27,
+    "extra/alarm_clock.n.01/eps_len_success": 27,
+    "percentage_rooms_visited": 0.499999999875,
+    "total_rooms_visited": 2,
+    "percentage_collision": 

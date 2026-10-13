@@ -1,0 +1,1314 @@
+{
+  "schema_version": 1,
+  "status": "INCOMPLETE",
+  "episodes_expected": 200,
+  "episodes_completed": 0,
+  "decisions": 0,
+  "action_names": [
+    "m",
+    "r",
+    "l",
+    "b",
+    "end",
+    "sub_done",
+    "ls",
+    "rs",
+    "p",
+    "zm",
+    "zp",
+    "yp",
+    "ym",
+    "wp",
+    "wm",
+    "yms",
+    "zms",
+    "zps",
+    "yps",
+    "d"
+  ],
+  "tasks": [
+    {
+      "sample_id": "task=ObjectNavType,house=13653,sub_house_id=127",
+      "task_source_index": 127,
+      "raw_spec_sha256": "44398b47cda8d2c53c610c33deac2ac76d0b1ac5b57df0ba3b2700de8e48620e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13125,sub_house_id=103",
+      "task_source_index": 103,
+      "raw_spec_sha256": "5967697a248c5972840adb1b9b137bc5d34d274c9bbb60db9de4df84b7e28f6f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=10940,sub_house_id=16",
+      "task_source_index": 16,
+      "raw_spec_sha256": "4c6787a1138b59c178533417bc3e7c6a378fedaa9cb02d9c2e59a70d2d97fac7"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=2986,sub_house_id=6",
+      "task_source_index": 6,
+      "raw_spec_sha256": "e37e396c7b50fdcbc7e2363036a51b9b47bb96ebbb9e81bd3c2144ea9fba8ee8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11157,sub_house_id=50",
+      "task_source_index": 50,
+      "raw_spec_sha256": "7dda85e0e3aff9297144f48930ccf7c80c6f88793e021508240f06a8330b51e1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11549,sub_house_id=57",
+      "task_source_index": 57,
+      "raw_spec_sha256": "e6bf000bd514893ff3c821e8482e30b30e3ed531a77f2c4dbb05d4d3ef580efc"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14636,sub_house_id=31",
+      "task_source_index": 31,
+      "raw_spec_sha256": "a9080d92fca8d0d22808e6b4bb85cd40452526bda773422462ae2a28d002cc9c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11131,sub_house_id=38",
+      "task_source_index": 38,
+      "raw_spec_sha256": "b94de375bb31beaff29cd11e979b9dcb123982a9a66afa172f8bc5de1ed6559f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13549,sub_house_id=160",
+      "task_source_index": 160,
+      "raw_spec_sha256": "b9224fc370e2df94bb4dfdd27e31c0b2ed2503317bdd932eefad58ed4a0a9d83"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14945,sub_house_id=150",
+      "task_source_index": 150,
+      "raw_spec_sha256": "aa0dca8400156485694b9ce09ea97900b4ee41da9128946155a484415fbdfaa5"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12507,sub_house_id=76",
+      "task_source_index": 76,
+      "raw_spec_sha256": "5b7b45fb6ea8c8a4a4019f255b11f214141d84a49ab77ba90aca683ebbc67d83"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14901,sub_house_id=180",
+      "task_source_index": 180,
+      "raw_spec_sha256": "463dc05d05f92c5a01e9d22ab9262d43eed69f0f590b66d7d0a9f297bd975927"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11865,sub_house_id=30",
+      "task_source_index": 30,
+      "raw_spec_sha256": "5c16e79b51630e7ece96c6ba5681214cee3b0ea998312dfd189fa7f17af7dc68"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14446,sub_house_id=88",
+      "task_source_index": 88,
+      "raw_spec_sha256": "3ee0e29c983114e1513e6ce696d6976019d87ca3007f7b9408821a6d4d9bc878"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13980,sub_house_id=151",
+      "task_source_index": 151,
+      "raw_spec_sha256": "cc25e2d74fb5e3473a75f68ca0f4af364c97a658af6786036ed06c915dd3ddab"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12350,sub_house_id=28",
+      "task_source_index": 28,
+      "raw_spec_sha256": "e3576753962776a073bf12fa99c8a8611ebfe248a3a549e157dec0102df91e74"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13634,sub_house_id=37",
+      "task_source_index": 37,
+      "raw_spec_sha256": "7cb1ac28bb5de4bafe5919db780e3a03eda95dad3683a23a7411eba189705b97"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14330,sub_house_id=193",
+      "task_source_index": 193,
+      "raw_spec_sha256": "b92d13b206ed2181c86058683c4f775f45eb387a2daf2ff987830c1da58aabb6"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13415,sub_house_id=84",
+      "task_source_index": 84,
+      "raw_spec_sha256": "978a74b77f66200209883b281045a88a8e62149318a8c51575dd9345b0cdb94e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13886,sub_house_id=162",
+      "task_source_index": 162,
+      "raw_spec_sha256": "e1b77ba50f010a58ad4d7234c21c107370211e7f1f1092b730febfc08fc0e1dd"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12793,sub_house_id=79",
+      "task_source_index": 79,
+      "raw_spec_sha256": "20e8686abd1acc45e1a091c9ed16c21e888555104affb8249ecbe3b8698948bd"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=9839,sub_house_id=14",
+      "task_source_index": 14,
+      "raw_spec_sha256": "62808543c5ee46612cbe907738ed2f45ba4b7879cef935a5e29b0e3605b54a96"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13027,sub_house_id=141",
+      "task_source_index": 141,
+      "raw_spec_sha256": "802b06159a9889cd832f1f360269e457ba4d96349f61da23038d9e616c823f90"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14397,sub_house_id=39",
+      "task_source_index": 39,
+      "raw_spec_sha256": "4d49cdad456b2716fe814c542aeee7fab5cb510ccd1a12720b1ad3fe19384bae"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12785,sub_house_id=93",
+      "task_source_index": 93,
+      "raw_spec_sha256": "8ce4a7ae55f4b0b40d95c7ac1033bc32bf6cf9a87d3271d541f5f3a3ce8ed2e2"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13639,sub_house_id=155",
+      "task_source_index": 155,
+      "raw_spec_sha256": "18072ab8ade5c5f65ca8c5bac042fc9423fd25ffd30c864c37fc99673cf26014"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=8027,sub_house_id=12",
+      "task_source_index": 12,
+      "raw_spec_sha256": "b80ca5f95e345818a8cc76bea997a569548cf79f470622f571c0c761ac0ef89c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14592,sub_house_id=195",
+      "task_source_index": 195,
+      "raw_spec_sha256": "94d33b249123742190d8981dd57600a5a1f91cdea0b44fb2b64c6d8abc93f53a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11881,sub_house_id=25",
+      "task_source_index": 25,
+      "raw_spec_sha256": "c1c97f20ea2cc730d62ed81ce4181eb237750c0ef77f00eb5fdbb2f153a40b45"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14643,sub_house_id=44",
+      "task_source_index": 44,
+      "raw_spec_sha256": "3845f71fda3164f0666bd09d96602a8de14a45f09db143eac90195d7054f6336"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13489,sub_house_id=20",
+      "task_source_index": 20,
+      "raw_spec_sha256": "f30fd1b3d76ab22ce501eb0dd8b89254b7e81465fcd8c885717d7779a952588c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13426,sub_house_id=118",
+      "task_source_index": 118,
+      "raw_spec_sha256": "674f99a198a44d21d5e6a2de397abe470147833ef079d576df7a408b7cbf6eee"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13819,sub_house_id=91",
+      "task_source_index": 91,
+      "raw_spec_sha256": "0a160da577ccbba803ab9fcad543631186d764ff6599dc7d07849bfa973e7c02"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14457,sub_house_id=77",
+      "task_source_index": 77,
+      "raw_spec_sha256": "3d8433419da539535779c775a68c244048d556cdf13cc21e5500286e81d4023a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11535,sub_house_id=47",
+      "task_source_index": 47,
+      "raw_spec_sha256": "1c6eba552a9c40e42513a2e512dd8a6aef578b02feb2170e8d1a7d7bb895dd6f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13449,sub_house_id=126",
+      "task_source_index": 126,
+      "raw_spec_sha256": "11caca54407376bb7b2500798c8b2f33097c2eb5545ecd46ac56f5de318b773f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14947,sub_house_id=128",
+      "task_source_index": 128,
+      "raw_spec_sha256": "a57a30d1e05d8212a86f25516b9624d32ca1a124c0ff05777305361026403021"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13668,sub_house_id=102",
+      "task_source_index": 102,
+      "raw_spec_sha256": "bb3f49a001b5543c4e22a2c813d62d99954f2b7d62a0658259110496eb361c6e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13923,sub_house_id=139",
+      "task_source_index": 139,
+      "raw_spec_sha256": "5b48a56ef4c564282402d4b3e27a2759ad719d6b6898fd10f4670e8f6c0a9ae9"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12370,sub_house_id=82",
+      "task_source_index": 82,
+      "raw_spec_sha256": "dcc14aa3472ac22c0ec20ada7feb27e5c06f9d568142780b64d08338004e132b"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13391,sub_house_id=138",
+      "task_source_index": 138,
+      "raw_spec_sha256": "853c6803fa528de99fb1d98977e45bcac9847cac17fd639e01ed48c61e999bf8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13169,sub_house_id=109",
+      "task_source_index": 109,
+      "raw_spec_sha256": "cc39c11a8fc4b7e952b64904d3c96b511bb8220973b6c3d4be90055197343d36"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13276,sub_house_id=66",
+      "task_source_index": 66,
+      "raw_spec_sha256": "1281ab2738099b0dcc8dcd7c5bc25774145eb4502f0156263fba3e3be9dc4947"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13226,sub_house_id=54",
+      "task_source_index": 54,
+      "raw_spec_sha256": "accabd2ab23b8742d7298f91ce2c88b28ffab2de1dbf8f0acd35867a78946f99"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13911,sub_house_id=90",
+      "task_source_index": 90,
+      "raw_spec_sha256": "bbafdad7d2148e429f8d6f5b905ed8196a377243728b543fbaef96e0d3564bc1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=8786,sub_house_id=15",
+      "task_source_index": 15,
+      "raw_spec_sha256": "320d1151414a812598478fb3ee25c4280a8d8400c0ab88c24d199e3c86f1d0ac"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12273,sub_house_id=42",
+      "task_source_index": 42,
+      "raw_spec_sha256": "e8f4b4f1b6cd6496a850c7008e88a7238bfae241ada737030f6aa297888c06e1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13731,sub_house_id=166",
+      "task_source_index": 166,
+      "raw_spec_sha256": "4eb39a0a8f9e6c974793850d1720c488f5f6f60d5f12eb130b3ab74968138dcb"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14122,sub_house_id=70",
+      "task_source_index": 70,
+      "raw_spec_sha256": "29a8269087fcd0a4b0abb29594984a03aae454a53537c9602b5c6845d6ee1cb7"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14044,sub_house_id=174",
+      "task_source_index": 174,
+      "raw_spec_sha256": "2ebef9d4411765577e0a823457be6a07daa19f1c50e7af2f765d858482dbbedb"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14243,sub_house_id=157",
+      "task_source_index": 157,
+      "raw_spec_sha256": "a5cf5c26fa72556616f9f58abf28262c0207a1acb749c7dc15852db248800249"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=1852,sub_house_id=4",
+      "task_source_index": 4,
+      "raw_spec_sha256": "5923c0f7a8b060b25d25a1a4f5285efedcca158e3b38143076ef3793dca824f8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14416,sub_house_id=154",
+      "task_source_index": 154,
+      "raw_spec_sha256": "e0bc84cd430ec780e8b2b290e8f1017907ab5726f48f85e6b3e5be1849cb131c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14286,sub_house_id=125",
+      "task_source_index": 125,
+      "raw_spec_sha256": "179c39ff978810c6b4f2a462e3f60d55864f8b65dc23c865da87efa4fdfbdad8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12454,sub_house_id=72",
+      "task_source_index": 72,
+      "raw_spec_sha256": "4f7581210e2bad00167f19410e6a04df028c7b6fdf6243a75059dc8c9b3308ad"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14510,sub_house_id=185",
+      "task_source_index": 185,
+      "raw_spec_sha256": "0c1c6735d121986e76a853b55acb4bf18a0db29e556230841ddad58cf2afa35f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12231,sub_house_id=71",
+      "task_source_index": 71,
+      "raw_spec_sha256": "3350c85e6902b0c825d96f30ccf697836ce78195230538422dccef94c6358f65"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13818,sub_house_id=173",
+      "task_source_index": 173,
+      "raw_spec_sha256": "9c570d38b098b5fcb7c88162ec35e314c894557f3f471be3bd64010beccc06db"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14684,sub_house_id=168",
+      "task_source_index": 168,
+      "raw_spec_sha256": "4be3b3ac995e7db701c81abe499c810b94d746e354ff0afb82938efe1e40777f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14932,sub_house_id=135",
+      "task_source_index": 135,
+      "raw_spec_sha256": "265bb14f672db1c05e13a6cbc609d64eefb70e65cefbcc5f5f3f3ff87f15a586"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12445,sub_house_id=35",
+      "task_source_index": 35,
+      "raw_spec_sha256": "f0eb63f02f20d41b9c5bd8f3f34b0577092191bf2c6186940bc8c80bb419d4d6"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12592,sub_house_id=98",
+      "task_source_index": 98,
+      "raw_spec_sha256": "298d44db613edac9f2cee0c3e128da110c32b1daec113b058ccf05867326cfd5"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13687,sub_house_id=145",
+      "task_source_index": 145,
+      "raw_spec_sha256": "09d328f0fa39cc6c3248ac7f51ebcc72fa6296fd1b48e7856832ef466935b25f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12375,sub_house_id=60",
+      "task_source_index": 60,
+      "raw_spec_sha256": "2578881da0c56f9597bd7b9e536e3e21793442ef5c681c6bbfb1525d8c95fab8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13298,sub_house_id=33",
+      "task_source_index": 33,
+      "raw_spec_sha256": "2542061cc7d3f21c8784bf2e734f1a786d154a9348e342c8bff0ae43ab4989d1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14988,sub_house_id=178",
+      "task_source_index": 178,
+      "raw_spec_sha256": "1cec59a516fa50cfdeac2b09990258feb39866ab78363209d7bc4100bb8e0e80"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14840,sub_house_id=147",
+      "task_source_index": 147,
+      "raw_spec_sha256": "e12900a1d2956242842fbbcfb78df15a92e3db55f4724d084d1cf06e206f2c7a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14034,sub_house_id=149",
+      "task_source_index": 149,
+      "raw_spec_sha256": "f9e098d611877b569d897884b84a251615f2ca930d31ccb993d79a3d0f32c472"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14454,sub_house_id=156",
+      "task_source_index": 156,
+      "raw_spec_sha256": "ea9a3237f8e226818385ab2fdb5d31f5840d6819feedb9e4a247d78a3a9d8110"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13205,sub_house_id=129",
+      "task_source_index": 129,
+      "raw_spec_sha256": "e5e5afb0d105cb807ca518d2b74753e7a6a6ef2b14792c4aa431c2b4fd959f13"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14129,sub_house_id=94",
+      "task_source_index": 94,
+      "raw_spec_sha256": "13ef1bf1dfc3754dda31d688cbbcf518d02eb9bba46ca2248781cde2ebec270c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12606,sub_house_id=89",
+      "task_source_index": 89,
+      "raw_spec_sha256": "12e8d8b21f549489486311fa041ce7505ade6efd63895b7cb610e78319cd9443"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13464,sub_house_id=140",
+      "task_source_index": 140,
+      "raw_spec_sha256": "d2e062ae22dc40dea2fe39bf9ee3b914e773c3ce2c46d15907fc57bb10197703"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=6954,sub_house_id=10",
+      "task_source_index": 10,
+      "raw_spec_sha256": "fc20e0fbfe46c7138e15f31b9d1f4c2cf3cc1fc0c100e638277401db97270dca"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14064,sub_house_id=119",
+      "task_source_index": 119,
+      "raw_spec_sha256": "ac838b23b65a3b5a15c7460c7fdb5bacdbecb71af0466af821873b4d0c83276d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13527,sub_house_id=83",
+      "task_source_index": 83,
+      "raw_spec_sha256": "ff015ea0d12460df006a63e66baacb1e3febc4931061523993b666ffda374047"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13265,sub_house_id=65",
+      "task_source_index": 65,
+      "raw_spec_sha256": "254492abad0af24638bdf73b6d50054dcb476a7003d51374e9451fe97ed57c80"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14811,sub_house_id=182",
+      "task_source_index": 182,
+      "raw_spec_sha256": "1e04a8268eb66618ad9bb99db5c03101ac5cd5e739a6bc1702dd97376410a98d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14067,sub_house_id=186",
+      "task_source_index": 186,
+      "raw_spec_sha256": "3d148a5e92cbdac37f2518272b305b3db24b4c1e79f09dbac83f35fa17a63c1e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14774,sub_house_id=177",
+      "task_source_index": 177,
+      "raw_spec_sha256": "b4419f8d032809593d5d65f926a72fd9c4dfb18e491e8db69f163cf9b7fa6ece"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11321,sub_house_id=53",
+      "task_source_index": 53,
+      "raw_spec_sha256": "df1cb8bae4d0cd3b6a057011740de6a3c4979220bb321acc5d0b24a8cd902bbf"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11295,sub_house_id=55",
+      "task_source_index": 55,
+      "raw_spec_sha256": "6a1fd1b2a7e48b232a415936f374c98f5e3988c7101da29e91bec3d9a45161f1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14854,sub_house_id=184",
+      "task_source_index": 184,
+      "raw_spec_sha256": "0296e85952200be6fcf73f401ccc8de55351817763289846218dde0bd0ebc0a2"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12952,sub_house_id=113",
+      "task_source_index": 113,
+      "raw_spec_sha256": "919577ba57f2a963b162efb5d84cba3a305e31a68dc39274df6c678d33d09f8c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13445,sub_house_id=164",
+      "task_source_index": 164,
+      "raw_spec_sha256": "d67efad9de43f8295563bbce371a0d53a3308e445c39d13ef3fcc65d54ca8995"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13699,sub_house_id=159",
+      "task_source_index": 159,
+      "raw_spec_sha256": "c46884a0c07cbaa01dbba3b56566c1f971a8bb9312a78ee6174fab985eb9de6b"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13264,sub_house_id=121",
+      "task_source_index": 121,
+      "raw_spec_sha256": "57f23ae085c062007e647bf1550cc5f26b067554dee8779f68ebe161d0f86e02"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12036,sub_house_id=58",
+      "task_source_index": 58,
+      "raw_spec_sha256": "0cf754bac13cf17d937fb98814f16d54694ae6b0f44942d09cbaaca6ec206254"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14168,sub_house_id=172",
+      "task_source_index": 172,
+      "raw_spec_sha256": "4fba30d77e9e63f20892b974be09351fdaea16d46fc97998db4fdedbce1b71ce"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14728,sub_house_id=115",
+      "task_source_index": 115,
+      "raw_spec_sha256": "82dff5d6501799eb066ed1816eaa97ac389725abc4a2419522bf815606c70da9"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13436,sub_house_id=163",
+      "task_source_index": 163,
+      "raw_spec_sha256": "1e6bd20acf9a85d3bce2853427ca4dc9b65082f342fef3cdf2d764833122e8b0"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14234,sub_house_id=59",
+      "task_source_index": 59,
+      "raw_spec_sha256": "f899ab06b2c91470136ecbc4bda91de59621b41d8c2e6dfdf483726cbc4b727f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11819,sub_house_id=48",
+      "task_source_index": 48,
+      "raw_spec_sha256": "f19af507c5fbaaf70729503b6afd4305f7e8a231df88d95d329ee1ee486a53be"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13297,sub_house_id=56",
+      "task_source_index": 56,
+      "raw_spec_sha256": "ce683c0a43d39269e281d2c65707ca9bb317795fd74db61ec6c87af93e07e39a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13529,sub_house_id=161",
+      "task_source_index": 161,
+      "raw_spec_sha256": "74ba51d6a694003fbd8cf5d0c3b032996014fb5d12764575d2cd63170cf097a2"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12854,sub_house_id=19",
+      "task_source_index": 19,
+      "raw_spec_sha256": "ad372dc0ee2f0a00af9340a9f201bebb73a32bc58d4e3446723a9f30206d0e64"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13708,sub_house_id=175",
+      "task_source_index": 175,
+      "raw_spec_sha256": "48e66f5538a6b117fde31d1d8b04188d7af77c4e4f4038ecff2aa6ee0ec37857"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11633,sub_house_id=61",
+      "task_source_index": 61,
+      "raw_spec_sha256": "5c0e312b17a2d1879fd9a2189b8995a96eaf303254d442bf9f6bfcc95d653f90"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12637,sub_house_id=69",
+      "task_source_index": 69,
+      "raw_spec_sha256": "22ffea45891ad8342642fbf694dd3bc718e112f01f323c721f8124b126964b46"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12953,sub_house_id=112",
+      "task_source_index": 112,
+      "raw_spec_sha256": "c15b59be137f423bea589fa892fee881c63b0a9c4366afded80a3efa49d37a8a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13392,sub_house_id=108",
+      "task_source_index": 108,
+      "raw_spec_sha256": "217996841da7c429ca23eec9ebcdb5d9057b3fa2315935d5188788429e89836f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13975,sub_house_id=117",
+      "task_source_index": 117,
+      "raw_spec_sha256": "7c432a123a9376d044a9dc076f811b9c04ed2451870a67f3c24f4f677263be03"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14782,sub_house_id=191",
+      "task_source_index": 191,
+      "raw_spec_sha256": "df67cef18a115487b64143c067d3d5a25d907bb6fabcad09ab5bbf6c9f0dcc8b"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12266,sub_house_id=63",
+      "task_source_index": 63,
+      "raw_spec_sha256": "e5d2e64d1d78ac91b2bbc841df6dd6afc998d0f1f7a2fd0d277476d4064ba1fa"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14499,sub_house_id=165",
+      "task_source_index": 165,
+      "raw_spec_sha256": "87cbd929ea640646102cb8e250870118029c10dcca1bbaa5c8f0a30974e110d9"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14172,sub_house_id=81",
+      "task_source_index": 81,
+      "raw_spec_sha256": "e47f87ecbfab298fd2685fd8fe0c3139e3718b6aa36c792dbd351a3b053e248c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=4495,sub_house_id=7",
+      "task_source_index": 7,
+      "raw_spec_sha256": "de7cd5e5dfc05501e304d2ddf9f73d5815aa6d1170be6c2f119d270e63225839"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12696,sub_house_id=105",
+      "task_source_index": 105,
+      "raw_spec_sha256": "ff7f33e422e89900bc36ab3bbae2cd2f98ba219f7c32a2484a8a8df4dea77000"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13968,sub_house_id=92",
+      "task_source_index": 92,
+      "raw_spec_sha256": "bdc865368e94b6d7ff1164b2feedcf1c2c2a371fdc294dde43d6ca4132326fce"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12771,sub_house_id=64",
+      "task_source_index": 64,
+      "raw_spec_sha256": "b0494d15d0466dbaf3bd7f8d7c1594e7f6b1bbda84fdd5f7cec14122adf2946a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14424,sub_house_id=194",
+      "task_source_index": 194,
+      "raw_spec_sha256": "99a545d915832e8bf3423617f7ebaf47367fa793a245762d5551315dc6da62fb"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12245,sub_house_id=51",
+      "task_source_index": 51,
+      "raw_spec_sha256": "021dd7daa4c859221ba728df2b9adea8dbcdbcbb6fe2f138eaa05f314f12f417"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13807,sub_house_id=29",
+      "task_source_index": 29,
+      "raw_spec_sha256": "bc57d91b5c6780d240b993321789b3ebc393cbe257a9596a3b65794e1c296761"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13238,sub_house_id=45",
+      "task_source_index": 45,
+      "raw_spec_sha256": "1bdf1946e335f08613fd2e6ecd69e667b8868db524eae58e9945361ea7f9d762"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14423,sub_house_id=169",
+      "task_source_index": 169,
+      "raw_spec_sha256": "44a3a1844c16056418a30f7508245f599a0497a0ae86b59f2fce5f35be463296"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13761,sub_house_id=171",
+      "task_source_index": 171,
+      "raw_spec_sha256": "f7a820f12d447c229708e587403f43e5aed85c1b55398f7fd2cb04977c07edcf"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14765,sub_house_id=136",
+      "task_source_index": 136,
+      "raw_spec_sha256": "ac535c92898f4e78a19e0bc1447a2fed789bb9550f734acea00a459643fc53e2"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13278,sub_house_id=148",
+      "task_source_index": 148,
+      "raw_spec_sha256": "87cff6609f2de83acbb0b5859a3eb7285e551dfd97235614e558d13c3a89d38f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12698,sub_house_id=106",
+      "task_source_index": 106,
+      "raw_spec_sha256": "f649f254ab09c20ee2c5b00b0a6da94c9bec964d99d7f689a90dd668f8bfc571"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14496,sub_house_id=167",
+      "task_source_index": 167,
+      "raw_spec_sha256": "4020263e60ae971b5d2668516149e8e17da411225fff9f2054a769229183e22b"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11951,sub_house_id=75",
+      "task_source_index": 75,
+      "raw_spec_sha256": "fdae7084732da9b9fd384510a44232244050e56ea24a4693ccfc358d3c866787"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=10248,sub_house_id=24",
+      "task_source_index": 24,
+      "raw_spec_sha256": "0e534f87607632ad37b8e1f4e008e5bdc84d983cf42b27797f21f34c02823e61"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=714,sub_house_id=2",
+      "task_source_index": 2,
+      "raw_spec_sha256": "cacc674fbe71721918e7a4192bb82e8b5f2f12d3513dc0356a5f715b2fd9fa7d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13352,sub_house_id=132",
+      "task_source_index": 132,
+      "raw_spec_sha256": "d6949b248cdc6ac0096719dd2d4a804d248c21146b7fce3b6dd63d1f7cfd10a4"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13351,sub_house_id=99",
+      "task_source_index": 99,
+      "raw_spec_sha256": "6983512c1d3b29296064152419f360e252ef64a06c4031f666b2bf72a7a19802"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13393,sub_house_id=73",
+      "task_source_index": 73,
+      "raw_spec_sha256": "889263066abda2beadf57bca85e5cad9875158f3232dcd64b80a77656825ae83"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13727,sub_house_id=49",
+      "task_source_index": 49,
+      "raw_spec_sha256": "33dd81b01db4b09e0c43c58a8f65fe27bb9594f8259715653a119c376e9305fe"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13259,sub_house_id=116",
+      "task_source_index": 116,
+      "raw_spec_sha256": "428c38dd9d4b0480bf3c595b1b718a74f75ad64e8b7dc2430dcbea03eb51fb50"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=9921,sub_house_id=18",
+      "task_source_index": 18,
+      "raw_spec_sha256": "892d940a0ac43278b9a4ea9453f79e148df5e661b7fcd1ba70c0bc3332a5e320"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12500,sub_house_id=100",
+      "task_source_index": 100,
+      "raw_spec_sha256": "dff6341dfa75c193af52b517c0944d5730e1bf0135b69b5c16fbf78afe464087"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14506,sub_house_id=183",
+      "task_source_index": 183,
+      "raw_spec_sha256": "5934e487a26d452233fd367ad9e558acc55d3c76d4a5c0cd26df7ac4f3add6df"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14426,sub_house_id=181",
+      "task_source_index": 181,
+      "raw_spec_sha256": "5115cd5eab2d81aea0a7ecd27a497f35cf6da6a7b76d4c9a8d91619f62e4055a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11059,sub_house_id=43",
+      "task_source_index": 43,
+      "raw_spec_sha256": "416cb65a80696b17db20a3ce1dda6cf1a3ad589375a2fe8360227eddc5a1320f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14070,sub_house_id=158",
+      "task_source_index": 158,
+      "raw_spec_sha256": "f87b2f4a8e18c2a0f23ad79b529e74d5d004e0a5e372994d18781487c9494263"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13757,sub_house_id=142",
+      "task_source_index": 142,
+      "raw_spec_sha256": "8f04a55518684290aea8ce82cd647cec3535a96175e3df7f1b73ac702a04a335"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13312,sub_house_id=21",
+      "task_source_index": 21,
+      "raw_spec_sha256": "60dc6817c3bcbad0d19bc8c251f8b90776bffb89b6856b600bde2bd496347b16"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13943,sub_house_id=46",
+      "task_source_index": 46,
+      "raw_spec_sha256": "700613312e4dbe60b1ff578a068b9b0cc8ab157cd2015ba1ee24480d525e7cb1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=4526,sub_house_id=8",
+      "task_source_index": 8,
+      "raw_spec_sha256": "12fd36cb08116e2330e056938dd324552671633ae1daed6ea52afd11cb7c403a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14490,sub_house_id=130",
+      "task_source_index": 130,
+      "raw_spec_sha256": "a533af87e55d1ee7c644374b31cef9f2746a0975b2d1dd0bf8b0a0c3a290e5e8"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13175,sub_house_id=95",
+      "task_source_index": 95,
+      "raw_spec_sha256": "4862fe0222395dd26263fbd8866ff0da44a1f0caf1ce6a2e81c8f87c86bac92e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12675,sub_house_id=107",
+      "task_source_index": 107,
+      "raw_spec_sha256": "5183a7ae75c5c1819ee319c5a687e1f32520ac7140d1823e1b97996c91bd536f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14807,sub_house_id=153",
+      "task_source_index": 153,
+      "raw_spec_sha256": "fb3da165070b6a267b3a91ec29554f832f357a3b4697f70ed97020ba8beedd57"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14563,sub_house_id=124",
+      "task_source_index": 124,
+      "raw_spec_sha256": "0ea9b0b5a04d64234d95d61d6533d5fb1832e9470900deb84b32bc5627a56c1a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14320,sub_house_id=190",
+      "task_source_index": 190,
+      "raw_spec_sha256": "53bec2ed479e6528f9b2de28b8743bcdb3912d6ceb77eff74f76e484093b7670"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14702,sub_house_id=176",
+      "task_source_index": 176,
+      "raw_spec_sha256": "2fc1b9346a06ca934aa8cb16aa9741fda2cdd85a7a186054ad4c684fe052bd2e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14635,sub_house_id=131",
+      "task_source_index": 131,
+      "raw_spec_sha256": "b60dcdaf5bf0505655e7d1f15a3545b97928cb8b208d4607759fce21197ed37d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13167,sub_house_id=101",
+      "task_source_index": 101,
+      "raw_spec_sha256": "3fa6209a5b59ccbacfcd4601f4ebbeced38a0c44a4e963d7759f6ce2dbcca657"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=1730,sub_house_id=3",
+      "task_source_index": 3,
+      "raw_spec_sha256": "0beb359e48d80e0189c9b77d677d9459c9660dc581fcee4165756e9d01843fc4"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13641,sub_house_id=170",
+      "task_source_index": 170,
+      "raw_spec_sha256": "01d9cd026b0cc0bf89570810e6d1319791151f7c9e92fafdbd286238693428de"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13952,sub_house_id=144",
+      "task_source_index": 144,
+      "raw_spec_sha256": "55ca9b634ab2a997ef80f933503fe78ff126d42208f9b1da5437425e64f11ec9"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14916,sub_house_id=134",
+      "task_source_index": 134,
+      "raw_spec_sha256": "0aab9b756165f6a5a36156b036ba2b76307e4f3456785a9ddfaef8911f9b7053"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14604,sub_house_id=52",
+      "task_source_index": 52,
+      "raw_spec_sha256": "63ca08811165143bfd47af919b0453bae6aa17d44dd195d0cef734ad940f4b94"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13340,sub_house_id=123",
+      "task_source_index": 123,
+      "raw_spec_sha256": "bba6c229ba7b7fe06e696724241796fceb2be6c0d474a4dddfcb95e41a4fc530"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13447,sub_house_id=133",
+      "task_source_index": 133,
+      "raw_spec_sha256": "95759482ad9c7a820dd9c371a1c73821c20622eaf341ba0e6b06b8eaa875e756"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14263,sub_house_id=187",
+      "task_source_index": 187,
+      "raw_spec_sha256": "5045a03c5bf1d706b4ad23234cb1b89100fffda3fc113eec4db1cbcfc0bab360"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12207,sub_house_id=78",
+      "task_source_index": 78,
+      "raw_spec_sha256": "61e09fdec807e8697e2f606fe3605eb46beed2758ce85d81b72c27e1e21fdcda"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14544,sub_house_id=192",
+      "task_source_index": 192,
+      "raw_spec_sha256": "a47310e3ae7f18554c3da420b6dec19d9232b2a2cb0e78c7136657e9abfbffad"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13419,sub_house_id=120",
+      "task_source_index": 120,
+      "raw_spec_sha256": "17a25fbe39c5e25cde368c03e07ec2912e5c3e8e2b5933c043e74d86744db708"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12042,sub_house_id=67",
+      "task_source_index": 67,
+      "raw_spec_sha256": "c4746dac7268db5134e1f9cfe74a79f1f2093f39e2e1c2951c7601a6efc5ca4c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13181,sub_house_id=122",
+      "task_source_index": 122,
+      "raw_spec_sha256": "63e54b5709343f2a4a33e63817b212559cdf9e02c8722536178e35ebc07d799e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13931,sub_house_id=146",
+      "task_source_index": 146,
+      "raw_spec_sha256": "01e408fc017ad9c6fde538dba32e82df223007a0afc2aee22b3771aba11f04f9"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13458,sub_house_id=110",
+      "task_source_index": 110,
+      "raw_spec_sha256": "6eca65c2bc9c238448c22e54121fc7e3e89c98fe4751f4a7b3e069f061dd4fd0"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12238,sub_house_id=74",
+      "task_source_index": 74,
+      "raw_spec_sha256": "8a976d3660b034ffb673a4724489b276d47f245d6750bd6c63e8e29a62ec0b14"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=2819,sub_house_id=5",
+      "task_source_index": 5,
+      "raw_spec_sha256": "afead84c485047b327045dcad9175551eac246491269fbdad9505d5751b0d38d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11933,sub_house_id=32",
+      "task_source_index": 32,
+      "raw_spec_sha256": "3b2401902608315b956ed6f7095bf99636c03bf459c864e8c9ebf98a2f2d8a22"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12050,sub_house_id=36",
+      "task_source_index": 36,
+      "raw_spec_sha256": "00e918bfd3aebeb453ca8ad873d77e7a0f506c2b6e8998c4be454f5b928b6edc"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13166,sub_house_id=23",
+      "task_source_index": 23,
+      "raw_spec_sha256": "bfe4aeb941f8c1fbac4bcca84be6a9662e1cce392f18b2a399da439b2b6ff1de"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=5093,sub_house_id=11",
+      "task_source_index": 11,
+      "raw_spec_sha256": "bacbb4e6a129eb0e3fa80fb9026a8fe7fb854c273a1b020592388586e426a411"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11097,sub_house_id=26",
+      "task_source_index": 26,
+      "raw_spec_sha256": "4b5d333036c32225f701c41937bcaeca8e7436687c96f325747b84d7b7e410eb"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13137,sub_house_id=114",
+      "task_source_index": 114,
+      "raw_spec_sha256": "f972426f503fd50da891e22bb58f45649b4918de8afa5bcbab01625efd6eab4d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12692,sub_house_id=80",
+      "task_source_index": 80,
+      "raw_spec_sha256": "5b37d987600cb6af5000a9cde73dfe8aab31081bf19ddf2f94e22b304314b603"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=1095,sub_house_id=1",
+      "task_source_index": 1,
+      "raw_spec_sha256": "300b26d1ecd46c5d0eca3305ff80139fe0282afb02e3e7644160ead68bba416f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=8828,sub_house_id=17",
+      "task_source_index": 17,
+      "raw_spec_sha256": "c2a723113cfd15100803f3c581b52e3fb58e8a677edfcb6b030a0ea0295f2885"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14561,sub_house_id=96",
+      "task_source_index": 96,
+      "raw_spec_sha256": "5add5fc97bd1c5606c13e9cd599d32a026dc05f4b96147e6f9c779fa1c150f7e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14891,sub_house_id=152",
+      "task_source_index": 152,
+      "raw_spec_sha256": "631c7fa906271ada4bc1be2f09287e27c3366b3a5cd10e992ebc43a1120b760c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14788,sub_house_id=197",
+      "task_source_index": 197,
+      "raw_spec_sha256": "14ef0cff3cb988d9dc7a929ecce2cbfe5a4721a9f54b19e8fe9b81c0ccb98157"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13337,sub_house_id=111",
+      "task_source_index": 111,
+      "raw_spec_sha256": "f1da48c0e33003c4c95c64a31613c823df86d4419fef6972a3710b2e665bc37e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=420,sub_house_id=0",
+      "task_source_index": 0,
+      "raw_spec_sha256": "e76e02f8257ee37611638f7a3b061da3ff0ffb66d1282cc17c4f94f611f96c1c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11033,sub_house_id=41",
+      "task_source_index": 41,
+      "raw_spec_sha256": "34f04cfe219f568797aaea1284d738cbe413d8f744ebcb923459fbe1a27e3487"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13422,sub_house_id=62",
+      "task_source_index": 62,
+      "raw_spec_sha256": "de2f689d2d974a963e4cfa38d185d248221775c1d8c003b07e34c165f0dbb83d"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14537,sub_house_id=179",
+      "task_source_index": 179,
+      "raw_spec_sha256": "3d80a76ac2e4429a676ce38a333656bf7175581949c4e88c89183423c17d3224"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14326,sub_house_id=188",
+      "task_source_index": 188,
+      "raw_spec_sha256": "953567b8a72635df806e0bb5cca02248cc8714264c4e13a0a3f1a3fad8ebcbe3"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14975,sub_house_id=189",
+      "task_source_index": 189,
+      "raw_spec_sha256": "ece9b76813efc8bab11180bdade8746aa82c83167b3c98d2cbc6b77772ab1468"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13859,sub_house_id=86",
+      "task_source_index": 86,
+      "raw_spec_sha256": "d6f8be9528a04765ff852a220500ab9db23303eb6f8e4afb7d3b27b8cc81561a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=11599,sub_house_id=34",
+      "task_source_index": 34,
+      "raw_spec_sha256": "cba62564c0c3a8120c8eb0d1ceb7c310924442f85453520c2706af2117c49d6c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12080,sub_house_id=40",
+      "task_source_index": 40,
+      "raw_spec_sha256": "fbe51686f2cb991fd106e47986b0d2597a1b847c331388f1bc7498207761c455"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14895,sub_house_id=199",
+      "task_source_index": 199,
+      "raw_spec_sha256": "b25241cb0e6219af336c1bdee77f4de04b6523dcc905380872b2e2aecc69c41c"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13623,sub_house_id=87",
+      "task_source_index": 87,
+      "raw_spec_sha256": "44f0d49cdf7d69affb8e05b8acdc9c6a761877db7637787968a63d30a1d5752e"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12045,sub_house_id=85",
+      "task_source_index": 85,
+      "raw_spec_sha256": "9e2014368a20bfcc04471200dab41469463a537592579336bef5b28fdb35f6e6"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13018,sub_house_id=143",
+      "task_source_index": 143,
+      "raw_spec_sha256": "a00e595250be853cf748e64c28eeb95536c84c531b0405fae1f960dafafebacb"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=13812,sub_house_id=137",
+      "task_source_index": 137,
+      "raw_spec_sha256": "dfac6f6bcad1a0b3b37d1629e0426ec1c795e17d7f08f9c735611835f99c5f2f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14299,sub_house_id=97",
+      "task_source_index": 97,
+      "raw_spec_sha256": "bebdbc102c0039cbc0a71bfaf9eb06ab4f74481fa03da0b6e07a219f9f1b205a"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=4110,sub_house_id=9",
+      "task_source_index": 9,
+      "raw_spec_sha256": "0ecb7ff024b15ed857edb321bf07cbd9798133a7f8e15d6939eae03fafce6388"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=10846,sub_house_id=27",
+      "task_source_index": 27,
+      "raw_spec_sha256": "4fb5115e18e9d85a56d644d7a3d1227aec122f72e4d26749a8756eac59a35ea1"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14915,sub_house_id=198",
+      "task_source_index": 198,
+      "raw_spec_sha256": "808ff58006c990b9251f64e6abfe4af9c981eec531b071aa2196342228805639"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14314,sub_house_id=104",
+      "task_source_index": 104,
+      "raw_spec_sha256": "4852f51c605b5fd122504a95168f710b322b7aa9b2166e70db5173ae04d026a4"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=14568,sub_house_id=196",
+      "task_source_index": 196,
+      "raw_spec_sha256": "3d6b333ae5f4b8dd537b8d2d9a3bd34ea4b2ad9a6f7f738f52f4064fa1a4755f"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=10822,sub_house_id=22",
+      "task_source_index": 22,
+      "raw_spec_sha256": "a87742f676800873d2ed414c7e5f20a1fac524b74e6d8e4ad3b98786ce381e36"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=12479,sub_house_id=68",
+      "task_source_index": 68,
+      "raw_spec_sha256": "627149818f7869c2fe1936d651ed3c43ac1ef2ffea33aaad27971b013e77fb65"
+    },
+    {
+      "sample_id": "task=ObjectNavType,house=8224,sub_house_id=13",
+      "task_source_index": 13,
+      "raw_spec_sha256": "bfb9c3642623980f69fb21f1e14ed5b294fdfd5992594cc71524664b5a3877f7"
+    }
+  ],
+  "provenance": {
+    "git_commit": "33ffa28000522e3715a0920bf3679c27e79b423e",
+    "source_sha256": {
+      "architecture/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "architecture/agent.py": "534ed49334709abb893942666739125b47783b350c4546be948f743f3e65b401",
+      "architecture/allenact_preprocessors/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "architecture/allenact_preprocessors/dino_preprocessors.py": "c522a81eec3169ce93c96104fd6d040f9e6943270c2d962390266318e77f7e7b",
+      "architecture/allenact_preprocessors/siglip_preprocessors.py": "a2d8fdb3f47a2cd83ab3da2f4915dc1114365543124bb4f43d3cf59b96121043",
+      "architecture/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "6cb5d81e957cff9b283ce42b8332b019d62e9618ae9af2a2f0ae6fea6c0bbcf2",
+      "architecture/models/allenact_transformer_models/inference_agent.py": "69016c0e2f1d4807eefef8465e00dec2f1920973c51cacd96113822979401e75",
+      "architecture/models/allenact_transformer_models/separate_actor_critic.py": "0b2643c9a58abab0dd0523d0496648f4e025403523518eca564ddbc11cccfbdf",
+      "architecture/models/transformer_models/__init__.py": "40bd211322fb129ebe90a61b9a5292fb2f377309b84ce360fe5278848bd10da0",
+      "architecture/models/transformer_models/early_fusion_tsfm_models.py": "1c8b2b7be62b88541a2d260250cd95ef909aa6c277c6b4cd0917a22748b80883",
+      "architecture/models/transformer_models/image_encoders.py": "5b9bd32431aa92ca5d1f2fafa1fe17cfe1c2be294b47c9f4310e1144508d350e",
+      "architecture/models/transformer_models/llama_model.py": "44917c4302fec01f5eb9036eb729da9e4d10d8946e5fb21cadf8294c2e9e489f",
+      "architecture/models/transformer_models/preprocessors.py": "de78c793dede65a97443171a04e23f1fb3e251e9e1d1acf0d2590cac02ee59d4",
+      "architecture/models/transformer_models/text_cond_visual_encoder.py": "cf2720b2f7e5ac726c193adbf5404652e09a25a2f67cbd234cf5a7b71579a609",
+      "diagnostics/actor_logits/SOURCE_HASHES.json": "fa1fbc62015046f7b4a39e6e1f496972d6557b7a6cd8df8e816db788f1cd45c9",
+      "diagnostics/actor_logits/__init__.py": "9761eedb515716a75559d8b73f81623e86864346d6bbbcabac538635eedc6567",
+      "diagnostics/actor_logits/analyze.py": "12134020a658cb8b882a1631739d8d729e6314951963ae9fc161fd17bff930d6",
+      "diagnostics/actor_logits/evaluate.py": "656953060e221f1e1e52934c8a4ee127257a8d92c38dcf2c9069f024f694e610",
+      "diagnostics/actor_logits/logger.py": "ba2ebc425e24a86f2e1f2e962e3e83b08e4d06d4acbd4d7e7908168986907eb2",
+      "diagnostics/actor_logits/manifest.py": "2fe203a57db5806936229f314994563aab92a1833120b998f6036e54a8ca950e",
+      "diagnostics/actor_logits/reference_identity.json": "3e80fdc0d3ecb8a62d686de2ac35fc6cb0305cbf7c41c14ad8c01c83a94ca39a",
+      "diagnostics/actor_logits/reset.py": "6acce304f914b94082954a968250d58ca7cd80ef1ad7b99cef07b50dae0201d1",
+      "diagnostics/actor_logits/run_p2_full400.sh": "d76f2c829bec6cb2966e924fe4ac320be51ea559c190a32d458961777cd10ab8",
+      "diagnostics/actor_logits/storage.py": "d0874bbe6b4ad3a83237e6530310d115ef33aae3c2f2c7eebfd19c9c8cd0c5b9",
+      "diagnostics/actor_logits/tests/test_logger.py": "2d71b96e329b06e31a40a21f4b13ecba082d5d8b2dd8120f424c3878ad85c978",
+      "diagnostics/actor_logits/validate.py": "4e961aef80b87ae956c770de5392cbb163069d6eb0cab7ea1dc7b6fb23d3f18e",
+      "environment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment/manipulation_sensors.py": "7ae49aab94ad31d87818ef165518baa32e2bb19448664d533d3c54fc1b871f67",
+      "environment/navigation_sensors.py": "53dce3221d46162cea8d385bab99fe765d8bf5b7da1a941a627c6c51cbd95c76",
+      "environment/spoc_objects.py": "b859a1319273b63edc4fe058bc582070a183163ee56ca1785de273865905c92b",
+      "environment/stretch_controller.py": "0734b866bc00bc593f7db3a4c3587e1d9d6299a8defea0619afc0f5273406804",
+      "environment/stretch_state.py": "1366fa8355f21e8704f1839eb86d790f93a1622d6eb1434433a0a0f538c03e5b",
+      "environment/vision_sensors.py": "5ab24301a592ace483bf4159540812a902cafb98efce0407f57796ea023ce81a",
+      "online_evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "online_evaluation/local_logging_utils.py": "46a76bd3d44e467fda5eba43967b3e3290abf3ab27f21d9c67194ab4c4f8081a",
+      "online_evaluation/max_episode_configs.py": "6b7088383c26dcc8c8b3dd0617b3931e40fd572091984d91204a667eab2fa8f2",
+      "online_evaluation/online_evaluation_types_and_utils.py": "ef7ab40fa6c5fb4f217bb8a8726568667ad6082523992dd9143227cf83b947e2",
+      "online_evaluation/online_evaluator.py": "e878e5c27512080ddbe9858e16dedb186d3be52b99abf83fea92ed57dbdafee3",
+      "online_evaluation/online_evaluator_worker.py": "c2a6a39cc7ef0fd4638823bec9d3a3641770f318b15a0053455519713cbb0363",
+      "scripts/download_aligned_ckpt.py": "1dbb34088f2a9c62103958d8d9c8a566f269a8237a54aa0cdcf5e8bd6d07239d",
+      "scripts/download_baseline_ckpt.py": "21e8a0104378e371d630abe853682b3e0c1a7019a8198db17424138b6912e1fe",
+      "scripts/download_objaverse_houses.py": "69a8eaa1dd838fb50ccbd97dbbead5e181f0495cff351e7f0d0f4f2267759b77",
+      "scripts/download_training_data.py": "82dfbf9f8645c47396b9bc8cdb23c89844352287babd98975cf609ba771ba2f3",
+      "scripts/eval.sh": "bcc1d26788ec579be9d9dfec64c5b870e59a09a171bd2a03de429a3a6f829dd1",
+      "scripts/install.sh": "dac743f2e0f741dc22251f591455d1b3ec19246169c9d16b13d2d377e9289d38",
+      "scripts/run_docker.sh": "d4574ebe0e767d3fa2e7a1e28242f0df11c68e58214c2a2e00fba9a0ace75d6d",
+      "scripts/train.sh": "196fd7118da52a52c086547c60a14b5a2b9bb8e554bbf439248b92de2973760e",
+      "tasks/__init__.py": "64593b62bfe9240cc3bda00943fd999fcc59e78d2b8edf0d8b8987f39d82622a",
+      "tasks/abstract_task.py": "b7e9546602b04a4d30412c1998451a0088cf5b02f174abe56f94774dd78c1343",
+      "tasks/abstract_task_sampler.py": "5c0974c32cc7a571a80b0eb72c24c594cdd3c996ef8f49e545204a044ffebf20",
+      "tasks/fetch_task.py": "843bb0bd33e6a06192f6bb5b4f137791a9e868e88d1b1bed4a016000563be4cb",
+      "tasks/multi_task_eval_sampler.py": "959cd38cd2adf93481e7b93052337d23d67ec4721d3d894f6c6e6b556b719327",
+      "tasks/object_nav_task.py": "0b5a4037f3672f49865922e7525d5eda7da72c9b694baea745b68bc64b4efadb",
+      "tasks/pickup_task.py": "b69ac7913aff57a1e64b35278a2645c0c7e617bda9fa05f7dedaf08ce5e42c82",
+      "tasks/task_specs.py": "a116b48cec55197b61d444f058bb03713a020ce3e145f3942c378fd4a0a08465",
+      "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/offline/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/offline/chores_dataset.py": "a5b9b9310b6a1174ed34d7780b5097943f5ce0006018b0a21f6730cbf2a5c201",
+      "training/offline/dataset_mixtures.py": "1cf5b9843fdef1e22acce27e4270cb17f87b7c29d0a4d55d27320c66e1f20547",
+      "training/offline/train_pl.py": "e3973ebf355f6fe0b951e8d61c78cf03ad0c1bcd3ea772f2776da095a7e13be7",
+      "training/offline/train_utils.py": "bea8f8b3b9c076be9b268a28b9363d27f4c27c5ca8536c0f6960da466bd45aa5",
+      "training/online/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/online/allenact_trainer.py": "313831e12ab5b03944fb8f459288857dbe6751400ed4f3a8040af0a05c709959",
+      "training/online/base.py": "05a1ee412d48936c5a54244482a88df26f640c6ad0b3ee6c5782a45d2e644bd6",
+      "training/online/chores_dataset.py": "a5b9b9310b6a1174ed34d7780b5097943f5ce0006018b0a21f6730cbf2a5c201",
+      "training/online/dataset_mixtures.py": "2a83bac3f04e47f1e439d0baeb149ef511238699405f49dc5578133495ab18da",
+      "training/online/dinov2_vits_tsfm_base.py": "175eeb444eaee32e55b212ca331ec3a882477e75445a4e22a7c1971e0cbead51",
+      "training/online/loss/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/online/loss/customized_loss.py": "bab5e1260247baa5ac914d802c78714b32b175ff28515a8a9c895fbee9519f67",
+      "training/online/online_eval.py": "4c1303e64c4eff1b9abf3eb96bb46f8a355c0ad045886edee3edc60eef602fad",
+      "training/online/reward/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/online/reward/reward_shaper.py": "2716bcf728b3caa709147aded22a9da92afb9652633f429afb45e678b9eb883f",
+      "training/online/third_party_models/llama/model.py": "f12e1f97b83b58cf8cb99b500e4afbda7e5a7daf048c3065095d0dedaf5ab69c",
+      "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utils/bbox_utils.py": "66b76aadc9fb11824a18cbe9faa837ca61f19a9cbb09d3bf9816d7058d4ef240",
+      "utils/constants/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utils/constants/objaverse_data_dirs.py": "7a67593dffccfa35244becfd407bd3e4f6bc116eadf369be60c4a38b460c2780",
+      "utils/constants/object_constants.py": "bb37db20a3056b3884c463d72e59df5abbf809a84ac538ff6e9e5e3b62db03d7",
+      "utils/constants/stretch_initialization_utils.py": "4de618cc4fab40757d14844297b19e21b2de74b3eb880b5743ce07581288b953",
+      "utils/constants/template_verbs.py": "85d515ae47616793534187bd40239b4f50b7c61e8ece2f2fd192c3c61f0ec4dd",
+      "utils/data_generation_utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utils/data_generation_utils/exception_utils.py": "448fe64099b8ff0686efb4114fc6dfc25ba3a9239f27205b3db9a5215773f6e9",
+      "utils/data_generation_utils/loc_grid_conversion.py": "1b857f0903543f1c73d1ca8a5a9a1b54df6d2038f85682994179b11f6f452465",
+      "utils/data_generation_utils/mp4_utils.py": "447f4cf260245adefabfd3f0f1f385f4e6ff856625dcbccb789fa8fdaa04b958",
+      "utils/data_generation_utils/navigation_utils.py": "2cc4b9b719e06501aa5becdbbffc97266c92e22f5c376174058979ae58844ac4",
+      "utils/data_utils.py": "ed594e0d150edd798aa1decdcb1077fd8c9cd408f4626e5acfb7c5f3142e576c",
+      "utils/debug_utils.py": "649a1b0adc75591b6e87c1191c1057b821b7754a672a9c154a41e1941ea80b0d",
+      "utils/detic_utils.py": "8326536a57eb44d122df842299e7f5a6d1813efbd4c253437d77fa427d4488c9",
+      "utils/distance_calculation_utils.py": "16499ed03a08867d2dcf0eea88a436bb0018d05b3701763180553cbb722a4d77",
+      "utils/local_logging.py": "7bb048f81ecdea8c2bc0251128b05e19116330abd746ec8c8f315de4f4da1538",
+      "utils/loss_functions.py": "fc067dccfae966cb9bc5cf40b6f16f2effe9105109b87ba366c5c1ccf1577dc7",
+      "utils/nn_utils.py": "9b9c1ad0e1e10a231beb3595258498a0d4fa61a6bb082f168874aa9c37c6405a",
+      "utils/objaverse_annotation.py": "7f642c64447e1c30ac91e26f8f149a9b210512da65a9e252b13f464ccfb51086",
+      "utils/sel_utils.py": "f211ccd2883699d1d96fc749452393f978cf2544163142f793616312be3d6183",
+      "utils/sensor_constant_utils.py": "e837e425c5c83b222a792afebd2786a4472f000ebb66037c3b20ec3502dc1bf7",
+      "utils/string_utils.py": "5d52d6435a605a40af8759e1e3e84e55cd2c69fde3421c044a67729b1b5f9ae7",
+      "utils/synset_to_best_lemma.json": "f0030be8cc110ab19bba34cf573f09920215e7bf5300d4713b2c78a13e934321",
+      "utils/synset_utils.py": "3fcea507e13b3bca2295b4f2b129e2279d3036a2e9c632c2da2921702ebd4103",
+      "utils/task_datagen_utils.py": "1ca5c077ecfceae89f5c53fef729eacb8367dc10a3bc7ee8caa3657d5bb836dc",
+      "utils/task_sampler_utils.py": "6670c6e86c97af074bbe0e1b4b5165562a4300f2fa8334aca69864f07c395d32",
+      "utils/task_spec_to_instruction.py": "8ff7d4cfb147bb5e514dcfa53628f6a539a66a28912f0b479893c311945e1dd5",
+      "utils/task_type_mapping_utils.py": "50a1c0c4d1956a3003f81188a15429cc2965afc1619ab923cf419053394d27bb",
+      "utils/transformation_util.py": "cfcfc80508acee032b126559a6428c56c8da97544021dfdb94201dc579582ba5",
+      "utils/type_utils.py": "f7716d4b8f22815a8725b58ea3e98ec96a3649bab78ce40154e2a27bce62daa1",
+      "utils/visualization_utils.py": "15438e49b29cc30c001b9293447cb1837c742d810c71f990cd7f2d544fe4c520",
+      "utils/wandb_logging.py": "be824fda9a8e1214148f8b7d4faf58af4f6ddf085e508cb3d6121becab684d13"
+    },
+    "actor_reset": "off",
+    "group": "OFF200",
+    "approval_reference": "2f153c3154caeb6266d463b4ba3e38d698bd9bad",
+    "control_evidence": {
+      "claim_commit": "e27a5d25bba4e6a991960a733d64fd295480b7b9",
+      "claim_id": "e3f688f832924a1dbb6a105b117b5551",
+      "approval_commit": "2f153c3154caeb6266d463b4ba3e38d698bd9bad",
+      "approval_expires_at_utc": "2026-10-27T03:02:52.436Z",
+      "gpu_logger_equivalence": "NOT_RUN_PI_WAIVED"
+    },
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+    "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+    "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "physical_gpu": 2,
+    "seed": 123,
+    "num_workers": 1,
+    "shuffle": true,
+    "greedy": false,
+    "test_augmentation": true,
+    "official_arguments": [
+      "--task_type",
+      "ObjectNavType",
+      "--eval_subset",
+      "minival",
+      "--eval_set_size",
+      "200",
+      "--shuffle",
+      "--num_workers",
+      "1",
+      "--seed",
+      "123",
+      "--test_augmentation",
+      "--max_eps_len",
+      "-1",
+      "--gpu_devices",
+      "0",
+      "--house_set",
+      "objaverse",
+      "--input_sensors",
+      "raw_navigation_camera",
+      "raw_manipulation_camera",
+      "last_actions",
+      "an_object_is_in_hand",
+      "--ckpt_path",
+      "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+      "--output_basedir",
+      "/nvme2/user/qyy/SafeVLA_p2_full400_results_20261012/OFF200_official"
+    ],
+    "python": "/home/amax/.conda/envs/safevla/bin/python",
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "2",
+      "DINOV2_REPO": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main",
+      "DINOV2_CKPT": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "OBJAVERSE_DATA_DIR": "/home/amax/public/datasets/qyy/objaverse_assets",
+      "OBJAVERSE_HOUSES_DIR": "/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28",
+      "NLTK_DATA": "/home/amax/public/datasets/qyy/nltk_data",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "WANDB_MODE": "offline"
+    },
+    "pre_model_rng": {
+      "python": "8db5755a6d557592eeab8940ee03d4a3eba7f8847b87e72ed35992500df6801b",
+      "numpy": "d8573128f94e69bc504c39601a57317df2d32f7b249d16594a1f8a565e212072",
+      "torch_cpu": "b04f168bb97ae5f0758f525c6b0e928d866ad2619a254710db893e71bd54e1e5",
+      "torch_cuda": "7ce51663c5b98c7e383cb7ca11e5171bf9d32dcad0fa33f8c831a5ddb1abdf3e"
+    },
+    "load_events": [
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "SafeDinoLLAMATxNavActorCriticSeparate",
+        "strict": false,
+        "nkeys": 417,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "runtime_modules": {
+      "diagnostics.actor_logits": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/diagnostics/actor_logits/__init__.py",
+      "diagnostics.actor_logits.storage": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/diagnostics/actor_logits/storage.py",
+      "diagnostics.actor_logits.manifest": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/diagnostics/actor_logits/manifest.py",
+      "training": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/__init__.py",
+      "training.online": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/__init__.py",
+      "architecture": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/__init__.py",
+      "architecture.models": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/__init__.py",
+      "architecture.models.allenact_transformer_models.inference_agent": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/allenact_transformer_models/inference_agent.py",
+      "architecture.allenact_preprocessors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/allenact_preprocessors/__init__.py",
+      "architecture.allenact_preprocessors.dino_preprocessors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/allenact_preprocessors/dino_preprocessors.py",
+      "architecture.models.transformer_models.image_encoders": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/image_encoders.py",
+      "architecture.models.transformer_models.llama_model": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/llama_model.py",
+      "architecture.models.transformer_models.preprocessors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/preprocessors.py",
+      "architecture.models.transformer_models.text_cond_visual_encoder": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/text_cond_visual_encoder.py",
+      "training.offline": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/offline/__init__.py",
+      "training.offline.train_utils": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/offline/train_utils.py",
+      "architecture.models.transformer_models.early_fusion_tsfm_models": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/early_fusion_tsfm_models.py",
+      "architecture.models.transformer_models": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/transformer_models/__init__.py",
+      "training.online.third_party_models.llama.model": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/third_party_models/llama/model.py",
+      "architecture.models.allenact_transformer_models.allenact_dino_transformer": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/allenact_transformer_models/allenact_dino_transformer.py",
+      "environment": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/__init__.py",
+      "environment.spoc_objects": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/spoc_objects.py",
+      "environment.stretch_state": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/stretch_state.py",
+      "environment.stretch_controller": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/stretch_controller.py",
+      "environment.navigation_sensors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/navigation_sensors.py",
+      "training.online.allenact_trainer": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/allenact_trainer.py",
+      "tasks.abstract_task": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/abstract_task.py",
+      "tasks.abstract_task_sampler": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/abstract_task_sampler.py",
+      "training.online.reward": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/reward/__init__.py",
+      "training.online.reward.reward_shaper": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/reward/reward_shaper.py",
+      "tasks.fetch_task": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/fetch_task.py",
+      "tasks.object_nav_task": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/object_nav_task.py",
+      "online_evaluation": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/online_evaluation/__init__.py",
+      "online_evaluation.online_evaluation_types_and_utils": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/online_evaluation/online_evaluation_types_and_utils.py",
+      "tasks.task_specs": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/task_specs.py",
+      "tasks.multi_task_eval_sampler": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/multi_task_eval_sampler.py",
+      "tasks.pickup_task": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/pickup_task.py",
+      "tasks": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/tasks/__init__.py",
+      "training.online.base": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/base.py",
+      "architecture.models.allenact_transformer_models.separate_actor_critic": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/models/allenact_transformer_models/separate_actor_critic.py",
+      "environment.vision_sensors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/vision_sensors.py",
+      "environment.manipulation_sensors": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/environment/manipulation_sensors.py",
+      "training.online.loss": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/loss/__init__.py",
+      "training.online.loss.customized_loss": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/loss/customized_loss.py",
+      "training.online.dinov2_vits_tsfm_base": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/dinov2_vits_tsfm_base.py",
+      "architecture.agent": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/architecture/agent.py",
+      "online_evaluation.max_episode_configs": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/online_evaluation/max_episode_configs.py",
+      "online_evaluation.online_evaluator_worker": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/online_evaluation/online_evaluator_worker.py",
+      "training.online.chores_dataset": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/chores_dataset.py",
+      "online_evaluation.online_evaluator": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/online_evaluation/online_evaluator.py",
+      "training.online.dataset_mixtures": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/dataset_mixtures.py",
+      "training.online.online_eval": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/training/online/online_eval.py",
+      "diagnostics.actor_logits.logger": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/diagnostics/actor_logits/logger.py",
+      "diagnostics.actor_logits.reset": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012/diagnostics/actor_logits/reset.py",
+      "dinov2": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/__init__.py",
+      "dinov2.hub": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/__init__.py",
+      "dinov2.hub.utils": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/utils.py",
+      "dinov2.hub.backbones": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/backbones.py",
+      "dinov2.hub.cell_dino.backbones": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/cell_dino/backbones.py",
+      "dinov2.hub.xray_dino.backbones": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/xray_dino/backbones.py",
+      "dinov2.hub.classifiers": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/classifiers.py",
+      "dinov2.hub.depth.ops": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/depth/ops.py",
+      "dinov2.hub.depth.decode_heads": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/depth/decode_heads.py",
+      "dinov2.hub.depth.encoder_decoder": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/depth/encoder_decoder.py",
+      "dinov2.hub.depth": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/depth/__init__.py",
+      "dinov2.hub.depthers": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/depthers.py",
+      "dinov2.hub.dinotxt": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/hub/dinotxt.py",
+      "dinov2.layers.dino_head": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/dino_head.py",
+      "dinov2.layers.layer_scale": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/layer_scale.py",
+      "dinov2.layers.mlp": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/mlp.py",
+      "dinov2.layers.patch_embed": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/patch_embed.py",
+      "dinov2.layers.swiglu_ffn": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/swiglu_ffn.py",
+      "dinov2.layers.attention": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/attention.py",
+      "dinov2.layers.drop_path": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/drop_path.py",
+      "dinov2.layers.block": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py",
+      "dinov2.layers": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/__init__.py",
+      "dinov2.models.vision_transformer": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py",
+      "dinov2.models": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/__init__.py"
+    }
+  },
+  "error_location": "end_episode",
+  "error": "TypeError: Unsupported JSON type: ndarray"
+}

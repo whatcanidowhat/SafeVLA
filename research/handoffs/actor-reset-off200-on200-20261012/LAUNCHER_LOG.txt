@@ -1,0 +1,7 @@
+[2026-10-13T03:30:47Z] GPU queue candidate=2 stable=1/3
+[2026-10-13T03:31:18Z] GPU queue candidate=2 stable=2/3
+[2026-10-13T03:31:48Z] GPU queue candidate=2 stable=3/3
+Chosen physical GPU 2 UUID GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c; logical cuda:0, CODEX claim e27a5d25bba4e6a991960a733d64fd295480b7b9
+START OFF200 on physical GPU 2 at 2026-10-13T03:31:49Z
+diagnostics/actor_logits/run_p2_full400.sh: line 134: 3485001 Killed                  timeout -s TERM -k 60 "$remaining" "$P2_PYTHON" -B -m diagnostics.actor_logits.evaluate --actor-reset "$treatment" --output "$OUTPUT_ROOT/$label" --checkpoint /home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt --physical-gpu "$selected" --num-workers 1 --seed 123 --shuffle --greedy false --test-augmentation --episodes 200 --execute-authorized --approval-reference "$APPROVAL_SHA" --claim-reference "$CLAIM_SHA" --control-root "$CONTROL_ROOT" --pi-waive-gpu-equivalence > "$OUTPUT_ROOT/$label.console.log" 2>&1
+STOP: OFF200 failed, see console log; later group NOT_STARTED

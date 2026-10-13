@@ -1,0 +1,30 @@
+{
+  "status": "SELECTED_THEN_RELEASED",
+  "hold_used": false,
+  "physical_gpu": 2,
+  "logical_gpu": 0,
+  "uuid": "GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c",
+  "queue_poll_utc": [
+    "2026-10-13T03:30:47Z",
+    "2026-10-13T03:31:18Z",
+    "2026-10-13T03:31:48Z"
+  ],
+  "stability": "same candidate2 across3 polls, gaps31s and30s; launch rechecked UUID/capacity/no compute PID",
+  "thresholds": {
+    "max_used_MiB": 4000,
+    "min_free_MiB_strict": 6823.390767,
+    "max_util_percent": 30,
+    "foreign_compute_pids": 0
+  },
+  "measurement_scope": "Frozen launcher logs candidates/stability but not every numeric sample. Separate read-only observations preserved; do not fabricate missing per-poll numeric telemetry.",
+  "before_launch_readonly_observation": {
+    "gpu2_used_MiB": 5,
+    "gpu2_free_MiB": 32490,
+    "gpu2_util_percent": 0,
+    "gpu2_compute_pids": []
+  },
+  "after_cleanup": "GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c, 5, 32490, 0",
+  "after_cleanup_compute_pids": [],
+  "foreign_jobs_terminated": false,
+  "own_failed_process_cleanup": "OWN_PROCESS_STOP.json; TERM then after88.6s KILL of verified own PID3485003 only"
+}

@@ -1,0 +1,17 @@
+{
+  "started_utc": "2026-10-13T03:30:44.620453+00:00",
+  "command": [
+    "bash",
+    "diagnostics/actor_logits/run_p2_full400.sh"
+  ],
+  "source_commit": "33ffa28000522e3715a0920bf3679c27e79b423e",
+  "approval_commit": "2f153c3154caeb6266d463b4ba3e38d698bd9bad",
+  "claim_commit": "e27a5d25bba4e6a991960a733d64fd295480b7b9",
+  "claim_ci": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/38341600763",
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED",
+  "CPU_static": "PASS: bash -n, 9 Python AST, frozen 200-row manifest",
+  "status": "EXITED",
+  "pid": 3482709,
+  "exit_code": 1,
+  "ended_utc": "2026-10-13T03:36:49.269684+00:00"
+}
