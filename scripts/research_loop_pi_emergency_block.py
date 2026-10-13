@@ -93,12 +93,26 @@ def main():
     base = root / "research" / "handoffs" / CYCLE
     check(not base.exists(), "Existing handoff: refusing overwrite")
 
+    # cp -a faithfully preserves symlinks. Record link texts as evidence, but
+    # never follow links into checkpoint caches or folders outside the archive.
     archived = []
-    for f in source.rglob("*"):
-        check(not f.is_symlink(), "Symlink in evidence archive")
-        if f.is_file():
-            archived.append((f.relative_to(source).as_posix(), f.stat().st_size, digest(f)))
+    symlinks = []
+    for f in sorted(source.rglob("*")):
+        relative = f.relative_to(source).as_posix()
+        if f.is_symlink():
+            text = os.readlink(f)
+            symlinks.append({"path": relative,
+                             "link_text_sha256": hashlib.sha256(os.fsencode(text)).hexdigest(),
+                             "link_text_length": len(os.fsencode(text)),
+                             "followed": False})
+        elif f.is_file():
+            archived.append((relative, f.stat().st_size, digest(f)))
+        else:
+            check(f.is_dir(), "Unsupported filesystem node in archive")
     check(archived, "No evidence files")
+    for needed in (source, off, off / "episodes", off / "episodes" / "0000.partial",
+                   error_file, off / "RUN_MANIFEST.json", off / "TASK_MANIFEST.csv"):
+        check(not needed.is_symlink(), "Required failure evidence is a symlink")
     start_count = len(list((off / "episodes").glob("*.partial")))
     start_count += len(list((off / "episodes").glob("*.complete")))
     check(start_count == 1, "Unexpected number of started episodes")
@@ -122,6 +136,7 @@ def main():
         "on200_started": False, "gpu_logger_equivalence": "NOT_RUN_PI_WAIVED",
         "command": ["bash", "diagnostics/actor_logits/run_p2_full400.sh"],
         "archive_path": str(archive), "archive_files": len(archived),
+        "archive_symlink_count": len(symlinks),
         "archive_file_list_sha256": archival_index_sha,
         "error_json_sha256": original_error_sha,
         "source_run_manifest_sha256": digest(off / "RUN_MANIFEST.json"),
@@ -159,6 +174,10 @@ def main():
             "first_100_files": [{"path": n, "size": v, "sha256": h}
                                 for n, v, h in sorted(archived)[:100]],
             "omitted_count": max(0, len(archived) - 100),
+            "symlink_policy": "Link text recorded without dereference; target content not inspected",
+            "archived_symlink_count": len(symlinks),
+            "first_100_symlinks": symlinks[:100],
+            "omitted_symlinks": max(0, len(symlinks) - 100),
         },
     }
     for name, val in files.items():

@@ -451,6 +451,18 @@ class ProtocolTests(unittest.TestCase):
         with self.assertRaises(Invalid):
             validate_transition(View(self.root, c), View(self.root), c)
 
+    def test_emergency_archived_symlink_is_recorded_not_followed(self):
+        import ast
+        import hashlib
+        from pathlib import Path
+        script = (SOURCE / "scripts/research_loop_pi_emergency_block.py").read_text()
+        ast.parse(script)
+        self.assertIn("os.readlink(f)", script)
+        self.assertIn("elif f.is_file():", script)
+        self.assertIn('"followed": False', script)
+        self.assertIn('os.fsencode(text)', script)
+        self.assertNotIn('check(not f.is_symlink(), "Symlink in evidence archive")', script)
+
     def test_pi_can_publish_evidence_based_blocked_when_codex_unavailable(self):
         import ast
         import hashlib
