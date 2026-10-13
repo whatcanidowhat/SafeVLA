@@ -21,6 +21,15 @@ def sha256(path):
 
 
 def json_value(value):
+    """Encode NumPy values in JSON metadata without touching lossless tensor shards.
+
+    NumPy arrays may appear in original evaluator metrics. JSON has no ndarray
+    type, so retain their full nested values/shape as JSON lists. Scalar NumPy
+    values retain the existing conversion; unsupported objects and NaN/Inf
+    remain fatal via TypeError / allow_nan=False (no silent dropping).
+    """
+    if isinstance(value, np.ndarray):
+        return value.tolist()
     if isinstance(value, np.generic):
         return value.item()
     raise TypeError(f'Unsupported JSON type: {type(value).__name__}')
