@@ -16,13 +16,16 @@ Cycle ID: actor-reset-off200-on200-20261012
 - Every live decision must have **lossless complete raw root Actor logits**, normalized logits, all action probabilities, sampled/executed action, task/episode/step and boundary root/critic state record. OFF and ON use identical Logger.
 - No extra GPU preflight, no 600-pair offline replay, no OFF/OFF mini run, no test Episode. A real OFF200 is first executable scientific session after valid control claim, then ON200 only after OFF complete/validated.
 
-Approval: REVOKED — PI is replacing the unclaimed OPERATOR execution route with CODEX; no experiment launched.
+Approval: DRAFT — awaiting PI reapproval for CODEX; OPERATOR unclaimed grant revoked and is no longer executable.
 
-## Development exception and actual launch
+## CODEX execution and exact source (replacing human-operator route)
 
-The currently submitted `diagnostics/actor_logits/evaluate.py` hard-requires an equivalence PASS JSON. CODEX must make a **minimal explicit PI-waiver code patch**, eliminate that obsolete requirement only for the exact approved P2 scope, and truthfully annotate `NOT_RUN_PI_WAIVED`; update tests/docs and implement single-sequential-launch `diagnostics/actor_logits/run_p2_full400.sh` in a **new isolated experiment worktree**, not B0 nor control worktree. Commit and hash changes; no fake PASS report. Require approval SHA/unique claim/green CI in executor/launch check; `--execute-authorized` alone is insufficient.
-
-**After control approval + its green CI, and CODEX claim + its green CI**, prepare code and CPU-only syntax/unit checks, use the bounded non-destructive GPU queue 0–3, then execute **OFF200 → validate complete → ON200 → validate/compare** on one selected physical GPU. The runner must honor no-foreign-PID, used<=4000MiB/util<=30%/free>6823.390767MiB 3 samples x30s, max12h queue. Optional short own GPU hold only with lab compliance, default disabled. Never terminate another user's PID or switch physical GPU after model starts.
+- PI switched back to **CODEX**, based on user's explicit request on 2026-10-13. The human `APPROVED_FOR_OPERATOR` grant was unclaimed and revoked at `cb44b00cdd9cbe421ab7cb64ae4c9ce392d1ea7c`; no human claim, no GPU work is implied by this protocol.
+- Exact implementation code: `33ffa28000522e3715a0920bf3679c27e79b423e` on `feature/p2-actor-logits-logger-20261012`; also frozen in `research/P2_CODE_SHA.txt`. This has the **CODEX_RUNNING** control evidence check and one-shot `diagnostics/actor_logits/run_p2_full400.sh`. The code branch is not the control branch.
+- After fresh PI approval commit **and its own CI SUCCESS**, CODEX alone must run `scripts/research_loop_claim.py` in the clean `research-loop` control tree, publish a single unique Claim, and wait for distinct Claim CI SUCCESS before launching any GPU/model/simulator process. CODEX must never run the human claim script or self-approve.
+- In isolated `/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012` execution worktree at exactly frozen code SHA, CODEX may run CPU-only static checks and the approved command **once**: `bash diagnostics/actor_logits/run_p2_full400.sh`. The launcher checks true CODEX claim CI and one free physical GPU from 0–3, then **OFF200 → integrity validation → ON200 → integrity validation → analyze** sequentially on the same GPU.
+- **No GPU Logger equivalence test** by explicit PI waiver. The label is `NOT_RUN_PI_WAIVED` and is not PASS. No new OFF/OFF Gate, GPU replay, short episode dry-run, unapproved model edit or change to frozen task/metric/reset definition.
+- On completion or STOP, CODEX must write the required review/handoff evidence in `research/handoffs/actor-reset-off200-on200-20261012/`, publish status AWAITING_PI_REVIEW or truthful terminal BLOCKED/INVALID/ABORTED, and STOP pending PI review.
 
 Approved max **1 GPU, 400 Episode starts, 240000 online decisions, 168h experiment runtime, 100GiB total output, 12h CPU-only queue**, plus authorization expiry; no hidden retry or seed. If OFF incomplete or any guard fails, **do not start ON**. No additional P2 authorization invented by a shell variable.
 
@@ -31,6 +34,6 @@ Output control handoff includes `research/handoffs/actor-reset-off200-on200-2026
 Prior P1R2 approval `a88d5ab1f29127753d5b6c1c42bf7b15f891b566` had max10 episodes, claim null and was revoked without execution in `763d7e76b72248b968f4f5d564185221da11d5b8`. Never use it for this experiment.
 
 
-## Manual source-code pin (PI)
+## PI CODEX source pin (2026-10-13)
 
-Operator implementation is **exact git commit** `637b3aee56fd5dacd0013eded65256ff714e2e53` on `feature/p2-actor-logits-logger-20261012`. PI approves the unaltered, clean detached or worktree checkout at this SHA only, including logger, explicit waiver entry, static checks, and `diagnostics/actor_logits/run_p2_full400.sh`. The SHA is also recorded in `research/P2_MANUAL_CODE_SHA.txt`. No CODEX executor and no fake GPU-equivalence PASS.
+Only exact source SHA `33ffa28000522e3715a0920bf3679c27e79b423e` is accepted for this CODEX executor. `research/P2_CODE_SHA.txt` is canonical. Historical manual source pin is superseded, without rewriting historical Git commits. The same science and all budget ceilings remain frozen.
