@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# PI-authorized CODEX one-shot OFF200 then ON200. No model until CODEX claim CI SUCCESS.
+# PI-authorized human-operator one-shot OFF200 then ON200. No model until human claim CI SUCCESS.
 set -Eeuo pipefail
 umask 077
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd -P)
 CONTROL_ROOT=$(printenv P2_CONTROL_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_loop_control)
-OUTPUT_ROOT=$(printenv P2_OUTPUT_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_p2_full400_results_20261012)
+OUTPUT_ROOT=$(printenv P2_OUTPUT_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_p2_full400_results_20261013_retry1)
 P2_PYTHON=$(printenv P2_PYTHON || printf '%s' /home/amax/.conda/envs/safevla/bin/python)
 PHASE_PID=""
 stop_own_process() {
@@ -21,14 +21,14 @@ die(){ printf 'STOP: %s\n' "$*" >&2; exit 1; }
 [[ "$REPO_ROOT" != "$CONTROL_ROOT" ]] || die "Never execute from control checkout"
 [[ ! -e "$OUTPUT_ROOT" ]] || die "Output directory already exists. No overwrite or retry."
 [[ -z "$(git -C "$REPO_ROOT" status --porcelain)" ]] || die "Source tree dirty"
-[[ -r "$CONTROL_ROOT/research/P2_CODE_SHA.txt" ]] || die "Missing frozen source SHA in PI control"
-CODE_SHA=$(tr -d '[:space:]' < "$CONTROL_ROOT/research/P2_CODE_SHA.txt")
+[[ -r "$CONTROL_ROOT/research/P2_MANUAL_CODE_SHA.txt" ]] || die "Missing frozen source SHA in PI control"
+CODE_SHA=$(tr -d '[:space:]' < "$CONTROL_ROOT/research/P2_MANUAL_CODE_SHA.txt")
 [[ "$CODE_SHA" =~ ^[0-9a-f]{40}$ ]] || die "Invalid approved source SHA"
 [[ "$(git -C "$REPO_ROOT" rev-parse HEAD)" == "$CODE_SHA" ]] || die "P2 source checkout is not the PI-frozen commit"
 [[ "$(git -C "$CONTROL_ROOT" branch --show-current)" == "research-loop" ]] || die "Wrong control checkout"
 [[ -z "$(git -C "$CONTROL_ROOT" status --porcelain)" ]] || die "Dirty control checkout"
 export P2_CONTROL_ROOT="$CONTROL_ROOT" P2_OUTPUT_ROOT="$OUTPUT_ROOT"
-# Query the actual GitHub Actions run for the exact CODEX claim; never trust a shell boolean.
+# Query the actual GitHub Actions run for the exact human claim; never trust a shell boolean.
 CLAIM_CONTEXT=$("$P2_PYTHON" - <<'PY'
 import json, os, subprocess, sys, urllib.request
 from datetime import datetime, timezone
@@ -40,9 +40,9 @@ s = json.loads((p/"research/LOOP_STATE.json").read_text())
 sha = git("rev-parse", "HEAD")
 remote = git("ls-remote", "--heads", "origin", "refs/heads/research-loop").split()
 if not remote or remote[0] != sha: raise SystemExit("Remote claim HEAD mismatch")
-if s.get("status") != "CODEX_RUNNING" or s.get("next_actor") != "CODEX" or s.get("updated_by") != "CODEX":
-    raise SystemExit("Missing CODEX_RUNNING claim")
-if s.get("experiment_id") != "EXP-ACTOR-RESET-OFF200-ON200-001" or s.get("cycle_id") != "actor-reset-off200-on200-20261012":
+if s.get("status") != "OPERATOR_RUNNING" or s.get("next_actor") != "OPERATOR" or s.get("updated_by") != "OPERATOR":
+    raise SystemExit("Missing OPERATOR_RUNNING claim")
+if s.get("experiment_id") != "EXP-ACTOR-RESET-OFF200-ON200-002" or s.get("cycle_id") != "actor-reset-off200-on200-20261013-retry1":
     raise SystemExit("Wrong P2 experiment")
 if not s.get("instruction_commit") or not s.get("claim_id"): raise SystemExit("Missing claim identity")
 a = s["authorization"]
@@ -55,7 +55,7 @@ if d.get("status") != "APPROVED" or d.get("command") != ["bash","diagnostics/act
     raise SystemExit("Different/unapproved research command")
 request = urllib.request.Request(
     "https://api.github.com/repos/whatcanidowhat/SafeVLA/actions/runs?head_sha="+sha+"&per_page=20",
-    headers={"Accept": "application/vnd.github+json", "User-Agent": "SafeVLA-codex-executor"})
+    headers={"Accept": "application/vnd.github+json", "User-Agent": "SafeVLA-manual-operator"})
 try:
     with urllib.request.urlopen(request, timeout=25) as response:
         runs = json.load(response).get("workflow_runs", [])
@@ -64,7 +64,7 @@ except Exception as e:
 if not any(r.get("head_sha")==sha and r.get("name")=="research-loop-validate"
            and r.get("status")=="completed" and r.get("conclusion")=="success" and r.get("event")=="push"
            for r in runs):
-    raise SystemExit("Distinct CODEX claim CI not SUCCESS")
+    raise SystemExit("Distinct human claim CI not SUCCESS")
 print(s["instruction_commit"], sha, int(expires.timestamp()), sep=" ")
 PY
 ) || die "Control claim or CI check failed; no GPU initialized"
@@ -125,10 +125,10 @@ compute=$(nvidia-smi -i "$selected" --query-compute-apps=pid --format=csv,nohead
 [[ "$used" =~ ^[0-9]+$ && "$free" =~ ^[0-9]+$ && "$util" =~ ^[0-9]+$ ]] || die "Malformed GPU metrics"
 (( used <= 4000 && free >= 6824 && util <= 30 )) || die "GPU capacity race"
 export CUDA_VISIBLE_DEVICES="$selected"
-printf 'Chosen physical GPU %s UUID %s; logical cuda:0, CODEX claim %s\n' "$selected" "$selected_uuid" "$CLAIM_SHA"
+printf 'Chosen physical GPU %s UUID %s; logical cuda:0, human claim %s\n' "$selected" "$selected_uuid" "$CLAIM_SHA"
 mkdir -m 700 "$OUTPUT_ROOT" || die "Cannot create fresh results root"
 cat > "$OUTPUT_ROOT/P2_LAUNCH_CONTEXT.json" <<EOF
-{"approval_commit":"$APPROVAL_SHA","codex_claim_commit":"$CLAIM_SHA","physical_gpu":$selected,"gpu_uuid":"$selected_uuid","gpu_logger_equivalence":"NOT_RUN_PI_WAIVED","implementation_commit":"$(git -C "$REPO_ROOT" rev-parse HEAD)","planned_groups":["OFF200","ON200"],"outcome":"RUNNING"}
+{"approval_commit":"$APPROVAL_SHA","operator_claim_commit":"$CLAIM_SHA","physical_gpu":$selected,"gpu_uuid":"$selected_uuid","gpu_logger_equivalence":"NOT_RUN_PI_WAIVED","implementation_commit":"$(git -C "$REPO_ROOT" rev-parse HEAD)","planned_groups":["OFF200","ON200"],"outcome":"RUNNING"}
 EOF
 GPU_TIME_START=$(date -u +%s)
 run_phase(){
