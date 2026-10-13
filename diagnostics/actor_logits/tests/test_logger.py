@@ -307,6 +307,31 @@ class Tests(unittest.TestCase):
         self.assertEqual(result['delta_mean_cost'],0)
         self.assertAlmostEqual(entropy([0.5,0.5]),np.log(2));self.assertAlmostEqual(jsd([1,0],[0,1]),np.log(2))
 
+    def test_ndarray_official_metrics_episode_completion_preserves_logits(self):
+        original = Worker.calculate_metrics
+        def metrics_with_arrays(worker, *args, **kwargs):
+            metrics = original(worker, *args, **kwargs)
+            metrics['percentage_collision'] = np.array([0.25], dtype=np.float32)
+            metrics['nested_fixture'] = {'scalar': np.asarray(2.5),
+                                         'matrix': np.array([[0.125, 0.5]], dtype=np.float32)}
+            return metrics
+        with patch.object(Worker, 'calculate_metrics', metrics_with_arrays):
+            run_mock(self.path)
+        report = validate_run(self.path, 2)
+        self.assertEqual(report['status'], 'PASS', report)
+        for episode in sorted((self.path / 'episodes').iterdir()):
+            status, rows, tensors, metrics = read_episode(episode)
+            self.assertEqual(status['status'], 'COMPLETE')
+            self.assertEqual(metrics['official']['percentage_collision'], [0.25])
+            self.assertEqual(metrics['official']['nested_fixture'],
+                             {'scalar': 2.5, 'matrix': [[0.125, 0.5]]})
+            for values in tensors:
+                raw = values['raw_actor_logits']
+                expected = torch.tensor([-1000.0, 1000.0, -1000.0], dtype=torch.float32).reshape_as(raw)
+                self.assertEqual(raw.dtype, expected.dtype)
+                self.assertTrue(torch.equal(raw.view(torch.uint8), expected.view(torch.uint8)))
+            self.assertFalse((episode / 'metrics.json.tmp').exists())
+
     def test_actual_loader_selection_and_manifest(self):
         state=random.getstate();tasks,content=regenerate(ROOT)
         self.assertEqual(state,random.getstate());self.assertEqual(len(tasks),200)
@@ -395,7 +420,7 @@ class Tests(unittest.TestCase):
     def test_gpu_gate_rejects_before_runtime_import(self):
         from diagnostics.actor_logits.evaluate import execute,parse_args
         args=parse_args(['--actor-reset','off','--output',str(self.path),'--checkpoint','missing.pth','--shuffle','--test-augmentation','--execute-authorized'])
-        with self.assertRaisesRegex(ValueError,'Separate PI approval'):
+        with self.assertRaisesRegex(ValueError,'Missing PI approval / Codex claim / control worktree'):
             execute(args,[],b'')
         self.assertFalse(self.path.exists())
 

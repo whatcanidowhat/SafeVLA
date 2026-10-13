@@ -1,0 +1,26 @@
+{
+  "diagnostics/actor_logits/storage.py": {
+    "sha256": "b07628ec543eb936aa4dc16d2212979c468e659be8133609549c16d529e408e0",
+    "bytes": 6864
+  },
+  "diagnostics/actor_logits/tests/test_logger.py": {
+    "sha256": "fc5190e76dccb25b16f7f8e2b5cc4ed15095941befc122681a8d9179fc5ae5e1",
+    "bytes": 21135
+  },
+  "diagnostics/actor_logits/tests/test_metrics_json_codec.py": {
+    "sha256": "a95820a7e880b8b3f1e020aad41d6185c28cb8b9d3f515cf76dda4c7bef3c1df",
+    "bytes": 2521
+  },
+  "diagnostics/actor_logits/regressions/ndarray-20261013/BASE_49d434f_TEST_RESULTS.txt": {
+    "sha256": "f1cb8f40cac7399483e91fdda8596728ef458f44dfcaeb234e58f5f702111c2a",
+    "bytes": 2735
+  },
+  "diagnostics/actor_logits/regressions/ndarray-20261013/FINAL_CPU_TEST_RESULTS.txt": {
+    "sha256": "e99dfb0f367148adeb1d520a443d0b4caa748c505a8950bb1d05162deeda3d50",
+    "bytes": 2088
+  },
+  "diagnostics/actor_logits/regressions/ndarray-20261013/VALIDATION.md": {
+    "sha256": "4c311d3678338c946322b0c922fc794c7f6287f01cd35e3dfacce9344629984a",
+    "bytes": 2781
+  }
+}

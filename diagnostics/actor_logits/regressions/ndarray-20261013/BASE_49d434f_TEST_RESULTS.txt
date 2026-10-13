@@ -1,0 +1,43 @@
+test_actual_loader_selection_and_manifest (test_logger.Tests) ... ok
+test_analysis_alignment_entropy_and_jsd (test_logger.Tests) ... ok
+test_analysis_rejects_different_provenance (test_logger.Tests) ... ok
+test_cli_plan_never_imports_runtime (test_logger.Tests) ... ok
+test_completed_episode_survives_later_failure (test_logger.Tests) ... ok
+test_corrupt_tensor_detected (test_logger.Tests) ... ok
+test_dispatched_step_survives_crash_without_ack (test_logger.Tests) ... ok
+test_duplicate_sample_fail_closed (test_logger.Tests) ... ok
+test_full_agent_worker_integration_lossless_and_override (test_logger.Tests) ... ok
+test_gpu_gate_rejects_before_runtime_import (test_logger.Tests) ... FAIL
+test_io_error_propagates_and_records_location (test_logger.Tests) ... ok
+test_missing_ack_detected (test_logger.Tests) ... ok
+test_missing_boundary_and_count_mismatch (test_logger.Tests) ... ok
+test_missing_or_duplicate_rows_detected (test_logger.Tests) ... ok
+test_native_roundtrip_all_dtypes (test_logger.Tests) ... ok
+test_no_added_rng_forward_sample_mode_or_observation_calls (test_logger.Tests) ... ok
+test_no_cuda_initialized (test_logger.Tests) ... ok
+test_no_zero_outcome_for_incomplete_200 (test_logger.Tests) ... ok
+test_off_on_command_plan_has_same_evaluation_parameters (test_logger.Tests) ... ok
+test_partial_crash_and_preexisting_output_rejected (test_logger.Tests) ... ok
+test_reset_changes_no_weights_or_rng (test_logger.Tests) ... ok
+test_shared_logger_on_reset_keeps_critics (test_logger.Tests) ... ok
+test_ndarray_empty_and_nested (test_metrics_json_codec.MetricsNumpyJsonRegression) ... ok
+test_nested_metrics_ndarray_roundtrip (test_metrics_json_codec.MetricsNumpyJsonRegression) ... ok
+test_nonfinite_remains_explicit_failure (test_metrics_json_codec.MetricsNumpyJsonRegression) ... ok
+test_unsupported_dtype_remains_failure (test_metrics_json_codec.MetricsNumpyJsonRegression) ... ok
+
+======================================================================
+FAIL: test_gpu_gate_rejects_before_runtime_import (test_logger.Tests)
+----------------------------------------------------------------------
+ValueError: Missing PI approval / Codex claim / control worktree
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/nvme2/user/qyy/SafeVLA_p2_ndarray_cpu_20261013/diagnostics/actor_logits/tests/test_logger.py", line 398, in test_gpu_gate_rejects_before_runtime_import
+    with self.assertRaisesRegex(ValueError,'Separate PI approval'):
+AssertionError: "Separate PI approval" does not match "Missing PI approval / Codex claim / control worktree"
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.707s
+
+FAILED (failures=1)
