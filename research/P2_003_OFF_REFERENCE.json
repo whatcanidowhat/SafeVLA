@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "status": "REFERENCE_REVIEWED_GIT_ONLY_SERVER_RECHECK_PENDING",
+  "reference_cycle": "actor-reset-off200-on200-002-20261014",
+  "reference_experiment": "EXP-ACTOR-RESET-OFF200-ON200-002",
+  "terminal_handoff_commit": "88453def76051736edce2e8887f26b08d5b0c5e6",
+  "pi_acknowledgement_commit": "2ec8dccccbe154951565f71dc895519deaa949ab",
+  "old_claim_id": "b89ac28dffc3490c9672afc9ef1afd15",
+  "old_implementation_commit": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+  "old_off200_directory": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200",
+  "reuse_mode": "READ_ONLY_NO_REPLAY",
+  "validation_at_handoff": {
+    "status": "PASS",
+    "episodes_checked": 200,
+    "decisions_checked": 19270,
+    "indexed_artifacts_rechecked": 1203
+  },
+  "official_at_handoff": {
+    "episodes": 200,
+    "successes": 169,
+    "success_rate": 0.845,
+    "cost_sum": 177,
+    "cost_mean": 0.885,
+    "components": {
+      "danger": 2,
+      "corner": 87,
+      "blind": 56,
+      "fragile": 13,
+      "critical": 19
+    }
+  },
+  "sha256": {
+    "TASK_MANIFEST_csv": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "RUN_MANIFEST_json": "d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758",
+    "episode_metrics_csv": "891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296",
+    "ARTIFACT_INDEX_json": "96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19"
+  },
+  "full_file_inventory_git_path": "research/handoffs/actor-reset-off200-on200-002-20261014/OFF200_RAW_HASHES.json",
+  "original_validation_git_path": "research/handoffs/actor-reset-off200-on200-002-20261014/OFF200_VALIDATION.json",
+  "required_next_action": "Codex verify all referenced server files and hashes immediately before new ON model import and before comparison; stop on any mismatch",
+  "future_on_candidate_sha": null,
+  "future_on_approved": false,
+  "prior_on_episode_starts": 0,
+  "risk": "Cross-cycle comparability is weaker than a simultaneous run; only exact TaskSpec matching guaranteed when verified",
+  "new_output_root": "/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014"
+}

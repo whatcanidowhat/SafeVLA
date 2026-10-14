@@ -1,65 +1,69 @@
 {
-  "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-002",
-  "cycle_id": "actor-reset-off200-on200-002-20261014",
+  "experiment_id": "EXP-ACTOR-RESET-ON200-003",
+  "cycle_id": "actor-reset-on200-off002-reuse-003-20261014",
   "status": "DRAFT",
-  "research_question": "On the same ordered 200 original ObjectNavType minival TaskSpecs, does reset of only root Actor time_step_counter and per-layer K/V caches at Episode boundaries change official Success Rate, observed five-part Safety Cost and logged every-step raw Actor logits relative to accepted unchanged OFF baseline?",
-  "hypothesis": "Episode-boundary Actor-only ON reset prevents unintended carry-over of root Actor temporal cache/counter and changes subsequent Actor output distributions, with potential SR/Cost/early-END/oscillation differences; no directional guarantee is assumed.",
-  "competing_explanation": "Stochastic action sampling and trajectory divergence, test augmentation/THOR stochasticity, logger/runtime integration issues or non-Actor execution differences can contribute. Online equal episode/time-step logits comparisons are descriptive if observations differ; not isolated same-input causal attribution.",
-  "reference": "Human PI accepted old INVALID 19dcb30e4858be81be25620ebe151860f7720b2c on 2026-10-14; acknowledgement 63797f4a7afd1d478e110c57868d4e18f6a7f9d6. PI accepted ndarray repair 55ecae3ba6e1fc834ea1976adab91640f15fcdd8 with 27 CPU regressions and directed no extra Debug. Proposed exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 on codex/p2-002-bindings-20261014 changes only cycle/path bindings plus documentation from that repair. Accepted B0 and original P2 scientific protocol retained. GPU Logger equivalence NOT_RUN_PI_WAIVED continues by explicit PI direction. Final PI approval granted 2026-10-14T06:55:18.648Z, expires 2026-10-28T06:55:18.648Z; 1 GPU / 400 Episodes; Codex Claim CI required before execution.",
-  "repeat_or_treatment": "One new cycle, never a retry under the old claim. Exact proposed code 06cde9adeb91d47c062a11e72e90c7edf56fb398; execution worktree /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014; fresh absent output root /nvme2/user/qyy/SafeVLA_p2_002_results_20261014. After NEW final PI authorization and its CI SUCCESS, obtain a unique CODEX claim through scripts/research_loop_claim.py and wait for independent claim CI SUCCESS. Run bash diagnostics/actor_logits/run_p2_full400.sh exactly once: queue on physical 0-3, OFF200, validate 200 complete ordered task/log/metric records, ON200 only after that validation, then validate and compare. Same physical GPU, separate processes and output directories. No additional Debug, GPU replay, smoke Episode, retry, resume or added task/seed. Approval deadline must be supplied by final PI authorization; none is active now.",
-  "unique_variable": "Only per-Episode root Actor time_step_counter and decoder attention K/V reset ON vs original OFF; Critic counters/cache, model weights, scheduler, augmentation, seed, task order, logger and all other code/metrics remain unchanged across OFF and ON. Both have logger enabled identically; waiver is identical across groups.",
+  "research_question": "Against the already completed and hash-verified P2-002 OFF200 baseline on the same fixed 200 ObjectNavType TaskSpecs, does root-Actor-only episode-boundary counter and K/V reset in a fresh, authorized ON200 run change official SR, five-part observed Safety Cost, and full logged Actor outputs?",
+  "hypothesis": "Resetting only root Actor temporal state at Episode boundaries may change policy behavior, including premature END/oscillation and SR/Cost, with no assumed directional effect; do not attribute post-divergence logits differences to identical inputs.",
+  "competing_explanation": "The OFF cohort was measured earlier in P2-002, so GPU timing, simulator randomness, stochastic action/augmentation and trajectory divergence are additional non-Actor sources of differences; cross-cycle comparison is paired by identical TaskSpecs but not necessarily paired by identical observations.",
+  "reference": "Human PI accepted terminal P2-002 BLOCKED at 88453def76051736edce2e8887f26b08d5b0c5e6 (CI 38569668621 SUCCESS). PI acknowledgement 2ec8dccccbe154951565f71dc895519deaa949ab and CI 38571715792 SUCCESS. The old OFF200 completed 200/200 episodes with PASS, 19270 decisions, SR 169/200, Cost 177. PI explicitly chose preserve/reuse OFF and prepare ON200-only 003, NOT authorize execution. Prior source 06cde9adeb91d47c062a11e72e90c7edf56fb398 is a historical code identity ONLY; 003 ON-only runnable SHA is PENDING and must be frozen under new PI approval. Old Claim b89ac28dffc3490c9672afc9ef1afd15 is terminal and cannot be reused.",
+  "repeat_or_treatment": "Proposed next cycle: use unchanged historical OFF200 from /nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200 as a READ-ONLY external reference, verify every archived byte against its P2-002 hash inventory plus 200 Episode integrity. Launch exactly ONE new ON200-only process using separately reviewed ON-only code with new experiment/cycle identifiers, distinct unclaimed control approval/CI/Claim/CI and independent fresh output root /nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014; no OFF replay, retry, resume or GPU smoke Episode. Code SHA PENDING; proposed entry script diagnostics/actor_logits/run_p2_on200_only.sh DOES NOT YET EXIST and is NOT execution-ready. Stable independent GitHub HTTPS access must be established and read-only preflight checked before any model/GPU initialization.",
+  "unique_variable": "Cross-run scientific treatment difference is only ON episode-boundary reset of root Actor time_step_counter and per-layer K/V; inherited P2-002 OFF is untouched. Critic, policy weights, TaskSpec order, action mapping, checkpoint, DINO, seed, one worker, greedy=false, test_augmentation=true and passive Logger identical. Reused historical OFF entails an explicitly disclosed cross-cycle transport/time confound.",
   "fixed_conditions": [
-    "Use accepted B0 policy checkpoint SHA256 05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301; DINO weights SHA256 b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9; source B0 identity SHA 2aa82559d272b5f888e53433e258914057f15bed plus separately approved local DINO adapter; accepted ndarray repair base 55ecae3ba6e1fc834ea1976adab91640f15fcdd8; proposed exact entry-binding code 06cde9adeb91d47c062a11e72e90c7edf56fb398. B0 and prior claims/outputs remain untouched.",
-    "ObjectNavType, minival, eval_set_size=200, 200-row TaskSpec SHA256 8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0, exact original ordering; source indices first five127,103,16,6,50; recompute and check before model construction; no alternate subset.",
-    "num_workers=1 in same process, one persistent Agent across Episodes in each group; two independent process/model init; seed=123, shuffle=true, greedy=false, test_augmentation=true, max original task horizon 600, official evaluator action mapping, actual success and five-part Safety Cost collected pre-step. No extra sampling/forward/logger model query, no per-episode manual reseed.",
-    "ON reset only root Actor counter and every root attention K/V at each Episode boundary; no critic/Cost Critic reset, RNG/augmentation reset, additional model forward; OFF does not change original B0 Actor lifecycle. Both groups share logger and exact code. Verify per-boundary root/critic snapshots using existing passive Logger; do not run separately staged GPU logger equality tests.",
-    "Record all original raw Actor logits each actual decision, normalized logits, probabilities, stochastic sampled action, final executed action, task ID, episode/step, boundary Actor/critic states, complete original official metrics and 5-part cost; lossless storage and strict validator. Loss of row, changed B0, metrics drift or incomplete phase => STOP and preserve partial raw evidence.",
-    "GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED by renewed PI direction; no 600-pair GPU replay, no OFF/OFF mini run, no forged PASS. Accepted 27 CPU regressions are sufficient; no extra Debug. Only new-cycle entry bindings changed, statically checked. Exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 remains fail-closed on true CODEX_RUNNING claim and distinct green claim CI.",
-    "One physical GPU from 0,1,2,3, no foreign compute processes, used<=4000 MiB, util<=30%, free>6823.390767 MiB, 3 stable polls spaced 30s, queue max12h before first model import; no user jobs killed, no sudo/pkill/killall/GPU reset. GPU hold OFF by default; if group conventions explicitly allow, only <=4096MiB <=120s self-spawned hold, release self exact PID before running. No switch after first GPU policy forward; physical→logical mapping verified, simulator renderer GPU mapping recorded.",
-    "Sequential OFF and ON both on same physical GPU; if OFF fails/incomplete/over budget, ON NOT_STARTED. No retry, resume, second seed, different tasks, alternate GPU after start, hidden smoke tests or fake metrics. With failure report BLOCKED/INVALID/ABORTED and hand off real artifacts for PI review.",
-    "Max 1 GPU concurrent, max 400 live Episode starts, max 240000 live policy decisions, 168h total actual experiment GPU wall-time budget (excluding <=12h queue), max 100GiB combined research artifacts and official outputs, approval expires as hard stop; stop/record once a cap is reached, never auto-extend."
+    "Frozen historical OFF provenance: terminal result 88453def76051736edce2e8887f26b08d5b0c5e6, P2-002 source 06cde9adeb91d47c062a11e72e90c7edf56fb398, source root /nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200; OFF PASS 200/200, decisions 19270; 1203 indexed raw files as last checked at terminal handoff; server bytes MUST be rehashed before ON and before final comparison. P2-002 task CSV SHA256 8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0, OFF RUN_MANIFEST SHA256 d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758, OFF episode_metrics.csv SHA256 891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296, OFF ARTIFACT_INDEX SHA256 96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19. Original results read-only; no copying/renaming files to simulate new results.",
+    "ON source must be separately prepared/reviewed/frozen; accepted ndarray fix 55ecae3ba6e1fc834ea1976adab91640f15fcdd8 remains unchanged; permitted candidate edits only ON-only cycle/claim/output path/launcher orchestration and read-only cross-cycle comparison. No Actor model, reset, sensors, evaluator metric math, action sampling or tensor encoding edits. 003 code SHA PENDING.",
+    "ObjectNavType minival exact same 200 ordered TaskSpecs and per-row raw_spec_sha256 as the historical OFF; 200-row CSV hash above; first source indices 127,103,16,6,50. Same B0 policy checkpoint SHA256 05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301; DINO SHA256 b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9.",
+    "ON: 1 persistent Agent across 200 episodes, independent single process/worker; seed123, shuffle=true, greedy=false, test_augmentation=true, max horizon600, same action mapping and original official metrics/five part pre-step cost. Only reset root Actor counter and decoder per-layer K/V at episode boundary; no Critic, RNG, weights or data changes.",
+    "Old /nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200 must never be written by new ON or analysis; fresh absent output root /nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014, working tree /nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014; ON files under the fresh root only; original full logits and tensor NPZ lossless, full exact per-decision metadata.",
+    "Stable Github authority: use verified SSH-session-INDEPENDENT HTTPS transport (direct egress or a preapproved host/user-managed persistent proxy), not ad-hoc SSH -R forwarding tied to a monitoring SSH. Before model import, repeatedly verify origin research-loop SHA and exact authorization Claim CI SUCCESS from the same execution environment, including after disconnecting monitoring SSH; fail closed and log sanitized endpoint errors if unstable. Do not bypass remote guard or fabricate CI.",
+    "Use one available physical GPU (0-3), no other-user process interruption, original stable admission polls and caps. Proposed max 1 concurrent GPU / 200 live ON Episodes / 120000 policy decisions / 168h GPU wall time / 100GiB outputs / 12h CPU queue; actual caps/expiry require separate PI approval.",
+    "GPU Logger equivalence retains NOT_RUN_PI_WAIVED, never PASS. Existing CPU metadata regressions are evidence, not real GPU noninterference proof; do not add extra full OFF/ON GPU equivalence or Debug.",
+    "No claims about same-input causal logits changes when observations diverge; report cross-cycle limitation in table and manuscript. New code and official compare must independently validate each phase's provenance and exact ordered alignment; no forced output merging."
   ],
   "metrics": [
-    "official overall OFF and ON n=200 SR, cost sum/mean/SD/quantiles, Delta SR and Delta observed Safety Cost; per-task pair and five components danger/corner/blind/fragile/critical",
-    "per decision full raw root actor logits exact dtype/shape/action indices, normalized logits and action probabilities, end probability and entropy; decision vs executed action and first divergence; 200 TaskSpec order verification and complete log hashes",
-    "boundary root Actor cache/counter and critic unchanged snapshots, no extra forward/sampling/controller queries in logger code; real-runtime invariants and fail-closed alerts, NOT a separate GPU equivalence test",
-    "per-task action entropy, end-action/early stopping, repeated action/ABA oscillation proxies and JS divergence; label differing-observation online comparisons as descriptive, not causal same-input",
-    "runtime provenance including GPU UUID/physical/logical, checkpoint/DINO/source hashes, Python deps/seed/manifest, per-group start/end/exit, budget counters, stderr/partial evidence and chain of control approval/claim/CI"
+    "Reused P2-002 OFF200: n200 SR169/200=0.845, cost sum177, mean0.885, five components danger2/corner87/blind56/fragile13/critical19, 19270 raw Actor decisions; must reverify original raw hashes and official per-task outcomes before comparison",
+    "New ON200: n200 official SR, cost sum/mean/SD/quantiles and five component sums; every-step raw root Actor logits/probabilities/end-action/entropy, 20-action mapping, action/step IDs, decoder boundary snapshots, complete hash/index and strict validator",
+    "Per-task exact 200-row matching sample_id, order, raw_spec_sha256, paired delta SR and cost with uncertainty/sensitivity and early-END/oscillation proxy comparisons; cross-cycle stochasticity flagged as possible alternative, online logits not same-input causal test",
+    "Remote validation provenance: exact 003 authorized approval SHA and Claim SHA/CI, observed git ls-remote and GitHub API responses under independent persistent network, GPU physical/logical UUID and budget traces, launch/process/exit evidence, file hashes",
+    "Separate PI handoff retains raw OFF reference, ON original outputs and cross-cycle analysis as distinct provenance scopes; GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED"
   ],
-  "expected_result": "Two validated 200-episode independent OFF and Actor-only ON runs with complete lossless per-decision root logits and official SR/observed Safety Cost, aligned task IDs/manifest and cautious paired descriptive comparison; or bounded partial failure with honest status. No assumed direction of improvement.",
-  "falsifying_result": "Actor-only ON reset has no reliable SR/Cost change or deteriorates it; paired logits differences can be driven by divergent trajectories/stochasticity. Any implementation identity, task, metrics, output integrity, GPU safety or budget guard failure invalidates/blocks scientific inference and stops further episode starts.",
+  "expected_result": "A verified historical OFF200 and a complete newly authorized ON200 allow a cross-cycle, exactly TaskSpec-aligned descriptive comparison of official SR, Safety Cost and Actor behavior; no automatic causal attribution or guarantee of improvement. Otherwise truthful BLOCKED/INVALID partial evidence.",
+  "falsifying_result": "If ON does not improve or worsens SR/Cost; if source/checkpoint/TaskSpec/hashes differ, OFF bytes change, network Claim evidence cannot be verified, or ON results are incomplete; preserve evidence and do not assert a valid matched comparison.",
   "alternative_explanations": [
-    "Logged ON/OFF logits differ because actions and later observations diverge; time-matched step is not identical-input proof.",
-    "Stochastic policy action sampling despite same seed, test augmentation and simulator rendering create residual variability; do not claim same trajectories.",
-    "No GPU Logger equivalence test was done by deliberate PI waiver; logger-side noninterference remains a limitation, not a passing result.",
-    "Slow real per-step storage may affect wall time, and shared GPU rendering/resource races may cause failures; no aggressive process control."
+    "Old OFF and new ON occur at different wall times/server GPU loads/simulator runtime; unchanged frozen scientific code cannot guarantee identical stochastic execution.",
+    "After initial action divergence, observations differ; time-aligned actor logits are descriptive, not paired-identical-input causal contrasts.",
+    "Policy sampling, test augmentation and rendering randomness persist despite common seed; one seed does not estimate between-seed variation.",
+    "GPU logger noninterference was waived and remains untested by real GPU replay."
   ],
   "stop_conditions": [
-    "Until PI approved control commit CI SUCCESS and unique CODEX claim+claim CI SUCCESS, zero simulator/model/GPU/episode starts; no reuse P1R2 prior approval or old claim.",
-    "Hard waiver may ONLY substitute for separate 600-pair GPU Logger equivalence gate. Never bypass checkpoint, manifest, source, action mapping, output-integrity, GPU occupancy, controls or stop conditions; report waiver truthfully.",
-    "User GPU processes unaffected; CPU-only queue 0-3 max12h, stable 3x30s, no foreign PIDs, used<=4000MiB util<=30%, free>6823.390767MiB. No heavy CUDA or simulator init while queuing; keep same GPU after first forward.",
-    "At most 1 concurrent GPU, 400 episode init attempts, 240000 online policy decisions, 168h actual GPU run, 100GiB disk, effective authorization deadline; at cap STOP, don't rerun.",
-    "Any partial/incomplete OFF, artifact loss, action/TaskSpec mismatch, source/weight mismatch, illegal critic reset, logger numerical/runtime exception or officially incorrect cost => STOP, ON NOT_STARTED. Any ON error preserves OFF and all ON partial artifacts, no reruns.",
-    "No claim of causal same-observation logits effects from online divergent observations. Hand back C result to PI then STOP; never self-approve or execute next cycle."
+    "No 003 new authorization or Claim exists at draft stage; no GPU/model/episode until reviewed exact new ON-only executable SHA is pinned and PI authorization/CI SUCCESS and a unique new CODEX Claim/CI SUCCESS.",
+    "Never reuse, move, delete, overwrite, resume, or relabel any P2-002 OFF200 file. If any referenced source file is absent or mismatched SHA, STOP without GPU.",
+    "Do not invoke the old run_p2_full400.sh. Require a reviewed ON-only launcher and evaluate.py aligned to 003; stop if source SHA or run cmd mismatches 003 approval.",
+    "Fail closed on GitHub proxy/network instability. No skip of remote Claim guard; independent persistent transport plus read-only preflight and post-session disconnect stability checks before ON model load.",
+    "One GPU max, 200 live ON Episodes max and all explicit budget/expiry/GPU admission checks from the final PI approval. Do not use another user's GPU workload or terminate their processes.",
+    "On any ON failure or incomplete hash/task/cost/result check, STOP; archive evidence, do not restart ON under the same claim.",
+    "Cross-cycle OFF/ON comparisons require full task order/provenance alignment and remain descriptive; report NOT_RUN_PI_WAIVED honestly."
   ],
   "command": [
     "bash",
-    "diagnostics/actor_logits/run_p2_full400.sh"
+    "diagnostics/actor_logits/run_p2_on200_only.sh"
   ],
   "required_outputs": [
-    "research/handoffs/actor-reset-off200-on200-002-20261014/RESULT_SUMMARY.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/RUN_MANIFEST.json",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/REVIEW_NOTES.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/LOGGER_WAIVER.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/TASK_MANIFEST.csv",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/OFF_ON_RESULTS.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/VALIDATION_SUMMARY.md",
-    "research/handoffs/actor-reset-off200-on200-002-20261014/GPU_QUEUE_REPORT.json"
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/LOGGER_WAIVER.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/VALIDATION_SUMMARY.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/GPU_QUEUE_REPORT.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_REUSE_VERIFICATION.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/NETWORK_PREFLIGHT.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CROSS_CYCLE_COMPARISON.json"
   ],
   "resources": {
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 200
   }
 }

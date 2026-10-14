@@ -1,114 +1,41 @@
-# P2 cycle 002 proposal for final PI authorization
+# P2-003 recovery proposal — reuse valid OFF200, execute ON200 only
 
-Experiment ID: EXP-ACTOR-RESET-OFF200-ON200-002
+Experiment ID: EXP-ACTOR-RESET-ON200-003
 Status: DRAFT
-Cycle ID: actor-reset-off200-on200-002-20261014
+Cycle ID: actor-reset-on200-off002-reuse-003-20261014
 
-**PI-APPROVED, NOT YET CLAIMED.** The human PI explicitly authorized this exact new cycle on 2026-10-14T06:55:18.648Z through 2026-10-28T06:55:18.648Z (14 days), 1 GPU maximum and 400 live Episode starts maximum. LOOP_STATE is APPROVED_FOR_CODEX, next_actor CODEX, instruction_commit=null and claim_id=null until a unique Codex Claim is published. This approval alone does NOT permit GPU execution: approval CI SUCCESS, a distinct CODEX claim and its CI SUCCESS are mandatory.
+**PI_REVIEW / NOT_AUTHORIZED.** PI accepted the old BLOCKED incident and the scientific validity of the stored OFF200. This document prepares a future ON200-only candidate, NOT an execution approval. Active resource allocation is **0 GPU / 0 Episodes**. No Claim exists for 003; the preceding P2-002 Claim remains historical and terminal.
 
-## Immutable code and paths
+## Frozen reference OFF200 (read-only)
 
-- PI-frozen code SHA: `06cde9adeb91d47c062a11e72e90c7edf56fb398` (branch `codex/p2-002-bindings-20261014`); canonical binding `research/P2_CODE_SHA.txt`.
-- Accepted repair base: `55ecae3ba6e1fc834ea1976adab91640f15fcdd8`; 27 CPU regression results accepted by PI. New code changes only experiment/cycle constants and launcher path defaults, plus binding documentation. Bash syntax, Python AST and exact replacement-only diff checks PASS; no extra Debug or runtime tests.
-- Execution worktree: `/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014`.
-- Control worktree: `/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013`.
-- Fresh output root: `/nvme2/user/qyy/SafeVLA_p2_002_results_20261014`; OFF200/ON200 and official outputs underneath. Absent during preparation. Never reuse old output root or claim; reject an existing result path. Use these defaults without path overrides.
-- Handoff: `research/handoffs/actor-reset-off200-on200-002-20261014/` (required future outputs, not generated results).
-- Existing frozen 200-row TaskSpec SHA256: `8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0`; same checkpoint, B0, DINO, seed=123, single worker, shuffle=true, greedy=false, test_augmentation=true.
-- GPU Logger equivalence: **NOT_RUN_PI_WAIVED**, not PASS. No new GPU equivalence or Debug experiment.
+- P2-002 evidence entry: 88453def76051736edce2e8887f26b08d5b0c5e6, reviewed by PI at 2ec8dccccbe154951565f71dc895519deaa949ab; terminal handoff CI and acknowledgement CI SUCCESS.
+- Old implementation: 06cde9adeb91d47c062a11e72e90c7edf56fb398; baseline directory: `/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200`; P2-002 OFF200 complete 200/200 and validation PASS, 19,270 decisions.
+- Success 169/200 (84.5%). Observed Safety Cost 177 (mean 0.885): danger 2, corner 87, blind 56, fragile 13, critical 19.
+- Exact task manifest SHA256 `8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0`; original RUN_MANIFEST SHA256 `d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758`; episode_metrics.csv SHA256 `891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296`; old ARTIFACT_INDEX SHA256 `96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19`.
+- The 1203 indexed raw artifacts were verified at P2-002 handoff. These were not freshly read on the server by this PI GitHub control update; the next runner MUST rehash and validate them before model import and again for final comparison. Do not copy/modify original evidence to make an OFF output for 003.
 
-## PI-approved command, allowed only after approval CI and unique Claim CI
+## ON200-only candidate and authorization gaps
 
-```bash
-cd /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014
-bash diagnostics/actor_logits/run_p2_full400.sh
-```
+- Proposed science: same 200 exact ordered ObjectNavType TaskSpecs, checkpoint, DINO, seed=123, one worker, original action mapping/metrics/logger; only root Actor episode-boundary counter and attention K/V reset ON, Critic unchanged. No OFF rerun or model retraining.
+- Proposed new working tree `/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014`; output root `/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014` MUST be absent before authorization and run.
+- Required NEW Codex code SHA: **PENDING**. Prior accepted source 06cde9adeb91d47c062a11e72e90c7edf56fb398 is NOT an approved ON-only executable. Codex must prepare a separate candidate changing only new cycle identity, fail-closed Claim guard, ON-only launcher, independent output path and provenance/comparison glue; retain fixed scientific code and CPU evidence.
+- Proposed command (NOT yet implemented): `bash diagnostics/actor_logits/run_p2_on200_only.sh`. Must not launch under existing 002 command or 002 Claim.
+- Proposed limits: 1 GPU, 200 ON Episodes, no extra GPU equivalence or Debug. Active authorization: **none**. A separate final PI approval with reviewed source SHA, validity dates and CI SUCCESS is required, followed by a unique Codex Claim and its own CI SUCCESS.
 
-Sequential OFF200 -> complete integrity validation -> Actor-only Reset ON200 -> complete integrity validation -> analysis. Stop on failure, retain actual partial evidence, never automatically retry. No GPU or Episodes executed during proposal preparation.
+## Network resilience, without bypassing authorization
 
-## Unchanged detailed scientific design
+The prior incident occurred during a new remote `git ls-remote` from ON evaluate.py, with `Proxy CONNECT aborted due to timeout`. A monitoring SSH session also reset; tunnel loss is plausible but NOT proven.
 
-### Research Question
+Codex must propose and document an independently maintained GitHub HTTPS path on the server: preferred direct network egress; otherwise a user-approved managed persistent proxy/tunnel service that remains alive after the interactive SSH session disconnects. Do not use an ephemeral reverse SSH `-R` tunnel whose lifetime is tied to a monitoring session.
 
-On the same ordered 200 original ObjectNavType minival TaskSpecs, does reset of only root Actor time_step_counter and per-layer K/V caches at Episode boundaries change official Success Rate, observed five-part Safety Cost and logged every-step raw Actor logits relative to accepted unchanged OFF baseline?
+Conduct CPU-only authenticated remote-read preflight from the actual process environment: verify exact `research-loop` head and signed-by-protocol authorization/Claim identity, independent GitHub Actions CI SUCCESS, repeated observations across a deliberate monitoring SSH disconnect/reconnect, and log timings/errors without recording secrets. Distinguish reachability of `github.com` and `api.github.com`. No proxy result or cached local state substitutes for the required live claim verification. Network failure => STOP before GPU/model import, and no automatic Episode retry.
 
-### Hypothesis
+## Cross-cycle validation contract
 
-Episode-boundary Actor-only ON reset prevents unintended carry-over of root Actor temporal cache/counter and changes subsequent Actor output distributions, with potential SR/Cost/early-END/oscillation differences; no directional guarantee is assumed.
+Before ON model import, validate P2-002 OFF run metrics, all 200 Episode statuses and 1203 raw index hashes against GitHub handoff; verify task manifest (including per-task raw spec hashes/order) and checkpoint/DINO provenance. Compare approved 003 ON outputs with immutable P2-002 OFF strictly by sample_id and order. The same TaskSpecs are matched, but online trajectories can differ, and cross-cycle wall-time/GPU/simulator effects remain possible confounds; report only descriptive treatment contrasts.
 
-### Competing Explanation
+Future required handoff additionally includes `OFF_REUSE_VERIFICATION.json`, `NETWORK_PREFLIGHT.json` and `CROSS_CYCLE_COMPARISON.json` under the new cycle's handoff path. They do not exist yet and must never be fabricated. The raw ON tensors remain server-side with index+hash and Git-readable summaries. The waiver remains `NOT_RUN_PI_WAIVED`, not a real GPU equivalence PASS.
 
-Stochastic action sampling and trajectory divergence, test augmentation/THOR stochasticity, logger/runtime integration issues or non-Actor execution differences can contribute. Online equal episode/time-step logits comparisons are descriptive if observations differ; not isolated same-input causal attribution.
+## PI decision still outstanding
 
-### Reference
-
-Human PI accepted old INVALID 19dcb30e4858be81be25620ebe151860f7720b2c on 2026-10-14; acknowledgement 63797f4a7afd1d478e110c57868d4e18f6a7f9d6. PI accepted ndarray repair 55ecae3ba6e1fc834ea1976adab91640f15fcdd8 with 27 CPU regressions and directed no extra Debug. Proposed exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 on codex/p2-002-bindings-20261014 changes only cycle/path bindings plus documentation from that repair. Accepted B0 and original P2 scientific protocol retained. GPU Logger equivalence NOT_RUN_PI_WAIVED continues by explicit PI direction. Final new-cycle PI execution approval is granted at 2026-10-14T06:55:18.648Z, expiring 2026-10-28T06:55:18.648Z, under 1 GPU / 400 Episodes maximum; Claim CI required before running.
-
-### Repeat Or Treatment
-
-One new cycle, never a retry under the old claim. Exact proposed code 06cde9adeb91d47c062a11e72e90c7edf56fb398; execution worktree /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014; fresh absent output root /nvme2/user/qyy/SafeVLA_p2_002_results_20261014. After NEW final PI authorization and its CI SUCCESS, obtain a unique CODEX claim through scripts/research_loop_claim.py and wait for independent claim CI SUCCESS. Run bash diagnostics/actor_logits/run_p2_full400.sh exactly once: queue on physical 0-3, OFF200, validate 200 complete ordered task/log/metric records, ON200 only after that validation, then validate and compare. Same physical GPU, separate processes and output directories. No additional Debug, GPU replay, smoke Episode, retry, resume or added task/seed. PI authorization expires 2026-10-28T06:55:18.648Z; hard stop at the deadline.
-
-### Unique Variable
-
-Only per-Episode root Actor time_step_counter and decoder attention K/V reset ON vs original OFF; Critic counters/cache, model weights, scheduler, augmentation, seed, task order, logger and all other code/metrics remain unchanged across OFF and ON. Both have logger enabled identically; waiver is identical across groups.
-
-### Fixed Conditions
-
-- Use accepted B0 policy checkpoint SHA256 05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301; DINO weights SHA256 b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9; source B0 identity SHA 2aa82559d272b5f888e53433e258914057f15bed plus separately approved local DINO adapter; accepted ndarray repair base 55ecae3ba6e1fc834ea1976adab91640f15fcdd8; proposed exact entry-binding code 06cde9adeb91d47c062a11e72e90c7edf56fb398. B0 and prior claims/outputs remain untouched.
-- ObjectNavType, minival, eval_set_size=200, 200-row TaskSpec SHA256 8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0, exact original ordering; source indices first five127,103,16,6,50; recompute and check before model construction; no alternate subset.
-- num_workers=1 in same process, one persistent Agent across Episodes in each group; two independent process/model init; seed=123, shuffle=true, greedy=false, test_augmentation=true, max original task horizon 600, official evaluator action mapping, actual success and five-part Safety Cost collected pre-step. No extra sampling/forward/logger model query, no per-episode manual reseed.
-- ON reset only root Actor counter and every root attention K/V at each Episode boundary; no critic/Cost Critic reset, RNG/augmentation reset, additional model forward; OFF does not change original B0 Actor lifecycle. Both groups share logger and exact code. Verify per-boundary root/critic snapshots using existing passive Logger; do not run separately staged GPU logger equality tests.
-- Record all original raw Actor logits each actual decision, normalized logits, probabilities, stochastic sampled action, final executed action, task ID, episode/step, boundary Actor/critic states, complete original official metrics and 5-part cost; lossless storage and strict validator. Loss of row, changed B0, metrics drift or incomplete phase => STOP and preserve partial raw evidence.
-- GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED by renewed PI direction; no 600-pair GPU replay, no OFF/OFF mini run, no forged PASS. Accepted 27 CPU regressions are sufficient; no extra Debug. Only new-cycle entry bindings changed, statically checked. Exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 remains fail-closed on true CODEX_RUNNING claim and distinct green claim CI.
-- One physical GPU from 0,1,2,3, no foreign compute processes, used<=4000 MiB, util<=30%, free>6823.390767 MiB, 3 stable polls spaced 30s, queue max12h before first model import; no user jobs killed, no sudo/pkill/killall/GPU reset. GPU hold OFF by default; if group conventions explicitly allow, only <=4096MiB <=120s self-spawned hold, release self exact PID before running. No switch after first GPU policy forward; physical→logical mapping verified, simulator renderer GPU mapping recorded.
-- Sequential OFF and ON both on same physical GPU; if OFF fails/incomplete/over budget, ON NOT_STARTED. No retry, resume, second seed, different tasks, alternate GPU after start, hidden smoke tests or fake metrics. With failure report BLOCKED/INVALID/ABORTED and hand off real artifacts for PI review.
-- Max 1 GPU concurrent, max 400 live Episode starts, max 240000 live policy decisions, 168h total actual experiment GPU wall-time budget (excluding <=12h queue), max 100GiB combined research artifacts and official outputs, approval expires as hard stop; stop/record once a cap is reached, never auto-extend.
-
-### Metrics
-
-- official overall OFF and ON n=200 SR, cost sum/mean/SD/quantiles, Delta SR and Delta observed Safety Cost; per-task pair and five components danger/corner/blind/fragile/critical
-- per decision full raw root actor logits exact dtype/shape/action indices, normalized logits and action probabilities, end probability and entropy; decision vs executed action and first divergence; 200 TaskSpec order verification and complete log hashes
-- boundary root Actor cache/counter and critic unchanged snapshots, no extra forward/sampling/controller queries in logger code; real-runtime invariants and fail-closed alerts, NOT a separate GPU equivalence test
-- per-task action entropy, end-action/early stopping, repeated action/ABA oscillation proxies and JS divergence; label differing-observation online comparisons as descriptive, not causal same-input
-- runtime provenance including GPU UUID/physical/logical, checkpoint/DINO/source hashes, Python deps/seed/manifest, per-group start/end/exit, budget counters, stderr/partial evidence and chain of control approval/claim/CI
-
-### Expected Result
-
-Two validated 200-episode independent OFF and Actor-only ON runs with complete lossless per-decision root logits and official SR/observed Safety Cost, aligned task IDs/manifest and cautious paired descriptive comparison; or bounded partial failure with honest status. No assumed direction of improvement.
-
-### Falsifying Result
-
-Actor-only ON reset has no reliable SR/Cost change or deteriorates it; paired logits differences can be driven by divergent trajectories/stochasticity. Any implementation identity, task, metrics, output integrity, GPU safety or budget guard failure invalidates/blocks scientific inference and stops further episode starts.
-
-### Alternative Explanations
-
-- Logged ON/OFF logits differ because actions and later observations diverge; time-matched step is not identical-input proof.
-- Stochastic policy action sampling despite same seed, test augmentation and simulator rendering create residual variability; do not claim same trajectories.
-- No GPU Logger equivalence test was done by deliberate PI waiver; logger-side noninterference remains a limitation, not a passing result.
-- Slow real per-step storage may affect wall time, and shared GPU rendering/resource races may cause failures; no aggressive process control.
-
-### Stop Conditions
-
-- Until PI approved control commit CI SUCCESS and unique CODEX claim+claim CI SUCCESS, zero simulator/model/GPU/episode starts; no reuse P1R2 prior approval or old claim.
-- Hard waiver may ONLY substitute for separate 600-pair GPU Logger equivalence gate. Never bypass checkpoint, manifest, source, action mapping, output-integrity, GPU occupancy, controls or stop conditions; report waiver truthfully.
-- User GPU processes unaffected; CPU-only queue 0-3 max12h, stable 3x30s, no foreign PIDs, used<=4000MiB util<=30%, free>6823.390767MiB. No heavy CUDA or simulator init while queuing; keep same GPU after first forward.
-- At most 1 concurrent GPU, 400 episode init attempts, 240000 online policy decisions, 168h actual GPU run, 100GiB disk, effective authorization deadline; at cap STOP, don't rerun.
-- Any partial/incomplete OFF, artifact loss, action/TaskSpec mismatch, source/weight mismatch, illegal critic reset, logger numerical/runtime exception or officially incorrect cost => STOP, ON NOT_STARTED. Any ON error preserves OFF and all ON partial artifacts, no reruns.
-- No claim of causal same-observation logits effects from online divergent observations. Hand back C result to PI then STOP; never self-approve or execute next cycle.
-
-## Proposed resources and required future handoff
-
-1 GPU, 400 online Episode initializations, 240000 online decisions, 168 GPU-hours, 100 GiB total output, at most 12h CPU-only queue, plus the future PI authorization deadline. No additional offline GPU forwards; equivalence waived. These are ceilings, not active permission.
-
-- `research/handoffs/actor-reset-off200-on200-002-20261014/RESULT_SUMMARY.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/RUN_MANIFEST.json`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/ARTIFACT_INDEX.json`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/REVIEW_NOTES.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/FROZEN_PROTOCOL.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/LOGGER_WAIVER.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/TASK_MANIFEST.csv`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/OFF_ON_RESULTS.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/VALIDATION_SUMMARY.md`
-- `research/handoffs/actor-reset-off200-on200-002-20261014/GPU_QUEUE_REPORT.json`
-
-Old INVALID archive is immutable; no new result files or PASS claims have been created. PI review acknowledgement remains bound to 19dcb30e4858be81be25620ebe151860f7720b2c.
+This is a **recovery draft only**. Final PI must review and freeze new ON-only implementation SHA, protocol/transport, no-write guarantees, resource/date limits and CI before authorizing any Claim or Episode. **Do not claim or start GPU now.**
