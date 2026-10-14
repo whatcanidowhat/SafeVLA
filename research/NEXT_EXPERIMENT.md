@@ -1,7 +1,7 @@
 # P2 cycle 002 proposal for final PI authorization
 
 Experiment ID: EXP-ACTOR-RESET-OFF200-ON200-002
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-off200-on200-002-20261014
 
 **PI-APPROVED, NOT YET CLAIMED.** The human PI explicitly authorized this exact new cycle on 2026-10-14T06:55:18.648Z through 2026-10-28T06:55:18.648Z (14 days), 1 GPU maximum and 400 live Episode starts maximum. LOOP_STATE is APPROVED_FOR_CODEX, next_actor CODEX, instruction_commit=null and claim_id=null until a unique Codex Claim is published. This approval alone does NOT permit GPU execution: approval CI SUCCESS, a distinct CODEX claim and its CI SUCCESS are mandatory.
