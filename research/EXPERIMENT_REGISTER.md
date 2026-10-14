@@ -412,3 +412,8 @@ User requested candidate physical GPUs 0/1/2/3, permission to hold an idle GPU b
 ## 2026-10-13 — P2 OFF200/ON200 executor handoff INVALID
 
 Claim e27a5d25bba4e6a991960a733d64fd295480b7b9 (CI38341600763 SUCCESS), approval 2f153c3154caeb6266d463b4ba3e38d698bd9bad, frozen source 33ffa28000522e3715a0920bf3679c27e79b423e. One OFF task reached Episode end after27 decisions; Logger metrics serialization failed on ndarray (percentage_collision), leaving0 complete archived Episodes. ON NOT_STARTED.1 GPU,1 task initialization,27 actual decisions,0 offline replay; GPU released after verified own failed-process cleanup. No retry/source edit. Full SR/Cost and paired comparison unavailable; GPU_EQUIVALENCE=NOT_RUN_PI_WAIVED. Required evidence: [RESULT_SUMMARY.md](handoffs/actor-reset-off200-on200-20261012/RESULT_SUMMARY.md). Next actor PI; STOP.
+
+
+## 2026-10-14 human PI acceptance of P2 INVALID
+
+Human PI explicitly accepted `19dcb30e4858be81be25620ebe151860f7720b2c` (research-loop-validate SUCCESS, run 38364890217). CODEX transcribed this decision at PI direction: INVALID -> PI_REVIEW, reviewed_result_commit binds the terminal entry, prior instruction/claim retained, authorization cleared. Old evidence and results are unchanged. PI accepted `55ecae3ba6e1fc834ea1976adab91640f15fcdd8` and 27 CPU regressions; no further Debug requested. A separate fresh cycle design and final PI authorization are required before any new claim or execution. No execution was performed by this acknowledgement.
