@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-10-14T13:08:49.456560+00:00",
+  "source_head": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+  "source_status": "",
+  "source_hashes_equal_run": true,
+  "OFF_raw_index_verified_entries": 1203,
+  "active_experiment_processes": [],
+  "gpu_compute_snapshot": [
+    "623100, GPU-5c0e013d-3f3c-99bb-6f4d-35e2fe37cbba, 3404 MiB",
+    "628534, GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c, 1564 MiB"
+  ],
+  "gpu_snapshot": [
+    "0, GPU-ee966fa4-ba0e-54e5-aaa2-3fbbac38da37, 9, 32486, 0",
+    "1, GPU-5c0e013d-3f3c-99bb-6f4d-35e2fe37cbba, 3415, 29080, 71",
+    "2, GPU-cb473e82-397b-a5a6-a17b-39dcd1852c1c, 1572, 30923, 36",
+    "3, GPU-6437f6fb-f656-3028-ff6c-20e20944fba6, 5, 32490, 0"
+  ],
+  "raw_file_bytes": 256747152,
+  "ON_result_root_exists": false,
+  "no_cleanup_signals_sent": true
+}

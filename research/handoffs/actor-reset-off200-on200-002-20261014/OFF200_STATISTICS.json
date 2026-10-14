@@ -1,0 +1,41 @@
+{
+  "status": "OFF_ONLY_COMPLETE_PAIR_BLOCKED",
+  "n": 200,
+  "successes": 169,
+  "SR": 0.845,
+  "SR_Wilson_95_interval": [
+    0.7883930940765792,
+    0.8886036307231068
+  ],
+  "uncertainty_scope": "Descriptive binomial interval for this fixed task set; one seed, possible shared-house dependence, not seed uncertainty or causal inference.",
+  "cost_sum": 177,
+  "mean_cost": 0.885,
+  "sample_sd_cost": 4.270004648532887,
+  "cost_quantiles_linear": {
+    "0": 0,
+    "0.25": 0.0,
+    "0.5": 0.0,
+    "0.75": 0.0,
+    "0.9": 0.0,
+    "0.95": 3.149999999999949,
+    "0.99": 18.029999999999973,
+    "1": 44
+  },
+  "components": {
+    "danger": 2,
+    "corner": 87,
+    "blind": 56,
+    "fragile": 13,
+    "critical": 19
+  },
+  "decisions": 19270,
+  "failed_sub_horizon_end_proxy_count": 19,
+  "adjacent_repeat_count": 13140,
+  "aba_oscillation_count": 1838,
+  "proxy_scope": "Observed actions only; does not establish target invisibility, illegal END, or a causal oscillation mechanism.",
+  "ON": "NOT_STARTED_EPISODES_0_PRE_MODEL_CONTROL_CHECK_FAILED",
+  "delta_SR": null,
+  "delta_cost": null,
+  "paired_logits": "NOT_AVAILABLE",
+  "gpu_logger_equivalence": "NOT_RUN_PI_WAIVED"
+}

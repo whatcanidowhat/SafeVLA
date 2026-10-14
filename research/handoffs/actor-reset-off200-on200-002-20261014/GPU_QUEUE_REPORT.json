@@ -1,0 +1,22 @@
+{
+  "status": "ADMITTED_GPU0_AFTER_THREE_STABLE_POLLS",
+  "physical_gpu": 0,
+  "gpu_uuid": "GPU-ee966fa4-ba0e-54e5-aaa2-3fbbac38da37",
+  "queue_start_utc": "2026-10-14T07:26:11Z",
+  "stable_poll_utc": [
+    "2026-10-14T07:27:42Z",
+    "2026-10-14T07:28:12Z",
+    "2026-10-14T07:28:43Z"
+  ],
+  "OFF_start_utc": "2026-10-14T07:28:43Z",
+  "OFF_validated_utc": "2026-10-14T11:36:48Z",
+  "ON_command_attempt_utc": "2026-10-14T11:36:48Z",
+  "launcher_exit": {
+    "exit_code": 1,
+    "finished_at_utc": "2026-10-14T11:38:18.881016+00:00"
+  },
+  "source_evidence": "LAUNCHER_CONSOLE.txt; P2_LAUNCH_CONTEXT_AT_EXIT.json",
+  "limitations": "Original runner logs admission and selected UUID, not each numerical nvidia-smi poll; do not fabricate missing poll values.",
+  "other_user_processes_terminated": false,
+  "ON_gpu_model_initialized": false
+}

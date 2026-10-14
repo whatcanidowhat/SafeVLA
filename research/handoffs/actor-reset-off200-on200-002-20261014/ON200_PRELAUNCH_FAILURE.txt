@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014/diagnostics/actor_logits/evaluate.py", line 226, in <module>
+    main()
+  File "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014/diagnostics/actor_logits/evaluate.py", line 222, in main
+    execute(args, tasks, content)
+  File "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014/diagnostics/actor_logits/evaluate.py", line 116, in execute
+    control_evidence = codex_control_evidence(args)
+  File "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014/diagnostics/actor_logits/evaluate.py", line 79, in codex_control_evidence
+    listing = git('ls-remote', '--heads', 'origin', 'refs/heads/research-loop').split()
+  File "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014/diagnostics/actor_logits/evaluate.py", line 73, in git
+    return subprocess.check_output(
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/subprocess.py", line 421, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/subprocess.py", line 505, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/subprocess.py", line 1154, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/subprocess.py", line 2022, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/subprocess.py", line 1198, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['git', '-C', '/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013', 'ls-remote', '--heads', 'origin', 'refs/heads/research-loop']' timed out after 60 seconds
+fatal: unable to access 'https://github.com/whatcanidowhat/SafeVLA.git/': Proxy CONNECT aborted due to timeout
