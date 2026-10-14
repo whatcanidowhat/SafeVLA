@@ -64,6 +64,7 @@ def code_identity():
 
 def codex_control_evidence(args):
     """Read exact claimed control HEAD, fail closed; status flags alone are not proof."""
+    from .recovery003 import direct_environment
     require(args.approval_reference and args.claim_reference and args.control_root,
             'Missing PI approval / Codex claim / control worktree')
     require(args.pi_waive_gpu_equivalence, 'Explicit PI waiver acknowledgement required')
@@ -71,7 +72,8 @@ def codex_control_evidence(args):
     require((control / 'research/LOOP_STATE.json').is_file(), 'Missing control tree')
     def git(*argv):
         return subprocess.check_output(
-            ['git', '-C', str(control), *argv], text=True, timeout=60
+            ['git', '-c', 'http.proxy=', '-C', str(control), *argv],
+            text=True, timeout=60, env=direct_environment()
         ).strip()
     require(git('branch', '--show-current') == 'research-loop', 'Wrong control branch')
     require(not git('status', '--porcelain'), 'Dirty control worktree')
@@ -87,15 +89,15 @@ def codex_control_evidence(args):
     state = read_json(control / 'research/LOOP_STATE.json')
     require(state.get('status') == 'CODEX_RUNNING' and state.get('next_actor') == 'CODEX'
             and state.get('updated_by') == 'CODEX', 'Not a unique CODEX claim')
-    require(state.get('experiment_id') == 'EXP-ACTOR-RESET-OFF200-ON200-002'
-            and state.get('cycle_id') == 'actor-reset-off200-on200-002-20261014',
+    require(state.get('experiment_id') == 'EXP-ACTOR-RESET-ON200-003'
+            and state.get('cycle_id') == 'actor-reset-on200-off002-reuse-003-20261014',
             'Wrong approved experiment')
     require(state.get('instruction_commit') == args.approval_reference
             and state.get('claim_id'), 'Claim not bound to approval')
     authorization = state['authorization']
     require(authorization.get('status') == 'APPROVED'
             and authorization.get('approved_by') == 'PI'
-            and authorization.get('max_episodes') == 400
+            and authorization.get('max_episodes') == 200
             and authorization.get('max_gpu') == 1,
             'P2 authorization mismatch')
     expires = datetime.fromisoformat(authorization['expires_at_utc'].replace('Z', '+00:00'))
@@ -104,7 +106,7 @@ def codex_control_evidence(args):
     require(design.get('status') == 'APPROVED'
             and design.get('experiment_id') == state['experiment_id']
             and design.get('cycle_id') == state['cycle_id']
-            and design.get('resources') == {'max_gpu': 1, 'max_episodes': 400},
+            and design.get('resources') == {'max_gpu': 1, 'max_episodes': 200},
             'Control design mismatch')
     return {'claim_commit': args.claim_reference, 'claim_id': state['claim_id'],
             'approval_commit': args.approval_reference,
@@ -113,7 +115,8 @@ def codex_control_evidence(args):
 
 
 def execute(args, tasks, manifest_bytes):
-    control_evidence = codex_control_evidence(args)
+    from .recovery003 import before_model
+    control_evidence = before_model(args, tasks, manifest_bytes)
     reference, identity = code_identity()
     require(not args.output.exists(), 'Output exists: no overwrite/resume')
     require(not os.environ.get('ACTION_DICT'), 'Action map override forbidden')

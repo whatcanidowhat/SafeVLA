@@ -31,7 +31,7 @@ def repetition(rows):
             'repeat_fraction': repeat / max(1, len(actions)-1), 'scope': 'Descriptive proxies, not diagnosed dead corners'}
 
 
-def compare(off, on, expected=200):
+def compare(off, on, expected=200, identity_validator=None):
     left, right = validate_run(off, expected), validate_run(on, expected)
     result = {'status': 'INCOMPLETE', 'delta_SR': None, 'delta_mean_cost': None,
               'scope': 'Online same task/step comparison is descriptive. After action divergence observations may differ; only separately authorized identical-input/state offline controls support direct logits attribution.'}
@@ -43,9 +43,12 @@ def compare(off, on, expected=200):
         return {**result, 'error': 'TaskSpecs/order/action map mismatch'}
     identity_keys = ['git_commit','source_sha256','checkpoint_sha256','dino_sha256','manifest_sha256',
                      'seed','num_workers','shuffle','greedy','test_augmentation','physical_gpu']
-    if any(k not in lm['provenance'] or k not in rm['provenance'] or
-           lm['provenance'][k] != rm['provenance'][k] for k in identity_keys):
-        return {**result, 'error': 'Runtime provenance/configuration mismatch or missing identity'}
+    if identity_validator is None:
+        if any(k not in lm['provenance'] or k not in rm['provenance'] or
+               lm['provenance'][k] != rm['provenance'][k] for k in identity_keys):
+            return {**result, 'error': 'Runtime provenance/configuration mismatch or missing identity'}
+    else:
+        identity_validator(lm['provenance'], rm['provenance'])
     if lm['provenance']['actor_reset'] != 'off' or rm['provenance']['actor_reset'] != 'on':
         return {**result, 'error': 'Expected OFF then ON runs'}
     task_results = []
