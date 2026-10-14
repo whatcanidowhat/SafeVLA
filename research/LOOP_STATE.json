@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 75,
+  "state_version": 76,
   "cycle_id": "actor-reset-off200-on200-002-20261014",
   "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-002",
-  "status": "APPROVED_FOR_CODEX",
+  "status": "CODEX_RUNNING",
   "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014",
-  "instruction_commit": null,
+  "instruction_commit": "7fc797645d00fc38ab4ac8e08f4b8ed98053449f",
   "reviewed_result_commit": "19dcb30e4858be81be25620ebe151860f7720b2c",
-  "claim_id": null,
+  "claim_id": "b89ac28dffc3490c9672afc9ef1afd15",
   "authorization": {
     "status": "APPROVED",
     "approved_by": "PI",
@@ -31,6 +31,6 @@
     "research/handoffs/actor-reset-off200-on200-002-20261014/VALIDATION_SUMMARY.md",
     "research/handoffs/actor-reset-off200-on200-002-20261014/GPU_QUEUE_REPORT.json"
   ],
-  "updated_by": "PI",
-  "updated_at_utc": "2026-10-14T06:55:18.648Z"
+  "updated_by": "CODEX",
+  "updated_at_utc": "2026-10-14T07:13:12.580887+00:00"
 }
