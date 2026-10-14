@@ -87,8 +87,8 @@ def codex_control_evidence(args):
     state = read_json(control / 'research/LOOP_STATE.json')
     require(state.get('status') == 'CODEX_RUNNING' and state.get('next_actor') == 'CODEX'
             and state.get('updated_by') == 'CODEX', 'Not a unique CODEX claim')
-    require(state.get('experiment_id') == 'EXP-ACTOR-RESET-OFF200-ON200-001'
-            and state.get('cycle_id') == 'actor-reset-off200-on200-20261012',
+    require(state.get('experiment_id') == 'EXP-ACTOR-RESET-OFF200-ON200-002'
+            and state.get('cycle_id') == 'actor-reset-off200-on200-002-20261014',
             'Wrong approved experiment')
     require(state.get('instruction_commit') == args.approval_reference
             and state.get('claim_id'), 'Claim not bound to approval')

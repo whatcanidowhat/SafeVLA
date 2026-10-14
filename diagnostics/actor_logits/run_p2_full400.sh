@@ -3,8 +3,8 @@
 set -Eeuo pipefail
 umask 077
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd -P)
-CONTROL_ROOT=$(printenv P2_CONTROL_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_loop_control)
-OUTPUT_ROOT=$(printenv P2_OUTPUT_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_p2_full400_results_20261012)
+CONTROL_ROOT=$(printenv P2_CONTROL_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013)
+OUTPUT_ROOT=$(printenv P2_OUTPUT_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_p2_002_results_20261014)
 P2_PYTHON=$(printenv P2_PYTHON || printf '%s' /home/amax/.conda/envs/safevla/bin/python)
 PHASE_PID=""
 stop_own_process() {
@@ -42,7 +42,7 @@ remote = git("ls-remote", "--heads", "origin", "refs/heads/research-loop").split
 if not remote or remote[0] != sha: raise SystemExit("Remote claim HEAD mismatch")
 if s.get("status") != "CODEX_RUNNING" or s.get("next_actor") != "CODEX" or s.get("updated_by") != "CODEX":
     raise SystemExit("Missing CODEX_RUNNING claim")
-if s.get("experiment_id") != "EXP-ACTOR-RESET-OFF200-ON200-001" or s.get("cycle_id") != "actor-reset-off200-on200-20261012":
+if s.get("experiment_id") != "EXP-ACTOR-RESET-OFF200-ON200-002" or s.get("cycle_id") != "actor-reset-off200-on200-002-20261014":
     raise SystemExit("Wrong P2 experiment")
 if not s.get("instruction_commit") or not s.get("claim_id"): raise SystemExit("Missing claim identity")
 a = s["authorization"]
