@@ -1,14 +1,14 @@
 # P2 cycle 002 proposal for final PI authorization
 
 Experiment ID: EXP-ACTOR-RESET-OFF200-ON200-002
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-off200-on200-002-20261014
 
-**NOT_AUTHORIZED.** Human PI has approved closing old INVALID and preparing this draft, not executing the new cycle. LOOP_STATE is PI_REVIEW, next_actor PI, authorization NOT_AUTHORIZED (active budget 0 GPU / 0 Episodes), instruction_commit=null and claim_id=null. Resource values below are proposed ceilings only. Final PI approval must specify new approval/expiry timestamps and be followed by approval CI SUCCESS, a unique CODEX claim and distinct claim CI SUCCESS before execution.
+**PI-APPROVED, NOT YET CLAIMED.** The human PI explicitly authorized this exact new cycle on 2026-10-14T06:55:18.648Z through 2026-10-28T06:55:18.648Z (14 days), 1 GPU maximum and 400 live Episode starts maximum. LOOP_STATE is APPROVED_FOR_CODEX, next_actor CODEX, instruction_commit=null and claim_id=null until a unique Codex Claim is published. This approval alone does NOT permit GPU execution: approval CI SUCCESS, a distinct CODEX claim and its CI SUCCESS are mandatory.
 
 ## Immutable code and paths
 
-- Proposed code SHA: `06cde9adeb91d47c062a11e72e90c7edf56fb398` (branch `codex/p2-002-bindings-20261014`); canonical binding `research/P2_CODE_SHA.txt`.
+- PI-frozen code SHA: `06cde9adeb91d47c062a11e72e90c7edf56fb398` (branch `codex/p2-002-bindings-20261014`); canonical binding `research/P2_CODE_SHA.txt`.
 - Accepted repair base: `55ecae3ba6e1fc834ea1976adab91640f15fcdd8`; 27 CPU regression results accepted by PI. New code changes only experiment/cycle constants and launcher path defaults, plus binding documentation. Bash syntax, Python AST and exact replacement-only diff checks PASS; no extra Debug or runtime tests.
 - Execution worktree: `/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014`.
 - Control worktree: `/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013`.
@@ -17,7 +17,7 @@ Cycle ID: actor-reset-off200-on200-002-20261014
 - Existing frozen 200-row TaskSpec SHA256: `8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0`; same checkpoint, B0, DINO, seed=123, single worker, shuffle=true, greedy=false, test_augmentation=true.
 - GPU Logger equivalence: **NOT_RUN_PI_WAIVED**, not PASS. No new GPU equivalence or Debug experiment.
 
-## Proposed command after all authorization gates
+## PI-approved command, allowed only after approval CI and unique Claim CI
 
 ```bash
 cd /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014
@@ -42,11 +42,11 @@ Stochastic action sampling and trajectory divergence, test augmentation/THOR sto
 
 ### Reference
 
-Human PI accepted old INVALID 19dcb30e4858be81be25620ebe151860f7720b2c on 2026-10-14; acknowledgement 63797f4a7afd1d478e110c57868d4e18f6a7f9d6. PI accepted ndarray repair 55ecae3ba6e1fc834ea1976adab91640f15fcdd8 with 27 CPU regressions and directed no extra Debug. Proposed exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 on codex/p2-002-bindings-20261014 changes only cycle/path bindings plus documentation from that repair. Accepted B0 and original P2 scientific protocol retained. GPU Logger equivalence NOT_RUN_PI_WAIVED continues by explicit PI direction. Final new-cycle execution approval is PENDING.
+Human PI accepted old INVALID 19dcb30e4858be81be25620ebe151860f7720b2c on 2026-10-14; acknowledgement 63797f4a7afd1d478e110c57868d4e18f6a7f9d6. PI accepted ndarray repair 55ecae3ba6e1fc834ea1976adab91640f15fcdd8 with 27 CPU regressions and directed no extra Debug. Proposed exact source 06cde9adeb91d47c062a11e72e90c7edf56fb398 on codex/p2-002-bindings-20261014 changes only cycle/path bindings plus documentation from that repair. Accepted B0 and original P2 scientific protocol retained. GPU Logger equivalence NOT_RUN_PI_WAIVED continues by explicit PI direction. Final new-cycle PI execution approval is granted at 2026-10-14T06:55:18.648Z, expiring 2026-10-28T06:55:18.648Z, under 1 GPU / 400 Episodes maximum; Claim CI required before running.
 
 ### Repeat Or Treatment
 
-One new cycle, never a retry under the old claim. Exact proposed code 06cde9adeb91d47c062a11e72e90c7edf56fb398; execution worktree /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014; fresh absent output root /nvme2/user/qyy/SafeVLA_p2_002_results_20261014. After NEW final PI authorization and its CI SUCCESS, obtain a unique CODEX claim through scripts/research_loop_claim.py and wait for independent claim CI SUCCESS. Run bash diagnostics/actor_logits/run_p2_full400.sh exactly once: queue on physical 0-3, OFF200, validate 200 complete ordered task/log/metric records, ON200 only after that validation, then validate and compare. Same physical GPU, separate processes and output directories. No additional Debug, GPU replay, smoke Episode, retry, resume or added task/seed. Approval deadline must be supplied by final PI authorization; none is active now.
+One new cycle, never a retry under the old claim. Exact proposed code 06cde9adeb91d47c062a11e72e90c7edf56fb398; execution worktree /nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014; fresh absent output root /nvme2/user/qyy/SafeVLA_p2_002_results_20261014. After NEW final PI authorization and its CI SUCCESS, obtain a unique CODEX claim through scripts/research_loop_claim.py and wait for independent claim CI SUCCESS. Run bash diagnostics/actor_logits/run_p2_full400.sh exactly once: queue on physical 0-3, OFF200, validate 200 complete ordered task/log/metric records, ON200 only after that validation, then validate and compare. Same physical GPU, separate processes and output directories. No additional Debug, GPU replay, smoke Episode, retry, resume or added task/seed. PI authorization expires 2026-10-28T06:55:18.648Z; hard stop at the deadline.
 
 ### Unique Variable
 
