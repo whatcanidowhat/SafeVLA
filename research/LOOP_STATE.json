@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 73,
-  "cycle_id": "actor-reset-off200-on200-20261012",
-  "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-001",
+  "state_version": 74,
+  "cycle_id": "actor-reset-off200-on200-002-20261014",
+  "experiment_id": "EXP-ACTOR-RESET-OFF200-ON200-002",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_full400_20261012",
-  "instruction_commit": "2f153c3154caeb6266d463b4ba3e38d698bd9bad",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014",
+  "instruction_commit": null,
   "reviewed_result_commit": "19dcb30e4858be81be25620ebe151860f7720b2c",
-  "claim_id": "e3f688f832924a1dbb6a105b117b5551",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
     "approved_by": null,
@@ -20,17 +20,17 @@
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/actor-reset-off200-on200-20261012/RESULT_SUMMARY.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/RUN_MANIFEST.json",
-    "research/handoffs/actor-reset-off200-on200-20261012/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-reset-off200-on200-20261012/REVIEW_NOTES.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/LOGGER_WAIVER.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/TASK_MANIFEST.csv",
-    "research/handoffs/actor-reset-off200-on200-20261012/OFF_ON_RESULTS.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/VALIDATION_SUMMARY.md",
-    "research/handoffs/actor-reset-off200-on200-20261012/GPU_QUEUE_REPORT.json"
+    "research/handoffs/actor-reset-off200-on200-002-20261014/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/LOGGER_WAIVER.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/VALIDATION_SUMMARY.md",
+    "research/handoffs/actor-reset-off200-on200-002-20261014/GPU_QUEUE_REPORT.json"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-14T06:17:37.161576+00:00"
+  "updated_at_utc": "2026-10-14T06:20:50.113746+00:00"
 }

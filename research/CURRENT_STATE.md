@@ -1,3 +1,7 @@
+## 2026-10-14 current P2 cycle 002 DRAFT (PI-directed preparation)
+
+Old INVALID accepted by human PI, recorded at 63797f4a7afd1d478e110c57868d4e18f6a7f9d6. New experiment `EXP-ACTOR-RESET-OFF200-ON200-002`, cycle `actor-reset-off200-on200-002-20261014`, proposed code `06cde9adeb91d47c062a11e72e90c7edf56fb398`, accepted fix base `55ecae3ba6e1fc834ea1976adab91640f15fcdd8` (27 CPU regressions). Final PI execution authorization PENDING; PI_REVIEW / NOT_AUTHORIZED, next_actor PI, no instruction or claim, active budget zero. Full design is in NEXT_EXPERIMENT.md/json. Worktree `/nvme2/user/qyy/SafeVLA_actor_logits_p2_002_20261014`, new output root `/nvme2/user/qyy/SafeVLA_p2_002_results_20261014` (not created). Same 200 TaskSpecs/checkpoint/seed123/single worker/OFF200+ON200 science and NOT_RUN_PI_WAIVED. Only entry bindings and static validation performed; no extra Debug, GPU, model, simulator or Episode. Await separate final PI approval + CI before fresh claim + CI, then one-shot formal command. Old evidence remains untouched.
+
 # Current State
 
 Updated: 2026-10-07（Asia/Shanghai）
