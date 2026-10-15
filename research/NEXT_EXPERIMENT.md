@@ -18,17 +18,17 @@ Cycle ID: actor-reset-on200-off002-reuse-003-20261014
 
 - Proposed science: same 200 exact ordered ObjectNavType TaskSpecs, checkpoint, DINO, seed=123, one worker, original action mapping/metrics/logger; only root Actor episode-boundary counter and attention K/V reset ON, Critic unchanged. No OFF rerun or model retraining.
 - Proposed new working tree `/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014`; output root `/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014` MUST be absent before authorization and run.
-- Required NEW Codex code SHA: **PENDING**. Prior accepted source 06cde9adeb91d47c062a11e72e90c7edf56fb398 is NOT an approved ON-only executable. Codex must prepare a separate candidate changing only new cycle identity, fail-closed Claim guard, ON-only launcher, independent output path and provenance/comparison glue; retain fixed scientific code and CPU evidence.
-- Proposed command (NOT yet implemented): `bash diagnostics/actor_logits/run_p2_on200_only.sh`. Must not launch under existing 002 command or 002 Claim.
+- Reviewed ON-only executable candidate **PI STAGED**: `013508992c07443d2cf25e9d2099916b9ba57bd8` (six-path code diff, 41 CPU tests reported PASS). This is an *exact source pin*, not a GPU/Claim approval. Actor/reset/Critic, Logger/storage and official science metric math remain unchanged relative to frozen P2-002 source.
+- Code-reviewed command **exists but is NOT YET AUTHORIZED**: `bash diagnostics/actor_logits/run_p2_on200_only.sh`. New 003 Claim and distinct Claim CI still required. Never run old 002 launcher or reuse 002 Claim.
 - Proposed limits: 1 GPU, 200 ON Episodes, no extra GPU equivalence or Debug. Active authorization: **none**. A separate final PI approval with reviewed source SHA, validity dates and CI SUCCESS is required, followed by a unique Codex Claim and its own CI SUCCESS.
 
 ## Network resilience, without bypassing authorization
 
 The prior incident occurred during a new remote `git ls-remote` from ON evaluate.py, with `Proxy CONNECT aborted due to timeout`. A monitoring SSH session also reset; tunnel loss is plausible but NOT proven.
 
-Codex must propose and document an independently maintained GitHub HTTPS path on the server: preferred direct network egress; otherwise a user-approved managed persistent proxy/tunnel service that remains alive after the interactive SSH session disconnects. Do not use an ephemeral reverse SSH `-R` tunnel whose lifetime is tied to a monitoring session.
+The reviewed 003 candidate uses direct HTTPS and rejects inherited SSH proxy settings. Direct connectivity has been intermittent, so the existing CPU-only live remote Claim+CI, cross-session and repeated preflight checks are **mandatory at actual startup**; a failed check STOPs before GPU/model import. We do **not** require a separate long-term network-infrastructure project as a precondition to final human authorization. Never bypass the remote Claim/CI guard or silently use a session-bound SSH `-R` proxy.
 
-Conduct CPU-only authenticated remote-read preflight from the actual process environment: verify exact `research-loop` head and signed-by-protocol authorization/Claim identity, independent GitHub Actions CI SUCCESS, repeated observations across a deliberate monitoring SSH disconnect/reconnect, and log timings/errors without recording secrets. Distinguish reachability of `github.com` and `api.github.com`. No proxy result or cached local state substitutes for the required live claim verification. Network failure => STOP before GPU/model import, and no automatic Episode retry.
+At execution time run the candidate's existing CPU-only guard in the exact launcher environment: live `research-loop` HEAD, distinct approved Claim/CI evidence, new cross-SSH-session direct-read receipts (<=30 min old), and three preflight network observations. No cache, bypass, token disclosure, or retrospective replacement of these checks. Failure => STOP before GPU/model import and truthful BLOCKED handoff, not an automatic Episode retry.
 
 ## Cross-cycle validation contract
 
@@ -38,4 +38,8 @@ Future required handoff additionally includes `OFF_REUSE_VERIFICATION.json`, `NE
 
 ## PI decision still outstanding
 
-This is a **recovery draft only**. Final PI must review and freeze new ON-only implementation SHA, protocol/transport, no-write guarantees, resource/date limits and CI before authorizing any Claim or Episode. **Do not claim or start GPU now.**
+**Code review completed; execution still DRAFT.** The exact candidate SHA is pinned, and 41 CPU tests/validated OFF200 are recorded as Codex evidence. A separate explicit human final GPU authorization, approved resource/date limits, PI approval commit+CI and new Claim+CI must precede any GPU/ON Episode. Direct HTTPS will be tested *live* under the existing fail-closed guard; no open-ended network remediation is required. **Do not Claim or start GPU now.**
+
+## 2026-10-15 — scoped PI code acceptance, NOT execution authorization
+
+PI reviewed candidate `013508992c07443d2cf25e9d2099916b9ba57bd8` and staged it in `research/P2_CODE_SHA.txt`. The prior unimplemented-code gap is closed. Intermittent direct network remains an *execution-time availability risk*: start only after the actual claim-specific live guard passes; failure stops before GPU. No blanket requirement for a long-term proxy project. Current design remains DRAFT and LOOP_STATE remains PI_REVIEW / NOT_AUTHORIZED. The candidate's 168h/100GiB/12h proposed physical limits are **not approved**; final human authorization must establish definite wall/deadline/caps (prefer a bounded ON200 run, not an indefinite queue). Revalidate OFF raw 1,203 files at pre-model and final comparison. Historical OFF/ON across cycles is descriptive, not same-input causal proof.
