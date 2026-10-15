@@ -1,10 +1,10 @@
 # P2-003 recovery proposal — reuse valid OFF200, execute ON200 only
 
 Experiment ID: EXP-ACTOR-RESET-ON200-003
-Status: DRAFT
+Status: APPROVED
 Cycle ID: actor-reset-on200-off002-reuse-003-20261014
 
-**PI_REVIEW / NOT_AUTHORIZED.** PI accepted the old BLOCKED incident and the scientific validity of the stored OFF200. This document prepares a future ON200-only candidate, NOT an execution approval. Active resource allocation is **0 GPU / 0 Episodes**. No Claim exists for 003; the preceding P2-002 Claim remains historical and terminal.
+**APPROVED_FOR_CODEX / GPU AUTHORIZED BY USER 2026-10-15; NOT YET CLAIMED.** Human explicitly authorized P2-003 ON200-only, and PI approved the pinned implementation. The approval is conditional on this approval commit's CI SUCCESS, then a unique Codex Claim commit with its own CI SUCCESS, then all original fail-closed CPU control/network/OFF hash checks before GPU/model import. Active *authorization limit*: 1 GPU / 200 Episodes; actual consumption remains 0 GPU / 0 ON Episodes until Codex starts.
 
 ## Frozen reference OFF200 (read-only)
 
@@ -19,8 +19,8 @@ Cycle ID: actor-reset-on200-off002-reuse-003-20261014
 - Proposed science: same 200 exact ordered ObjectNavType TaskSpecs, checkpoint, DINO, seed=123, one worker, original action mapping/metrics/logger; only root Actor episode-boundary counter and attention K/V reset ON, Critic unchanged. No OFF rerun or model retraining.
 - Proposed new working tree `/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014`; output root `/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014` MUST be absent before authorization and run.
 - Reviewed ON-only executable candidate **PI STAGED**: `013508992c07443d2cf25e9d2099916b9ba57bd8` (six-path code diff, 41 CPU tests reported PASS). This is an *exact source pin*, not a GPU/Claim approval. Actor/reset/Critic, Logger/storage and official science metric math remain unchanged relative to frozen P2-002 source.
-- Code-reviewed command **exists but is NOT YET AUTHORIZED**: `bash diagnostics/actor_logits/run_p2_on200_only.sh`. New 003 Claim and distinct Claim CI still required. Never run old 002 launcher or reuse 002 Claim.
-- Proposed limits: 1 GPU, 200 ON Episodes, no extra GPU equivalence or Debug. Active authorization: **none**. A separate final PI approval with reviewed source SHA, validity dates and CI SUCCESS is required, followed by a unique Codex Claim and its own CI SUCCESS.
+- Approved command **after approval CI and unique Claim CI only**: `bash diagnostics/actor_logits/run_p2_on200_only.sh`. New 003 Claim and distinct Claim CI still required. Never run old 002 launcher or reuse 002 Claim.
+- **Formal resource authorization**: 1 GPU on physical 0–3 if the pre-existing shared GPU admission guard passes; 200 ON Episodes; 120,000 maximum policy decisions (horizon 600); absolute validity 2026-10-15T01:49:16Z through 2026-10-16T01:49:16Z UTC (24h); CPU GPU queue capped 12h; launcher disk guard at 96636764160 bytes (90 GiB). Runtime clock includes queue and execution in a 24h absolute permission interval, superseding the code's dormant 168h long-stop. No other users' processes affected; no repeat, resume, OFF rerun, GPU logger equivalence test or Debug.
 
 ## Network resilience, without bypassing authorization
 
@@ -38,8 +38,12 @@ Future required handoff additionally includes `OFF_REUSE_VERIFICATION.json`, `NE
 
 ## PI decision still outstanding
 
-**Code review completed; execution still DRAFT.** The exact candidate SHA is pinned, and 41 CPU tests/validated OFF200 are recorded as Codex evidence. A separate explicit human final GPU authorization, approved resource/date limits, PI approval commit+CI and new Claim+CI must precede any GPU/ON Episode. Direct HTTPS will be tested *live* under the existing fail-closed guard; no open-ended network remediation is required. **Do not Claim or start GPU now.**
+**FINAL PI APPROVAL RECORDED, CONDITIONAL GATES REMAIN.** User explicitly authorized GPU; exact new ON-only source 013508992c07443d2cf25e9d2099916b9ba57bd8 pinned and approved. Codex may Claim only after this approval commit has SUCCESS control CI; run only after its unique Claim CI SUCCESS, clean exact code tree, absent output roots and live fail-closed remote Claim/CI + OFF byte recheck. No GPU may start merely because this document says APPROVED. No bypass/automatic retry. Human permission expires 2026-10-16T01:49:16Z UTC.
 
 ## 2026-10-15 — scoped PI code acceptance, NOT execution authorization
 
-PI reviewed candidate `013508992c07443d2cf25e9d2099916b9ba57bd8` and staged it in `research/P2_CODE_SHA.txt`. The prior unimplemented-code gap is closed. Intermittent direct network remains an *execution-time availability risk*: start only after the actual claim-specific live guard passes; failure stops before GPU. No blanket requirement for a long-term proxy project. Current design remains DRAFT and LOOP_STATE remains PI_REVIEW / NOT_AUTHORIZED. The candidate's 168h/100GiB/12h proposed physical limits are **not approved**; final human authorization must establish definite wall/deadline/caps (prefer a bounded ON200 run, not an indefinite queue). Revalidate OFF raw 1,203 files at pre-model and final comparison. Historical OFF/ON across cycles is descriptive, not same-input causal proof.
+PI reviewed candidate `013508992c07443d2cf25e9d2099916b9ba57bd8` and staged it in `research/P2_CODE_SHA.txt`. The prior unimplemented-code gap is closed. Intermittent direct network remains an *execution-time availability risk*: start only after the actual claim-specific live guard passes; failure stops before GPU. No blanket requirement for a long-term proxy project. Historical statement from staging: design was DRAFT and state was PI_REVIEW / NOT_AUTHORIZED. Subsequent 2026-10-15 user GPU authorization supersedes that draft, and current formal state is APPROVED_FOR_CODEX. The candidate's 168h/100GiB/12h proposed physical limits are **not approved**; final human authorization must establish definite wall/deadline/caps (prefer a bounded ON200 run, not an indefinite queue). Revalidate OFF raw 1,203 files at pre-model and final comparison. Historical OFF/ON across cycles is descriptive, not same-input causal proof.
+
+## 2026-10-15 — binding human + PI GPU authorization (current and controlling)
+
+Human explicitly approved a formal GPU ON200 run on 2026-10-15; PI binds this one and only one experiment to the exact reviewed source SHA `013508992c07443d2cf25e9d2099916b9ba57bd8` and command `bash diagnostics/actor_logits/run_p2_on200_only.sh`. Approved max GPU=1, max ON Episodes=200, max steps=120000, start at 2026-10-15T01:49:16Z UTC and absolute expiry 2026-10-16T01:49:16Z UTC, 12h max shared GPU CPU queue, 90 GiB output guard (the existing launcher enforces the bound), valid only on physical GPUs 0–3 meeting shared resource admission. No OFF replay; frozen historical OFF200 is READ_ONLY. No changes to policy/reset/Critic/logger/metrics/TaskSpecs. Previous controls including cross-session GitHub live Claim/CI reads and immediate pre-model OFF 1203-file hash validation remain **mandatory**, with STOP before GPU on failure. No network service project required. This authorizing commit is A; Codex must **await CI SUCCESS for A** then publish its own unique Claim B and **await distinct CI SUCCESS for B** before executing. No Claim or compute has been created by this PI approval. No automatic retry or renewal. After ON success or BLOCKED/INVALID failure, publish actual handoff in GitHub and STOP.

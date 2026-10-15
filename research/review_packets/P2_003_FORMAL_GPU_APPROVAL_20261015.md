@@ -1,0 +1,15 @@
+# Formal human + PI GPU authorization — P2-003 ON-only
+
+**Authority:** User explicitly says "授权gpu" and "进行正式授权" on 2026-10-15. PI source review and frozen control commit `b8ce7d7c81d7281d07f85fba2bdd4666146eb850` CI [38662896388](https://github.com/whatcanidowhat/SafeVLA/actions/runs/38662896388) SUCCESS before this approval.
+
+**Experiment:** `EXP-ACTOR-RESET-ON200-003`; cycle `actor-reset-on200-off002-reuse-003-20261014`. Control transition v79 PI_REVIEW -> v80 APPROVED_FOR_CODEX, next_actor CODEX. Status is **APPROVED but UNCLAIMED** at the time of publication. No model or GPU started by PI.
+
+**Source:** exact immutable commit [`013508992c07443d2cf25e9d2099916b9ba57bd8`](https://github.com/whatcanidowhat/SafeVLA/commit/013508992c07443d2cf25e9d2099916b9ba57bd8), recorded in `research/P2_CODE_SHA.txt`. Exactly one command `bash diagnostics/actor_logits/run_p2_on200_only.sh` in isolated runtime worktree `/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014`.
+
+**Limits:** single physical GPU selected 0–3 only if the unchanged shared GPU admission polls pass; maximum 200 live ON ObjectNavType Episodes; 120000 potential decisions at horizon 600; 12h CPU queue; launcher-enforced output limit 96636764160 bytes (90 GiB). Absolute approval interval **2026-10-15T01:49:16Z through 2026-10-16T01:49:16Z UTC**, maximum 24h total from approval, including GPU queue and model execution. Launcher enforces expiry throughout; its 168h fallback runtime ceiling is *superseded* by this earlier absolute expiry. No other-user process interruption, no OFF replay or modification, no additional Debug/offline equivalence experiment, no extension, no automatic retry.
+
+**Mandatory action gates:** (1) after this approval commit A is published, independently observe its `research-loop-validate` CI SUCCESS; (2) Codex creates one new unique Claim B using `scripts/research_loop_claim.py`, atomically pushes B, confirms remote HEAD B and B's **distinct** CI SUCCESS; (3) from exact intended launcher server context pass the unchanged two fresh SSH-session independent direct GitHub receipts, three live remote HEAD/Claim+CI checks, rehash historical OFF200 1203 files, source/checkpoint/DINO/TaskSpec proof and absence of any new output root; (4) safe GPU admission; (5) one ON200 run, validate ON and OFF immutability, compare cross-cycle descriptively and hand off all real outputs to PI. Network failure is a fail-closed STOP before GPU/model import. The past OFF200 succeeded and must not rerun.
+
+**Scientific limitations:** This is a paired TaskSpec / *cross-cycle descriptive* OFF vs ON contrast, not same-input causal policy evaluation after stochastic trajectories diverge. Keep official SR, five-component cost, per-step actor outputs, provenance, uncertainty and waiver `NOT_RUN_PI_WAIVED`.
+
+**Authentication boundary:** Formal PI authorization does not itself grant a Claim, start GPU, prove runtime network availability or promise a result. CI and Codex Claim are subsequent required steps.

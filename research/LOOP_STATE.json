@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "state_version": 79,
+  "state_version": 80,
   "cycle_id": "actor-reset-on200-off002-reuse-003-20261014",
   "experiment_id": "EXP-ACTOR-RESET-ON200-003",
-  "status": "PI_REVIEW",
-  "next_actor": "PI",
+  "status": "APPROVED_FOR_CODEX",
+  "next_actor": "CODEX",
   "control_branch": "research-loop",
   "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014",
   "instruction_commit": null,
   "reviewed_result_commit": "88453def76051736edce2e8887f26b08d5b0c5e6",
   "claim_id": null,
   "authorization": {
-    "status": "NOT_AUTHORIZED",
-    "approved_by": null,
-    "approved_at_utc": null,
-    "expires_at_utc": null,
+    "status": "APPROVED",
+    "approved_by": "PI",
+    "approved_at_utc": "2026-10-15T01:49:16Z",
+    "expires_at_utc": "2026-10-16T01:49:16Z",
     "scope": "RESEARCH_EXPERIMENT",
-    "max_gpu": 0,
-    "max_episodes": 0
+    "max_gpu": 1,
+    "max_episodes": 200
   },
   "required_outputs": [
     "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md",
@@ -35,5 +35,5 @@
     "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CROSS_CYCLE_COMPARISON.json"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-14T13:35:10.241Z"
+  "updated_at_utc": "2026-10-15T01:49:16Z"
 }
