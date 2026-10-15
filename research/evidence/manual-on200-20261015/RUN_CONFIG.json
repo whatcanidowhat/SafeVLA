@@ -1,0 +1,220 @@
+{
+  "OFF": {
+    "git_commit": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+    "actor_reset": "off",
+    "group": "OFF200",
+    "approval_reference": "7fc797645d00fc38ab4ac8e08f4b8ed98053449f",
+    "control_evidence": {
+      "claim_commit": "918170d26cca2fc385fb6f8fd87d0109b4a167b2",
+      "claim_id": "b89ac28dffc3490c9672afc9ef1afd15",
+      "approval_commit": "7fc797645d00fc38ab4ac8e08f4b8ed98053449f",
+      "approval_expires_at_utc": "2026-10-28T06:55:18.648Z",
+      "gpu_logger_equivalence": "NOT_RUN_PI_WAIVED"
+    },
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+    "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+    "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "physical_gpu": 0,
+    "seed": 123,
+    "num_workers": 1,
+    "shuffle": true,
+    "greedy": false,
+    "test_augmentation": true,
+    "official_arguments": [
+      "--task_type",
+      "ObjectNavType",
+      "--eval_subset",
+      "minival",
+      "--eval_set_size",
+      "200",
+      "--shuffle",
+      "--num_workers",
+      "1",
+      "--seed",
+      "123",
+      "--test_augmentation",
+      "--max_eps_len",
+      "-1",
+      "--gpu_devices",
+      "0",
+      "--house_set",
+      "objaverse",
+      "--input_sensors",
+      "raw_navigation_camera",
+      "raw_manipulation_camera",
+      "last_actions",
+      "an_object_is_in_hand",
+      "--ckpt_path",
+      "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+      "--output_basedir",
+      "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200_official"
+    ],
+    "python": "/home/amax/.conda/envs/safevla/bin/python",
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "DINOV2_REPO": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main",
+      "DINOV2_CKPT": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "OBJAVERSE_DATA_DIR": "/home/amax/public/datasets/qyy/objaverse_assets",
+      "OBJAVERSE_HOUSES_DIR": "/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28",
+      "NLTK_DATA": "/home/amax/public/datasets/qyy/nltk_data",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "WANDB_MODE": "offline"
+    },
+    "pre_model_rng": {
+      "python": "8db5755a6d557592eeab8940ee03d4a3eba7f8847b87e72ed35992500df6801b",
+      "numpy": "d8573128f94e69bc504c39601a57317df2d32f7b249d16594a1f8a565e212072",
+      "torch_cpu": "b04f168bb97ae5f0758f525c6b0e928d866ad2619a254710db893e71bd54e1e5",
+      "torch_cuda": "7ce51663c5b98c7e383cb7ca11e5171bf9d32dcad0fa33f8c831a5ddb1abdf3e"
+    },
+    "load_events": [
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "SafeDinoLLAMATxNavActorCriticSeparate",
+        "strict": false,
+        "nkeys": 417,
+        "missing": [],
+        "unexpected": []
+      }
+    ]
+  },
+  "ON": {
+    "git_commit": "67c7051ed4287968897282f915b8b076851562a1",
+    "actor_reset": "on",
+    "group": "ON200",
+    "approval_reference": null,
+    "control_evidence": {
+      "execution_mode": "MANUAL_OUTSIDE_RESEARCH_LOOP",
+      "claim_commit": null,
+      "approval_commit": null,
+      "OFF_reference_result_commit": "88453def76051736edce2e8887f26b08d5b0c5e6",
+      "OFF_verified": "PASS",
+      "gpu_logger_equivalence": "NOT_RUN_PI_WAIVED"
+    },
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+    "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+    "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "physical_gpu": 0,
+    "seed": 123,
+    "num_workers": 1,
+    "shuffle": true,
+    "greedy": false,
+    "test_augmentation": true,
+    "official_arguments": [
+      "--task_type",
+      "ObjectNavType",
+      "--eval_subset",
+      "minival",
+      "--eval_set_size",
+      "200",
+      "--shuffle",
+      "--num_workers",
+      "1",
+      "--seed",
+      "123",
+      "--test_augmentation",
+      "--max_eps_len",
+      "-1",
+      "--gpu_devices",
+      "0",
+      "--house_set",
+      "objaverse",
+      "--input_sensors",
+      "raw_navigation_camera",
+      "raw_manipulation_camera",
+      "last_actions",
+      "an_object_is_in_hand",
+      "--ckpt_path",
+      "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+      "--output_basedir",
+      "/nvme2/user/qyy/SafeVLA_manual_on200_20261015/ON200_official"
+    ],
+    "python": "/home/amax/.conda/envs/safevla/bin/python",
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "DINOV2_REPO": "/home/amax/.cache/torch/hub/facebookresearch_dinov2_main",
+      "DINOV2_CKPT": "/home/amax/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "OBJAVERSE_DATA_DIR": "/home/amax/public/datasets/qyy/objaverse_assets",
+      "OBJAVERSE_HOUSES_DIR": "/home/amax/public/datasets/qyy/objaverse_houses/houses_2023_07_28",
+      "NLTK_DATA": "/home/amax/public/datasets/qyy/nltk_data",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "WANDB_MODE": "offline"
+    },
+    "pre_model_rng": {
+      "python": "8db5755a6d557592eeab8940ee03d4a3eba7f8847b87e72ed35992500df6801b",
+      "numpy": "d8573128f94e69bc504c39601a57317df2d32f7b249d16594a1f8a565e212072",
+      "torch_cpu": "b04f168bb97ae5f0758f525c6b0e928d866ad2619a254710db893e71bd54e1e5",
+      "torch_cuda": "7ce51663c5b98c7e383cb7ca11e5171bf9d32dcad0fa33f8c831a5ddb1abdf3e"
+    },
+    "load_events": [
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "DinoVisionTransformer",
+        "strict": true,
+        "nkeys": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "SafeDinoLLAMATxNavActorCriticSeparate",
+        "strict": false,
+        "nkeys": 417,
+        "missing": [],
+        "unexpected": []
+      }
+    ]
+  },
+  "source_changes": [
+    {
+      "path": "diagnostics/actor_logits/analyze.py",
+      "off": "12134020a658cb8b882a1631739d8d729e6314951963ae9fc161fd17bff930d6",
+      "on": "3a1ef4ee92cf5e0bfab0f7091af2c95bab45427aa634da6ffcb830d66b52cb89"
+    },
+    {
+      "path": "diagnostics/actor_logits/evaluate.py",
+      "off": "d7e5cd38dbf66c6e63bd242b6781b0a675a0265f02804283fcc1d1a0d019ea3d",
+      "on": "17998694eca9e101cd7cc44aced16c6ffc717c84113de14fb866d06bee7c2821"
+    },
+    {
+      "path": "diagnostics/actor_logits/recovery003.py",
+      "off": null,
+      "on": "1a4620314918c132a1dce05e0c4e29706be28a86b84372ceaaa1171483456217"
+    },
+    {
+      "path": "diagnostics/actor_logits/run_p2_on200_only.sh",
+      "off": null,
+      "on": "c09f7c4eec4bb11f6191d6b09ebe9ae9c86d234763108ea9ee26ad9fdc163217"
+    },
+    {
+      "path": "diagnostics/actor_logits/tests/test_recovery003.py",
+      "off": null,
+      "on": "ee5ef4d26c6723ef493b2d36d72c8497b4547663ab225678f157e5039805ef05"
+    }
+  ],
+  "recorded_source_hashes_verified_against_exact_commits": true,
+  "scientific_execute_AST_equal_after_initial_gate": true,
+  "TaskSpecs_exact_order_and_action_map_equal": true,
+  "runtime_modules_within_recorded_source_roots": true,
+  "current_checkpoint_bytes_rehashed": false,
+  "checkpoint_identity_basis": "Equal recorded SHA256; frozen evaluate checks bytes before load, complete load_events recorded."
+}

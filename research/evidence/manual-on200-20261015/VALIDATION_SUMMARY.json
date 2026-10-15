@@ -1,0 +1,27 @@
+{
+  "execution_mode": "MANUAL_OUTSIDE_RESEARCH_LOOP",
+  "OFF": {
+    "status": "PASS",
+    "problems": [],
+    "episodes_checked": 200,
+    "decisions_checked": 19270,
+    "scope": "Stored evidence integrity; NOT GPU equivalence validation"
+  },
+  "ON": {
+    "status": "PASS",
+    "problems": [],
+    "episodes_checked": 200,
+    "decisions_checked": 18424,
+    "scope": "Stored evidence integrity; NOT GPU equivalence validation"
+  },
+  "strict_validator_calls_per_cohort": 1,
+  "indexed_file_counts": {
+    "OFF": 1203,
+    "ON": 1203
+  },
+  "original_identity_files_unchanged_during_audit": true,
+  "Actor_reset_and_Critic_isolation": "PASS within recorded per-episode boundary snapshots",
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED",
+  "audit_GPU_operations": 0,
+  "audit_episodes": 0
+}

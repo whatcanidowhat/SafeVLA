@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.0",
+  "recorded_utc": "2026-10-15T11:44:42.995839+00:00",
+  "Git_artifacts": [
+    {
+      "name": "COMPARISON_SUMMARY.json",
+      "git_path": "research/evidence/manual-on200-20261015/COMPARISON_SUMMARY.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/COMPARISON_SUMMARY.json",
+      "sha256": "4cd2a48f46c6bcae863769072179b88bef59261c7f22e3dd398b1ac43dd38e0f",
+      "size": 7658,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "LOG_EXCERPT.txt",
+      "git_path": "research/evidence/manual-on200-20261015/LOG_EXCERPT.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/LOG_EXCERPT.txt",
+      "sha256": "0fc439bfb9843da5daabdcbae6a4082c1e9bbad514f40c9de1e935dd97eb0baa",
+      "size": 2858,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "MANUAL_LAUNCH_SOURCE.txt",
+      "git_path": "research/evidence/manual-on200-20261015/MANUAL_LAUNCH_SOURCE.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/MANUAL_LAUNCH_SOURCE.txt",
+      "sha256": "42f5824bfc413c5ab9b55b2d4581e721a9cff768d79237dd6225a93d998feedf",
+      "size": 1785,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "MANUAL_PROVENANCE_AUDIT.json",
+      "git_path": "research/evidence/manual-on200-20261015/MANUAL_PROVENANCE_AUDIT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/MANUAL_PROVENANCE_AUDIT.json",
+      "sha256": "57a0517b14a193358f210169869ae38ca7d3e4a6e0cc26839fc2ff5531e521f7",
+      "size": 1027,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "README.md",
+      "git_path": "research/evidence/manual-on200-20261015/README.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/README.md",
+      "sha256": "1436980af6e47dfa64e57c04802ff936cedf2cd32311e6a7b3f8c5f9ec5140bc",
+      "size": 247,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "REPORT.md",
+      "git_path": "research/evidence/manual-on200-20261015/REPORT.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/REPORT.md",
+      "sha256": "51833910b95942da51379b447b7fc8c93e8ff2a73eddd34e69f54001da0ce95e",
+      "size": 6110,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "RUN_CONFIG.json",
+      "git_path": "research/evidence/manual-on200-20261015/RUN_CONFIG.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/RUN_CONFIG.json",
+      "sha256": "d682c78fb06a73b37318b34cd0bac1ab8d8f574d4b1886ddab4be97815171f73",
+      "size": 7633,
+      "PI_readable_in_Git": true
+    },
+    {
+      "name": "VALIDATION_SUMMARY.json",
+      "git_path": "research/evidence/manual-on200-20261015/VALIDATION_SUMMARY.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_evidence_20261015/research/evidence/manual-on200-20261015/VALIDATION_SUMMARY.json",
+      "sha256": "6087ae0efea2813ffd37f19a020a3cbbcbc1d2bcde8b1fd488c7cc1375256ead",
+      "size": 789,
+      "PI_readable_in_Git": true
+    }
+  ],
+  "server_only_artifacts": [
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/COMPARISON_SUMMARY.json",
+      "sha256": "4cd2a48f46c6bcae863769072179b88bef59261c7f22e3dd398b1ac43dd38e0f",
+      "size": 7658,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/LOG_EXCERPT.txt",
+      "sha256": "24a7c0c831c30955eedce24ad5ab290664ebc4aba7dca8ec94fe081024ed75e5",
+      "size": 2859,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/MANUAL_PROVENANCE_AUDIT.json",
+      "sha256": "57a0517b14a193358f210169869ae38ca7d3e4a6e0cc26839fc2ff5531e521f7",
+      "size": 1027,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/OFF_ON_FULL_STEP_COMPARISON.json",
+      "sha256": "2c844d11b8922235e959d99b2c6fd9be6073407db8689b1d34660d51b4114f11",
+      "size": 6559741,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/OFF_TASK_BEHAVIOR.json",
+      "sha256": "d4ce331c87054f06df8cfe9879d933b8ecbcf7121e09913fc914146b14e52c02",
+      "size": 86852,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/OFF_VALIDATION_FULL.json",
+      "sha256": "334f40b0f1573be45ad9bbc7b70433d59bfb063b9774abb03a222625d19644d4",
+      "size": 53609,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/ON_TASK_BEHAVIOR.json",
+      "sha256": "29d8813df3b7431d43294fc432dc54901d589bbd69cbb0316117324c0e089d44",
+      "size": 86908,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/ON_VALIDATION_FULL.json",
+      "sha256": "862bbfd1a7c298a5a10bfcbf43e68ad3da3e24ab1d3252400e3d998c1bf45847",
+      "size": 53604,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/RUN_CONFIG.json",
+      "sha256": "d682c78fb06a73b37318b34cd0bac1ab8d8f574d4b1886ddab4be97815171f73",
+      "size": 7633,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/SERVER_RAW_HASH_INDEX.json",
+      "sha256": "dd368e748613b219dd89bc34a762e04823d7c30ef154bb25c6e02f12e7261f82",
+      "size": 888116,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/TASK_PAIRS.csv",
+      "sha256": "9a32097c0a1ba334917c48f51f5311e0857d30dbdca03a664b76cfb32cdb568e",
+      "size": 14966,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/VALIDATION_SUMMARY.json",
+      "sha256": "6087ae0efea2813ffd37f19a020a3cbbcbc1d2bcde8b1fd488c7cc1375256ead",
+      "size": 789,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_audit_20261015/audit_manual_on200.py",
+      "sha256": "7dc1c6dba50ed2bd89cb32a9da8113cfaea23f843586558de705c7efbc85b8b5",
+      "size": 12878,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200/RUN_MANIFEST.json",
+      "sha256": "d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758",
+      "size": 67198,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200/ARTIFACT_INDEX.json",
+      "sha256": "96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19",
+      "size": 209222,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200/episode_metrics.csv",
+      "sha256": "891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296",
+      "size": 14902,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_20261015/ON200/RUN_MANIFEST.json",
+      "sha256": "2d48bba74ff9d802f9cb40ddbec8d4525e986beaf6103acf3485a7195dde5792",
+      "size": 68255,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_20261015/ON200/ARTIFACT_INDEX.json",
+      "sha256": "31eae99152760284d6387f81b6c0e57581df08c60cc8398704d6949ec5a57369",
+      "size": 209209,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_20261015/ON200/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "PI_readable_in_Git": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_manual_on200_20261015/ON200/episode_metrics.csv",
+      "sha256": "69a9d145bfe8cdab43e7721bf74ab7727df244001ad40dedba140ac49b6d9e90",
+      "size": 14897,
+      "PI_readable_in_Git": false
+    }
+  ],
+  "raw_scope": "Complete raw hashes are retained in SERVER_RAW_HASH_INDEX.json on server; this file binds its exact digest. No large raw upload."
+}

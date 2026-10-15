@@ -1,0 +1,12 @@
+{
+  "manifest_status": "COMPLETE",
+  "worker_200_log_present": true,
+  "evaluation_finished_log_present": true,
+  "shell_exit_code": null,
+  "shell_exit_code_evidence_files": [],
+  "exit_conclusion": "Application completion supported by manifest, strict artifacts and log; independent shell exit code NOT_RECORDED",
+  "manual_script_sha256": "42f5824bfc413c5ab9b55b2d4581e721a9cff768d79237dd6225a93d998feedf",
+  "manual_script_changes": "Only recovery.before_model replaced; explicit manual identity/no claim; OFF/tasks/source checks retained; real remote Claim/CI/network/resource-launcher guards bypassed",
+  "scientific_body_static_check": "UNCHANGED_AFTER_GATE; later seed reset, weight/load checks and original evaluate/reset/logger/metric bodies retained",
+  "limitations": "Static script plus recorded source hashes cannot prove absence of all unrecorded runtime patches. Wrapper is external to RUN_MANIFEST source map and is separately hashed now. No original shell/GPU admission receipts. No GPU equivalence proof."
+}
