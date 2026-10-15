@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "observed_utc": "2026-10-14T14:01:17.974822+00:00",
+  "reference_result_commit": "88453def76051736edce2e8887f26b08d5b0c5e6",
+  "reference_claim_commit": "918170d26cca2fc385fb6f8fd87d0109b4a167b2",
+  "reference_code_commit": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+  "server_root": "/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200",
+  "identity_sha256": {
+    "RUN_MANIFEST.json": "d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758",
+    "episode_metrics.csv": "891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296",
+    "ARTIFACT_INDEX.json": "96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19"
+  },
+  "episodes_checked": 200,
+  "decisions_checked": 19270,
+  "indexed_artifacts_checked": 1203,
+  "OFF_written": false,
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED"
+}

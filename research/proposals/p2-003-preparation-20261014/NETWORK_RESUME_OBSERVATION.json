@@ -1,0 +1,12 @@
+{
+  "observed_at_utc": "2026-10-15T00:43:42.537926+00:00",
+  "scope": "Read-only publication checks, no runtime launch",
+  "direct_git_observations": [
+    "Git query failed with GnuTLS recv error (-110): TLS connection was non-properly terminated",
+    "Subsequent bounded direct Git queries returned no refs before timeout"
+  ],
+  "publication_transport": "Existing session-bound SSH reverse proxy used ONLY for Git publication; not runtime transport or a successful independent network gate",
+  "remote_control_head": "d4315c468bf88110bc3de09691ee0b5d1ca1cbd5",
+  "execution_network_gate": "NOT_ESTABLISHED_FOR_FUTURE_RUN",
+  "action": "Fresh independent direct or PI-approved persistent transport checks required after final approval and claim; fail closed before GPU"
+}

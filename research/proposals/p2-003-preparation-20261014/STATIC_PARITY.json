@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "evaluate_scientific_body_AST_unchanged": true,
+  "analysis_metric_body_unchanged": true,
+  "shell_syntax": "PASS",
+  "ON_launch_calls": 1,
+  "OFF_launch_calls": 0,
+  "models_loaded": 0,
+  "episodes": 0,
+  "GPU_used": 0
+}

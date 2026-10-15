@@ -1,0 +1,18 @@
+{
+  "scope": "Preparation only, not execution authority or future network guarantee",
+  "initial_direct_page_probe": {
+    "github.com": "DNS resolution timeout after 8 seconds, HTTP 000",
+    "api.github.com": "HTTP 200"
+  },
+  "second_direct_probe": {
+    "git_ls_remote": "PASS exact d4315c468bf88110bc3de09691ee0b5d1ca1cbd5",
+    "github_page": "HTTP 200 but full page download timed out at 20 seconds after 353120 bytes"
+  },
+  "subsequent_exact_git_and_api_probes": [
+    "NETWORK_SESSION_A.json",
+    "NETWORK_DISCONNECT_A.json",
+    "NETWORK_DISCONNECT_B.json"
+  ],
+  "runtime_transport": "Direct HTTPS with proxy environment removed and git http.proxy cleared; no persistent proxy service installed",
+  "limitations": "Successful bounded observations after independent SSH sessions do not guarantee long-term availability. Future claim needs new fresh cross-session probes; every live failure remains STOP."
+}

@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "scope": "preparation_only_not_runtime_handoff",
+  "artifacts": [
+    {
+      "name": "ALL_CPU_TEST_RESULTS.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/ALL_CPU_TEST_RESULTS.txt",
+      "git_path": "research/proposals/p2-003-preparation-20261014/ALL_CPU_TEST_RESULTS.txt",
+      "sha256": "8daec3a1012ef12153cac359d33f768f0027df8ac02b43e9fd06688d4157b3cc",
+      "size": 3416,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CPU_TEST_RESULTS.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/CPU_TEST_RESULTS.txt",
+      "git_path": "research/proposals/p2-003-preparation-20261014/CPU_TEST_RESULTS.txt",
+      "sha256": "96c80be43534582f664abb17367c87858521841f48d8e78dc0e4e0d8ab61e81e",
+      "size": 1861,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CANDIDATE_POST_COMMIT_CHECK.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/CANDIDATE_POST_COMMIT_CHECK.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/CANDIDATE_POST_COMMIT_CHECK.json",
+      "sha256": "41087201b39c153e286648bcfefeb11dba818388e7f5ce295de9729ad2e6e2f8",
+      "size": 361,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "STATIC_PARITY.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/STATIC_PARITY.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/STATIC_PARITY.json",
+      "sha256": "20741f859a510cba8b52fc59ac41f8dc4f01d870458bc84fcb3bb9f430b0569c",
+      "size": 246,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OFF_REUSE_PREPARATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/OFF_REUSE_PREPARATION.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/OFF_REUSE_PREPARATION.json",
+      "sha256": "78db5e6890ba23eab6058eb5f3159b1de0313378ff345cd93e69115d090d0b72",
+      "size": 838,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_SESSION_A.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/NETWORK_SESSION_A.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/NETWORK_SESSION_A.json",
+      "sha256": "bda0b48f620d3fb1c69d566ad951a86b105223dc3644def4981990526d321043",
+      "size": 459,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_DISCONNECT_A.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/NETWORK_DISCONNECT_A.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/NETWORK_DISCONNECT_A.json",
+      "sha256": "671809ad4b3cb3f006277b973abc0c38b0168582c9a82bf2bf83eaa36c8956b1",
+      "size": 551,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_DISCONNECT_B.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/NETWORK_DISCONNECT_B.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/NETWORK_DISCONNECT_B.json",
+      "sha256": "5c211f847e3a474bde30a1e4cc6363db529b6837db3d519f628e946a503709dd",
+      "size": 552,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_OBSERVATIONS.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_p2_003_preparation_20261014/NETWORK_OBSERVATIONS.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/NETWORK_OBSERVATIONS.json",
+      "sha256": "a2bb6d82f2f4730eb7396295584edd247c77b230a3eb882c247b293c5bc949f6",
+      "size": 919,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CANDIDATE_IMPLEMENTATION.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-003-preparation-20261014/CANDIDATE_IMPLEMENTATION.md",
+      "git_path": "research/proposals/p2-003-preparation-20261014/CANDIDATE_IMPLEMENTATION.md",
+      "sha256": "bdf85dfdb3fa6c00cdb60ad92acd06bf9245fe55c9d3746ac69afc27cb551b66",
+      "size": 4592,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_RESUME_OBSERVATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-003-preparation-20261014/NETWORK_RESUME_OBSERVATION.json",
+      "git_path": "research/proposals/p2-003-preparation-20261014/NETWORK_RESUME_OBSERVATION.json",
+      "sha256": "1b82e21b3b4fad60abb1f3f91281c4cf06584a8238c5e7072ef1e21bf4a9ed60",
+      "size": 775,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "README.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-003-preparation-20261014/README.md",
+      "git_path": "research/proposals/p2-003-preparation-20261014/README.md",
+      "sha256": "2d5366cb539e7e18e269395dae4202621710e2ab44432fa997b555bd13bb3d36",
+      "size": 4014,
+      "required_for_PI_review": true
+    }
+  ]
+}

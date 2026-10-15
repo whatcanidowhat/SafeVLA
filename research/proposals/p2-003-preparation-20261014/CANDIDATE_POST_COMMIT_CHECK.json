@@ -1,0 +1,11 @@
+{
+  "candidate_sha": "013508992c07443d2cf25e9d2099916b9ba57bd8",
+  "scientific_source_parity": "PASS",
+  "current_DRAFT_control": "REJECTED_AS_REQUIRED",
+  "rejection": "Missing PI approval / Codex claim / control worktree",
+  "future_result_root_absent": true,
+  "future_launch_root_absent": true,
+  "torch_imported": false,
+  "GPU_used": 0,
+  "episodes": 0
+}

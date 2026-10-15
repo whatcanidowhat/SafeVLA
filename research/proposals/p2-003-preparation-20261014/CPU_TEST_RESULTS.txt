@@ -1,0 +1,19 @@
+test_cross_session_evidence_accepts_only_fresh_distinct_sessions (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_cross_session_evidence_rejects_old_or_wrong_claim (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_direct_environment_drops_proxy_credentials (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_failed_network_probe_is_not_authorization (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_off_execution_rejected_before_any_control_or_data_read (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_off_identity_mismatch_stops_before_full_validation (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_only_explicit_orchestration_files_may_change (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_remote_drift_fails_before_ci_lookup (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_removed_source_rejected (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_report_cannot_follow_symlink_into_old_tree (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_report_cannot_write_old_off_tree (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_scientific_source_drift_rejected (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_unreviewed_new_source_rejected (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_wrong_output_rejected_before_model_gate (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.006s
+
+OK
