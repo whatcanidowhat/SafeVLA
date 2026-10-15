@@ -1,6 +1,6 @@
 """P2-003 control, immutable OFF reuse, and descriptive cross-cycle comparison.
 
-No model construction or Episode execution. Network access is direct HTTPS only.
+No model construction or Episode execution. GitHub HTTPS uses the user-managed loopback proxy with TLS verification.
 """
 import argparse
 from datetime import datetime, timezone
@@ -9,10 +9,14 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import ssl
 import time
 import urllib.request
 
 from .storage import read_json, require, sha256, write_json
+
+PROXY_URL = 'http://127.0.0.1:7899'
+TRANSPORT = 'USER_MANAGED_HTTP_PROXY_TLS_VERIFIED'
 
 REPO = Path(__file__).resolve().parents[2]
 EXPERIMENT = 'EXP-ACTOR-RESET-ON200-003'
@@ -36,20 +40,29 @@ NEW_SOURCE_FILES = {'diagnostics/actor_logits/recovery003.py',
                     'diagnostics/actor_logits/tests/test_recovery003.py'}
 
 
-def direct_environment():
+def transport_environment():
     env = dict(os.environ)
     for key in list(env):
-        if key.lower() in {'http_proxy', 'https_proxy', 'all_proxy'}:
+        if key.lower() in {'http_proxy', 'https_proxy', 'all_proxy', 'no_proxy'} or key == 'GIT_SSL_NO_VERIFY':
             del env[key]
-    env['NO_PROXY'] = '*'
-    env['no_proxy'] = '*'
+    for key in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']:
+        env[key] = PROXY_URL
+    env['NO_PROXY'] = env['no_proxy'] = ''
     env['GIT_TERMINAL_PROMPT'] = '0'
     return env
 
 
+def github_opener():
+    # urllib otherwise honors inherited NO_PROXY=* even with an explicit handler.
+    os.environ['NO_PROXY'] = os.environ['no_proxy'] = ''
+    return urllib.request.build_opener(
+        urllib.request.ProxyHandler({'http': PROXY_URL, 'https': PROXY_URL}),
+        urllib.request.HTTPSHandler(context=ssl.create_default_context()))
+
+
 def git(root, *args):
-    result = subprocess.run(['git', '-c', 'http.proxy=', '-C', str(root), *args],
-                            env=direct_environment(), capture_output=True, text=True, timeout=60)
+    result = subprocess.run(['git', '-c', 'http.proxy='+PROXY_URL, '-c', 'http.sslVerify=true', '-C', str(root), *args],
+                            env=transport_environment(), capture_output=True, text=True, timeout=60)
     require(result.returncode == 0, 'Git read failed (credential-bearing stderr suppressed)')
     return result.stdout.strip()
 
@@ -59,8 +72,8 @@ def ci_success(sha):
     request = urllib.request.Request(
         'https://api.github.com/repos/whatcanidowhat/SafeVLA/actions/runs?head_sha='+sha+'&per_page=100',
         headers={'Accept':'application/vnd.github+json','User-Agent':'SafeVLA-P2-003'})
-    # Explicit empty ProxyHandler ignores any inherited interactive SSH proxy.
-    with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=30) as response:
+    # User-managed proxy; default certificate and hostname verification remain mandatory.
+    with github_opener().open(request, timeout=30) as response:
         runs = json.load(response).get('workflow_runs', [])
     matches = [r for r in runs if r.get('head_sha') == sha
                and r.get('name') == 'research-loop-validate' and r.get('event') == 'push'
@@ -73,7 +86,7 @@ def network_probe(control):
     """One live read, with no retries or permission inference from reachability."""
     start = time.monotonic()
     report = {'observed_utc':datetime.now(timezone.utc).isoformat(),
-              'transport':'DIRECT_HTTPS_NO_PROXY','status':'FAIL','authorizes_execution':False}
+              'transport':TRANSPORT,'proxy_url':PROXY_URL,'status':'FAIL','authorizes_execution':False}
     # Hash the non-secret connection tuple, rather than copying environment data.
     connection = os.environ.get('SSH_CONNECTION', '')
     report['ssh_session_sha256'] = hashlib.sha256(connection.encode()).hexdigest() if connection else None
@@ -92,7 +105,7 @@ def network_probe(control):
 def require_disconnect_witnesses(claim):
     reports = [read_json(NETWORK_WITNESSES/claim/name) for name in ['session_a.json','session_b.json']]
     for report in reports:
-        require(report['status']=='PASS' and report['transport']=='DIRECT_HTTPS_NO_PROXY'
+        require(report['status']=='PASS' and report['transport']==TRANSPORT and report.get('proxy_url')==PROXY_URL
                 and report['head_sha']==claim and report['ci']['head_sha']==claim
                 and report['ci']['conclusion']=='success', 'Invalid cross-session claim network evidence')
         age = (datetime.now(timezone.utc)-datetime.fromisoformat(report['observed_utc'])).total_seconds()
@@ -229,7 +242,7 @@ def main():
                       'control':control,'OFF_reuse':off,
                       'cross_session_network_evidence':witnesses,'network':observations}
             write_report(args.report, report)
-            require(observation['status']=='PASS','Direct live network preflight failed')
+            require(observation['status']=='PASS','Live proxy network preflight failed')
             if i < 2:
                 time.sleep(30)
         report['status']='PASS'

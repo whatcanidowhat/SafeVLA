@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import subprocess
 import tempfile
+import ssl
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -17,7 +18,7 @@ class RecoveryBoundaryTests(unittest.TestCase):
         claim = 'a'*40
         with tempfile.TemporaryDirectory() as td, patch.object(recovery,'NETWORK_WITNESSES',Path(td)):
             root=Path(td)/claim;root.mkdir()
-            report={'status':'PASS','transport':'DIRECT_HTTPS_NO_PROXY','head_sha':claim,
+            report={'status':'PASS','transport':recovery.TRANSPORT,'proxy_url':recovery.PROXY_URL,'head_sha':claim,
                     'ci':{'head_sha':claim,'conclusion':'success'},
                     'observed_utc':datetime.now(timezone.utc).isoformat(),'ssh_session_sha256':'session-a'}
             (root/'session_a.json').write_text(json.dumps(report))
@@ -33,7 +34,7 @@ class RecoveryBoundaryTests(unittest.TestCase):
         claim='a'*40
         with tempfile.TemporaryDirectory() as td, patch.object(recovery,'NETWORK_WITNESSES',Path(td)):
             root=Path(td)/claim;root.mkdir()
-            report={'status':'PASS','transport':'DIRECT_HTTPS_NO_PROXY','head_sha':claim,
+            report={'status':'PASS','transport':recovery.TRANSPORT,'proxy_url':recovery.PROXY_URL,'head_sha':claim,
                     'ci':{'head_sha':claim,'conclusion':'success'},
                     'observed_utc':'2000-01-01T00:00:00+00:00','ssh_session_sha256':'session-a'}
             for name in ['session_a.json','session_b.json']:(root/name).write_text(json.dumps(report))
@@ -45,13 +46,37 @@ class RecoveryBoundaryTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Invalid cross-session'):
                 recovery.require_disconnect_witnesses(claim)
 
-    def test_direct_environment_drops_proxy_credentials(self):
+    def test_transport_environment_uses_approved_proxy_and_tls(self):
         with patch.dict(os.environ, {'HTTPS_PROXY':'secret-proxy','http_proxy':'other',
-                                     'ALL_PROXY':'third','KEEP_TEST_VALUE':'kept'}, clear=True):
-            env = recovery.direct_environment()
-        self.assertEqual(env['NO_PROXY'], '*')
+                                     'ALL_PROXY':'third','NO_PROXY':'*',
+                                     'GIT_SSL_NO_VERIFY':'true','KEEP_TEST_VALUE':'kept'}, clear=True):
+            env = recovery.transport_environment()
+        self.assertEqual(env['NO_PROXY'], '')
+        self.assertEqual(env['no_proxy'], '')
         self.assertEqual(env['KEEP_TEST_VALUE'], 'kept')
-        self.assertFalse(any(k.lower() in {'https_proxy','http_proxy','all_proxy'} for k in env))
+        self.assertNotIn('GIT_SSL_NO_VERIFY', env)
+        self.assertNotIn('ALL_PROXY', env)
+        for key in ['HTTPS_PROXY','HTTP_PROXY','https_proxy','http_proxy']:
+            self.assertEqual(env[key], 'http://127.0.0.1:7899')
+
+    def test_git_uses_proxy_and_enforces_tls(self):
+        with patch.object(recovery.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='ok')) as run:
+            self.assertEqual(recovery.git(Path('/unused'),'rev-parse','HEAD'),'ok')
+        argv=run.call_args.args[0]
+        self.assertIn('http.proxy=http://127.0.0.1:7899',argv)
+        self.assertIn('http.sslVerify=true',argv)
+        self.assertEqual(run.call_args.kwargs['env']['HTTPS_PROXY'], recovery.PROXY_URL)
+
+    def test_api_uses_proxy_with_certificate_and_hostname_verification(self):
+        with patch.dict(os.environ, {'NO_PROXY':'*','no_proxy':'*'}), \
+             patch.object(recovery.urllib.request,'build_opener') as build:
+            recovery.github_opener()
+            self.assertEqual(os.environ['NO_PROXY'],'')
+            self.assertEqual(os.environ['no_proxy'],'')
+        proxy,https=build.call_args.args
+        self.assertEqual(proxy.proxies, {'http':recovery.PROXY_URL,'https':recovery.PROXY_URL})
+        self.assertEqual(https._context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(https._context.check_hostname)
 
     def test_failed_network_probe_is_not_authorization(self):
         with patch.object(recovery, 'git', side_effect=subprocess.TimeoutExpired('secret', 60)):

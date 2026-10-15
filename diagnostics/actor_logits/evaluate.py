@@ -64,7 +64,7 @@ def code_identity():
 
 def codex_control_evidence(args):
     """Read exact claimed control HEAD, fail closed; status flags alone are not proof."""
-    from .recovery003 import direct_environment
+    from .recovery003 import transport_environment, PROXY_URL
     require(args.approval_reference and args.claim_reference and args.control_root,
             'Missing PI approval / Codex claim / control worktree')
     require(args.pi_waive_gpu_equivalence, 'Explicit PI waiver acknowledgement required')
@@ -72,8 +72,8 @@ def codex_control_evidence(args):
     require((control / 'research/LOOP_STATE.json').is_file(), 'Missing control tree')
     def git(*argv):
         return subprocess.check_output(
-            ['git', '-c', 'http.proxy=', '-C', str(control), *argv],
-            text=True, timeout=60, env=direct_environment()
+            ['git', '-c', 'http.proxy='+PROXY_URL, '-c', 'http.sslVerify=true', '-C', str(control), *argv],
+            text=True, timeout=60, env=transport_environment()
         ).strip()
     require(git('branch', '--show-current') == 'research-loop', 'Wrong control branch')
     require(not git('status', '--porcelain'), 'Dirty control worktree')

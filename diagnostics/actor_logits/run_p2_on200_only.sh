@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # P2-003 one-shot ON200 with immutable historical OFF reference. Final PI authorization required.
 set -Eeuo pipefail
-unset HTTPS_PROXY HTTP_PROXY ALL_PROXY https_proxy http_proxy all_proxy
-export NO_PROXY="*" no_proxy="*"
+unset ALL_PROXY all_proxy GIT_SSL_NO_VERIFY
+export HTTPS_PROXY=http://127.0.0.1:7899 HTTP_PROXY=http://127.0.0.1:7899
+export https_proxy="$HTTPS_PROXY" http_proxy="$HTTP_PROXY"
+export NO_PROXY="" no_proxy=""
 umask 077
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd -P)
 CONTROL_ROOT=$(printenv P2_CONTROL_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013)
@@ -35,7 +37,7 @@ export PYTHONPATH="$REPO_ROOT" PYTHONDONTWRITEBYTECODE=1
 cd "$REPO_ROOT"
 [[ ! -e "$EVIDENCE_ROOT" ]] || die "Launch evidence exists; no automatic retry"
 mkdir -m 700 "$EVIDENCE_ROOT" || die "Cannot create unique launch evidence"
-# Strict live authorization, original OFF bytes and three direct network probes, CPU only.
+# Strict live authorization, original OFF bytes and three proxy network probes, CPU only.
 CUDA_VISIBLE_DEVICES="" "$P2_PYTHON" -B -m diagnostics.actor_logits.recovery003 preflight \
   --control-root "$CONTROL_ROOT" --report "$EVIDENCE_ROOT/NETWORK_PREFLIGHT.json" \
   || die "P2-003 CPU control/network/OFF gate failed"
@@ -44,9 +46,10 @@ CLAIM_CONTEXT=$("$P2_PYTHON" - <<'PY'
 import json, os, subprocess, sys, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+from diagnostics.actor_logits.recovery003 import PROXY_URL, transport_environment, github_opener
 p = Path(os.environ["P2_CONTROL_ROOT"])
 def git(*args):
-    return subprocess.check_output(["git", "-c", "http.proxy=", "-C", str(p), *args], text=True, timeout=60).strip()
+    return subprocess.check_output(["git", "-c", "http.proxy="+PROXY_URL, "-c", "http.sslVerify=true", "-C", str(p), *args], text=True, timeout=60, env=transport_environment()).strip()
 s = json.loads((p/"research/LOOP_STATE.json").read_text())
 sha = git("rev-parse", "HEAD")
 remote = git("ls-remote", "--heads", "origin", "refs/heads/research-loop").split()
@@ -68,7 +71,7 @@ request = urllib.request.Request(
     "https://api.github.com/repos/whatcanidowhat/SafeVLA/actions/runs?head_sha="+sha+"&per_page=20",
     headers={"Accept": "application/vnd.github+json", "User-Agent": "SafeVLA-codex-executor"})
 try:
-    with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=25) as response:
+    with github_opener().open(request, timeout=25) as response:
         runs = json.load(response).get("workflow_runs", [])
 except Exception as e:
     raise SystemExit("Cannot verify claim CI over GitHub API; STOP: "+type(e).__name__)
