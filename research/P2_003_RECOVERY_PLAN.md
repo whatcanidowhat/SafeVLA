@@ -13,3 +13,8 @@ The recorded P2-002 failure was a **pre-model remote Claim check** transport tim
 **Final comparison:** old OFF root `/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200` stays untouched. New ON root `/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014` must be new. Source/task/weight/action/scientific-code parity and hash evidence required; label paired TaskSpecs but cross-cycle environments as an explicit limitation.
 
 **Status:** PI_REVIEW / NOT_AUTHORIZED, no 003 Claim, GPU use zero.
+
+
+## 2026-10-15 — new Executor candidate and PI request for revision
+
+A genuine ON-only candidate [013508992c07443d2cf25e9d2099916b9ba57bd8](https://github.com/whatcanidowhat/SafeVLA/commit/013508992c07443d2cf25e9d2099916b9ba57bd8) and 41 CPU tests plus OFF200 read-only revalidation have been published in `research/proposals/p2-003-preparation-20261014/`. These supersede the earlier statement above that **no candidate exists**. This is **not** a final code pin or approval. Read [PI review and network blocker](review_packets/P2_003_PI_READINESS_20261015.md): direct Git HTTPS was still intermittent on continuation, so PI requests a stable independent runtime transport with new CPU-only evidence and a tighter resources proposal before freezing code. `P2_CODE_SHA.txt` remains pending; no Claim/GPU/ON Episode authorized, `LOOP_STATE` unchanged.
