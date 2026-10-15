@@ -1,0 +1,17 @@
+{
+  "status": "FAIL",
+  "stage": "REQUIRED_CROSS_SESSION_WITNESS",
+  "receipts": [
+    {
+      "observed_utc": "2026-10-15T02:45:54.926523+00:00",
+      "transport": "DIRECT_HTTPS_NO_PROXY",
+      "status": "FAIL",
+      "authorizes_execution": false,
+      "ssh_session_sha256": "cbae0404b7bc3d1e3b16c3ca96a76894d2c34b2fe7006899ffb1809a52af5311",
+      "error_type": "TimeoutExpired",
+      "elapsed_seconds": 60.066628181986744
+    }
+  ],
+  "launcher_three_probe_preflight": "NOT_STARTED",
+  "automatic_retries": 0
+}

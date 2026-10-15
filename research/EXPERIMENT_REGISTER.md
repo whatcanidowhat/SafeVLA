@@ -426,3 +426,7 @@ Old INVALID accepted by human PI, recorded at 63797f4a7afd1d478e110c57868d4e18f6
 ## 2026-10-14 P2-002 terminal BLOCKED, next actor PI
 
 Claim 918170d26cca2fc385fb6f8fd87d0109b4a167b2 (CI 38527821564 SUCCESS), approval 7fc797645d00fc38ab4ac8e08f4b8ed98053449f, source 06cde9adeb91d47c062a11e72e90c7edf56fb398. OFF200 completed 200/200 with integrity PASS, 19270 decisions, SR169/200=84.5%, cost177/mean0.885. ON command attempted only after OFF PASS; remote Claim git ls-remote/Proxy CONNECT timed out before ON model/simulator/Episode initialization (0 ON starts). Launcher exit1; no retry or code change. One GPU0; conservative run wall bound 4.1600h. NOT_RUN_PI_WAIVED retained, paired contrasts unavailable. Required actual evidence: [RESULT_SUMMARY.md](handoffs/actor-reset-off200-on200-002-20261014/RESULT_SUMMARY.md). Old outputs untouched. This entry supersedes earlier draft/running descriptions; PI review is the only next action. Executor STOP after publication.
+
+## P2-003 terminal BLOCKED before GPU (2026-10-15)
+
+Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md). Next actor PI; executor STOP.

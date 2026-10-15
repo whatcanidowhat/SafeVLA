@@ -1,0 +1,7 @@
+# P2-003 BLOCKED before ON launch
+
+Approval d918fe8841f6e960ffcbc7ea0aee995a508e3bc4; unique claim fa4877c4550be75e9726172421d76468bcc920c5, claim ID b0b33c970b1a4721a1c48a068913e45a. Approval CI 38667841310 SUCCESS and distinct Claim CI SUCCESS were verified before the required CPU-only direct-network witness. The actual witness returned FAIL; original receipt(s) preserve timestamp, error type, transport and elapsed time. A receipt may omit remote HEAD/CI if that stage was not reached. This is an operational network block, not a model failure or a failed ON outcome.
+
+Per the approved fail-closed stop condition, no second attempt, proxy substitution, launcher, GPU admission, model, simulator or ON Episode was started. New result and launch roots remain absent; clean runtime code is 013508992c07443d2cf25e9d2099916b9ba57bd8. Actual resources: 0 GPU /0 Episodes /0 policy forwards. No foreign process was stopped. Full launcher preflight and fresh 1203-file validation were NOT_REACHED; only the three OFF identity files and TaskSpec CSV were rehashed for this handoff. Historical full OFF validation remains separately identified, never relabeled as a new check.
+
+Old OFF200 remains read-only, previously 200/200 complete, SR169/200, Cost177. No new SR, Cost, logits, early-END or oscillation contrast is available. GPU_EQUIVALENCE remains NOT_RUN_PI_WAIVED. All required files report actual evidence or explicitly NOT_STARTED/NOT_AVAILABLE. Return to PI; no automatic retry or successor approval.

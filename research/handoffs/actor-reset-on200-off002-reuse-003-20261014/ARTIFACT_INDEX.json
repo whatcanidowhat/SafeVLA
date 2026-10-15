@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "CLAIM_CI.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CLAIM_CI.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CLAIM_CI.json",
+      "sha256": "4dcd0c4b6b42f45f22a88c813af112e49a85d58d58511b06c178586829698ed6",
+      "size": 174,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CROSS_CYCLE_COMPARISON.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CROSS_CYCLE_COMPARISON.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CROSS_CYCLE_COMPARISON.json",
+      "sha256": "342f1f7d43e03cc76478a925d5cfa378fb4969980929841acc22989503fa0563",
+      "size": 271,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_DESIGN.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_DESIGN.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_DESIGN.json",
+      "sha256": "d9e758bd57f33966450614de650433379284a77a9641d92598466a2a9cf30327",
+      "size": 13516,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_PROTOCOL.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_PROTOCOL.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_PROTOCOL.md",
+      "sha256": "e18058c556776845a474b9e089736b999632e951a81824c3b2fc0f2593385f89",
+      "size": 8587,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "GPU_QUEUE_REPORT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/GPU_QUEUE_REPORT.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/GPU_QUEUE_REPORT.json",
+      "sha256": "0e4b6f05245c562a679dcd5004fb809ff8c7c575ffc4c78fe18f2793b4ca107a",
+      "size": 148,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "LOGGER_WAIVER.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/LOGGER_WAIVER.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/LOGGER_WAIVER.md",
+      "sha256": "b9ad86674df218d4c13161328d610a1b4f4e8450530426199baac38dafdfaf54",
+      "size": 93,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NETWORK_PREFLIGHT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/NETWORK_PREFLIGHT.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/NETWORK_PREFLIGHT.json",
+      "sha256": "ad15373e0b923c1dd005d6eb0b8a8895d0e4e166a2d3e636fbea80d1096c9a4e",
+      "size": 519,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OFF_ON_RESULTS.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_ON_RESULTS.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_ON_RESULTS.md",
+      "sha256": "ca3d2e17b28e435574f435a15264ffd31d08f278e39c9fff5d57f52e62ca48f3",
+      "size": 188,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OFF_REUSE_VERIFICATION.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_REUSE_VERIFICATION.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_REUSE_VERIFICATION.json",
+      "sha256": "f49c4a704bbbec4de748400658e879fbe356bd973cac3500821694b39cb18857",
+      "size": 668,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md",
+      "sha256": "9cf790cb9dfe36bf009b4b17475398a39a8688209c483a2667714b6d1e00a7c1",
+      "size": 1508,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/REVIEW_NOTES.md",
+      "sha256": "412f21669da10b3dbbe11eeae057a36f58f958e17ab457f7e7ee4d332379a1e3",
+      "size": 342,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RUN_MANIFEST.json",
+      "sha256": "73ce60f08cee61b37fc837df73c4ee7797bf4f62d09b11554fc6d0ffaf7a0e9b",
+      "size": 1633,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_MANIFEST.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/TASK_MANIFEST.csv",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "VALIDATION_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/VALIDATION_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/VALIDATION_SUMMARY.md",
+      "sha256": "2ce5a75baf213c185ff903ff3e929d5663794e28d9165de8ecb5888dbc135808",
+      "size": 363,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "session_a.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/handoffs/actor-reset-on200-off002-reuse-003-20261014/session_a.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/session_a.json",
+      "sha256": "08e43b58456356cd0347d39936bde39c5217be84149ee70365ef5d1404479434",
+      "size": 317,
+      "required_for_PI_review": true
+    }
+  ]
+}

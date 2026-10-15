@@ -1,0 +1,6 @@
+{
+  "status": "NOT_STARTED",
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "reason": "Direct-network witness failed before launcher/GPU admission"
+}

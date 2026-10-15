@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "EXP-ACTOR-RESET-ON200-003",
+  "cycle_id": "actor-reset-on200-off002-reuse-003-20261014",
+  "instruction_commit": "d918fe8841f6e960ffcbc7ea0aee995a508e3bc4",
+  "claim_id": "b0b33c970b1a4721a1c48a068913e45a",
+  "claim_commit": "fa4877c4550be75e9726172421d76468bcc920c5",
+  "status": "BLOCKED",
+  "handoff_actor": "CODEX",
+  "implementation_commit": "013508992c07443d2cf25e9d2099916b9ba57bd8",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014",
+  "command": [
+    "/home/amax/.conda/envs/safevla/bin/python",
+    "-B",
+    "-m",
+    "diagnostics.actor_logits.recovery003",
+    "network-readiness",
+    "--control-root",
+    "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013",
+    "--report",
+    "/nvme2/user/qyy/SafeVLA_p2_003_network_claim_20261014/fa4877c4550be75e9726172421d76468bcc920c5/session_a.json"
+  ],
+  "approved_launcher": [
+    "bash",
+    "diagnostics/actor_logits/run_p2_on200_only.sh"
+  ],
+  "approved_launcher_started": false,
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "online_decisions": 0,
+  "model_loads": 0,
+  "simulator_starts": 0,
+  "automatic_retries": 0,
+  "GPU_EQUIVALENCE": "NOT_RUN_PI_WAIVED",
+  "observed_utc": "2026-10-15T03:09:55.377320+00:00",
+  "source_clean": true,
+  "result_root_exists": false,
+  "launch_root_exists": false,
+  "active_evaluator_processes": [],
+  "claim_ci": {
+    "conclusion": "success",
+    "headSha": "fa4877c4550be75e9726172421d76468bcc920c5",
+    "status": "completed",
+    "url": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/38672298925"
+  }
+}

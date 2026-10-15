@@ -1,0 +1,12 @@
+{
+  "status": "IDENTITY_FILES_REHASHED_ONLY",
+  "identity_sha256": {
+    "RUN_MANIFEST.json": "d94c3c905a023ac1fbfa31a7b866d9b84a9ca5b4c5d3147a179a220cfa5f1758",
+    "episode_metrics.csv": "891973cbfc5d299ad76951efe6170dc12962729f9b991b81ba925577235a4296",
+    "ARTIFACT_INDEX.json": "96e10b0fa5a5e7c8edd04289267c9ca2c7cd63679963e4dab7ee01647dd3be19"
+  },
+  "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+  "full_1203_file_runtime_validation": "NOT_REACHED_NETWORK_WITNESS_FAILED",
+  "historical_preparation_validation": "research/proposals/p2-003-preparation-20261014/OFF_REUSE_PREPARATION.json",
+  "OFF_written": false
+}

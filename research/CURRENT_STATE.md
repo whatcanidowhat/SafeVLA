@@ -1,3 +1,7 @@
+## P2-003 terminal BLOCKED before GPU (2026-10-15)
+
+Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md). Next actor PI; executor STOP.
+
 ## P2-003 candidate preparation submitted for PI review (2026-10-15)
 
 CODEX preparation only: candidate 013508992c07443d2cf25e9d2099916b9ba57bd8, 41 CPU tests PASS; immutable OFF200 revalidated (200 episodes /19270 decisions /1203 files). Packet: [P2-003 preparation](proposals/p2-003-preparation-20261014/README.md). Current authority remains PI_REVIEW / NOT_AUTHORIZED, next_actor PI, null claim, zero active budget. Direct Git transport failed again during continuation; historical successful disconnected-session probes do not establish a future runtime gate. Final code pin/design/authorization belongs to PI; fresh authorization CI, unique claim CI and independent network preflight remain required. No GPU/model/simulator/Episode started. This entry supersedes historical cycle descriptions as a preparation status only, not a PI decision.

@@ -1,0 +1,12 @@
+test_transport_environment_uses_approved_proxy_and_tls (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_git_uses_proxy_and_enforces_tls (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_api_uses_proxy_with_certificate_and_hostname_verification (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_failed_network_probe_is_not_authorization (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_remote_drift_fails_before_ci_lookup (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_cross_session_evidence_accepts_only_fresh_distinct_sessions (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+test_cross_session_evidence_rejects_old_or_wrong_claim (diagnostics.actor_logits.tests.test_recovery003.RecoveryBoundaryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.033s
+
+OK

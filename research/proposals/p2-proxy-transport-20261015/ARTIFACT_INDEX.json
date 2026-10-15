@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "CANDIDATE.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-proxy-transport-20261015/CANDIDATE.md",
+      "git_path": "research/proposals/p2-proxy-transport-20261015/CANDIDATE.md",
+      "sha256": "3d255c9ad103210af130d9f3e05f4c13306649074cc5c8fa2249df4aee8f8418",
+      "size": 1478,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CPU_TEST_RESULTS.txt",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-proxy-transport-20261015/CPU_TEST_RESULTS.txt",
+      "git_path": "research/proposals/p2-proxy-transport-20261015/CPU_TEST_RESULTS.txt",
+      "sha256": "9810906975afb1848242d3ec5e6f7575e6f6879d3c5ce486894b541d563aab1f",
+      "size": 1014,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "README.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013/research/proposals/p2-proxy-transport-20261015/README.md",
+      "git_path": "research/proposals/p2-proxy-transport-20261015/README.md",
+      "sha256": "2358624c1b9ca02399ba1fa3e63a770b98c4898eaf56dc275f31163c9032a59f",
+      "size": 1617,
+      "required_for_PI_review": true
+    }
+  ]
+}

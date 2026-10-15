@@ -806,3 +806,11 @@ Human clarified the sole immediate objective is ON200 completion; PI independent
 ## 2026-10-15 — User authorizes GPU and PI approves P2-003 ON-only
 
 Human explicitly gave GPU authorization and requested formal approval. PI re-read research-loop HEAD `b8ce7d7c81d7281d07f85fba2bdd4666146eb850` with SUCCESS control CI #38662896388, read exact pinned source `013508992c07443d2cf25e9d2099916b9ba57bd8` and the 41 CPU tests/OFF200 reused-file verification reports. PI transitions unique EXP-ACTOR-RESET-ON200-003 state v79 PI_REVIEW / NOT_AUTHORIZED to **v80 APPROVED_FOR_CODEX / APPROVED**, next_actor CODEX, no Claim yet. Code and scientific design remain frozen; ONE ON200 only, historical P2-002 OFF200 read-only, root Actor Episode-boundary counter+KV reset ON, Critic unchanged. Approval window 2026-10-15T01:49:16Z UTC to 2026-10-16T01:49:16Z UTC (24h), max one GPU (physical 0–3 subject to capacity guard), 200 Episodes / <=120000 decisions, 12h queue guard, 90GiB output guard. Approval CI must SUCCEED before Codex may Claim; distinct new Claim CI must SUCCEED before run. Future run must satisfy code's unchanged direct HTTPS cross-session/read-only Claim/CI preflight, OFF hashes, clean source/empty root and safe GPU admission; any failure STOP without GPU and no automatic retry, new network infrastructure not required as a separate project. GPU Logger equivalence NOT_RUN_PI_WAIVED. No GPU or Claim performed by PI approval itself.
+
+## P2-003 terminal BLOCKED before GPU (2026-10-15)
+
+Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md). Next actor PI; executor STOP.
+
+## Transport-only candidate submitted for PI review
+
+CODEX prepared d9e092eba73da7bdc64683a4de45d0c12aaeec2d (proxy 127.0.0.1:7899, TLS verified), seven focused CPU tests PASS. See proposals/p2-proxy-transport-20261015/README.md. Current P2-003 is BLOCKED, no retry; new cycle and final source binding/authorization remain PI-owned. No new experiment or GPU execution.
