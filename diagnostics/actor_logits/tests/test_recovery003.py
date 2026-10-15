@@ -71,12 +71,30 @@ class RecoveryBoundaryTests(unittest.TestCase):
         with patch.dict(os.environ, {'NO_PROXY':'*','no_proxy':'*'}), \
              patch.object(recovery.urllib.request,'build_opener') as build:
             recovery.github_opener()
-            self.assertEqual(os.environ['NO_PROXY'],'')
-            self.assertEqual(os.environ['no_proxy'],'')
+            self.assertEqual(os.environ['NO_PROXY'],'*')
+            self.assertEqual(os.environ['no_proxy'],'*')
         proxy,https=build.call_args.args
         self.assertEqual(proxy.proxies, {'http':recovery.PROXY_URL,'https':recovery.PROXY_URL})
         self.assertEqual(https._context.verify_mode, ssl.CERT_REQUIRED)
         self.assertTrue(https._context.check_hostname)
+
+    def test_explicit_proxy_ignores_bypass_without_global_mutation(self):
+        request = recovery.urllib.request.Request('https://api.github.com/repos/example')
+        with patch.dict(os.environ, {'NO_PROXY':'*','no_proxy':'*'}), \
+             patch.object(recovery.urllib.request,'proxy_bypass',side_effect=AssertionError('bypass called')):
+            handler = recovery.GitHubProxyHandler({'https':recovery.PROXY_URL})
+            self.assertIsNone(handler.proxy_open(request,recovery.PROXY_URL,'https'))
+            self.assertEqual(request.host,'127.0.0.1:7899')
+            self.assertEqual(request._tunnel_host,'api.github.com')
+            self.assertEqual(os.environ['NO_PROXY'],'*')
+
+    def test_004_bindings_and_immutable_off(self):
+        self.assertEqual(recovery.EXPERIMENT,'EXP-ACTOR-RESET-ON200-004')
+        self.assertEqual(recovery.CYCLE,'actor-reset-on200-off002-reuse-004-20261015')
+        self.assertEqual(str(recovery.OUTPUT),'/nvme2/user/qyy/SafeVLA_p2_004_on200_results_20261015')
+        self.assertEqual(str(recovery.EVIDENCE),'/nvme2/user/qyy/SafeVLA_p2_004_launch_20261015')
+        self.assertEqual(str(recovery.NETWORK_WITNESSES),'/nvme2/user/qyy/SafeVLA_p2_004_network_claim_20261015')
+        self.assertEqual(str(recovery.OFF),'/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200')
 
     def test_failed_network_probe_is_not_authorization(self):
         with patch.object(recovery, 'git', side_effect=subprocess.TimeoutExpired('secret', 60)):

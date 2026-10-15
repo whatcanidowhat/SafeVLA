@@ -1,4 +1,4 @@
-"""P2-003 control, immutable OFF reuse, and descriptive cross-cycle comparison.
+"""P2-004 control, immutable OFF reuse, and descriptive cross-cycle comparison.
 
 No model construction or Episode execution. GitHub HTTPS uses the user-managed loopback proxy with TLS verification.
 """
@@ -19,12 +19,12 @@ PROXY_URL = 'http://127.0.0.1:7899'
 TRANSPORT = 'USER_MANAGED_HTTP_PROXY_TLS_VERIFIED'
 
 REPO = Path(__file__).resolve().parents[2]
-EXPERIMENT = 'EXP-ACTOR-RESET-ON200-003'
-CYCLE = 'actor-reset-on200-off002-reuse-003-20261014'
+EXPERIMENT = 'EXP-ACTOR-RESET-ON200-004'
+CYCLE = 'actor-reset-on200-off002-reuse-004-20261015'
 OFF = Path('/nvme2/user/qyy/SafeVLA_p2_002_results_20261014/OFF200')
-OUTPUT = Path('/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014')
-EVIDENCE = Path('/nvme2/user/qyy/SafeVLA_p2_003_launch_20261014')
-NETWORK_WITNESSES = Path('/nvme2/user/qyy/SafeVLA_p2_003_network_claim_20261014')
+OUTPUT = Path('/nvme2/user/qyy/SafeVLA_p2_004_on200_results_20261015')
+EVIDENCE = Path('/nvme2/user/qyy/SafeVLA_p2_004_launch_20261015')
+NETWORK_WITNESSES = Path('/nvme2/user/qyy/SafeVLA_p2_004_network_claim_20261015')
 OLD_CODE = '06cde9adeb91d47c062a11e72e90c7edf56fb398'
 OLD_CLAIM = '918170d26cca2fc385fb6f8fd87d0109b4a167b2'
 OLD_RESULT = '88453def76051736edce2e8887f26b08d5b0c5e6'
@@ -52,11 +52,17 @@ def transport_environment():
     return env
 
 
+class GitHubProxyHandler(urllib.request.ProxyHandler):
+    def proxy_open(self, req, proxy, type):
+        # Fixed unauthenticated HTTP loopback proxy; ignore NO_PROXY for this request only.
+        require(proxy == PROXY_URL and req.type in {'http', 'https'}, 'Unexpected proxy transport')
+        req.set_proxy('127.0.0.1:7899', 'http')
+        return None  # HTTPSHandler retains CONNECT + certificate/hostname verification.
+
+
 def github_opener():
-    # urllib otherwise honors inherited NO_PROXY=* even with an explicit handler.
-    os.environ['NO_PROXY'] = os.environ['no_proxy'] = ''
     return urllib.request.build_opener(
-        urllib.request.ProxyHandler({'http': PROXY_URL, 'https': PROXY_URL}),
+        GitHubProxyHandler({'http': PROXY_URL, 'https': PROXY_URL}),
         urllib.request.HTTPSHandler(context=ssl.create_default_context()))
 
 
@@ -71,7 +77,7 @@ def ci_success(sha):
     require(len(sha) == 40 and all(c in '0123456789abcdef' for c in sha), 'Invalid CI SHA')
     request = urllib.request.Request(
         'https://api.github.com/repos/whatcanidowhat/SafeVLA/actions/runs?head_sha='+sha+'&per_page=100',
-        headers={'Accept':'application/vnd.github+json','User-Agent':'SafeVLA-P2-003'})
+        headers={'Accept':'application/vnd.github+json','User-Agent':'SafeVLA-P2-004'})
     # User-managed proxy; default certificate and hostname verification remain mandatory.
     with github_opener().open(request, timeout=30) as response:
         runs = json.load(response).get('workflow_runs', [])
@@ -180,7 +186,7 @@ def strict_control(control):
 def before_model(args, tasks, manifest_bytes):
     require(args.approval_reference and args.claim_reference and args.control_root,
             'Missing PI approval / Codex claim / control worktree')
-    require(args.actor_reset == 'on', 'P2-003 forbids OFF execution')
+    require(args.actor_reset == 'on', 'P2-004 forbids OFF execution')
     require(args.output.resolve() == OUTPUT/'ON200', 'Wrong fresh ON destination')
     evidence = strict_control(args.control_root.resolve())
     preflight = read_json(EVIDENCE/'NETWORK_PREFLIGHT.json')

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# P2-003 one-shot ON200 with immutable historical OFF reference. Final PI authorization required.
+# P2-004 one-shot ON200 with immutable historical OFF reference. Final PI authorization required.
 set -Eeuo pipefail
 unset ALL_PROXY all_proxy GIT_SSL_NO_VERIFY
 export HTTPS_PROXY=http://127.0.0.1:7899 HTTP_PROXY=http://127.0.0.1:7899
@@ -8,8 +8,8 @@ export NO_PROXY="" no_proxy=""
 umask 077
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd -P)
 CONTROL_ROOT=$(printenv P2_CONTROL_ROOT || printf '%s' /nvme2/user/qyy/SafeVLA_loop_control_p2_codex_20261013)
-OUTPUT_ROOT=/nvme2/user/qyy/SafeVLA_p2_003_on200_results_20261014
-EVIDENCE_ROOT=/nvme2/user/qyy/SafeVLA_p2_003_launch_20261014
+OUTPUT_ROOT=/nvme2/user/qyy/SafeVLA_p2_004_on200_results_20261015
+EVIDENCE_ROOT=/nvme2/user/qyy/SafeVLA_p2_004_launch_20261015
 P2_PYTHON=$(printenv P2_PYTHON || printf '%s' /home/amax/.conda/envs/safevla/bin/python)
 PHASE_PID=""
 stop_own_process() {
@@ -40,7 +40,7 @@ mkdir -m 700 "$EVIDENCE_ROOT" || die "Cannot create unique launch evidence"
 # Strict live authorization, original OFF bytes and three proxy network probes, CPU only.
 CUDA_VISIBLE_DEVICES="" "$P2_PYTHON" -B -m diagnostics.actor_logits.recovery003 preflight \
   --control-root "$CONTROL_ROOT" --report "$EVIDENCE_ROOT/NETWORK_PREFLIGHT.json" \
-  || die "P2-003 CPU control/network/OFF gate failed"
+  || die "P2-004 CPU control/network/OFF gate failed"
 # Query the actual GitHub Actions run for the exact CODEX claim; never trust a shell boolean.
 CLAIM_CONTEXT=$("$P2_PYTHON" - <<'PY'
 import json, os, subprocess, sys, urllib.request
@@ -56,7 +56,7 @@ remote = git("ls-remote", "--heads", "origin", "refs/heads/research-loop").split
 if not remote or remote[0] != sha: raise SystemExit("Remote claim HEAD mismatch")
 if s.get("status") != "CODEX_RUNNING" or s.get("next_actor") != "CODEX" or s.get("updated_by") != "CODEX":
     raise SystemExit("Missing CODEX_RUNNING claim")
-if s.get("experiment_id") != "EXP-ACTOR-RESET-ON200-003" or s.get("cycle_id") != "actor-reset-on200-off002-reuse-003-20261014":
+if s.get("experiment_id") != "EXP-ACTOR-RESET-ON200-004" or s.get("cycle_id") != "actor-reset-on200-off002-reuse-004-20261015":
     raise SystemExit("Wrong P2 experiment")
 if not s.get("instruction_commit") or not s.get("claim_id"): raise SystemExit("Missing claim identity")
 a = s["authorization"]
@@ -183,5 +183,5 @@ run_phase on ON200
 "$P2_PYTHON" -B -m diagnostics.actor_logits.recovery003 compare \
   --control-root "$CONTROL_ROOT" --report "$OUTPUT_ROOT/CROSS_CYCLE_COMPARISON.json" \
   || die "Cross-cycle comparison validation failed"
-printf 'P2-003 ON COMPLETE; immutable OFF compared. Outputs: %s\n' "$OUTPUT_ROOT"
+printf 'P2-004 ON COMPLETE; immutable OFF compared. Outputs: %s\n' "$OUTPUT_ROOT"
 # User must inspect logs and publish actual result handoff for PI review; no auto reruns.
