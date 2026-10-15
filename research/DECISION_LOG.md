@@ -834,3 +834,7 @@ PI independently examined source `67c7051ed4287968897282f915b8b076851562a1` on c
 ## 2026-10-15 — Human final GPU consent + PI formal P2-004 authorization
 
 User explicitly confirmed final P2-004 ON200 GPU permission. PI independently verified pinned source `67c7051ed4287968897282f915b8b076851562a1` in control commit `693ed4870dd476c692200b0e00c220161d65f204`, code-stage CI #38690170141 SUCCESS, read P2-004 draft and source diff. This unique cycle EXP-ACTOR-RESET-ON200-004 transitions state v84 PI_REVIEW to v85 APPROVED_FOR_CODEX, next_actor CODEX, authorizations APPROVED maximum one safe GPU and 200 ON Episodes for UTC interval 2026-10-15T06:08:16Z to 2026-10-16T06:08:16Z. Absolute 24h permission, 12h queue, 90GiB output, 120000 decisions. Science/task/metrics unchanged; OFF200 remains immutable, future ON200-only. Existing user-managed 127.0.0.1:7899 proxy/TLS and exact remote Claim+CI gate, CPU OFF integrity checks, no retries remain. Approval control CI must pass before unique 004 Claim B; Claim B's independent CI must succeed before launcher and GPU admission. No old P2-003 Claim reuse and no CPU/GPU/episode performed by PI in this step.
+
+## P2-004 terminal BLOCKED before GPU (2026-10-15)
+
+Claim 89b3607c03448223484202ee9aabd3bd79b06f7f passed CI; mandatory proxy-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md). Next actor PI; executor STOP.

@@ -430,3 +430,7 @@ Claim 918170d26cca2fc385fb6f8fd87d0109b4a167b2 (CI 38527821564 SUCCESS), approva
 ## P2-003 terminal BLOCKED before GPU (2026-10-15)
 
 Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md). Next actor PI; executor STOP.
+
+## P2-004 terminal BLOCKED before GPU (2026-10-15)
+
+Claim 89b3607c03448223484202ee9aabd3bd79b06f7f passed CI; mandatory proxy-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md). Next actor PI; executor STOP.

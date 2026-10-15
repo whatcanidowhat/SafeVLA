@@ -1,0 +1,18 @@
+{
+  "status": "FAIL",
+  "stage": "REQUIRED_CROSS_SESSION_WITNESS",
+  "receipts": [
+    {
+      "observed_utc": "2026-10-15T06:41:17.607825+00:00",
+      "transport": "USER_MANAGED_HTTP_PROXY_TLS_VERIFIED",
+      "proxy_url": "http://127.0.0.1:7899",
+      "status": "FAIL",
+      "authorizes_execution": false,
+      "ssh_session_sha256": "dfaebe63fd8aa52ae83ca325bf0e87656f5cb554f9f933464de2768231bac4ee",
+      "error_type": "HTTPError",
+      "elapsed_seconds": 1.475082018005196
+    }
+  ],
+  "launcher_three_probe_preflight": "NOT_STARTED",
+  "automatic_retries": 0
+}
