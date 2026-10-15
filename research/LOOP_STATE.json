@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 83,
-  "cycle_id": "actor-reset-on200-off002-reuse-003-20261014",
-  "experiment_id": "EXP-ACTOR-RESET-ON200-003",
+  "state_version": 84,
+  "cycle_id": "actor-reset-on200-off002-reuse-004-20261015",
+  "experiment_id": "EXP-ACTOR-RESET-ON200-004",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_003_20261014",
-  "instruction_commit": "d918fe8841f6e960ffcbc7ea0aee995a508e3bc4",
+  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_004_20261015",
+  "instruction_commit": null,
   "reviewed_result_commit": "8b560d54d18a9db26417cb4824f1386c74638430",
-  "claim_id": "b0b33c970b1a4721a1c48a068913e45a",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
     "approved_by": null,
@@ -20,20 +20,20 @@
     "max_episodes": 0
   },
   "required_outputs": [
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RESULT_SUMMARY.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/RUN_MANIFEST.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/REVIEW_NOTES.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/LOGGER_WAIVER.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/TASK_MANIFEST.csv",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_ON_RESULTS.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/VALIDATION_SUMMARY.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/GPU_QUEUE_REPORT.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/OFF_REUSE_VERIFICATION.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/NETWORK_PREFLIGHT.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-003-20261014/CROSS_CYCLE_COMPARISON.json"
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-15T05:48:21Z"
+  "updated_at_utc": "2026-10-15T05:49:50Z"
 }

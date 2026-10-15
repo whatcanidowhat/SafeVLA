@@ -819,3 +819,8 @@ CODEX prepared d9e092eba73da7bdc64683a4de45d0c12aaeec2d (proxy 127.0.0.1:7899, T
 ## 2026-10-15 — PI acknowledges P2-003 BLOCKED and accepts proxy transport direction
 
 PI independently reviewed terminal commit `8b560d54d18a9db26417cb4824f1386c74638430` and 15 indexed Git-readable artifacts: claim/approval CI SUCCESS, genuine required witness failure `TimeoutExpired` in 60.0666s, zero GPU/model/simulator/ON Episodes, OFF reference untouched. This is an operational transport block, not model failure. Acknowledged `BLOCKED -> PI_REVIEW`, state v83; original 003 claim/instruction retained as provenance; active authorization reset, DRAFT designs. Reviewed transport candidate `d9e092eba73da7bdc64683a4de45d0c12aaeec2d` as a proxy-only baseline (7 focused CPU PASS, TLS + real Claim/CI retained), not approved new executable due to stale 003 constants/paths. Await new 004 code binding and a separate human GPU authorization; no automatic retry, Claim or GPU. Original handoff control CI had not yet reported SUCCESS when decision initially prepared.
+
+
+## 2026-10-15 — PI opens unclaimed P2-004 DRAFT after acknowledging P2-003 BLOCKED
+
+New unique `EXP-ACTOR-RESET-ON200-004`, `actor-reset-on200-off002-reuse-004-20261015`, state v84 PI_REVIEW / NOT_AUTHORIZED / zero active GPU & Episodes. No Claim. Scientific ON200-only protocol and 200-task immutable P2-002 OFF200 reuse preserved; proxy TLS candidate d9e092eba73da7bdc64683a4de45d0c12aaeec2d accepted as *base only*, still old 003 paths. New isolated worktree/output/evidence/witness roots defined. Final P2-004 executable SHA pending Codex CPU-only rebind; separate human final GPU authorization explicitly required. No GPU or new experiment has been executed.
