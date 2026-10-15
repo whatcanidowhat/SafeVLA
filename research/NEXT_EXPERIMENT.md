@@ -15,7 +15,7 @@ Cycle ID: actor-reset-on200-off002-reuse-004-20261015
 ## Codex CPU-only binding task — one minimal source commit
 
 - Base accepted transport-only candidate: [d9e092eba73da7bdc64683a4de45d0c12aaeec2d](https://github.com/whatcanidowhat/SafeVLA/commit/d9e092eba73da7bdc64683a4de45d0c12aaeec2d), 7 focused CPU tests PASS; changes proxy routing, TLS and real GitHub Claim/CI checks, not scientific execution bodies.
-- Candidate still contains **old 003** constants/paths. Rebind experiment identity `EXP-ACTOR-RESET-ON200-004`, cycle `actor-reset-on200-off002-reuse-004-20261015`, new control target, output, evidence and session witness roots ONLY. Final 004 **executable source SHA PENDING** until Codex submits a new exact commit and PI reviews it. Maintain original future run command `bash diagnostics/actor_logits/run_p2_on200_only.sh`.
+- **PI-reviewed executable SHA (STAGED, NOT EXECUTION-APPROVED):** [`67c7051ed4287968897282f915b8b076851562a1`](https://github.com/whatcanidowhat/SafeVLA/commit/67c7051ed4287968897282f915b8b076851562a1). P2-004 cycle, isolated worktree/output/evidence/witness paths are bound. Request-level proxy bypasses inherited `NO_PROXY` without mutating global environment; TLS + real remote Claim/CI controls remain. Codex reports 8 focused CPU tests PASS and bash syntax PASS. Maintain original future command `bash diagnostics/actor_logits/run_p2_on200_only.sh`.
 - Execution worktree: `/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_004_20261015`
 - ON result root (must be absent): `/nvme2/user/qyy/SafeVLA_p2_004_on200_results_20261015`
 - Launch evidence root (must be absent): `/nvme2/user/qyy/SafeVLA_p2_004_launch_20261015`
@@ -30,10 +30,14 @@ Cycle ID: actor-reset-on200-off002-reuse-004-20261015
 
 ## Release and authorization sequence
 
-1. Codex prepares **only** final 004 code identity/paths and scoped CPU tests, publishes exact SHA and STOPs. No Claim or GPU.
-2. PI checks final SHA/science parity and GitHub evidence. Human separately gives **explicit P2-004 GPU approval**.
-3. PI pins executable source in `research/P2_CODE_SHA.txt`, changes both designs to APPROVED and LOOP_STATE to APPROVED_FOR_CODEX with new validity window (control approval A). Wait **A CI SUCCESS**.
+1. **Completed:** Codex published final P2-004 executable candidate `67c7051ed4287968897282f915b8b076851562a1`; PI independently reviewed and staged its exact SHA in `research/P2_CODE_SHA.txt`. No Claim or GPU.
+2. **Still required:** Human explicitly gives **new P2-004 final GPU authorization**, distinct from already terminated P2-003 permission.
+3. PI changes both designs to APPROVED and LOOP_STATE to APPROVED_FOR_CODEX with a new absolute validity window (control approval A). Wait **A CI SUCCESS**.
 4. Codex/authorized Executor creates **one unique Claim B** and waits **B CI SUCCESS**; one-shot P2-004 ON200 launcher with real-time proxy TLS checks, OFF data hashes and GPU admission.
 5. Validate new ON200 and compare to old OFF200 descriptively; archive actual evidence to `research/handoffs/actor-reset-on200-off002-reuse-004-20261015/` and STOP. No retry on failed gates.
 
 No 003 claim/approval inherited; no model/ON Episode before full new approval.
+
+## 2026-10-15 — PI code pin accepted, NOT GPU authorized
+
+Exact 004 candidate [`67c7051ed4287968897282f915b8b076851562a1`](https://github.com/whatcanidowhat/SafeVLA/commit/67c7051ed4287968897282f915b8b076851562a1) reviewed against transport-only base `d9e092eba73da7bdc64683a4de45d0c12aaeec2d`: five-path binding diff. It updates only experiment identity, 004 isolated paths, scoped tests/documentation, and custom per-request proxy handling. Actor/Critic, scientific evaluation and metric methods, OFF proof, checkpoint/DINO, TaskSpecs and no-overwrite semantics are unchanged by this candidate's diff. Codex reports 8 targeted CPU tests; PI has not independently run server tests or rehashed raw server files. **Static review ACCEPT; live proxy/tunnel and GPU readiness are NOT proven.** P2_CODE_SHA.txt is now pinned to the exact candidate, both designs remain DRAFT, LOOP_STATE remains v84 PI_REVIEW/NOT_AUTHORIZED, Claim null, resources active 0/0. Do not trigger Claim or GPU until explicit new human authorization and subsequent PI approval+CI.

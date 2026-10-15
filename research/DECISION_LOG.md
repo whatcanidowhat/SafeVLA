@@ -824,3 +824,8 @@ PI independently reviewed terminal commit `8b560d54d18a9db26417cb4824f1386c74638
 ## 2026-10-15 — PI opens unclaimed P2-004 DRAFT after acknowledging P2-003 BLOCKED
 
 New unique `EXP-ACTOR-RESET-ON200-004`, `actor-reset-on200-off002-reuse-004-20261015`, state v84 PI_REVIEW / NOT_AUTHORIZED / zero active GPU & Episodes. No Claim. Scientific ON200-only protocol and 200-task immutable P2-002 OFF200 reuse preserved; proxy TLS candidate d9e092eba73da7bdc64683a4de45d0c12aaeec2d accepted as *base only*, still old 003 paths. New isolated worktree/output/evidence/witness roots defined. Final P2-004 executable SHA pending Codex CPU-only rebind; separate human final GPU authorization explicitly required. No GPU or new experiment has been executed.
+
+
+## 2026-10-15 — PI accepts/stages P2-004 rebound implementation, without GPU authorization
+
+PI independently examined source `67c7051ed4287968897282f915b8b076851562a1` on codex/p2-004-binding-20261015 and one-commit diff against `d9e092eba73da7bdc64683a4de45d0c12aaeec2d`. Five paths change only 004 identity/path binding, request-scoped GitHub loopback proxy handling, focused tests and documentation; no model/science body/official metrics change. Codex reports 8 CPU tests+shell syntax PASS; no separate PI server execution, model weight hashing or OFF1203 rehash. PI stages `research/P2_CODE_SHA.txt` and corresponding DRAFT descriptions. `LOOP_STATE` v84 PI_REVIEW/NOT_AUTHORIZED remains unchanged; 004 needs an *explicitly new human GPU authorization*, then PI approved control CI and unique new Claim CI before ON200. No Claim/GPU launched.
