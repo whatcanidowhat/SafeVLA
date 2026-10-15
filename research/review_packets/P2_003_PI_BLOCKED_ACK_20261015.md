@@ -1,0 +1,13 @@
+# P2-003 terminal BLOCKED — PI acknowledgement (2026-10-15)
+
+**PI decision: ACCEPT_TERMINAL_BLOCKED / NO GPU AUTHORIZATION FOR SUCCESSOR.**
+
+Reviewed the original, Git-readable terminal [commit `8b560d54d18a9db26417cb4824f1386c74638430`](https://github.com/whatcanidowhat/SafeVLA/commit/8b560d54d18a9db26417cb4824f1386c74638430) and the complete `research/handoffs/actor-reset-on200-off002-reuse-003-20261014/` packet. Approval SHA `d918fe8841f6e960ffcbc7ea0aee995a508e3bc4` and Claim SHA `fa4877c4550be75e9726172421d76468bcc920c5` each had SUCCESS CI. The required independently witnessed **DIRECT HTTPS** runtime Git read failed after 60.0666 seconds with `TimeoutExpired`. Launcher not started, GPU 0, model imports 0, simulator starts 0, Episodes 0, Actor decisions 0. No result on treatment efficacy.
+
+OFF200 is a separately validated immutable reference from P2-002: 200/200 episodes, 19270 decisions, SR 169/200, cost 177. The failed 003 runner rehashed only 3 identity files + TaskSpec CSV and did **not** revalidate all 1203 raw files after the failure; the full earlier 002/003 preparation proof remains historical and requires fresh pre-model rehash on eventual ON execution.
+
+PI accepts faithful fail-closed STOP; clears P2-003 active authorization and preserves historical instruction/claim IDs for traceability. The current control state returns to `PI_REVIEW` state_version 83; both experiment designs become DRAFT; no new Claim/GPU permission. The old Claim is terminal and may not be reused.
+
+**Code assessment:** [transport candidate `d9e092eba73da7bdc64683a4de45d0c12aaeec2d`](https://github.com/whatcanidowhat/SafeVLA/commit/d9e092eba73da7bdc64683a4de45d0c12aaeec2d) is exactly one source commit ahead of reviewed 003 code. Five paths: network handling in `evaluate.py`, `recovery003.py` and ON-only launcher, focused tests, descriptive documentation. Maintains HTTPS TLS and real remote HEAD/Claim/CI, no known modification to Actor/Critic/task/metric model bodies. Codex reports 7 focused CPU tests, shell syntax, and scientific AST parity. This **accepts the design of the transport patch**, not an executable new-cycle pin: EXPERIMENT/CYCLE and result/evidence paths still use 003 and must be rebound to a new unique cycle. Preserve no OFF rerun/no-debug and scientific interpretation limits.
+
+**Remaining:** prepare fresh 004 ON200-only unclaimed DRAFT, source rebinding, inspect final exact source SHA and an explicit *new* human GPU authorization. Retain fail-closed live verification; Git publication CI is not runtime availability. Control CI for original BLOCKED commit was still IN_PROGRESS at initial PI inspection, so this review does not claim that CI was SUCCESS until independently observed.

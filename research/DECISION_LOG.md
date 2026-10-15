@@ -814,3 +814,8 @@ Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-netwo
 ## Transport-only candidate submitted for PI review
 
 CODEX prepared d9e092eba73da7bdc64683a4de45d0c12aaeec2d (proxy 127.0.0.1:7899, TLS verified), seven focused CPU tests PASS. See proposals/p2-proxy-transport-20261015/README.md. Current P2-003 is BLOCKED, no retry; new cycle and final source binding/authorization remain PI-owned. No new experiment or GPU execution.
+
+
+## 2026-10-15 — PI acknowledges P2-003 BLOCKED and accepts proxy transport direction
+
+PI independently reviewed terminal commit `8b560d54d18a9db26417cb4824f1386c74638430` and 15 indexed Git-readable artifacts: claim/approval CI SUCCESS, genuine required witness failure `TimeoutExpired` in 60.0666s, zero GPU/model/simulator/ON Episodes, OFF reference untouched. This is an operational transport block, not model failure. Acknowledged `BLOCKED -> PI_REVIEW`, state v83; original 003 claim/instruction retained as provenance; active authorization reset, DRAFT designs. Reviewed transport candidate `d9e092eba73da7bdc64683a4de45d0c12aaeec2d` as a proxy-only baseline (7 focused CPU PASS, TLS + real Claim/CI retained), not approved new executable due to stale 003 constants/paths. Await new 004 code binding and a separate human GPU authorization; no automatic retry, Claim or GPU. Original handoff control CI had not yet reported SUCCESS when decision initially prepared.

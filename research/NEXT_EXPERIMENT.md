@@ -1,10 +1,10 @@
 # P2-003 recovery proposal — reuse valid OFF200, execute ON200 only
 
 Experiment ID: EXP-ACTOR-RESET-ON200-003
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-on200-off002-reuse-003-20261014
 
-**APPROVED_FOR_CODEX / GPU AUTHORIZED BY USER 2026-10-15; NOT YET CLAIMED.** Human explicitly authorized P2-003 ON200-only, and PI approved the pinned implementation. The approval is conditional on this approval commit's CI SUCCESS, then a unique Codex Claim commit with its own CI SUCCESS, then all original fail-closed CPU control/network/OFF hash checks before GPU/model import. Active *authorization limit*: 1 GPU / 200 Episodes; actual consumption remains 0 GPU / 0 ON Episodes until Codex starts.
+**P2-003 CLOSED / BLOCKED (accepted by PI).** Historical GPU permission applied only to this now-terminal 003 run, and no ON200 started. The Claim/CI did succeed, but an independent direct-network witness timed out after 60.07s before model/GPU; no retry. This DRAFT document is historical and not a fresh experiment authorization.
 
 ## Frozen reference OFF200 (read-only)
 
@@ -47,3 +47,7 @@ PI reviewed candidate `013508992c07443d2cf25e9d2099916b9ba57bd8` and staged it i
 ## 2026-10-15 — binding human + PI GPU authorization (current and controlling)
 
 Human explicitly approved a formal GPU ON200 run on 2026-10-15; PI binds this one and only one experiment to the exact reviewed source SHA `013508992c07443d2cf25e9d2099916b9ba57bd8` and command `bash diagnostics/actor_logits/run_p2_on200_only.sh`. Approved max GPU=1, max ON Episodes=200, max steps=120000, start at 2026-10-15T01:49:16Z UTC and absolute expiry 2026-10-16T01:49:16Z UTC, 12h max shared GPU CPU queue, 90 GiB output guard (the existing launcher enforces the bound), valid only on physical GPUs 0–3 meeting shared resource admission. No OFF replay; frozen historical OFF200 is READ_ONLY. No changes to policy/reset/Critic/logger/metrics/TaskSpecs. Previous controls including cross-session GitHub live Claim/CI reads and immediate pre-model OFF 1203-file hash validation remain **mandatory**, with STOP before GPU on failure. No network service project required. This authorizing commit is A; Codex must **await CI SUCCESS for A** then publish its own unique Claim B and **await distinct CI SUCCESS for B** before executing. No Claim or compute has been created by this PI approval. No automatic retry or renewal. After ON success or BLOCKED/INVALID failure, publish actual handoff in GitHub and STOP.
+
+## 2026-10-15 — PI accepts zero-start BLOCKED (terminal 003)
+
+PI inspected terminal evidence commit `8b560d54d18a9db26417cb4824f1386c74638430`, required Git-readable packet (manifest/artifacts/claim CI, failed `session_a.json` and NETWORK_PREFLIGHT, no run). The failure was CPU-only direct network `TimeoutExpired`, not an experimental treatment result. Control state returned to PI_REVIEW / NOT_AUTHORIZED at state_version=83; historical claim and instruction retained as provenance. Prior P2-003 scientific code and OFF200 evidence remain unchanged. Submitted proxy-only candidate `d9e092eba73da7bdc64683a4de45d0c12aaeec2d` is acceptable as a *transport baseline* subject to distinct successor cycle identity/output-root binding and final source freeze. No automatic restart, no old Claim reuse, no GPU authorization for successor. The former 24h P2-003 permission is not inherited.
