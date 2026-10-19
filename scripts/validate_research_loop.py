@@ -572,7 +572,9 @@ def audit_tree(view):
     allowed = {"AGENTS.md", ".gitignore", ".github/workflows/research-loop-validate.yml",
                ".codex/skills/safevla-research-loop/SKILL.md", "scripts/research_loop_claim.py", "scripts/research_loop_manual_claim.py",
                "scripts/validate_research_loop.py", "scripts/test_research_loop.py",
-               "scripts/research_loop_pi_emergency_block.py", "scripts/research_loop_pi_ack_blocked.py"}
+               "scripts/research_loop_pi_emergency_block.py", "scripts/research_loop_pi_ack_blocked.py",
+               "scripts/research_loop_readonly.py", "scripts/research_loop_status.py",
+               "scripts/research_loop_ci_wait.py", "scripts/test_research_loop_readonly.py"}
     for path in files:
         require(path in allowed or path.startswith("research/"), "outside control whitelist: " + path)
         if not view.ref:

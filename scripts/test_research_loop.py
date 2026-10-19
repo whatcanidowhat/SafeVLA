@@ -30,7 +30,8 @@ def git(root, *args):
 def save(root, path, data):
     p = root / path
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(data, indent=2) + "\n" if not isinstance(data, str) else data)
+    p.write_text(json.dumps(data, indent=2) + "\n" if not isinstance(data, str) else data,
+                 encoding="utf-8", newline="\n")
 
 
 def initial():
@@ -644,4 +645,3 @@ class ProtocolTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
-

@@ -1,0 +1,1147 @@
+diff --git a/.codex/skills/safevla-research-loop/SKILL.md b/.codex/skills/safevla-research-loop/SKILL.md
+index 4220385..7174ae8 100644
+--- a/.codex/skills/safevla-research-loop/SKILL.md
++++ b/.codex/skills/safevla-research-loop/SKILL.md
+@@ -21,6 +21,8 @@ description: SafeVLA ObjectNav 研究与受控交接入口。按 STATUS/GATE、
+ 
+ STATUS/GATE 可按字段检索设计；任何身份/范围矛盾、字段缺失或协议要求均须扩大读取并 STOP 受影响动作。远端不可读时明确 REMOTE_UNVERIFIED；本地缓存永不授予执行许可。状态/CI/network CLI 只有已实现且验证后才能调用；不得假定规划中的工具存在。
+ 
++STATUS/GATE 的只读查询可使用 scripts/research_loop_status.py 和 scripts/research_loop_ci_wait.py；首次使用读 [参数与结果契约](../../../research/agent_workflow/READONLY_TOOLS.md)。CI 等待交给一次有界脚本调用；其 SUCCESS/exit 0 不是执行许可，不代替 Claim、完整历史、身份或 runtime 门禁。
++
+ ## Policy：授权与停止条件
+ 
+ - GitHub research-loop 的实时 HEAD + LOOP_STATE + 对应 exact-SHA CI 共同判定当前控制状态；历史 001A/001B、bootstrap、protocol-only、dry-run 或草案描述都不是现时授权。终止周期不可自动重跑。
+diff --git a/.github/workflows/research-loop-validate.yml b/.github/workflows/research-loop-validate.yml
+index 813bc5b..230ff37 100644
+--- a/.github/workflows/research-loop-validate.yml
++++ b/.github/workflows/research-loop-validate.yml
+@@ -28,4 +28,5 @@ jobs:
+         run: python scripts/test_research_loop.py
+       - name: Validate every control commit and artifact
+         run: python scripts/validate_research_loop.py --history
+-
++      - name: Test read-only query and CI wait fixtures (no network)
++        run: python scripts/test_research_loop_readonly.py
+diff --git a/research/HANDOFF_PROTOCOL.md b/research/HANDOFF_PROTOCOL.md
+index 824aefc..9622adc 100644
+--- a/research/HANDOFF_PROTOCOL.md
++++ b/research/HANDOFF_PROTOCOL.md
+@@ -148,6 +148,13 @@ read/write path and a real PI receipt. Executor-side API readability alone does
+ 
+ ## Secrets and whitelist
+ 
++PR-2 read-only helpers: `scripts/research_loop_status.py`, `scripts/research_loop_ci_wait.py`,
++their shared GET-only transport `scripts/research_loop_readonly.py`, and offline synthetic tests
++`scripts/test_research_loop_readonly.py` are explicit additional whitelist entries.
++They do not alter any state transition, actor, Claim, approval, execution or full-history gate.
++Every query result has `EVIDENCE.CAN_EXECUTE=false`; SUCCESS/exit 0 is only observational evidence.
++See `research/agent_workflow/READONLY_TOOLS.md` for bounded waiting and failure semantics.
++
+ Allowed: AGENTS.md, .codex/skills/safevla-research-loop/SKILL.md, research/, the three control Python tools,
+ .github/workflows/research-loop-validate.yml and a control .gitignore.
+ The control scripts/workflow are the explicitly authorized extensions to the earlier three-directory proposal.
+diff --git a/research/agent_workflow/READONLY_TOOLS.md b/research/agent_workflow/READONLY_TOOLS.md
+new file mode 100644
+index 0000000..0a4ffb7
+--- /dev/null
++++ b/research/agent_workflow/READONLY_TOOLS.md
+@@ -0,0 +1,101 @@
++# PR-2 read-only status and CI waiting
++
++Python 3.10+, existing jsonschema==4.25.1. No model/runtime dependencies. These helpers query
++only whatcanidowhat/SafeVLA through https://api.github.com. Run from a reviewed checkout.
++They never claim, dispatch/rerun CI, push, change state, or start experiments.
++
++## Commands
++
++```
++python scripts/research_loop_status.py --remote-readonly
++python scripts/research_loop_status.py --local --root /path/to/control-checkout
++python scripts/research_loop_ci_wait.py --sha FULL_40_CHARACTER_SHA --workflow research-loop-validate.yml --event push --branch research-loop --timeout 600 --interval 15
++```
++
++For a PR, explicitly choose `--event pull_request --branch codex/your-branch` and its full head SHA.
++The branch tip must equal that SHA throughout observation. Historical successful CI on an older
++commit is deliberately rejected. `--workflow` accepts a numeric workflow ID or exact YAML filename,
++not an ambiguous display name. Workflow ID/name/path and event are all verified on the run.
++If a rerun is intended, pass `--attempt N`; without it only attempt 1 is accepted. A changed run ID
++or attempt, multiple matching runs, or incomplete/paginated listings stop with UNKNOWN. A single
++explicit attempt must be the current attempt; prior success cannot mask a failed/in-progress rerun.
++
++Optional GH_TOKEN or GITHUB_TOKEN comes only from the caller's environment; it is never printed,
++persisted or passed on a command line. A GitHub connector session does not automatically populate
++these variables. Public read access may work anonymously subject to GitHub rate limits. Standard
++HTTPS_PROXY is inherited. Default TLS CA verification remains enabled, and redirects are refused.
++Errors never print response bodies, raw exception text, credentials or full environment/config.
++
++## Output and exit contract
++
++One final JSON line, under 2 KiB, with VERDICT, EVIDENCE, BLOCKER, NEXT_AUTHORIZED_ACTION.
++EVIDENCE.CAN_EXECUTE is always false. CLI `--help` is usage text, not a query result.
++
++| Verdict | Exit | Meaning |
++| --- | ---: | --- |
++| SUCCESS | 0 | Exact CI observation succeeded; no execution permission |
++| OBSERVED | 0 | Current valid-looking approval observed; CI/Claim/runtime NOT checked |
++| BLOCKED / UNKNOWN / REMOTE_UNVERIFIED | 2 | Non-executable state, incomplete/conflicting evidence, or local-only cache |
++| FAILURE | 3 | CI failure/action_required/startup_failure |
++| CANCELLED | 4 | CI cancelled or caller interrupted |
++| TIMED_OUT | 5 | Wait deadline or CI timed_out |
++| NETWORK_ERROR | 6 | HTTPS/DNS/TLS/proxy/transport failure or other HTTP error |
++| NOT_FOUND | 7 | No visible run/file/ref; 404 can also conceal permission denial |
++| RATE_LIMITED | 8 | HTTP 429, or 403 with quota/retry headers |
++| PERMISSION_DENIED | 9 | HTTP 401/403 without rate-limit evidence |
++| INVALID_INPUT | 64 | CLI argument parsing failed |
++
++Neutral/skipped/unknown conclusions are UNKNOWN, never SUCCESS. A missing run returns NOT_FOUND
++for CI waiting. Status transport/evidence errors return UNKNOWN and preserve the error category in
++EVIDENCE.error_kind. A missing CI run returns NOT_FOUND
++immediately; it does not poll indefinitely for future CI creation. On any HTTP/network/rate-limit
++failure there is no automatic retry, credential fallback or CI rerun. Ambiguous 403 is conservatively
++PERMISSION_DENIED. Only an existing, identified pending run is polled. Waiting is bounded by the
++specified deadline; each request also has a 10-second cap. A temporary daemon transport thread bounds
++even a stalled OS DNS/TLS operation. On timeout the CLI returns once and exits without waiting for
++that thread or issuing another request. A library caller that stays alive may retain that single
++read-only request thread until the OS unblocks it. No persistent background service is installed.
++
++## Status scope and limitations
++
++Remote status reads the branch ref, fetches LOOP_STATE, both NEXT_EXPERIMENT files and
++LOOP_STATE.schema.json at that same immutable SHA, verifies all four Git Blob hashes, then checks
++the ref again. It explicitly passes this snapshot's schema to assessment, validates the schema and
++checks role/design identity, approval timestamps, scope, required-output paths and Claim bindings.
++`--expected-cycle` / `--expected-claim` pin caller expectations; mismatch is UNKNOWN/STALE_*.
++BLOCKED/INVALID/ABORTED/review and existing running Claims remain non-executable. An expired approval
++cannot yield OBSERVED. CODEX and OPERATOR are reported distinctly and never substituted.
++
++This is a compact state/design observer, not the complete historical/terminal-artifact validator. It
++does not verify archived output hashes, full provenance, approval/Claim CI, runtime identity, or
++historical uniqueness. Its scope is explicit in EVIDENCE. Those existing mandatory gates still apply
++separately; no claim/launch command may treat this exit code as authorization. Observations are valid
++as of the final reads, not atomic locks against changes immediately afterward.
++
++Local mode reads all four files, including the schema, from the specified root's committed HEAD
++using read-only git show, ignores uncommitted files and the script directory's schema,
++does not fetch/update refs, and always reports REMOTE_UNVERIFIED for a coherent snapshot. Corrupt or
++missing snapshots report UNKNOWN. Repeated invocations recheck current evidence; no authorization
++cache or mutation is created. A CI timeout/failure does not revoke or mutate any actual state.
++
++## CPU tests and measurements
++
++```
++python scripts/test_research_loop.py
++python scripts/test_research_loop_readonly.py
++python scripts/test_research_loop_readonly.py --benchmark
++python scripts/validate_research_loop.py --history
++```
++
++Tests use synthetic fixtures and fake HTTP only. The benchmark reports five synthetic tasks with
++virtual polling time and actual Python harness duration. The comparison models the old approach as
++one LLM tool invocation per polling round versus one invocation of the new bounded helper. This is
++an explicitly modeled mechanism, not a measured Codex session. Real LLM tool calls, input/output
++tokens, LLM wait turns and real end-to-end latency are NOT_MEASURED. Characters are not token proxies.
++Safety observations include CAN_EXECUTE=false on every outcome and no mutation transport capability.
++
++PR-1 compatibility: its four-field output and conditional reading remain. Full scientific audit and
++all original Stop Conditions remain unchanged. The only validator change is four exact whitelist
++entries; existing 1 MiB/secret/symlink checks and full-history traversal remain intact. The workflow
++adds offline tests without changing any existing validation step. PR-2 does not provide an Executor,
++network launcher witness, evidence pack, or approval for P2-004 recovery.
+diff --git a/scripts/research_loop_ci_wait.py b/scripts/research_loop_ci_wait.py
+new file mode 100644
+index 0000000..28aa57a
+--- /dev/null
++++ b/scripts/research_loop_ci_wait.py
+@@ -0,0 +1,100 @@
++#!/usr/bin/env python3
++"""Bounded exact-revision CI observation; never dispatches, reruns, claims or executes."""
++import re
++import time
++from urllib.parse import quote, urlencode
++
++from research_loop_readonly import GitHub, Parser, SHA, Stop, emit, guarded, positive, report, require
++
++
++def wait_ci(api, sha, workflow, event, branch='research-loop', attempt=None,
++            timeout=600, interval=15, clock=time.monotonic, sleep=time.sleep):
++    evidence = {}
++    try:
++        require(isinstance(sha, str) and bool(SHA.fullmatch(sha)), 'FULL_SHA_REQUIRED')
++        require(bool(re.fullmatch(r'(?:[1-9][0-9]*|[A-Za-z0-9_.-]+\.ya?ml)', workflow)),
++                'WORKFLOW_ID_OR_FILENAME_REQUIRED')
++        require(event in ('push', 'pull_request', 'workflow_dispatch'), 'INVALID_EXPECTED_EVENT')
++        require(isinstance(branch, str) and 0 < len(branch) <= 200 and
++                not any(c.isspace() for c in branch), 'INVALID_BRANCH')
++        require(attempt is None or type(attempt) is int and attempt > 0, 'INVALID_ATTEMPT')
++        evidence.update(sha=sha, branch=branch, event=event)
++        deadline = clock() + timeout
++        require(api.head(branch) == sha, 'REMOTE_HEAD_MISMATCH')
++        wf = api.get('/actions/workflows/' + quote(workflow, safe=''))
++        wid = wf.get('id')
++        require(type(wid) is int and isinstance(wf.get('name'), str) and
++                isinstance(wf.get('path'), str), 'INVALID_WORKFLOW')
++        require(str(wid) == workflow if workflow.isdigit()
++                else wf['path'] == '.github/workflows/' + workflow, 'WORKFLOW_MISMATCH')
++        evidence.update(workflow_id=wid, workflow=wf['name'], workflow_path=wf['path'])
++        pinned_id = pinned_attempt = None
++        polls = 0
++        while True:
++            if clock() >= deadline:
++                return report('TIMED_OUT', evidence, 'WAIT_DEADLINE_EXCEEDED')
++            require(api.head(branch) == sha, 'REMOTE_HEAD_CHANGED')
++            q = urlencode({'head_sha': sha, 'branch': branch, 'event': event, 'per_page': 100})
++            listing = api.get('/actions/workflows/' + str(wid) + '/runs?' + q)
++            runs, count = listing.get('workflow_runs'), listing.get('total_count')
++            require(isinstance(runs, list) and type(count) is int and count == len(runs),
++                    'INCOMPLETE_RUN_LIST_OR_PAGINATION')
++            polls += 1
++            evidence['polls'] = polls
++            if count == 0:
++                return report('NOT_FOUND', evidence, 'NO_VISIBLE_MATCHING_RUN')
++            require(count == 1, 'MULTIPLE_MATCHING_RUNS')
++            summary = runs[0]
++            rid = summary.get('id')
++            require(type(rid) is int and rid > 0, 'INVALID_RUN_ID')
++            run = api.get('/actions/runs/' + str(rid))
++            for item in (summary, run):
++                require(item.get('id') == rid and item.get('head_sha') == sha and
++                        item.get('head_branch') == branch and item.get('event') == event and
++                        item.get('workflow_id') == wid and item.get('name') == wf['name'] and
++                        item.get('path') == wf['path'], 'RUN_IDENTITY_MISMATCH')
++            actual_attempt = run.get('run_attempt')
++            require(type(actual_attempt) is int and actual_attempt > 0 and
++                    summary.get('run_attempt') == actual_attempt, 'ATTEMPT_RACE_OR_MISSING')
++            require(actual_attempt == (attempt or 1), 'ATTEMPT_MISMATCH; EXPLICIT_RERUN_ATTEMPT_REQUIRED')
++            if pinned_id is not None:
++                require(rid == pinned_id and actual_attempt == pinned_attempt, 'RUN_OR_ATTEMPT_CHANGED')
++            pinned_id, pinned_attempt = rid, actual_attempt
++            evidence.update(run_id=rid, attempt=actual_attempt,
++                            run_url=f'https://github.com/whatcanidowhat/SafeVLA/actions/runs/{rid}',
++                            status=run.get('status'), conclusion=run.get('conclusion'))
++            require(api.head(branch) == sha, 'REMOTE_HEAD_CHANGED')
++            if clock() >= deadline:
++                return report('TIMED_OUT', evidence, 'WAIT_DEADLINE_EXCEEDED')
++            if run.get('status') == 'completed':
++                outcomes = {'success': 'SUCCESS', 'failure': 'FAILURE', 'cancelled': 'CANCELLED',
++                            'timed_out': 'TIMED_OUT', 'action_required': 'FAILURE',
++                            'startup_failure': 'FAILURE'}
++                verdict = outcomes.get(run.get('conclusion'), 'UNKNOWN')
++                return report(verdict, evidence, None if verdict == 'SUCCESS' else 'CI_NOT_SUCCESS',
++                              'Report CI evidence only; execution gates remain separate')
++            require(run.get('status') in ('queued', 'in_progress', 'waiting', 'pending', 'requested')
++                    and run.get('conclusion') is None, 'UNKNOWN_RUN_STATE')
++            sleep(min(interval, max(0, deadline - clock())))
++    except Stop as e:
++        return report(e.verdict, evidence, e.reason)
++
++
++def main(argv=None):
++    def run():
++        p = Parser(description=__doc__)
++        p.add_argument('--sha', required=True)
++        p.add_argument('--workflow', required=True)
++        p.add_argument('--event', required=True)
++        p.add_argument('--branch', default='research-loop')
++        p.add_argument('--attempt', type=int)
++        p.add_argument('--timeout', type=positive, default=600)
++        p.add_argument('--interval', type=positive, default=15)
++        a = p.parse_args(argv)
++        return wait_ci(GitHub(a.timeout), a.sha, a.workflow, a.event, a.branch,
++                       a.attempt, a.timeout, a.interval)
++    return emit(guarded(run))
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/scripts/research_loop_readonly.py b/scripts/research_loop_readonly.py
+new file mode 100644
+index 0000000..e6760a7
+--- /dev/null
++++ b/scripts/research_loop_readonly.py
+@@ -0,0 +1,183 @@
++"""Shared GET-only transport/output. No Claim, Git writes, or runtime imports."""
++import argparse
++import base64
++import hashlib
++import json
++import math
++import os
++import queue
++import re
++import ssl
++import threading
++import time
++import urllib.error
++import urllib.parse
++import urllib.request
++
++REPO = 'whatcanidowhat/SafeVLA'
++API = 'https://api.github.com/repos/' + REPO
++SHA = re.compile(r'[0-9a-f]{40}')
++CODES = {'SUCCESS': 0, 'OBSERVED': 0, 'BLOCKED': 2, 'UNKNOWN': 2,
++         'REMOTE_UNVERIFIED': 2, 'FAILURE': 3, 'CANCELLED': 4,
++         'TIMED_OUT': 5, 'NETWORK_ERROR': 6, 'NOT_FOUND': 7,
++         'RATE_LIMITED': 8, 'PERMISSION_DENIED': 9, 'INVALID_INPUT': 64}
++
++
++class Stop(Exception):
++    def __init__(self, verdict, reason):
++        self.verdict, self.reason = verdict, reason
++
++
++def require(condition, reason):
++    if not condition:
++        raise Stop('UNKNOWN', reason)
++
++
++def report(verdict, evidence=None, blocker=None, next_action='STOP; report to PI'):
++    return {'VERDICT': verdict, 'EVIDENCE': {**(evidence or {}), 'CAN_EXECUTE': False},
++            'BLOCKER': blocker, 'NEXT_AUTHORIZED_ACTION': next_action}
++
++
++def emit(result):
++    encoded = json.dumps(result, ensure_ascii=True, separators=(',', ':'))
++    if len(encoded.encode('utf-8')) >= 2048:
++        result = report('UNKNOWN', blocker='OUTPUT_EXCEEDS_2KB; EVIDENCE_WITHHELD')
++        encoded = json.dumps(result, separators=(',', ':'))
++    print(encoded)
++    return CODES[result['VERDICT']]
++
++
++class Parser(argparse.ArgumentParser):
++    def error(self, message):
++        # Never echo user arguments (which might contain credentials).
++        raise Stop('INVALID_INPUT', 'INVALID_ARGUMENTS')
++
++
++def positive(value):
++    try:
++        n = float(value)
++        if not math.isfinite(n) or n <= 0:
++            raise ValueError
++        return n
++    except ValueError:
++        raise argparse.ArgumentTypeError('positive finite number required')
++
++
++class NoRedirect(urllib.request.HTTPRedirectHandler):
++    def redirect_request(self, req, fp, code, msg, headers, newurl):
++        raise Stop('NETWORK_ERROR', 'REDIRECT_REFUSED')
++
++
++class GitHub:
++    """Fixed HTTPS origin; GET only; default CA verification; no transport retries.
++
++    A daemon transport thread bounds even a stalled platform DNS/TLS operation.
++    Timeout returns once, stops the caller, and never schedules another request.
++    """
++    def __init__(self, timeout=60, clock=time.monotonic, opener=None):
++        self.clock = clock
++        self.deadline = clock() + timeout
++        self.opener = opener or urllib.request.build_opener(
++            NoRedirect(), urllib.request.HTTPSHandler(context=ssl.create_default_context()))
++        self.calls = 0
++
++    def get(self, path):
++        remaining = self.deadline - self.clock()
++        if remaining <= 0:
++            raise Stop('TIMED_OUT', 'DEADLINE_EXCEEDED')
++        results = queue.Queue(maxsize=1)
++        def request():
++            try:
++                results.put((True, self._get(path)))
++            except Exception as error:
++                results.put((False, error))
++        threading.Thread(target=request, daemon=True, name='readonly-https').start()
++        try:
++            ok, value = results.get(timeout=min(10, remaining))
++        except queue.Empty:
++            if remaining <= 10:
++                raise Stop('TIMED_OUT', 'DEADLINE_EXCEEDED') from None
++            raise Stop('NETWORK_ERROR', 'REQUEST_TIMEOUT') from None
++        if self.clock() >= self.deadline:
++            raise Stop('TIMED_OUT', 'DEADLINE_EXCEEDED')
++        if not ok:
++            raise value
++        return value
++
++    def _get(self, path):
++        require(path.startswith('/') and not path.startswith('//'), 'INVALID_API_PATH')
++        remaining = self.deadline - self.clock()
++        if remaining <= 0:
++            raise Stop('TIMED_OUT', 'DEADLINE_EXCEEDED')
++        headers = {'Accept': 'application/vnd.github+json',
++                   'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'safevla-readonly',
++                   'Cache-Control': 'no-cache'}
++        token = os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')
++        if token:
++            headers['Authorization'] = 'Bearer ' + token
++        req = urllib.request.Request(API + path, headers=headers, method='GET')
++        self.calls += 1
++        try:
++            with self.opener.open(req, timeout=min(10, remaining)) as response:
++                require(response.geturl() == API + path, 'UNEXPECTED_RESPONSE_ORIGIN')
++                chunks, size = [], 0
++                while True:
++                    if self.clock() >= self.deadline:
++                        raise Stop('TIMED_OUT', 'DEADLINE_EXCEEDED')
++                    chunk = response.read1(65536)
++                    if not chunk:
++                        break
++                    size += len(chunk)
++                    require(size <= 8 * 1024 * 1024, 'API_RESPONSE_TOO_LARGE')
++                    chunks.append(chunk)
++                value = json.loads(b''.join(chunks))
++                require(isinstance(value, dict), 'INVALID_API_RESPONSE')
++                return value
++        except urllib.error.HTTPError as e:
++            if e.code == 429 or (e.code == 403 and
++                    (e.headers.get('X-RateLimit-Remaining') == '0' or e.headers.get('Retry-After'))):
++                raise Stop('RATE_LIMITED', 'API_RATE_LIMIT') from None
++            if e.code in (401, 403):
++                raise Stop('PERMISSION_DENIED', 'API_AUTH_OR_PERMISSION') from None
++            if e.code == 404:
++                raise Stop('NOT_FOUND', 'API_NOT_FOUND_OR_NOT_VISIBLE') from None
++            raise Stop('NETWORK_ERROR', 'HTTP_ERROR') from None
++        except (urllib.error.URLError, OSError, TimeoutError):
++            raise Stop('NETWORK_ERROR', 'HTTPS_DNS_TLS_PROXY_OR_TIMEOUT') from None
++        except (ValueError, UnicodeError):
++            raise Stop('UNKNOWN', 'INVALID_API_JSON') from None
++
++    def head(self, branch):
++        value = self.get('/git/ref/heads/' + urllib.parse.quote(branch, safe=''))
++        require(value.get('ref') == 'refs/heads/' + branch, 'REF_MISMATCH')
++        obj = value.get('object', {})
++        sha = obj.get('sha', '')
++        require(obj.get('type') == 'commit' and isinstance(sha, str) and SHA.fullmatch(sha),
++                'INVALID_REMOTE_HEAD')
++        return sha
++
++    def file(self, revision, path):
++        require(bool(SHA.fullmatch(revision)), 'INVALID_REVISION')
++        value = self.get('/contents/' + urllib.parse.quote(path, safe='/') + '?ref=' + revision)
++        require(value.get('type') == 'file' and value.get('path') == path and
++                value.get('encoding') == 'base64', 'INVALID_FILE_RESPONSE')
++        try:
++            raw = base64.b64decode(''.join(value['content'].split()), validate=True)
++        except (ValueError, KeyError, TypeError):
++            raise Stop('UNKNOWN', 'INVALID_FILE_ENCODING') from None
++        require(len(raw) <= 1024 * 1024 and value.get('size') == len(raw), 'FILE_SIZE_MISMATCH')
++        digest = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
++        require(value.get('sha') == digest, 'FILE_BLOB_MISMATCH')
++        return raw
++
++
++def guarded(call):
++    try:
++        return call()
++    except Stop as e:
++        return report(e.verdict, blocker=e.reason)
++    except KeyboardInterrupt:
++        return report('CANCELLED', blocker='INTERRUPTED')
++    except Exception:
++        # No raw error, URL, token, response body or environment in output.
++        return report('UNKNOWN', blocker='INVALID_OR_INCOMPLETE_EVIDENCE')
+diff --git a/scripts/research_loop_status.py b/scripts/research_loop_status.py
+new file mode 100644
+index 0000000..5ce1c97
+--- /dev/null
++++ b/scripts/research_loop_status.py
+@@ -0,0 +1,120 @@
++#!/usr/bin/env python3
++"""Observe a pinned control snapshot. Exit 0 means observation, never execution."""
++from datetime import datetime, timezone
++import json
++from pathlib import Path
++import re
++import subprocess
++
++from jsonschema import Draft202012Validator, FormatChecker, SchemaError
++from research_loop_readonly import GitHub, Parser, Stop, emit, guarded, positive, report, require
++from validate_research_loop import ACTOR, BASE_OUTPUTS, DESIGN_FIELDS, safe_path
++
++ROOT = Path(__file__).resolve().parents[1]
++PATHS = ('research/LOOP_STATE.json', 'research/NEXT_EXPERIMENT.json', 'research/NEXT_EXPERIMENT.md',
++         'research/LOOP_STATE.schema.json')
++
++
++def assess(state, design, markdown, schema, now, expected_cycle=None, expected_claim=None):
++    try:
++        Draft202012Validator.check_schema(schema)
++    except SchemaError:
++        raise Stop('UNKNOWN', 'INVALID_STATE_SCHEMA') from None
++    require(not list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(state)),
++            'STATE_SCHEMA_CONFLICT')
++    require(state['next_actor'] == ACTOR[state['status']], 'ACTOR_CONFLICT')
++    require(all(design.get(k) == state[k] for k in ('cycle_id', 'experiment_id')), 'DESIGN_IDENTITY_CONFLICT')
++    require(re.findall(r'^Experiment ID:[ \t]*(\S+)[ \t]*$', markdown, re.M) == [state['experiment_id']],
++            'MARKDOWN_IDENTITY_CONFLICT')
++    statuses = re.findall(r'^Status:[ \t]*(\S+)[ \t]*$', markdown, re.M)
++    require(len(statuses) == 1, 'MARKDOWN_STATUS_MISSING')
++    status, auth = state['status'], state['authorization']
++    require(state['execution_worktree'] is None or 'SafeVLA_loop_control' not in state['execution_worktree'],
++            'CONTROL_WORKTREE_FORBIDDEN')
++    prefix = 'research/handoffs/' + state['cycle_id'] + '/'
++    require({prefix + name for name in BASE_OUTPUTS}.issubset(state['required_outputs']) and
++            all(p.startswith(prefix) and safe_path(p) for p in state['required_outputs']),
++            'OUTPUT_PATH_CONFLICT')
++    if auth['scope'] == 'CONTROL_ONLY_NOOP':
++        require(auth['max_gpu'] == auth['max_episodes'] == 0 and state['execution_worktree'] is None,
++                'NOOP_RESOURCE_CONFLICT')
++    if expected_cycle is not None:
++        require(state['cycle_id'] == expected_cycle, 'STALE_CYCLE')
++    if expected_claim is not None:
++        require(state['claim_id'] == expected_claim, 'STALE_CLAIM')
++    if status == 'PI_REVIEW':
++        require(auth['status'] == 'NOT_AUTHORIZED', 'REVIEW_AUTH_CONFLICT')
++        staged = state['instruction_commit'] is None and state['claim_id'] is None
++        allowed = ('DRAFT', 'APPROVED') if staged else ('DRAFT',)
++        require(statuses[0] in allowed and design.get('status') in allowed, 'REVIEW_DESIGN_CONFLICT')
++        return 'BLOCKED', 'PI_REVIEW_NOT_EXECUTABLE'
++    require(auth['status'] == 'APPROVED' and design.get('status') == statuses[0] == 'APPROVED',
++            'APPROVAL_DESIGN_CONFLICT')
++    require(all(design.get(k) for k in DESIGN_FIELDS), 'INCOMPLETE_DESIGN')
++    require(design.get('resources') == {k: auth[k] for k in ('max_gpu', 'max_episodes')} and
++            design.get('required_outputs') == state['required_outputs'], 'DESIGN_SCOPE_CONFLICT')
++    require(auth['approved_by'] == 'PI', 'APPROVER_CONFLICT')
++    approved = datetime.fromisoformat(auth['approved_at_utc'].replace('Z', '+00:00'))
++    expiry = datetime.fromisoformat(auth['expires_at_utc'].replace('Z', '+00:00'))
++    require(approved <= now and approved < expiry, 'APPROVAL_TIME_CONFLICT')
++    is_approval = status.startswith('APPROVED_FOR_')
++    require((state['claim_id'] is None and state['instruction_commit'] is None) if is_approval
++            else bool(state['claim_id'] and state['instruction_commit']), 'CLAIM_BINDING_CONFLICT')
++    if status in ('BLOCKED', 'INVALID', 'ABORTED', 'AWAITING_PI_REVIEW'):
++        return 'BLOCKED', 'TERMINAL_OR_REVIEW_STATE; HISTORICAL_CLAIM_NOT_REUSABLE'
++    if now >= expiry:
++        return 'BLOCKED', 'APPROVAL_EXPIRED'
++    if not is_approval:
++        return 'BLOCKED', 'EXISTING_CLAIM; NO_AUTOMATIC_RESUME'
++    return 'OBSERVED', 'APPROVAL_OBSERVED_ONLY; CI_CLAIM_RUNTIME_GATES_NOT_CHECKED'
++
++
++def query(api=None, root=ROOT, local=False, now=None, expected_cycle=None, expected_claim=None):
++    evidence = {'repository': 'whatcanidowhat/SafeVLA', 'branch': 'research-loop',
++                'scope': 'STATE_AND_DESIGN_ONLY; NOT_FULL_HISTORY_OR_ARTIFACT_AUDIT'}
++    try:
++        if local:
++            def git(*args):
++                return subprocess.check_output(['git', '-C', str(root), *args],
++                                               stderr=subprocess.DEVNULL, timeout=10)
++            revision = git('rev-parse', 'HEAD').decode().strip()
++            raw = [git('show', revision + ':' + p) for p in PATHS]
++            evidence['remote'] = 'REMOTE_UNVERIFIED'
++        else:
++            revision = api.head('research-loop')
++            raw = [api.file(revision, p) for p in PATHS]
++            require(api.head('research-loop') == revision, 'REMOTE_HEAD_CHANGED')
++            evidence['remote'] = 'VERIFIED_AT_QUERY'
++        evidence['sha'] = revision
++        state, design = json.loads(raw[0]), json.loads(raw[1])
++        verdict, reason = assess(state, design, raw[2].decode('utf-8'), json.loads(raw[3]),
++                                 now or datetime.now(timezone.utc), expected_cycle, expected_claim)
++        evidence.update({k: state[k] for k in ('status', 'next_actor', 'experiment_id', 'cycle_id',
++                                             'claim_id', 'instruction_commit')})
++        evidence['authorization'] = state['authorization']
++        if local:
++            return report('REMOTE_UNVERIFIED', evidence, 'LOCAL_COMMITTED_SNAPSHOT_ONLY; ' + reason)
++        return report(verdict, evidence, reason, 'Report observation; follow existing PI protocol separately')
++    except Stop as e:
++        evidence['error_kind'] = e.verdict
++        return report('UNKNOWN', evidence, e.reason)
++
++
++def main(argv=None):
++    def run():
++        p = Parser(description=__doc__)
++        group = p.add_mutually_exclusive_group(required=True)
++        group.add_argument('--local', action='store_true')
++        group.add_argument('--remote-readonly', action='store_true')
++        p.add_argument('--root', type=Path, default=ROOT)
++        p.add_argument('--timeout', type=positive, default=60)
++        p.add_argument('--expected-cycle')
++        p.add_argument('--expected-claim')
++        a = p.parse_args(argv)
++        return query(None if a.local else GitHub(a.timeout), root=a.root, local=a.local,
++                     expected_cycle=a.expected_cycle, expected_claim=a.expected_claim)
++    return emit(guarded(run))
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/scripts/test_research_loop.py b/scripts/test_research_loop.py
+index ab812f1..9300a75 100644
+--- a/scripts/test_research_loop.py
++++ b/scripts/test_research_loop.py
+@@ -30,7 +30,8 @@ def git(root, *args):
+ def save(root, path, data):
+     p = root / path
+     p.parent.mkdir(parents=True, exist_ok=True)
+-    p.write_text(json.dumps(data, indent=2) + "\n" if not isinstance(data, str) else data)
++    p.write_text(json.dumps(data, indent=2) + "\n" if not isinstance(data, str) else data,
++                 encoding="utf-8", newline="\n")
+ 
+ 
+ def initial():
+@@ -644,4 +645,3 @@ class ProtocolTests(unittest.TestCase):
+ 
+ if __name__ == "__main__":
+     unittest.main(verbosity=2)
+-
+diff --git a/scripts/test_research_loop_readonly.py b/scripts/test_research_loop_readonly.py
+new file mode 100644
+index 0000000..5152729
+--- /dev/null
++++ b/scripts/test_research_loop_readonly.py
+@@ -0,0 +1,537 @@
++"""Offline adversarial tests. No real credentials, GitHub writes or experiments."""
++import base64
++import contextlib
++import copy
++from datetime import datetime, timezone
++import hashlib
++import io
++import json
++from pathlib import Path
++import subprocess
++import tempfile
++import threading
++import time
++import unittest
++from unittest.mock import patch
++import urllib.error
++
++import research_loop_ci_wait as ci
++import research_loop_status as status
++from research_loop_readonly import API, GitHub, NoRedirect, Stop, emit, guarded, report
++from validate_research_loop import Invalid, View, audit_tree
++from test_research_loop import initial, design
++
++SHA = 'a' * 40
++OTHER = 'b' * 40
++NOW = datetime(2026, 10, 17, tzinfo=timezone.utc)
++WF = {'id': 123, 'name': 'research-loop-validate', 'path': '.github/workflows/research-loop-validate.yml'}
++SCHEMA = json.loads((Path(__file__).resolve().parents[1] /
++                     'research/LOOP_STATE.schema.json').read_text(encoding='utf-8'))
++
++
++def run_state(state='completed', conclusion='success', attempt=1):
++    return {'id': 7, 'head_sha': SHA, 'head_branch': 'research-loop', 'event': 'push',
++            'workflow_id': 123, 'name': WF['name'], 'path': WF['path'],
++            'run_attempt': attempt, 'status': state, 'conclusion': conclusion}
++
++
++class Clock:
++    def __init__(self):
++        self.value = 0
++
++    def __call__(self):
++        return self.value
++
++    def sleep(self, seconds):
++        self.value += seconds
++
++
++class CIAPI:
++    def __init__(self, runs=None, head=SHA, count=1, error=None):
++        self.runs = copy.deepcopy(runs or [run_state()])
++        self.remote = head
++        self.count, self.error = count, error
++        self.index, self.calls = 0, []
++        self.detail_patch = {}
++        self.head_reads = 0
++        self.move_at = None
++
++    def head(self, branch):
++        self.calls.append(('HEAD', branch))
++        self.head_reads += 1
++        return OTHER if self.move_at == self.head_reads else self.remote
++
++    def get(self, path):
++        self.calls.append(('GET', path))
++        if self.error:
++            raise self.error
++        if '/runs?' in path:
++            n = min(self.index, len(self.runs) - 1)
++            self.current = copy.deepcopy(self.runs[n])
++            self.index += 1
++            return {'total_count': self.count, 'workflow_runs': [self.current] * self.count}
++        if path.startswith('/actions/runs/'):
++            return {**self.current, **self.detail_patch}
++        return copy.deepcopy(WF)
++
++
++def wait(api, **kwargs):
++    clock = Clock()
++    return ci.wait_ci(api, SHA, 'research-loop-validate.yml', 'push',
++                      timeout=kwargs.pop('timeout', 30), interval=10, clock=clock,
++                      sleep=clock.sleep, **kwargs)
++
++
++def snapshot(state='PI_REVIEW'):
++    s = initial()
++    s['updated_by'] = 'PI'
++    if state != 'PI_REVIEW':
++        s.update(status=state, next_actor=status.ACTOR[state])
++        s['authorization'].update(status='APPROVED', approved_by='PI',
++                                  approved_at_utc='2026-10-16T00:00:00Z',
++                                  expires_at_utc='2026-10-18T00:00:00Z')
++        if not state.startswith('APPROVED_FOR_'):
++            s.update(claim_id='old-claim-123', instruction_commit=OTHER)
++    d = design(s, 'DRAFT' if state == 'PI_REVIEW' else 'APPROVED')
++    md = f"Experiment ID: {s['experiment_id']}\nStatus: {d['status']}\n"
++    return s, d, md
++
++
++class StateAPI:
++    def __init__(self, state='PI_REVIEW'):
++        self.data = (*snapshot(state), copy.deepcopy(SCHEMA))
++        self.refs, self.heads = [], 0
++        self.move = False
++
++    def head(self, branch):
++        self.heads += 1
++        return OTHER if self.move and self.heads == 2 else SHA
++
++    def file(self, revision, path):
++        self.refs.append((revision, path))
++        i = status.PATHS.index(path)
++        return (self.data[i] if i == 2 else json.dumps(self.data[i])).encode()
++
++
++class StateTests(unittest.TestCase):
++    def test_future_approval_and_scope_conflicts(self):
++        for change in (lambda s: s['authorization'].update(approved_at_utc='2026-10-17T01:00:00Z'),
++                       lambda s: s.update(execution_worktree='/x/SafeVLA_loop_control'),
++                       lambda s: s['authorization'].update(max_gpu=1),
++                       lambda s: s['required_outputs'].pop(),
++                       lambda s: s['authorization'].update(approved_by='CODEX')):
++            api = StateAPI('APPROVED_FOR_CODEX')
++            change(api.data[0])
++            self.assertEqual(status.query(api, now=NOW)['VERDICT'], 'UNKNOWN')
++
++    def test_missing_state_or_network_failure(self):
++        api = StateAPI()
++        with patch.object(api, 'file', side_effect=Stop('NETWORK_ERROR', 'TLS')):
++            result = status.query(api, now=NOW)
++            self.assertEqual(result['VERDICT'], 'UNKNOWN')
++            self.assertEqual(result['EVIDENCE']['error_kind'], 'NETWORK_ERROR')
++        with patch.object(api, 'file', return_value=b'not-json'):
++            self.assertEqual(guarded(lambda: status.query(api, now=NOW))['VERDICT'], 'UNKNOWN')
++
++    def test_all_states_never_grant_execution(self):
++        for name in status.ACTOR:
++            with self.subTest(state=name):
++                result = status.query(StateAPI(name), now=NOW)
++                self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++                self.assertEqual(result['VERDICT'], 'OBSERVED' if name.startswith('APPROVED_FOR_') else 'BLOCKED')
++
++    def test_expired_approval(self):
++        api = StateAPI('APPROVED_FOR_CODEX')
++        api.data[0]['authorization']['expires_at_utc'] = '2026-10-16T01:00:00Z'
++        result = status.query(api, now=NOW)
++        self.assertEqual(result['BLOCKER'], 'APPROVAL_EXPIRED')
++
++    def test_conflicts_and_missing_evidence(self):
++        mutations = [lambda s, d: s.update(next_actor='CODEX'),
++                     lambda s, d: s.update(status='NOT_A_STATE'),
++                     lambda s, d: d.update(cycle_id='another-cycle'),
++                     lambda s, d: d.pop('status'),
++                     lambda s, d: s['authorization'].update(status='APPROVED')]
++        for change in mutations:
++            api = StateAPI()
++            change(api.data[0], api.data[1])
++            self.assertEqual(status.query(api, now=NOW)['VERDICT'], 'UNKNOWN')
++
++    def test_claim_is_not_reusable(self):
++        for name in ('BLOCKED', 'CODEX_RUNNING', 'OPERATOR_RUNNING'):
++            api = StateAPI(name)
++            result = status.query(api, now=NOW)
++            self.assertEqual(result['VERDICT'], 'BLOCKED')
++            result = status.query(api, now=NOW, expected_claim='different')
++            self.assertEqual(result['BLOCKER'], 'STALE_CLAIM')
++
++    def test_approval_cannot_contain_old_claim(self):
++        api = StateAPI('APPROVED_FOR_CODEX')
++        api.data[0].update(claim_id='old-claim-123', instruction_commit=OTHER)
++        self.assertEqual(status.query(api, now=NOW)['BLOCKER'], 'CLAIM_BINDING_CONFLICT')
++
++    def test_remote_moves_and_revision_pinning(self):
++        api = StateAPI()
++        api.move = True
++        self.assertEqual(status.query(api, now=NOW)['BLOCKER'], 'REMOTE_HEAD_CHANGED')
++        self.assertTrue(all(ref == SHA for ref, _ in api.refs))
++        self.assertEqual([path for _, path in api.refs], list(status.PATHS))
++        self.assertIn('research/LOOP_STATE.schema.json', status.PATHS)
++
++    def test_repeated_queries_recheck_without_mutation(self):
++        api = StateAPI('BLOCKED')
++        before = copy.deepcopy(api.data)
++        one, two = status.query(api, now=NOW), status.query(api, now=NOW)
++        self.assertEqual(one, two)
++        self.assertEqual(before, api.data)
++        self.assertEqual(api.heads, 4)
++
++    def test_local_uses_committed_snapshot_never_network(self):
++        s, d, md = snapshot('APPROVED_FOR_CODEX')
++        values = [SHA.encode(), json.dumps(s).encode(), json.dumps(d).encode(), md.encode(),
++                  json.dumps(SCHEMA).encode()]
++        with patch.object(status.subprocess, 'check_output', side_effect=values) as command:
++            result = status.query(local=True, now=NOW)
++        self.assertEqual(result['VERDICT'], 'REMOTE_UNVERIFIED')
++        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++        self.assertEqual([c.args[0][3] for c in command.call_args_list],
++                         ['rev-parse', 'show', 'show', 'show', 'show'])
++
++    def test_remote_schema_is_used_without_script_directory_reads(self):
++        api = StateAPI('APPROVED_FOR_CODEX')
++        api.data[3]['properties']['status'] = {'const': 'PI_REVIEW'}
++        with patch.object(Path, 'read_text', side_effect=AssertionError('implicit filesystem read')):
++            result = status.query(api, now=NOW)
++        self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
++        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_missing_and_invalid_remote_schema_fail_closed(self):
++        for raw in (None, b'not-json', b'{"type":"not-a-json-type"}'):
++            api = StateAPI('APPROVED_FOR_CODEX')
++            original = api.file
++            def file(revision, path):
++                if path == 'research/LOOP_STATE.schema.json':
++                    if raw is None:
++                        raise Stop('NOT_FOUND', 'SCHEMA_NOT_FOUND')
++                    return raw
++                return original(revision, path)
++            api.file = file
++            result = guarded(lambda: status.query(api, now=NOW))
++            self.assertEqual(result['VERDICT'], 'UNKNOWN')
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def local_fixture(self, root, schema):
++        def git(*args):
++            return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.DEVNULL)
++        git('init', '-q')
++        git('config', 'user.name', 'Offline fixture')
++        git('config', 'user.email', 'fixture@example.invalid')
++        data = (*snapshot('APPROVED_FOR_CODEX'), schema)
++        for path, value in zip(status.PATHS, data):
++            if value is None:
++                continue
++            target = root / path
++            target.parent.mkdir(parents=True, exist_ok=True)
++            target.write_text(value if isinstance(value, str) else json.dumps(value),
++                              encoding='utf-8', newline='\n')
++        git('add', '.')
++        git('commit', '-qm', 'synthetic snapshot')
++        return git('rev-parse', 'HEAD').decode().strip()
++
++    def test_explicit_local_root_uses_committed_schema_not_working_copy(self):
++        with tempfile.TemporaryDirectory() as folder:
++            root = Path(folder)
++            schema = copy.deepcopy(SCHEMA)
++            schema['properties']['status'] = {'const': 'PI_REVIEW'}
++            revision = self.local_fixture(root, schema)
++            (root / 'research/LOOP_STATE.schema.json').write_text(json.dumps(SCHEMA), encoding='utf-8')
++            result = guarded(lambda: status.query(root=root, local=True, now=NOW))
++            self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
++            self.assertEqual(result['EVIDENCE']['sha'], revision)
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_missing_and_invalid_local_schema_fail_closed(self):
++        for schema in (None, 'not-json', {'type': 'not-a-json-type'}):
++            with self.subTest(schema=schema), tempfile.TemporaryDirectory() as folder:
++                root = Path(folder)
++                self.local_fixture(root, schema)
++                result = guarded(lambda: status.query(root=root, local=True, now=NOW))
++                self.assertEqual(result['VERDICT'], 'UNKNOWN')
++                self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_remote_transport_pins_and_verifies_all_four_blobs(self):
++        values = (*snapshot('APPROVED_FOR_CODEX'), SCHEMA)
++        bodies = dict(zip(status.PATHS, [v.encode() if isinstance(v, str) else
++                                       json.dumps(v).encode() for v in values]))
++        for corrupt in (False, True):
++            calls = []
++            class Opener:
++                def open(self, req, timeout):
++                    calls.append((req.get_method(), req.full_url))
++                    if '/git/ref/' in req.full_url:
++                        value = {'ref': 'refs/heads/research-loop',
++                                 'object': {'type': 'commit', 'sha': SHA}}
++                    else:
++                        path = req.full_url.split('/contents/')[1].split('?')[0]
++                        raw = bodies[path]
++                        blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
++                        value = {'type': 'file', 'path': path, 'encoding': 'base64',
++                                 'content': base64.b64encode(raw).decode(), 'size': len(raw),
++                                 'sha': OTHER if corrupt and path.endswith('.schema.json') else blob}
++                    return Response(value, req.full_url)
++            result = status.query(GitHub(opener=Opener()), now=NOW)
++            self.assertEqual(result['VERDICT'], 'UNKNOWN' if corrupt else 'OBSERVED')
++            if corrupt:
++                self.assertEqual(result['BLOCKER'], 'FILE_BLOB_MISMATCH')
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++            self.assertTrue(all(method == 'GET' for method, _ in calls))
++            self.assertEqual([url for _, url in calls if '/contents/' in url],
++                             [API + '/contents/' + p + '?ref=' + SHA for p in status.PATHS])
++
++
++class CITests(unittest.TestCase):
++    def test_pending_then_success(self):
++        api = CIAPI([run_state('queued', None), run_state('in_progress', None), run_state()])
++        result = wait(api)
++        self.assertEqual(result['VERDICT'], 'SUCCESS')
++        self.assertEqual(result['EVIDENCE']['polls'], 3)
++        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_terminal_outcomes(self):
++        for conclusion, verdict in [('failure', 'FAILURE'), ('cancelled', 'CANCELLED'),
++                                    ('timed_out', 'TIMED_OUT'), ('neutral', 'UNKNOWN'),
++                                    ('skipped', 'UNKNOWN'), (None, 'UNKNOWN')]:
++            with self.subTest(conclusion=conclusion):
++                self.assertEqual(wait(CIAPI([run_state(conclusion=conclusion)]))['VERDICT'], verdict)
++
++    def test_identity_errors(self):
++        for field, value in [('head_sha', OTHER), ('head_branch', 'other'), ('event', 'pull_request'),
++                             ('workflow_id', 999), ('name', 'another'), ('path', 'other.yml'), ('id', 999)]:
++            api = CIAPI()
++            api.detail_patch[field] = value
++            with self.subTest(field=field):
++                self.assertEqual(wait(api)['VERDICT'], 'UNKNOWN')
++
++    def test_wrong_remote_and_movement(self):
++        self.assertEqual(wait(CIAPI(head=OTHER))['BLOCKER'], 'REMOTE_HEAD_MISMATCH')
++        api = CIAPI()
++        api.move_at = 3
++        self.assertEqual(wait(api)['BLOCKER'], 'REMOTE_HEAD_CHANGED')
++
++    def test_no_run_or_multiple_runs(self):
++        self.assertEqual(wait(CIAPI(count=0))['VERDICT'], 'NOT_FOUND')
++        self.assertEqual(wait(CIAPI(count=2))['BLOCKER'], 'MULTIPLE_MATCHING_RUNS')
++
++    def test_rerun_requires_explicit_current_attempt(self):
++        self.assertEqual(wait(CIAPI([run_state(attempt=2)]))['VERDICT'], 'UNKNOWN')
++        self.assertEqual(wait(CIAPI([run_state(attempt=2)]), attempt=2)['VERDICT'], 'SUCCESS')
++        self.assertEqual(wait(CIAPI([run_state(attempt=2)]), attempt=1)['VERDICT'], 'UNKNOWN')
++
++    def test_attempt_changes_during_poll_or_between_list_and_detail(self):
++        api = CIAPI([run_state('queued', None), run_state(attempt=2)])
++        self.assertEqual(wait(api)['VERDICT'], 'UNKNOWN')
++        api = CIAPI()
++        api.detail_patch['run_attempt'] = 2
++        self.assertEqual(wait(api)['BLOCKER'], 'ATTEMPT_RACE_OR_MISSING')
++
++    def test_new_run_replaces_old_run(self):
++        new = run_state()
++        new['id'] = 8
++        self.assertEqual(wait(CIAPI([run_state('queued', None), new]))['BLOCKER'], 'RUN_OR_ATTEMPT_CHANGED')
++
++    def test_timeout_is_bounded(self):
++        result = wait(CIAPI([run_state('queued', None)]), timeout=25)
++        self.assertEqual(result['VERDICT'], 'TIMED_OUT')
++        self.assertEqual(result['EVIDENCE']['polls'], 3)
++
++    def test_errors_never_retry(self):
++        for verdict in ('NETWORK_ERROR', 'PERMISSION_DENIED', 'RATE_LIMITED', 'NOT_FOUND'):
++            api = CIAPI(error=Stop(verdict, 'SYNTHETIC'))
++            result = wait(api)
++            self.assertEqual(result['VERDICT'], verdict)
++            self.assertEqual(len([c for c in api.calls if c[0] == 'GET']), 1)
++
++    def test_incomplete_pagination(self):
++        api = CIAPI()
++        original = api.get
++        def truncated(path):
++            value = original(path)
++            if '/runs?' in path:
++                value['total_count'] = 101
++            return value
++        api.get = truncated
++        self.assertEqual(wait(api)['BLOCKER'], 'INCOMPLETE_RUN_LIST_OR_PAGINATION')
++
++    def test_repeated_success_has_no_side_effects(self):
++        api = CIAPI()
++        self.assertEqual(wait(api)['VERDICT'], 'SUCCESS')
++        self.assertEqual(wait(api)['VERDICT'], 'SUCCESS')
++        self.assertTrue(all(method in ('HEAD', 'GET') for method, _ in api.calls))
++
++    def test_cli_emits_one_json_and_exit_code(self):
++        api = CIAPI([run_state(conclusion='cancelled')])
++        out = io.StringIO()
++        with patch.object(ci, 'GitHub', return_value=api), contextlib.redirect_stdout(out):
++            code = ci.main(['--sha', SHA, '--workflow', '123', '--event', 'push'])
++        self.assertEqual(code, 4)
++        self.assertEqual(len(out.getvalue().splitlines()), 1)
++        self.assertEqual(json.loads(out.getvalue())['VERDICT'], 'CANCELLED')
++
++    def test_invalid_cli_is_structured(self):
++        for args in ([], ['--sha', SHA, '--workflow', '123', '--event', 'push', '--timeout', 'nan']):
++            out = io.StringIO()
++            with contextlib.redirect_stdout(out):
++                code = ci.main(args)
++            self.assertEqual(code, 64)
++            self.assertEqual(json.loads(out.getvalue())['VERDICT'], 'INVALID_INPUT')
++
++
++class Response(io.BytesIO):
++    def __init__(self, content, url):
++        super().__init__(json.dumps(content).encode())
++        self.url = url
++
++    def geturl(self):
++        return self.url
++
++
++class TransportTests(unittest.TestCase):
++    def test_stalled_dns_is_bounded(self):
++        release = threading.Event()
++        class Opener:
++            def open(self, req, timeout):
++                release.wait(2)
++                raise TimeoutError
++        start = time.monotonic()
++        try:
++            result = guarded(lambda: GitHub(timeout=0.03, opener=Opener()).get('/x'))
++            self.assertEqual(result['VERDICT'], 'TIMED_OUT')
++            self.assertLess(time.monotonic() - start, 0.5)
++        finally:
++            release.set()
++
++    def test_invalid_json_and_redirect_origin_are_not_success(self):
++        class Opener:
++            def open(self, req, timeout):
++                return Response({}, 'https://other.invalid')
++        self.assertEqual(guarded(lambda: GitHub(opener=Opener()).get('/x'))['VERDICT'], 'UNKNOWN')
++
++    def test_tls_context_verifies_certificates(self):
++        import ssl
++        import research_loop_readonly as shared
++        original = ssl.create_default_context
++        contexts = []
++        def context():
++            ctx = original()
++            contexts.append(ctx)
++            return ctx
++        with patch.object(shared.ssl, 'create_default_context', side_effect=context):
++            GitHub()
++        self.assertEqual(contexts[0].verify_mode, ssl.CERT_REQUIRED)
++        self.assertTrue(contexts[0].check_hostname)
++
++    def test_output_size_fail_closed(self):
++        out = io.StringIO()
++        with contextlib.redirect_stdout(out):
++            code = emit(report('SUCCESS', {'long': 'x' * 3000}))
++        self.assertEqual(code, 2)
++        self.assertLess(len(out.getvalue().encode()), 2048)
++        self.assertFalse(json.loads(out.getvalue())['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_exact_whitelist_does_not_allow_other_scripts(self):
++        with tempfile.TemporaryDirectory() as folder:
++            root = Path(folder)
++            subprocess.run(['git', 'init', '-q', str(root)], check=True, capture_output=True)
++            (root / 'scripts').mkdir()
++            for name in ('research_loop_status.py', 'research_loop_ci_wait.py',
++                         'research_loop_readonly.py', 'test_research_loop_readonly.py'):
++                (root / 'scripts' / name).write_text('# fixture\n', encoding='utf-8')
++            audit_tree(View(root))
++            forbidden = root / 'scripts/unauthorized.py'
++            forbidden.write_text('# fixture\n')
++            with self.assertRaisesRegex(Invalid, 'outside control whitelist'):
++                audit_tree(View(root))
++            forbidden.unlink()
++            (root / 'scripts/research_loop_status.py').write_bytes(b'x' * (1024 * 1024 + 1))
++            with self.assertRaisesRegex(Invalid, 'OVERSIZED_ARTIFACT'):
++                audit_tree(View(root))
++
++    def test_get_only_fixed_host_and_blob_hash(self):
++        raw = b'hello\n'
++        value = {'type': 'file', 'path': 'research/example.md', 'encoding': 'base64',
++                 'content': base64.b64encode(raw).decode(), 'size': len(raw),
++                 'sha': hashlib.sha1(b'blob 6\0' + raw).hexdigest()}
++        class Opener:
++            def open(self, req, timeout):
++                self.request = req
++                return Response(value, req.full_url)
++        opener = Opener()
++        self.assertEqual(GitHub(opener=opener).file(SHA, 'research/example.md'), raw)
++        self.assertEqual(opener.request.get_method(), 'GET')
++        self.assertTrue(opener.request.full_url.startswith(API + '/contents/'))
++        value['sha'] = OTHER
++        with self.assertRaisesRegex(Stop, 'FILE_BLOB_MISMATCH'):
++            GitHub(opener=opener).file(SHA, 'research/example.md')
++
++    def test_http_errors_sanitized_and_not_retried(self):
++        for code, headers, verdict in [(401, {}, 'PERMISSION_DENIED'), (403, {}, 'PERMISSION_DENIED'),
++                                      (403, {'X-RateLimit-Remaining': '0'}, 'RATE_LIMITED'),
++                                      (429, {}, 'RATE_LIMITED'), (404, {}, 'NOT_FOUND'),
++                                      (503, {}, 'NETWORK_ERROR')]:
++            class Opener:
++                calls = 0
++                def open(self, req, timeout):
++                    self.calls += 1
++                    raise urllib.error.HTTPError(req.full_url, code, 'SENSITIVE_SENTINEL', headers, None)
++            opener = Opener()
++            result = guarded(lambda: GitHub(opener=opener).get('/actions/runs/7'))
++            self.assertEqual(result['VERDICT'], verdict)
++            self.assertNotIn('SENSITIVE_SENTINEL', json.dumps(result))
++            self.assertEqual(opener.calls, 1)
++
++    def test_tls_proxy_timeout_fail_closed(self):
++        for error in (urllib.error.URLError('TLS certificate invalid'), TimeoutError('secret proxy')):
++            class Opener:
++                def open(self, req, timeout):
++                    raise error
++            self.assertEqual(guarded(lambda: GitHub(opener=Opener()).get('/x'))['VERDICT'], 'NETWORK_ERROR')
++
++    def test_redirect_refused(self):
++        with self.assertRaises(Stop):
++            NoRedirect().redirect_request(None, None, 302, None, None, 'https://other.invalid')
++
++
++def benchmark():
++    """Five offline control tasks; actual LLM/token fields deliberately unmeasured."""
++    scenarios = {'immediate_success': [run_state()],
++                 'queued_success': [run_state('queued', None), run_state('in_progress', None), run_state()],
++                 'failure': [run_state('queued', None), run_state(conclusion='failure')],
++                 'cancelled': [run_state(conclusion='cancelled')],
++                 'timeout': [run_state('queued', None)]}
++    rows = []
++    for name, states in scenarios.items():
++        api = CIAPI(states)
++        start = time.perf_counter()
++        result = wait(api)
++        elapsed = time.perf_counter() - start
++        polls = result['EVIDENCE'].get('polls', 0)
++        rows.append({'task': name, 'verdict': result['VERDICT'],
++                     'synthetic_polls': polls, 'synthetic_api_reads': len(api.calls),
++                     'python_harness_wall_seconds': elapsed,
++                     'modeled_before_llm_tool_calls': polls, 'modeled_after_llm_tool_calls': 1,
++                     'modeled_before_wait_interactions': max(0, polls - 1),
++                     'modeled_after_wait_interactions': 0,
++                     'actual_llm_tool_calls_before_after': 'NOT_MEASURED',
++                     'actual_input_output_tokens_before_after': 'NOT_MEASURED',
++                     'actual_llm_wait_turns_before_after': 'NOT_MEASURED',
++                     'real_end_to_end_wall_before_after': 'NOT_MEASURED',
++                     'unsafe_execution_permission': result['EVIDENCE']['CAN_EXECUTE']})
++    return {'method': 'Offline fake GitHub and virtual sleeps. Modeled baseline: one LLM tool call per poll; not an observed session. Python timing excludes real network/wait latency.', 'tasks': rows}
++
++
++if __name__ == '__main__':
++    import sys
++    if sys.argv[1:] == ['--benchmark']:
++        print(json.dumps(benchmark(), indent=2))
++    else:
++        unittest.main(verbosity=2)
+diff --git a/scripts/validate_research_loop.py b/scripts/validate_research_loop.py
+index ba6da4e..f15123c 100644
+--- a/scripts/validate_research_loop.py
++++ b/scripts/validate_research_loop.py
+@@ -572,7 +572,9 @@ def audit_tree(view):
+     allowed = {"AGENTS.md", ".gitignore", ".github/workflows/research-loop-validate.yml",
+                ".codex/skills/safevla-research-loop/SKILL.md", "scripts/research_loop_claim.py", "scripts/research_loop_manual_claim.py",
+                "scripts/validate_research_loop.py", "scripts/test_research_loop.py",
+-               "scripts/research_loop_pi_emergency_block.py", "scripts/research_loop_pi_ack_blocked.py"}
++               "scripts/research_loop_pi_emergency_block.py", "scripts/research_loop_pi_ack_blocked.py",
++               "scripts/research_loop_readonly.py", "scripts/research_loop_status.py",
++               "scripts/research_loop_ci_wait.py", "scripts/test_research_loop_readonly.py"}
+     for path in files:
+         require(path in allowed or path.startswith("research/"), "outside control whitelist: " + path)
+         if not view.ref:
