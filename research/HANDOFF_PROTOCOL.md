@@ -148,6 +148,13 @@ read/write path and a real PI receipt. Executor-side API readability alone does 
 
 ## Secrets and whitelist
 
+PR-2 read-only helpers: `scripts/research_loop_status.py`, `scripts/research_loop_ci_wait.py`,
+their shared GET-only transport `scripts/research_loop_readonly.py`, and offline synthetic tests
+`scripts/test_research_loop_readonly.py` are explicit additional whitelist entries.
+They do not alter any state transition, actor, Claim, approval, execution or full-history gate.
+Every query result has `EVIDENCE.CAN_EXECUTE=false`; SUCCESS/exit 0 is only observational evidence.
+See `research/agent_workflow/READONLY_TOOLS.md` for bounded waiting and failure semantics.
+
 Allowed: AGENTS.md, .codex/skills/safevla-research-loop/SKILL.md, research/, the three control Python tools,
 .github/workflows/research-loop-validate.yml and a control .gitignore.
 The control scripts/workflow are the explicitly authorized extensions to the earlier three-directory proposal.

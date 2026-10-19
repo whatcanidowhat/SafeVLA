@@ -21,6 +21,8 @@ description: SafeVLA ObjectNav 研究与受控交接入口。按 STATUS/GATE、�
 
 STATUS/GATE 可按字段检索设计；任何身份/范围矛盾、字段缺失或协议要求均须扩大读取并 STOP 受影响动作。远端不可读时明确 REMOTE_UNVERIFIED；本地缓存永不授予执行许可。状态/CI/network CLI 只有已实现且验证后才能调用；不得假定规划中的工具存在。
 
+STATUS/GATE 的只读查询可使用 scripts/research_loop_status.py 和 scripts/research_loop_ci_wait.py；首次使用读 [参数与结果契约](../../../research/agent_workflow/READONLY_TOOLS.md)。CI 等待交给一次有界脚本调用；其 SUCCESS/exit 0 不是执行许可，不代替 Claim、完整历史、身份或 runtime 门禁。
+
 ## Policy：授权与停止条件
 
 - GitHub research-loop 的实时 HEAD + LOOP_STATE + 对应 exact-SHA CI 共同判定当前控制状态；历史 001A/001B、bootstrap、protocol-only、dry-run 或草案描述都不是现时授权。终止周期不可自动重跑。

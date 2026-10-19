@@ -28,4 +28,5 @@ jobs:
         run: python scripts/test_research_loop.py
       - name: Validate every control commit and artifact
         run: python scripts/validate_research_loop.py --history
-
+      - name: Test read-only query and CI wait fixtures (no network)
+        run: python scripts/test_research_loop_readonly.py
