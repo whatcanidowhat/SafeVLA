@@ -58,8 +58,9 @@ read-only request thread until the OS unblocks it. No persistent background serv
 
 ## Status scope and limitations
 
-Remote status reads the branch ref, fetches LOOP_STATE and both NEXT_EXPERIMENT files at that immutable
-SHA, verifies file Git Blob hashes, then checks the ref again. It uses the checked-in state schema and
+Remote status reads the branch ref, fetches LOOP_STATE, both NEXT_EXPERIMENT files and
+LOOP_STATE.schema.json at that same immutable SHA, verifies all four Git Blob hashes, then checks
+the ref again. It explicitly passes this snapshot's schema to assessment, validates the schema and
 checks role/design identity, approval timestamps, scope, required-output paths and Claim bindings.
 `--expected-cycle` / `--expected-claim` pin caller expectations; mismatch is UNKNOWN/STALE_*.
 BLOCKED/INVALID/ABORTED/review and existing running Claims remain non-executable. An expired approval
@@ -71,7 +72,8 @@ historical uniqueness. Its scope is explicit in EVIDENCE. Those existing mandato
 separately; no claim/launch command may treat this exit code as authorization. Observations are valid
 as of the final reads, not atomic locks against changes immediately afterward.
 
-Local mode reads files from one committed HEAD using read-only git show, ignores uncommitted files,
+Local mode reads all four files, including the schema, from the specified root's committed HEAD
+using read-only git show, ignores uncommitted files and the script directory's schema,
 does not fetch/update refs, and always reports REMOTE_UNVERIFIED for a coherent snapshot. Corrupt or
 missing snapshots report UNKNOWN. Repeated invocations recheck current evidence; no authorization
 cache or mutation is created. A CI timeout/failure does not revoke or mutate any actual state.

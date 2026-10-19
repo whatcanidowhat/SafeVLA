@@ -25,6 +25,8 @@ SHA = 'a' * 40
 OTHER = 'b' * 40
 NOW = datetime(2026, 10, 17, tzinfo=timezone.utc)
 WF = {'id': 123, 'name': 'research-loop-validate', 'path': '.github/workflows/research-loop-validate.yml'}
+SCHEMA = json.loads((Path(__file__).resolve().parents[1] /
+                     'research/LOOP_STATE.schema.json').read_text(encoding='utf-8'))
 
 
 def run_state(state='completed', conclusion='success', attempt=1):
@@ -97,7 +99,7 @@ def snapshot(state='PI_REVIEW'):
 
 class StateAPI:
     def __init__(self, state='PI_REVIEW'):
-        self.data = snapshot(state)
+        self.data = (*snapshot(state), copy.deepcopy(SCHEMA))
         self.refs, self.heads = [], 0
         self.move = False
 
@@ -173,6 +175,8 @@ class StateTests(unittest.TestCase):
         api.move = True
         self.assertEqual(status.query(api, now=NOW)['BLOCKER'], 'REMOTE_HEAD_CHANGED')
         self.assertTrue(all(ref == SHA for ref, _ in api.refs))
+        self.assertEqual([path for _, path in api.refs], list(status.PATHS))
+        self.assertIn('research/LOOP_STATE.schema.json', status.PATHS)
 
     def test_repeated_queries_recheck_without_mutation(self):
         api = StateAPI('BLOCKED')
@@ -184,12 +188,105 @@ class StateTests(unittest.TestCase):
 
     def test_local_uses_committed_snapshot_never_network(self):
         s, d, md = snapshot('APPROVED_FOR_CODEX')
-        values = [SHA.encode(), json.dumps(s).encode(), json.dumps(d).encode(), md.encode()]
+        values = [SHA.encode(), json.dumps(s).encode(), json.dumps(d).encode(), md.encode(),
+                  json.dumps(SCHEMA).encode()]
         with patch.object(status.subprocess, 'check_output', side_effect=values) as command:
             result = status.query(local=True, now=NOW)
         self.assertEqual(result['VERDICT'], 'REMOTE_UNVERIFIED')
         self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
-        self.assertEqual([c.args[0][3] for c in command.call_args_list], ['rev-parse', 'show', 'show', 'show'])
+        self.assertEqual([c.args[0][3] for c in command.call_args_list],
+                         ['rev-parse', 'show', 'show', 'show', 'show'])
+
+    def test_remote_schema_is_used_without_script_directory_reads(self):
+        api = StateAPI('APPROVED_FOR_CODEX')
+        api.data[3]['properties']['status'] = {'const': 'PI_REVIEW'}
+        with patch.object(Path, 'read_text', side_effect=AssertionError('implicit filesystem read')):
+            result = status.query(api, now=NOW)
+        self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
+        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
+
+    def test_missing_and_invalid_remote_schema_fail_closed(self):
+        for raw in (None, b'not-json', b'{"type":"not-a-json-type"}'):
+            api = StateAPI('APPROVED_FOR_CODEX')
+            original = api.file
+            def file(revision, path):
+                if path == 'research/LOOP_STATE.schema.json':
+                    if raw is None:
+                        raise Stop('NOT_FOUND', 'SCHEMA_NOT_FOUND')
+                    return raw
+                return original(revision, path)
+            api.file = file
+            result = guarded(lambda: status.query(api, now=NOW))
+            self.assertEqual(result['VERDICT'], 'UNKNOWN')
+            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
+
+    def local_fixture(self, root, schema):
+        def git(*args):
+            return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.DEVNULL)
+        git('init', '-q')
+        git('config', 'user.name', 'Offline fixture')
+        git('config', 'user.email', 'fixture@example.invalid')
+        data = (*snapshot('APPROVED_FOR_CODEX'), schema)
+        for path, value in zip(status.PATHS, data):
+            if value is None:
+                continue
+            target = root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(value if isinstance(value, str) else json.dumps(value),
+                              encoding='utf-8', newline='\n')
+        git('add', '.')
+        git('commit', '-qm', 'synthetic snapshot')
+        return git('rev-parse', 'HEAD').decode().strip()
+
+    def test_explicit_local_root_uses_committed_schema_not_working_copy(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            schema = copy.deepcopy(SCHEMA)
+            schema['properties']['status'] = {'const': 'PI_REVIEW'}
+            revision = self.local_fixture(root, schema)
+            (root / 'research/LOOP_STATE.schema.json').write_text(json.dumps(SCHEMA), encoding='utf-8')
+            result = guarded(lambda: status.query(root=root, local=True, now=NOW))
+            self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
+            self.assertEqual(result['EVIDENCE']['sha'], revision)
+            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
+
+    def test_missing_and_invalid_local_schema_fail_closed(self):
+        for schema in (None, 'not-json', {'type': 'not-a-json-type'}):
+            with self.subTest(schema=schema), tempfile.TemporaryDirectory() as folder:
+                root = Path(folder)
+                self.local_fixture(root, schema)
+                result = guarded(lambda: status.query(root=root, local=True, now=NOW))
+                self.assertEqual(result['VERDICT'], 'UNKNOWN')
+                self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
+
+    def test_remote_transport_pins_and_verifies_all_four_blobs(self):
+        values = (*snapshot('APPROVED_FOR_CODEX'), SCHEMA)
+        bodies = dict(zip(status.PATHS, [v.encode() if isinstance(v, str) else
+                                       json.dumps(v).encode() for v in values]))
+        for corrupt in (False, True):
+            calls = []
+            class Opener:
+                def open(self, req, timeout):
+                    calls.append((req.get_method(), req.full_url))
+                    if '/git/ref/' in req.full_url:
+                        value = {'ref': 'refs/heads/research-loop',
+                                 'object': {'type': 'commit', 'sha': SHA}}
+                    else:
+                        path = req.full_url.split('/contents/')[1].split('?')[0]
+                        raw = bodies[path]
+                        blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
+                        value = {'type': 'file', 'path': path, 'encoding': 'base64',
+                                 'content': base64.b64encode(raw).decode(), 'size': len(raw),
+                                 'sha': OTHER if corrupt and path.endswith('.schema.json') else blob}
+                    return Response(value, req.full_url)
+            result = status.query(GitHub(opener=Opener()), now=NOW)
+            self.assertEqual(result['VERDICT'], 'UNKNOWN' if corrupt else 'OBSERVED')
+            if corrupt:
+                self.assertEqual(result['BLOCKER'], 'FILE_BLOB_MISMATCH')
+            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
+            self.assertTrue(all(method == 'GET' for method, _ in calls))
+            self.assertEqual([url for _, url in calls if '/contents/' in url],
+                             [API + '/contents/' + p + '?ref=' + SHA for p in status.PATHS])
 
 
 class CITests(unittest.TestCase):

@@ -6,16 +6,20 @@ from pathlib import Path
 import re
 import subprocess
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, SchemaError
 from research_loop_readonly import GitHub, Parser, Stop, emit, guarded, positive, report, require
 from validate_research_loop import ACTOR, BASE_OUTPUTS, DESIGN_FIELDS, safe_path
 
 ROOT = Path(__file__).resolve().parents[1]
-PATHS = ('research/LOOP_STATE.json', 'research/NEXT_EXPERIMENT.json', 'research/NEXT_EXPERIMENT.md')
+PATHS = ('research/LOOP_STATE.json', 'research/NEXT_EXPERIMENT.json', 'research/NEXT_EXPERIMENT.md',
+         'research/LOOP_STATE.schema.json')
 
 
-def assess(state, design, markdown, now, expected_cycle=None, expected_claim=None):
-    schema = json.loads((ROOT / 'research/LOOP_STATE.schema.json').read_text(encoding='utf-8'))
+def assess(state, design, markdown, schema, now, expected_cycle=None, expected_claim=None):
+    try:
+        Draft202012Validator.check_schema(schema)
+    except SchemaError:
+        raise Stop('UNKNOWN', 'INVALID_STATE_SCHEMA') from None
     require(not list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(state)),
             'STATE_SCHEMA_CONFLICT')
     require(state['next_actor'] == ACTOR[state['status']], 'ACTOR_CONFLICT')
@@ -83,7 +87,7 @@ def query(api=None, root=ROOT, local=False, now=None, expected_cycle=None, expec
             evidence['remote'] = 'VERIFIED_AT_QUERY'
         evidence['sha'] = revision
         state, design = json.loads(raw[0]), json.loads(raw[1])
-        verdict, reason = assess(state, design, raw[2].decode('utf-8'),
+        verdict, reason = assess(state, design, raw[2].decode('utf-8'), json.loads(raw[3]),
                                  now or datetime.now(timezone.utc), expected_cycle, expected_claim)
         evidence.update({k: state[k] for k in ('status', 'next_actor', 'experiment_id', 'cycle_id',
                                              'claim_id', 'instruction_commit')})

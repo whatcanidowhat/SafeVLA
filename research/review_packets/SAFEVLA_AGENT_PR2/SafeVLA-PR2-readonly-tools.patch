@@ -1,26 +1,3 @@
-From 4d2b52e3992d5b2330d1e7ee0e7a6e3c824f47cf Mon Sep 17 00:00:00 2001
-From: Codex <codex@local.invalid>
-Date: Sat, 17 Oct 2026 14:57:14 +0800
-Subject: [PATCH] feat: add fail-closed read-only state and exact CI observers
-
----
- .codex/skills/safevla-research-loop/SKILL.md |   2 +
- .github/workflows/research-loop-validate.yml |   3 +-
- research/HANDOFF_PROTOCOL.md                 |   7 +
- research/agent_workflow/READONLY_TOOLS.md    |  99 +++++
- scripts/research_loop_ci_wait.py             | 100 +++++
- scripts/research_loop_readonly.py            | 183 ++++++++
- scripts/research_loop_status.py              | 116 +++++
- scripts/test_research_loop.py                |   4 +-
- scripts/test_research_loop_readonly.py       | 440 +++++++++++++++++++
- scripts/validate_research_loop.py            |   4 +-
- 10 files changed, 954 insertions(+), 4 deletions(-)
- create mode 100644 research/agent_workflow/READONLY_TOOLS.md
- create mode 100644 scripts/research_loop_ci_wait.py
- create mode 100644 scripts/research_loop_readonly.py
- create mode 100644 scripts/research_loop_status.py
- create mode 100644 scripts/test_research_loop_readonly.py
-
 diff --git a/.codex/skills/safevla-research-loop/SKILL.md b/.codex/skills/safevla-research-loop/SKILL.md
 index 4220385..7174ae8 100644
 --- a/.codex/skills/safevla-research-loop/SKILL.md
@@ -65,10 +42,10 @@ index 824aefc..9622adc 100644
  The control scripts/workflow are the explicitly authorized extensions to the earlier three-directory proposal.
 diff --git a/research/agent_workflow/READONLY_TOOLS.md b/research/agent_workflow/READONLY_TOOLS.md
 new file mode 100644
-index 0000000..8d28fa5
+index 0000000..0a4ffb7
 --- /dev/null
 +++ b/research/agent_workflow/READONLY_TOOLS.md
-@@ -0,0 +1,99 @@
+@@ -0,0 +1,101 @@
 +# PR-2 read-only status and CI waiting
 +
 +Python 3.10+, existing jsonschema==4.25.1. No model/runtime dependencies. These helpers query
@@ -129,8 +106,9 @@ index 0000000..8d28fa5
 +
 +## Status scope and limitations
 +
-+Remote status reads the branch ref, fetches LOOP_STATE and both NEXT_EXPERIMENT files at that immutable
-+SHA, verifies file Git Blob hashes, then checks the ref again. It uses the checked-in state schema and
++Remote status reads the branch ref, fetches LOOP_STATE, both NEXT_EXPERIMENT files and
++LOOP_STATE.schema.json at that same immutable SHA, verifies all four Git Blob hashes, then checks
++the ref again. It explicitly passes this snapshot's schema to assessment, validates the schema and
 +checks role/design identity, approval timestamps, scope, required-output paths and Claim bindings.
 +`--expected-cycle` / `--expected-claim` pin caller expectations; mismatch is UNKNOWN/STALE_*.
 +BLOCKED/INVALID/ABORTED/review and existing running Claims remain non-executable. An expired approval
@@ -142,7 +120,8 @@ index 0000000..8d28fa5
 +separately; no claim/launch command may treat this exit code as authorization. Observations are valid
 +as of the final reads, not atomic locks against changes immediately afterward.
 +
-+Local mode reads files from one committed HEAD using read-only git show, ignores uncommitted files,
++Local mode reads all four files, including the schema, from the specified root's committed HEAD
++using read-only git show, ignores uncommitted files and the script directory's schema,
 +does not fetch/update refs, and always reports REMOTE_UNVERIFIED for a coherent snapshot. Corrupt or
 +missing snapshots report UNKNOWN. Repeated invocations recheck current evidence; no authorization
 +cache or mutation is created. A CI timeout/failure does not revoke or mutate any actual state.
@@ -465,10 +444,10 @@ index 0000000..e6760a7
 +        return report('UNKNOWN', blocker='INVALID_OR_INCOMPLETE_EVIDENCE')
 diff --git a/scripts/research_loop_status.py b/scripts/research_loop_status.py
 new file mode 100644
-index 0000000..c3b492a
+index 0000000..5ce1c97
 --- /dev/null
 +++ b/scripts/research_loop_status.py
-@@ -0,0 +1,116 @@
+@@ -0,0 +1,120 @@
 +#!/usr/bin/env python3
 +"""Observe a pinned control snapshot. Exit 0 means observation, never execution."""
 +from datetime import datetime, timezone
@@ -477,16 +456,20 @@ index 0000000..c3b492a
 +import re
 +import subprocess
 +
-+from jsonschema import Draft202012Validator, FormatChecker
++from jsonschema import Draft202012Validator, FormatChecker, SchemaError
 +from research_loop_readonly import GitHub, Parser, Stop, emit, guarded, positive, report, require
 +from validate_research_loop import ACTOR, BASE_OUTPUTS, DESIGN_FIELDS, safe_path
 +
 +ROOT = Path(__file__).resolve().parents[1]
-+PATHS = ('research/LOOP_STATE.json', 'research/NEXT_EXPERIMENT.json', 'research/NEXT_EXPERIMENT.md')
++PATHS = ('research/LOOP_STATE.json', 'research/NEXT_EXPERIMENT.json', 'research/NEXT_EXPERIMENT.md',
++         'research/LOOP_STATE.schema.json')
 +
 +
-+def assess(state, design, markdown, now, expected_cycle=None, expected_claim=None):
-+    schema = json.loads((ROOT / 'research/LOOP_STATE.schema.json').read_text(encoding='utf-8'))
++def assess(state, design, markdown, schema, now, expected_cycle=None, expected_claim=None):
++    try:
++        Draft202012Validator.check_schema(schema)
++    except SchemaError:
++        raise Stop('UNKNOWN', 'INVALID_STATE_SCHEMA') from None
 +    require(not list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(state)),
 +            'STATE_SCHEMA_CONFLICT')
 +    require(state['next_actor'] == ACTOR[state['status']], 'ACTOR_CONFLICT')
@@ -554,7 +537,7 @@ index 0000000..c3b492a
 +            evidence['remote'] = 'VERIFIED_AT_QUERY'
 +        evidence['sha'] = revision
 +        state, design = json.loads(raw[0]), json.loads(raw[1])
-+        verdict, reason = assess(state, design, raw[2].decode('utf-8'),
++        verdict, reason = assess(state, design, raw[2].decode('utf-8'), json.loads(raw[3]),
 +                                 now or datetime.now(timezone.utc), expected_cycle, expected_claim)
 +        evidence.update({k: state[k] for k in ('status', 'next_actor', 'experiment_id', 'cycle_id',
 +                                             'claim_id', 'instruction_commit')})
@@ -606,10 +589,10 @@ index ab812f1..9300a75 100644
 -
 diff --git a/scripts/test_research_loop_readonly.py b/scripts/test_research_loop_readonly.py
 new file mode 100644
-index 0000000..a86a0c7
+index 0000000..5152729
 --- /dev/null
 +++ b/scripts/test_research_loop_readonly.py
-@@ -0,0 +1,440 @@
+@@ -0,0 +1,537 @@
 +"""Offline adversarial tests. No real credentials, GitHub writes or experiments."""
 +import base64
 +import contextlib
@@ -637,6 +620,8 @@ index 0000000..a86a0c7
 +OTHER = 'b' * 40
 +NOW = datetime(2026, 10, 17, tzinfo=timezone.utc)
 +WF = {'id': 123, 'name': 'research-loop-validate', 'path': '.github/workflows/research-loop-validate.yml'}
++SCHEMA = json.loads((Path(__file__).resolve().parents[1] /
++                     'research/LOOP_STATE.schema.json').read_text(encoding='utf-8'))
 +
 +
 +def run_state(state='completed', conclusion='success', attempt=1):
@@ -709,7 +694,7 @@ index 0000000..a86a0c7
 +
 +class StateAPI:
 +    def __init__(self, state='PI_REVIEW'):
-+        self.data = snapshot(state)
++        self.data = (*snapshot(state), copy.deepcopy(SCHEMA))
 +        self.refs, self.heads = [], 0
 +        self.move = False
 +
@@ -785,6 +770,8 @@ index 0000000..a86a0c7
 +        api.move = True
 +        self.assertEqual(status.query(api, now=NOW)['BLOCKER'], 'REMOTE_HEAD_CHANGED')
 +        self.assertTrue(all(ref == SHA for ref, _ in api.refs))
++        self.assertEqual([path for _, path in api.refs], list(status.PATHS))
++        self.assertIn('research/LOOP_STATE.schema.json', status.PATHS)
 +
 +    def test_repeated_queries_recheck_without_mutation(self):
 +        api = StateAPI('BLOCKED')
@@ -796,12 +783,105 @@ index 0000000..a86a0c7
 +
 +    def test_local_uses_committed_snapshot_never_network(self):
 +        s, d, md = snapshot('APPROVED_FOR_CODEX')
-+        values = [SHA.encode(), json.dumps(s).encode(), json.dumps(d).encode(), md.encode()]
++        values = [SHA.encode(), json.dumps(s).encode(), json.dumps(d).encode(), md.encode(),
++                  json.dumps(SCHEMA).encode()]
 +        with patch.object(status.subprocess, 'check_output', side_effect=values) as command:
 +            result = status.query(local=True, now=NOW)
 +        self.assertEqual(result['VERDICT'], 'REMOTE_UNVERIFIED')
 +        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
-+        self.assertEqual([c.args[0][3] for c in command.call_args_list], ['rev-parse', 'show', 'show', 'show'])
++        self.assertEqual([c.args[0][3] for c in command.call_args_list],
++                         ['rev-parse', 'show', 'show', 'show', 'show'])
++
++    def test_remote_schema_is_used_without_script_directory_reads(self):
++        api = StateAPI('APPROVED_FOR_CODEX')
++        api.data[3]['properties']['status'] = {'const': 'PI_REVIEW'}
++        with patch.object(Path, 'read_text', side_effect=AssertionError('implicit filesystem read')):
++            result = status.query(api, now=NOW)
++        self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
++        self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_missing_and_invalid_remote_schema_fail_closed(self):
++        for raw in (None, b'not-json', b'{"type":"not-a-json-type"}'):
++            api = StateAPI('APPROVED_FOR_CODEX')
++            original = api.file
++            def file(revision, path):
++                if path == 'research/LOOP_STATE.schema.json':
++                    if raw is None:
++                        raise Stop('NOT_FOUND', 'SCHEMA_NOT_FOUND')
++                    return raw
++                return original(revision, path)
++            api.file = file
++            result = guarded(lambda: status.query(api, now=NOW))
++            self.assertEqual(result['VERDICT'], 'UNKNOWN')
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def local_fixture(self, root, schema):
++        def git(*args):
++            return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.DEVNULL)
++        git('init', '-q')
++        git('config', 'user.name', 'Offline fixture')
++        git('config', 'user.email', 'fixture@example.invalid')
++        data = (*snapshot('APPROVED_FOR_CODEX'), schema)
++        for path, value in zip(status.PATHS, data):
++            if value is None:
++                continue
++            target = root / path
++            target.parent.mkdir(parents=True, exist_ok=True)
++            target.write_text(value if isinstance(value, str) else json.dumps(value),
++                              encoding='utf-8', newline='\n')
++        git('add', '.')
++        git('commit', '-qm', 'synthetic snapshot')
++        return git('rev-parse', 'HEAD').decode().strip()
++
++    def test_explicit_local_root_uses_committed_schema_not_working_copy(self):
++        with tempfile.TemporaryDirectory() as folder:
++            root = Path(folder)
++            schema = copy.deepcopy(SCHEMA)
++            schema['properties']['status'] = {'const': 'PI_REVIEW'}
++            revision = self.local_fixture(root, schema)
++            (root / 'research/LOOP_STATE.schema.json').write_text(json.dumps(SCHEMA), encoding='utf-8')
++            result = guarded(lambda: status.query(root=root, local=True, now=NOW))
++            self.assertEqual(result['BLOCKER'], 'STATE_SCHEMA_CONFLICT')
++            self.assertEqual(result['EVIDENCE']['sha'], revision)
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_missing_and_invalid_local_schema_fail_closed(self):
++        for schema in (None, 'not-json', {'type': 'not-a-json-type'}):
++            with self.subTest(schema=schema), tempfile.TemporaryDirectory() as folder:
++                root = Path(folder)
++                self.local_fixture(root, schema)
++                result = guarded(lambda: status.query(root=root, local=True, now=NOW))
++                self.assertEqual(result['VERDICT'], 'UNKNOWN')
++                self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++
++    def test_remote_transport_pins_and_verifies_all_four_blobs(self):
++        values = (*snapshot('APPROVED_FOR_CODEX'), SCHEMA)
++        bodies = dict(zip(status.PATHS, [v.encode() if isinstance(v, str) else
++                                       json.dumps(v).encode() for v in values]))
++        for corrupt in (False, True):
++            calls = []
++            class Opener:
++                def open(self, req, timeout):
++                    calls.append((req.get_method(), req.full_url))
++                    if '/git/ref/' in req.full_url:
++                        value = {'ref': 'refs/heads/research-loop',
++                                 'object': {'type': 'commit', 'sha': SHA}}
++                    else:
++                        path = req.full_url.split('/contents/')[1].split('?')[0]
++                        raw = bodies[path]
++                        blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
++                        value = {'type': 'file', 'path': path, 'encoding': 'base64',
++                                 'content': base64.b64encode(raw).decode(), 'size': len(raw),
++                                 'sha': OTHER if corrupt and path.endswith('.schema.json') else blob}
++                    return Response(value, req.full_url)
++            result = status.query(GitHub(opener=Opener()), now=NOW)
++            self.assertEqual(result['VERDICT'], 'UNKNOWN' if corrupt else 'OBSERVED')
++            if corrupt:
++                self.assertEqual(result['BLOCKER'], 'FILE_BLOB_MISMATCH')
++            self.assertFalse(result['EVIDENCE']['CAN_EXECUTE'])
++            self.assertTrue(all(method == 'GET' for method, _ in calls))
++            self.assertEqual([url for _, url in calls if '/contents/' in url],
++                             [API + '/contents/' + p + '?ref=' + SHA for p in status.PATHS])
 +
 +
 +class CITests(unittest.TestCase):
@@ -1065,6 +1145,3 @@ index ba6da4e..f15123c 100644
      for path in files:
          require(path in allowed or path.startswith("research/"), "outside control whitelist: " + path)
          if not view.ref:
--- 
-2.40.0.windows.1
-

@@ -1,5 +1,26 @@
 # SafeVLA PR-2：静态审核交付
 
+## PI REQUEST_CHANGES 修正：Schema 与快照绑定
+
+修正基于 PR #3 的 `a107c0113bd7bc4dcf25f5202edc16faf08b38a3`。
+`research/LOOP_STATE.schema.json` 现在与状态、JSON/Markdown 设计一起读取：远端四个文件
+使用同一完整 commit SHA，并逐个通过 Git Blob 校验，最后再次核验分支 HEAD；本地四个文件
+均通过指定 `--root` 的 `git show <revision>:<path>` 读取，忽略工作区未提交内容。
+Schema 显式传入 `assess()`，并先由 `Draft202012Validator.check_schema()` 检查。
+缺失、畸形 JSON、无效 Schema 或状态不符合指定 Schema 时失败关闭，始终 CAN_EXECUTE=false。
+
+保留原有 33 项离线测试，增加 5 项 Schema 回归（共 38 项）：远端 Schema 生效且无隐式文件读取、
+远端 Schema 缺失/无效、指定本地 root 的 committed Schema 与工作区冲突、本地 Schema 缺失/无效、
+四文件完整 revision 绑定及 Schema Blob 损坏。Windows 的 38 项已通过；其余本轮验收结果、
+最终候选 SHA 和真实 GET-only API 冒烟证据将记录在 PR #3 的最终验收说明中。
+
+本轮 PI 已授权更新 Draft PR 与真实 API 只读测试；此授权不涉及合并或实验执行。
+原有 25 项回归、完整历史算法、文件白名单、Claim/授权和实验状态均未修改。
+实际 Token、LLM 工具调用次数、真实等待轮次仍为 NOT_MEASURED。
+下文为初版交付记录（含当时测试计数、候选身份及授权边界），不得视为本轮验证结果。
+
+## 初版交付记录
+
 状态：开发与 CPU 验证完成，交付 PI 静态审核。未 Push、未创建 PR、未合并。
 
 - 基线：`f260e7e0c55489d4ae1695577d15c95d702f00d7`
