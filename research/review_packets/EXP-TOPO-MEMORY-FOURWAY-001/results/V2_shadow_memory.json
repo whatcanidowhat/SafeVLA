@@ -1,0 +1,26 @@
+{
+  "lane": "V2_shadow_memory",
+  "status": "PASS_SYNTHETIC_UNIT_TESTS__BLOCKED_REAL_POLICY_EQUIVALENCE",
+  "checks": {
+    "ten_unittests_passed": true,
+    "input_object_unchanged": true,
+    "state_is_episode_scoped": true,
+    "unknown_room_does_not_create_false_topology_edge": true
+  },
+  "blockers": [
+    "No recorded per-step room sensor output accessible for an authentic trace replay.",
+    "No original evaluator+checkpoint+simulator; cannot test exact B0 action/RNG/cache/logit equivalence."
+  ],
+  "observations": {
+    "unittests": 10,
+    "example_unique_rooms": 3
+  },
+  "evidence": [
+    "topology_memory.py",
+    "test_topology_memory.py"
+  ],
+  "completed_at_utc": "2026-10-23T06:41:07.499400+00:00",
+  "policy_loads": 0,
+  "gpu_experiments": 0,
+  "simulator_episodes": 0
+}
