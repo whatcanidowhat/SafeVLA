@@ -30,3 +30,39 @@ jobs:
         run: python scripts/validate_research_loop.py --history
       - name: Test read-only query and CI wait fixtures (no network)
         run: python scripts/test_research_loop_readonly.py
+
+  topology-fourway-preflight:
+    name: Topology four-way CPU preflight (NO GPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run synthetic four-lane preflight
+        working-directory: research/review_packets/EXP-TOPO-MEMORY-FOURWAY-001
+        run: |
+          python run_four_validation_lanes.py --out-dir "$RUNNER_TEMP/safevla-topo-fourway"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "safevla-topo-fourway" / "FOURWAY_STATUS.json").read_text())
+          assert data["policy_or_simulator_evaluation_performed"] is False
+          assert len(data["results"]) == 4
+          assert all(result["policy_loads"] == 0 and result["gpu_experiments"] == 0 for result in data["results"])
+          assert all(not result["status"].startswith(("FAIL", "INVALID", "ERROR")) for result in data["results"])
+          print("TOPO_FOURWAY_CPU_PREFLIGHT_PASS")
+          PY
+      - name: Upload preflight receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topo-fourway-cpu-preflight
+          path: ${{ runner.temp }}/safevla-topo-fourway/*.json
+          if-no-files-found: warn

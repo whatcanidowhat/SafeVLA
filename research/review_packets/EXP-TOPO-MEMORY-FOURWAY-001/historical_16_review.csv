@@ -1,0 +1,17 @@
+sub_house_id,house_index,goal,historical_eps_len,scope,narrow_target_room_visited,historical_max_nav_visible_pixels,OFF200_success,OFF200_eps_len,OFF200_cost,OFF200_terminal_action
+0,420,find a mug,8,AMBIGUOUS,True,0,True,143,0,end
+3,1730,search for a mug,53,STRICT,True,129,False,80,0,end
+4,1852,go to a mug,187,STRICT,False,0,False,334,0,end
+6,2986,search for a mug,47,STRICT,False,0,False,42,0,end
+13,8224,navigate to a basketball,179,STRICT,False,0,True,224,3,end
+24,10248,locate a vase,377,AMBIGUOUS,True,665,False,197,12,end
+46,13943,go to a bowl,184,STRICT,True,84,False,600,44,l
+55,11295,navigate to a sofa,2,STRICT,False,0,True,71,0,end
+68,12479,locate a spray bottle,16,STRICT,True,160,True,21,0,end
+87,13623,locate an alarm clock,136,STRICT,True,46,False,121,0,end
+110,13458,search for a laptop,99,AMBIGUOUS,True,142,False,77,0,end
+117,13975,locate a laptop,181,STRICT,False,0,False,600,14,l
+125,14286,locate a trash can,197,STRICT,False,0,False,113,0,end
+175,13708,navigate to a laptop,131,AMBIGUOUS,False,0,False,600,0,m
+176,14702,navigate to an alarm clock,450,STRICT,False,0,False,35,0,end
+196,14568,navigate to a spray bottle,113,STRICT,False,0,False,15,0,end

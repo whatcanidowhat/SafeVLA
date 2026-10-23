@@ -1,0 +1,6 @@
+condition,text_template,model_input_changes,question
+L0,"{original_goal}",none,baseline
+L1,"Go to the {candidate_room_type}.",text_only,room_navigation_capability
+L2,"Find the {target} in the {candidate_room_type}.",text_only,object_room_joint_constraint
+L3,"Go to the {candidate_room_type} and find the {target}.",text_only,multi_stage_instruction
+L4,"{original_goal} Search the {candidate_room_type} next.",text_only,dynamic_guidance

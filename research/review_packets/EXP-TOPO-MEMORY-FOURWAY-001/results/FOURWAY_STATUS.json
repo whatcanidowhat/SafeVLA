@@ -1,0 +1,138 @@
+{
+  "experiment_id": "EXP-TOPO-MEMORY-FOURWAY-001",
+  "execution": "FOUR_CONCURRENT_LOCAL_PREFLIGHTS",
+  "source_code_untouched": true,
+  "github_written": false,
+  "policy_or_simulator_evaluation_performed": false,
+  "results": [
+    {
+      "lane": "V1_historical_coverage",
+      "status": "PASS_COHORT_AUDIT__BLOCKED_STEPWISE_TOPOLOGY",
+      "checks": {
+        "16_source_rows_unique": true,
+        "9_candidate_join": true,
+        "8_STRICT_cohort": true,
+        "cross_period_identity_consistent": true
+      },
+      "blockers": [
+        "No historical per-decision room ID or robot pose + room floor polygons were present in the GitHub record; cannot reconstruct room sequence.",
+        "Room-not-visited is observational association, not proved failure causation."
+      ],
+      "observations": {
+        "historical_confirmed_invalid_END": 16,
+        "historical_unvisited_narrow_room": 9,
+        "unvisited_STRICT": 8,
+        "unvisited_AMBIGUOUS": 1,
+        "visited_STRICT_negative_controls": [
+          "3",
+          "46",
+          "68",
+          "87"
+        ],
+        "core_later_OFF200_success": 2,
+        "core_later_OFF200_failure": 6,
+        "core_later_OFF200_cost14_ids": [
+          "117"
+        ],
+        "historical_16_sha256": "a3f5ecc5e6aeefced529fd101729669515873ebc36d498ff91ff5ce4fdd474ff",
+        "candidates_sha256": "35d084ed94f88519e4c8af5f4ea3d47e387b65bd7bbe9a6ef83095e6776143b6"
+      },
+      "evidence": [
+        "historical_16_review.csv (extracted/adjudicated from original GitHub cases)",
+        "exploration_candidates.csv (extracted) "
+      ],
+      "completed_at_utc": "2026-10-23T06:41:06.517599+00:00",
+      "policy_loads": 0,
+      "gpu_experiments": 0,
+      "simulator_episodes": 0
+    },
+    {
+      "lane": "V2_shadow_memory",
+      "status": "PASS_SYNTHETIC_UNIT_TESTS__BLOCKED_REAL_POLICY_EQUIVALENCE",
+      "checks": {
+        "ten_unittests_passed": true,
+        "input_object_unchanged": true,
+        "state_is_episode_scoped": true,
+        "unknown_room_does_not_create_false_topology_edge": true
+      },
+      "blockers": [
+        "No recorded per-step room sensor output accessible for an authentic trace replay.",
+        "No original evaluator+checkpoint+simulator; cannot test exact B0 action/RNG/cache/logit equivalence."
+      ],
+      "observations": {
+        "unittests": 10,
+        "example_unique_rooms": 3
+      },
+      "evidence": [
+        "topology_memory.py",
+        "test_topology_memory.py"
+      ],
+      "completed_at_utc": "2026-10-23T06:41:07.499400+00:00",
+      "policy_loads": 0,
+      "gpu_experiments": 0,
+      "simulator_episodes": 0
+    },
+    {
+      "lane": "V3_language_intervention",
+      "status": "PASS_PROMPT_FORMAT__BLOCKED_MODEL_ROLLOUT",
+      "checks": {
+        "five_conditions_unique": true,
+        "utf8_bytes_compatible_with_goal_buffer": true,
+        "not_measured_language_to_motion": true
+      },
+      "blockers": [
+        "safevla_root missing",
+        "model_checkpoint missing",
+        "house_dataset missing",
+        "python dependency transformers unavailable",
+        "python dependency ai2thor unavailable",
+        "python dependency allenact unavailable",
+        "Requires checkpoint-based, isolated-state action-distribution probes and real room-goal rollouts.",
+        "Do not interpret text encodeability as learned room-level navigation control."
+      ],
+      "observations": {
+        "generated_prompt_templates": [
+          "find a mug",
+          "Go to the kitchen.",
+          "Find the mug in the kitchen.",
+          "Go to the kitchen and find the mug.",
+          "find a mug Search the kitchen next."
+        ]
+      },
+      "evidence": [
+        "prompt_probe_plan.csv",
+        "baseline-experiment/architecture/models/allenact_transformer_models/allenact_dino_transformer.py"
+      ],
+      "completed_at_utc": "2026-10-23T06:41:06.518094+00:00",
+      "policy_loads": 0,
+      "gpu_experiments": 0,
+      "simulator_episodes": 0
+    },
+    {
+      "lane": "V4_topology_plus_language",
+      "status": "BLOCKED_NO_PAIRED_ROLLOUTS",
+      "checks": {
+        "historic_OFF200_as_control_only": true,
+        "historical_ON200_exists": false,
+        "did_not_use_oracle_target_room_for_planning": true
+      },
+      "blockers": [
+        "baseline_rollouts missing",
+        "treatment_rollouts missing",
+        "baseline_manifest missing",
+        "treatment_manifest missing",
+        "No treatment rollout, so intervention SR/Cost, paired effects and official improvement claims cannot be estimated.",
+        "Need B0 manifest equivalence: checkpoint/seed/worker/task order/horizon/action semantics/dataset/augmentation."
+      ],
+      "observations": {},
+      "evidence": [
+        "historical_16_review.csv",
+        "baseline-contract provenance from research-loop"
+      ],
+      "completed_at_utc": "2026-10-23T06:41:06.517464+00:00",
+      "policy_loads": 0,
+      "gpu_experiments": 0,
+      "simulator_episodes": 0
+    }
+  ]
+}

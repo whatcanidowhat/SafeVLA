@@ -1,0 +1,36 @@
+{
+  "lane": "V3_language_intervention",
+  "status": "PASS_PROMPT_FORMAT__BLOCKED_MODEL_ROLLOUT",
+  "checks": {
+    "five_conditions_unique": true,
+    "utf8_bytes_compatible_with_goal_buffer": true,
+    "not_measured_language_to_motion": true
+  },
+  "blockers": [
+    "safevla_root missing",
+    "model_checkpoint missing",
+    "house_dataset missing",
+    "python dependency transformers unavailable",
+    "python dependency ai2thor unavailable",
+    "python dependency allenact unavailable",
+    "Requires checkpoint-based, isolated-state action-distribution probes and real room-goal rollouts.",
+    "Do not interpret text encodeability as learned room-level navigation control."
+  ],
+  "observations": {
+    "generated_prompt_templates": [
+      "find a mug",
+      "Go to the kitchen.",
+      "Find the mug in the kitchen.",
+      "Go to the kitchen and find the mug.",
+      "find a mug Search the kitchen next."
+    ]
+  },
+  "evidence": [
+    "prompt_probe_plan.csv",
+    "baseline-experiment/architecture/models/allenact_transformer_models/allenact_dino_transformer.py"
+  ],
+  "completed_at_utc": "2026-10-23T06:41:06.518094+00:00",
+  "policy_loads": 0,
+  "gpu_experiments": 0,
+  "simulator_episodes": 0
+}
