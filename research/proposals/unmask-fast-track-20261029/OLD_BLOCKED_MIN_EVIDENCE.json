@@ -1,0 +1,200 @@
+{
+  "status": "EVIDENCE_FOR_PI_ACKNOWLEDGEMENT_ONLY",
+  "observed_control_head": "2b3491b474c79685f54ff884b57bdd551f7b2629",
+  "control_state_version": 87,
+  "terminal_result_commit_to_acknowledge": "d478be22efea7b1fc94d5dbe8750d09fd903e44a",
+  "current_control_ci": {
+    "run_id": 39227522905,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "workflow": "research-loop-validate"
+  },
+  "terminal_result_ci": {
+    "run_id": 38694129068,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "workflow": "research-loop-validate"
+  },
+  "old_experiment": "EXP-ACTOR-RESET-ON200-004",
+  "old_cycle": "actor-reset-on200-off002-reuse-004-20261015",
+  "old_claim_commit": "89b3607c03448223484202ee9aabd3bd79b06f7f",
+  "old_claim_id": "1c50b223da0a49d09fdbfe160ed780b4",
+  "old_instruction": "500f7ba22151a7a62880199d737f0683558b91f0",
+  "old_authorization_expired_utc": "2026-10-16T06:08:16Z",
+  "finding": "Required proxy-network witness HTTPError; operational block before launcher/model/GPU/simulator/ON Episode. No scientific ON result or failed mask hypothesis.",
+  "actual_resources": {
+    "gpu_count": 0,
+    "episodes_started": 0,
+    "episodes_completed": 0,
+    "online_decisions": 0,
+    "model_loads": 0,
+    "simulator_starts": 0,
+    "automatic_retries": 0
+  },
+  "original_network_receipt": {
+    "status": "FAIL",
+    "stage": "REQUIRED_CROSS_SESSION_WITNESS",
+    "receipts": [
+      {
+        "observed_utc": "2026-10-15T06:41:17.607825+00:00",
+        "transport": "USER_MANAGED_HTTP_PROXY_TLS_VERIFIED",
+        "proxy_url": "http://127.0.0.1:7899",
+        "status": "FAIL",
+        "authorizes_execution": false,
+        "ssh_session_sha256": "dfaebe63fd8aa52ae83ca325bf0e87656f5cb554f9f933464de2768231bac4ee",
+        "error_type": "HTTPError",
+        "elapsed_seconds": 1.475082018005196
+      }
+    ],
+    "launcher_three_probe_preflight": "NOT_STARTED",
+    "automatic_retries": 0
+  },
+  "required_outputs_verified": [
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+      "sha256": "f2f3ab1990d789f2e01ad9ed209ef9a2cc1dc332a93dd21ef16282c45232bf32",
+      "size": 1507
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+      "sha256": "af126ce3733b8521069e7dab283625e3cc19ee69aef7aeb7b7bdc9a9e3e3d945",
+      "size": 1633
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
+      "sha256": "36ef58f689b208a40090d9fe391670226b40e0b23c484b034ee406e51e73da83",
+      "size": 6852
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+      "sha256": "29df65c5dade0a308a530c32107fa5aa4a23afaa06c9cab85eb54475d7ce5d02",
+      "size": 341
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+      "sha256": "82dd54d802db193a4cc68b9f7a248d1a503f57837a4b16cc6f0389702e93f424",
+      "size": 4491
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+      "sha256": "b9ad86674df218d4c13161328d610a1b4f4e8450530426199baac38dafdfaf54",
+      "size": 93
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+      "sha256": "ca3d2e17b28e435574f435a15264ffd31d08f278e39c9fff5d57f52e62ca48f3",
+      "size": 188
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+      "sha256": "15c053add85b3846f020219de9cb6723302285303ea113fbfbbbe27d4b459265",
+      "size": 362
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+      "sha256": "df9655697172f28aaffefe0d8f0e8be9de9388fcc9f30d4930e923b96d4517a5",
+      "size": 147
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+      "sha256": "f49c4a704bbbec4de748400658e879fbe356bd973cac3500821694b39cb18857",
+      "size": 668
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+      "sha256": "d045911c769c2a2e27f6a7c19625ece71d341834667f858db451bd485e0a114e",
+      "size": 572
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json",
+      "sha256": "342f1f7d43e03cc76478a925d5cfa378fb4969980929841acc22989503fa0563",
+      "size": 271
+    }
+  ],
+  "indexed_small_artifacts_verified": [
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CLAIM_CI.json",
+      "sha256": "6f542fff83e680a3047f4e62a3e80287234c196de74be6435fb82c4e3a6b4e3d",
+      "size": 191
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json",
+      "sha256": "342f1f7d43e03cc76478a925d5cfa378fb4969980929841acc22989503fa0563",
+      "size": 271
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_DESIGN.json",
+      "sha256": "77079de6eef24f53bdea6bdffd8bca20dea107737d14d7d8bb905ad35d655436",
+      "size": 11518
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+      "sha256": "82dd54d802db193a4cc68b9f7a248d1a503f57837a4b16cc6f0389702e93f424",
+      "size": 4491
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+      "sha256": "df9655697172f28aaffefe0d8f0e8be9de9388fcc9f30d4930e923b96d4517a5",
+      "size": 147
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+      "sha256": "b9ad86674df218d4c13161328d610a1b4f4e8450530426199baac38dafdfaf54",
+      "size": 93
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+      "sha256": "d045911c769c2a2e27f6a7c19625ece71d341834667f858db451bd485e0a114e",
+      "size": 572
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+      "sha256": "ca3d2e17b28e435574f435a15264ffd31d08f278e39c9fff5d57f52e62ca48f3",
+      "size": 188
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+      "sha256": "f49c4a704bbbec4de748400658e879fbe356bd973cac3500821694b39cb18857",
+      "size": 668
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+      "sha256": "f2f3ab1990d789f2e01ad9ed209ef9a2cc1dc332a93dd21ef16282c45232bf32",
+      "size": 1507
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+      "sha256": "29df65c5dade0a308a530c32107fa5aa4a23afaa06c9cab85eb54475d7ce5d02",
+      "size": 341
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+      "sha256": "af126ce3733b8521069e7dab283625e3cc19ee69aef7aeb7b7bdc9a9e3e3d945",
+      "size": 1633
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+      "sha256": "15c053add85b3846f020219de9cb6723302285303ea113fbfbbbe27d4b459265",
+      "size": 362
+    },
+    {
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/session_a.json",
+      "sha256": "e8be332f283c104efd6d527d153ffa8dcf856808ae493b36862e5a558a3121f3",
+      "size": 366
+    }
+  ],
+  "pi_action": "Independently review terminal d478be2 and original required outputs; ACK BLOCKED->PI_REVIEW with reviewed_result_commit=d478be2, not current maintenance HEAD. Clear approval metadata; retain old instruction/claim only as history. No retry or reuse of old Claim/OFF.",
+  "new_execution_authorized": false
+}

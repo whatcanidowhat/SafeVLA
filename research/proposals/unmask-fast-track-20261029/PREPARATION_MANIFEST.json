@@ -1,0 +1,22 @@
+{
+  "status": "PI_PREPARATION_ONLY",
+  "author_role": "CODEX",
+  "utc": "2026-10-28T17:34:20.371317+00:00",
+  "control_base": "2b3491b474c79685f54ff884b57bdd551f7b2629",
+  "state_version_unchanged": 87,
+  "terminal_to_acknowledge": "d478be22efea7b1fc94d5dbe8750d09fd903e44a",
+  "frozen_source": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+  "runtime_source_clean": true,
+  "runtime_source_modified": false,
+  "LOOP_STATE_modified": false,
+  "existing_NEXT_EXPERIMENT_modified": false,
+  "new_claims": 0,
+  "new_gpu_jobs": 0,
+  "new_simulators": 0,
+  "new_episodes": 0,
+  "new_cpu_model_validation_runs": 0,
+  "preparation_checks": "Read immutable control artifacts; verify small original handoff SHA/size; read/hash proposed renderer configuration binaries only. No model/renderer/strategy forward.",
+  "policy": "FAST_TRACK",
+  "signature_by_PI": null,
+  "remaining_authority": "PI-only recovery, scoped decisions, formal A approval and exact CI; then protocol B, B CI/liveHEAD/expiry"
+}

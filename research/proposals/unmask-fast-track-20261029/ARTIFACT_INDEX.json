@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "FAST_TRACK_CHECKLIST.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/FAST_TRACK_CHECKLIST.md",
+      "git_path": "research/proposals/unmask-fast-track-20261029/FAST_TRACK_CHECKLIST.md",
+      "sha256": "36c198451ff58399924cf454a3b28c758ec3de81601c5db630bd57e09951c067",
+      "size": 2422,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NEXT_EXPERIMENT.DRAFT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/NEXT_EXPERIMENT.DRAFT.json",
+      "git_path": "research/proposals/unmask-fast-track-20261029/NEXT_EXPERIMENT.DRAFT.json",
+      "sha256": "b96edc2a12a617a62a8fa53c59e2116ae2a2e44f3c0434f47730f5373aaf3a6f",
+      "size": 8531,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NEXT_EXPERIMENT.DRAFT.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/NEXT_EXPERIMENT.DRAFT.md",
+      "git_path": "research/proposals/unmask-fast-track-20261029/NEXT_EXPERIMENT.DRAFT.md",
+      "sha256": "f44f76dea4d3000caa7d61221b9ca3c3e197ae78713207dcfaba35e51117a3fc",
+      "size": 2036,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_BLOCKED_MIN_EVIDENCE.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/OLD_BLOCKED_MIN_EVIDENCE.json",
+      "git_path": "research/proposals/unmask-fast-track-20261029/OLD_BLOCKED_MIN_EVIDENCE.json",
+      "sha256": "6ac969b340eb56d17d906fc31995350e1e849bd3b53801889399b312a3b8033c",
+      "size": 8484,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "PI_APPLY_STEPS.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/PI_APPLY_STEPS.md",
+      "git_path": "research/proposals/unmask-fast-track-20261029/PI_APPLY_STEPS.md",
+      "sha256": "8b420e66d06348189eabbbc14f52310a83b5a2393b8dad219ac3913366b0a213",
+      "size": 3430,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "PREPARATION_MANIFEST.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/PREPARATION_MANIFEST.json",
+      "git_path": "research/proposals/unmask-fast-track-20261029/PREPARATION_MANIFEST.json",
+      "sha256": "e2baa575b6d7158f3c8534dbf409910b7b35b90544a84b0584786458ea7af13a",
+      "size": 989,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "README.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask-fast-track-20261029/README.md",
+      "git_path": "research/proposals/unmask-fast-track-20261029/README.md",
+      "sha256": "49d2f4e3b95ed8bcf5b029b7059443a929a6bfcb697a36639c96dfcc13db403b",
+      "size": 1851,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_RESULT_SUMMARY.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+      "sha256": "f2f3ab1990d789f2e01ad9ed209ef9a2cc1dc332a93dd21ef16282c45232bf32",
+      "size": 1507,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_RUN_MANIFEST.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+      "sha256": "af126ce3733b8521069e7dab283625e3cc19ee69aef7aeb7b7bdc9a9e3e3d945",
+      "size": 1633,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_ARTIFACT_INDEX.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
+      "sha256": "36ef58f689b208a40090d9fe391670226b40e0b23c484b034ee406e51e73da83",
+      "size": 6852,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_REVIEW_NOTES.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+      "sha256": "29df65c5dade0a308a530c32107fa5aa4a23afaa06c9cab85eb54475d7ce5d02",
+      "size": 341,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_FROZEN_PROTOCOL.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+      "sha256": "82dd54d802db193a4cc68b9f7a248d1a503f57837a4b16cc6f0389702e93f424",
+      "size": 4491,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_LOGGER_WAIVER.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+      "sha256": "b9ad86674df218d4c13161328d610a1b4f4e8450530426199baac38dafdfaf54",
+      "size": 93,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_TASK_MANIFEST.csv",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_OFF_ON_RESULTS.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+      "sha256": "ca3d2e17b28e435574f435a15264ffd31d08f278e39c9fff5d57f52e62ca48f3",
+      "size": 188,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_VALIDATION_SUMMARY.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+      "sha256": "15c053add85b3846f020219de9cb6723302285303ea113fbfbbbe27d4b459265",
+      "size": 362,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_GPU_QUEUE_REPORT.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+      "sha256": "df9655697172f28aaffefe0d8f0e8be9de9388fcc9f30d4930e923b96d4517a5",
+      "size": 147,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_OFF_REUSE_VERIFICATION.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+      "sha256": "f49c4a704bbbec4de748400658e879fbe356bd973cac3500821694b39cb18857",
+      "size": 668,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_NETWORK_PREFLIGHT.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+      "sha256": "d045911c769c2a2e27f6a7c19625ece71d341834667f858db451bd485e0a114e",
+      "size": 572,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OLD_CROSS_CYCLE_COMPARISON.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_research_control_20261028/research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json",
+      "git_path": "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json",
+      "sha256": "342f1f7d43e03cc76478a925d5cfa378fb4969980929841acc22989503fa0563",
+      "size": 271,
+      "required_for_PI_review": true
+    }
+  ],
+  "self_excluded": true
+}
