@@ -1,0 +1,57 @@
+{
+  "control_head": "d478be22efea7b1fc94d5dbe8750d09fd903e44a",
+  "files": {
+    "AGENTS.md": "c0cf206d02664c52f02bab178abb9d4122467349be202a07ecc074dc65ed3995",
+    ".codex/skills/safevla-research-loop/SKILL.md": "8a5eed00c73dd71b582c8d7522a6195f470e028cb43d4fb0a6348bba4867a945",
+    "research/BASELINE_CONTRACT.md": "5dc7aaa8a0bc0efadbb7b8ce6fb2474300e22a02f459a109dccf78dcc53e1ed2",
+    "research/CURRENT_STATE.md": "771ca9dba0be162d10a8703175b1985427b2968c5a39aca9402ced183a0d41cf",
+    "research/NEXT_EXPERIMENT.md": "82dd54d802db193a4cc68b9f7a248d1a503f57837a4b16cc6f0389702e93f424",
+    "research/NEXT_EXPERIMENT.json": "77079de6eef24f53bdea6bdffd8bca20dea107737d14d7d8bb905ad35d655436",
+    "research/EXPERIMENT_REGISTER.md": "4a27de61e2bb1509cb87f96e9b56b3c7789e74fd7e187129c6791ae5d06c5bda",
+    "research/DECISION_LOG.md": "b19e2e46daf2e5ff006d661b8188b116745595418abdf036b52e6b9920ba4177",
+    "research/LOOP_STATE.json": "74ab637da5f7b6091e4ccd497a4e249b3d514606b9e577a41d79ca9516a182eb",
+    "research/HANDOFF_PROTOCOL.md": "10b0f4bc939938ff463fc074ac4827cd14de43c7ac7ba350fa768f4d7e4b08a4"
+  },
+  "github_loop_state_independently_read": true,
+  "github_state_blob": "550adb8c2ffae6a502d873523023c0f04ac90b0b",
+  "state": {
+    "schema_version": "1.0",
+    "state_version": 87,
+    "cycle_id": "actor-reset-on200-off002-reuse-004-20261015",
+    "experiment_id": "EXP-ACTOR-RESET-ON200-004",
+    "status": "BLOCKED",
+    "next_actor": "PI",
+    "control_branch": "research-loop",
+    "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_004_20261015",
+    "instruction_commit": "500f7ba22151a7a62880199d737f0683558b91f0",
+    "reviewed_result_commit": "8b560d54d18a9db26417cb4824f1386c74638430",
+    "claim_id": "1c50b223da0a49d09fdbfe160ed780b4",
+    "authorization": {
+      "status": "APPROVED",
+      "approved_by": "PI",
+      "approved_at_utc": "2026-10-15T06:08:16Z",
+      "expires_at_utc": "2026-10-16T06:08:16Z",
+      "scope": "RESEARCH_EXPERIMENT",
+      "max_gpu": 1,
+      "max_episodes": 200
+    },
+    "required_outputs": [
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
+      "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json"
+    ],
+    "updated_by": "CODEX",
+    "updated_at_utc": "2026-10-15T06:43:00.093582+00:00"
+  },
+  "authority": "user CPU preparation only; historical claim never reused"
+}

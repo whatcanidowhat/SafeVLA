@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "strict_submodule_loads": [
+    {
+      "prefix": "decoder.",
+      "nkeys": 29,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "actor.",
+      "nkeys": 2,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "last_actions_embed.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "time_encoder.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    }
+  ],
+  "contrasts": [
+    {
+      "a": "mask_on_none",
+      "b": "mask_off_none",
+      "max_abs_logit": 9.711416244506836,
+      "js_nats": 0.4636995990225755,
+      "p_end_delta": 0.00012956907517180515
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_keys",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_values",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_keys",
+      "max_abs_logit": 3.6197383403778076,
+      "js_nats": 0.21940677721098173,
+      "p_end_delta": 0.0010572671263311554
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_values",
+      "max_abs_logit": 5.297392845153809,
+      "js_nats": 0.5227154402293259,
+      "p_end_delta": 0.0008104617773679403
+    }
+  ]
+}

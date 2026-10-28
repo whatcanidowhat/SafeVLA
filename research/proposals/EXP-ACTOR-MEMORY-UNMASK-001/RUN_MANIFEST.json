@@ -1,0 +1,105 @@
+{
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "run_id": "cpu-preparation-20261028-001",
+  "status": "CPU_VALIDATED_AWAITING_PI_REVIEW",
+  "utc": "2026-10-28T08:52:40.270314+00:00",
+  "base_commit": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+  "source_commit": "0d0ec865de555c2d13d591d666730b45e7b1e20f",
+  "branch": "codex/actor-memory-unmask-001-20261028",
+  "host": "amax",
+  "cwd": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028",
+  "python": "/home/amax/.conda/envs/safevla/bin/python",
+  "actual_commands": [
+    {
+      "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 /home/amax/.conda/envs/safevla/bin/python -B -m diagnostics.actor_memory_unmask.test_cpu",
+      "result": "8/8 PASS",
+      "log": "cpu-tests-attempt1.log"
+    },
+    {
+      "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 /home/amax/.conda/envs/safevla/bin/python -B -m diagnostics.actor_memory_unmask.replay --checkpoint /home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt --output /nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay1",
+      "exit_code": 1,
+      "result": "OFFLINE_HOOK_ASSERTION_FAILED",
+      "log": "replay-attempt1.log"
+    },
+    {
+      "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 /home/amax/.conda/envs/safevla/bin/python -B -m diagnostics.actor_memory_unmask.replay --checkpoint /home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt --output /nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay2",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "replay-attempt2.log"
+    },
+    {
+      "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 /home/amax/.conda/envs/safevla/bin/python -B -m diagnostics.actor_memory_unmask.preflight",
+      "exit_code": 0,
+      "result": "CPU_IDENTITY_PASS_ONLINE_RESOURCES_BLOCKED",
+      "log": "preflight.log"
+    }
+  ],
+  "source_hashes": {
+    "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504",
+    "diagnostics/actor_memory_unmask/configure.py": "c7720f66e4e89387bb85730f7173a6a6d0565c1932585bb2a5c639d5ed686615",
+    "diagnostics/actor_memory_unmask/cpu_model.py": "f2894c26fc85bf9b1714060eb9bc605dafe82ddb642a50b2947845fbce38588f",
+    "diagnostics/actor_memory_unmask/preflight.py": "42c010930d637a53f60dc4c89ec80831b65572b42995dcb19e4a189d0ccf5c3a",
+    "diagnostics/actor_memory_unmask/replay.py": "486924871735e21ddeb2d0d1f7a30ba1574351a95096626e3916e1538ddc3a1e",
+    "diagnostics/actor_memory_unmask/test_cpu.py": "b78a3bd8edf4e484a0602441e2a5bd8977b2bbb6261089e4cf4c69587d50eb26"
+  },
+  "tracked_patch_sha256": "f1d1f7999b9bfff73f55e3fe867fc61fd1843535b1e047faf88c58d1eeedaaee",
+  "provenance": "Code executed in dirty isolated preparation tree against base; all participating new sources frozen in source_commit after CPU execution. Committed hashes equal executed files except replay.py hook repair between attempts, documented below.",
+  "attempt1_source_difference": "replay.py registered hook on Attention; direct Attention.forward bypassed it. Attempt2 registers same observation on TransformerBlock; first failure preserved. No production-model change between tests/replays.",
+  "control_head": "d478be22efea7b1fc94d5dbe8750d09fd903e44a",
+  "claim_id": null,
+  "instruction_commit": null,
+  "online_authorization": "NOT_AUTHORIZED",
+  "episodes_started": 0,
+  "gpu_allocations": 0,
+  "simulator_launches": 0,
+  "full_policy_loads": 0,
+  "checkpoint_component_replay_attempts": 2,
+  "policy_checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "dependencies": {
+    "torch": {
+      "actual": "2.4.1+cu121",
+      "expected": "2.4.1+cu121",
+      "match": true
+    },
+    "numpy": {
+      "actual": "2.1.2",
+      "expected": "2.1.2",
+      "match": true
+    },
+    "transformers": {
+      "actual": "4.46.1",
+      "expected": "4.46.1",
+      "match": true
+    },
+    "ai2thor": {
+      "actual": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "expected": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "match": true
+    },
+    "jsonschema": {
+      "actual": "4.25.1",
+      "expected": "4.25.1",
+      "match": true
+    }
+  },
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+  "seed": 123,
+  "worker": "not applicable to CPU replay; planned worker0 for online",
+  "sampling": "not performed CPU; logits only",
+  "augmentation": "not performed CPU; synthetic post-perception embeddings",
+  "future_online_blockers": [
+    "new independent authorization/claim/CI",
+    "new reviewed online entrypoint binding",
+    "all GPUs busy at snapshot",
+    "only 34.14 GiB free vs proposed100 GiB minimum",
+    "asset contents not yet version-pinned",
+    "GPU equivalence not demonstrated"
+  ],
+  "official_SR": "NOT_MEASURED",
+  "official_safety_cost": "NOT_MEASURED",
+  "publication": "Server direct git push failed: localhost7899 connection refused; GitHub connector publication is attempted separately, never represented as a Claim."
+}

@@ -1,0 +1,191 @@
+{
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "self_excluded_to_avoid_recursive_hash": true,
+  "artifacts": [
+    {
+      "name": "CONTROL_READ_INDEX.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/CONTROL_READ_INDEX.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/CONTROL_READ_INDEX.json",
+      "sha256": "1224c942ef0b85368df62f1123bce791092b80f1dd6f286c5b553a269d31414a",
+      "size": 3431,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "DESIGN.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/DESIGN.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/DESIGN.json",
+      "sha256": "eabae956dc0b41ca6774c1ab67589b7c3837448cc981fd204b525f22d57cc03d",
+      "size": 2111,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "DESIGN.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/DESIGN.md",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/DESIGN.md",
+      "sha256": "2caab1a27427b63fe3cd92cc4e43c664c1ba7c62fd60aaecf800281bcefa4720",
+      "size": 8954,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RAW_REPLAY_INDEX.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RAW_REPLAY_INDEX.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RAW_REPLAY_INDEX.json",
+      "sha256": "c0ab02d97c95dfaab7c65af8ede593b7875004c8f259b8e03d1c002ca828b8fc",
+      "size": 1577,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "README.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/README.md",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/README.md",
+      "sha256": "5503aa91df271afbe8df2245c2f306aa418ad32f81278bd855454c35c6367a05",
+      "size": 1221,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REPLAY_RESULTS.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/REPLAY_RESULTS.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/REPLAY_RESULTS.json",
+      "sha256": "fdd0432d90eae2aa26ba699626e7ceebc9908e2b38ec833c31a963d67b7fbff2",
+      "size": 12550,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESOURCE_PREFLIGHT.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RESOURCE_PREFLIGHT.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RESOURCE_PREFLIGHT.json",
+      "sha256": "cf87219a2a24bf33fe49b53ef12b57b1d2af3ad46b2760c9595eb335b8dc48dd",
+      "size": 12017,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RESULT_SUMMARY.md",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RESULT_SUMMARY.md",
+      "sha256": "a03bf7d1961344f0f18839c03aa55a80ff336a0d05baa247f80ac3871ef5782b",
+      "size": 4371,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/REVIEW_NOTES.md",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/REVIEW_NOTES.md",
+      "sha256": "3e42ee169343f078d76427bf0e917d6189db7f16fdc55460fb7a5ae9451b7243",
+      "size": 1097,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RUN_MANIFEST.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/RUN_MANIFEST.json",
+      "sha256": "22a94de2f66710099cee5c4d74d73a7cd9d221388f00d16b84ca1e7b3fd916fd",
+      "size": 5170,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SOURCE.patch",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE.patch",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE.patch",
+      "sha256": "f1d1f7999b9bfff73f55e3fe867fc61fd1843535b1e047faf88c58d1eeedaaee",
+      "size": 24821,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SOURCE_HASHES.json",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE_HASHES.json",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE_HASHES.json",
+      "sha256": "b0c1af7ddf57e14eaaa1e1f299cc6f463505a967b380e8d3fa72e97fe9468867",
+      "size": 739,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_MANIFEST.csv",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/TASK_MANIFEST.csv",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "cpu-tests-attempt1.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/cpu-tests-attempt1.log",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/cpu-tests-attempt1.log",
+      "sha256": "671c8656bab88d035fc0a3c9e69f4540ef36188b4a57b0e704d3b75b934ca06d",
+      "size": 728,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "preflight.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/preflight.log",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/preflight.log",
+      "sha256": "cf87219a2a24bf33fe49b53ef12b57b1d2af3ad46b2760c9595eb335b8dc48dd",
+      "size": 12017,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "replay-attempt1.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/replay-attempt1.log",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/replay-attempt1.log",
+      "sha256": "3dfec9ce1597b9a59eec807dff969844ab60a585201038e940d0e195bea79b50",
+      "size": 667,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "replay-attempt2.log",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/replay-attempt2.log",
+      "git_path": "research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/replay-attempt2.log",
+      "sha256": "992702764b59e8a1eb9fc6b794a4d277b759248c029f8fd5f4f278eef9ebd248",
+      "size": 1456,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "architecture/models/allenact_transformer_models/allenact_dino_transformer.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/architecture/models/allenact_transformer_models/allenact_dino_transformer.py",
+      "git_path": "architecture/models/allenact_transformer_models/allenact_dino_transformer.py",
+      "sha256": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504",
+      "size": 29564,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "diagnostics/actor_memory_unmask/configure.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/configure.py",
+      "git_path": "diagnostics/actor_memory_unmask/configure.py",
+      "sha256": "c7720f66e4e89387bb85730f7173a6a6d0565c1932585bb2a5c639d5ed686615",
+      "size": 690,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "diagnostics/actor_memory_unmask/cpu_model.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/cpu_model.py",
+      "git_path": "diagnostics/actor_memory_unmask/cpu_model.py",
+      "sha256": "f2894c26fc85bf9b1714060eb9bc605dafe82ddb642a50b2947845fbce38588f",
+      "size": 3907,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "diagnostics/actor_memory_unmask/preflight.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/preflight.py",
+      "git_path": "diagnostics/actor_memory_unmask/preflight.py",
+      "sha256": "42c010930d637a53f60dc4c89ec80831b65572b42995dcb19e4a189d0ccf5c3a",
+      "size": 4456,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "diagnostics/actor_memory_unmask/replay.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py",
+      "git_path": "diagnostics/actor_memory_unmask/replay.py",
+      "sha256": "486924871735e21ddeb2d0d1f7a30ba1574351a95096626e3916e1538ddc3a1e",
+      "size": 6315,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "diagnostics/actor_memory_unmask/test_cpu.py",
+      "server_path": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_cpu.py",
+      "git_path": "diagnostics/actor_memory_unmask/test_cpu.py",
+      "sha256": "b78a3bd8edf4e484a0602441e2a5bd8977b2bbb6261089e4cf4c69587d50eb26",
+      "size": 6288,
+      "required_for_PI_review": true
+    }
+  ],
+  "optional_large_server_evidence_index": "RAW_REPLAY_INDEX.json"
+}

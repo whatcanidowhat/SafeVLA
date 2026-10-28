@@ -96,6 +96,9 @@ class DinoLLAMATxNavActorCritic(VisualNavActorCritic):
 
         assert action_embed_size == combiner_hidden_out_dims
         self.time_step_counter = 0
+        # Per-instance switch: configure only the root Actor after construction.
+        # Constructor kwargs are shared with both separate Critic models.
+        self.actor_cross_episode_attention_mask = True
         self.traj_idx_uuid = traj_idx_uuid
         self.traj_max_idx = traj_max_idx
         self.relevant_object_box_uuid = relevant_object_box_uuid
@@ -383,7 +386,11 @@ class DinoLLAMATxNavActorCritic(VisualNavActorCritic):
             self.time_encoder(observations[self.time_step_uuid]) + joint_embeds
         )
         x = joint_embeds.permute(1, 0, 2)
-        if self.traj_idx_uuid is None:
+        if not getattr(self, "actor_cross_episode_attention_mask", True):
+            # Remove episode isolation, retaining causality. For a single cached
+            # token the decoder's default causal mask exposes the valid prefix.
+            mask = None
+        elif self.traj_idx_uuid is None:
             mask = None
         elif joint_embeds.shape[0] == 1:
             timesteps = observations[self.time_step_uuid].permute(1, 0)  # bs, nsteps

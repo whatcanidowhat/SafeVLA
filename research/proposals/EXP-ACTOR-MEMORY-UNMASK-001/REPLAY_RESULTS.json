@@ -1,0 +1,546 @@
+{
+  "status": "PASS",
+  "scope": "checkpoint Actor component, source-extracted forward, fixed synthetic post-perception input; NOT full policy/online",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "strict_submodule_loads": [
+    {
+      "prefix": "decoder.",
+      "nkeys": 29,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "actor.",
+      "nkeys": 2,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "last_actions_embed.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "time_encoder.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    }
+  ],
+  "variants": {
+    "mask_on_none": {
+      "logits": [
+        -3.213930368423462,
+        2.989720582962036,
+        12.706847190856934,
+        -1.3211748600006104,
+        -2.357954502105713,
+        1.8109647035598755,
+        -2.055727481842041,
+        -1.0091509819030762,
+        2.143313407897949,
+        0.002377808094024658,
+        -4.531054973602295,
+        -1.0555824041366577,
+        -0.8019999861717224,
+        -3.09196138381958,
+        -1.5093454122543335,
+        1.3221255540847778,
+        -3.691211700439453,
+        -1.1016207933425903,
+        -1.46872079372406,
+        -4.599835395812988
+      ],
+      "p_end": 2.866716127457187e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_on_keys": {
+      "logits": [
+        -3.213930368423462,
+        2.989720582962036,
+        12.706847190856934,
+        -1.3211748600006104,
+        -2.357954502105713,
+        1.8109647035598755,
+        -2.055727481842041,
+        -1.0091509819030762,
+        2.143313407897949,
+        0.002377808094024658,
+        -4.531054973602295,
+        -1.0555824041366577,
+        -0.8019999861717224,
+        -3.09196138381958,
+        -1.5093454122543335,
+        1.3221255540847778,
+        -3.691211700439453,
+        -1.1016207933425903,
+        -1.46872079372406,
+        -4.599835395812988
+      ],
+      "p_end": 2.866716127457187e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_on_values": {
+      "logits": [
+        -3.213930368423462,
+        2.989720582962036,
+        12.706847190856934,
+        -1.3211748600006104,
+        -2.357954502105713,
+        1.8109647035598755,
+        -2.055727481842041,
+        -1.0091509819030762,
+        2.143313407897949,
+        0.002377808094024658,
+        -4.531054973602295,
+        -1.0555824041366577,
+        -0.8019999861717224,
+        -3.09196138381958,
+        -1.5093454122543335,
+        1.3221255540847778,
+        -3.691211700439453,
+        -1.1016207933425903,
+        -1.46872079372406,
+        -4.599835395812988
+      ],
+      "p_end": 2.866716127457187e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_none": {
+      "logits": [
+        0.9729362726211548,
+        4.240769386291504,
+        2.9954307079315186,
+        0.36371347308158875,
+        -4.097007751464844,
+        -2.6712605953216553,
+        -0.13004979491233826,
+        1.5088355541229248,
+        2.160146713256836,
+        -1.3554143905639648,
+        -8.37026596069336,
+        2.67429256439209,
+        -3.6731276512145996,
+        -3.786149024963379,
+        -4.252359867095947,
+        1.4295583963394165,
+        -0.9623725414276123,
+        -8.362110137939453,
+        -0.07731281220912933,
+        -6.361260414123535
+      ],
+      "p_end": 0.00012985574678455087,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_keys": {
+      "logits": [
+        -1.2175616025924683,
+        1.8424311876296997,
+        4.131067276000977,
+        -1.8318945169448853,
+        -1.9106178283691406,
+        -0.4860565662384033,
+        1.524916410446167,
+        0.14087578654289246,
+        2.613731861114502,
+        -0.45551806688308716,
+        -7.417261123657227,
+        2.7472004890441895,
+        -0.053389258682727814,
+        -2.547177314758301,
+        -1.4077426195144653,
+        1.05734121799469,
+        -0.8265364170074463,
+        -4.855093479156494,
+        2.6839816570281982,
+        -3.981538772583008
+      ],
+      "p_end": 0.0011871228731157061,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_values": {
+      "logits": [
+        4.8474578857421875,
+        0.8006318807601929,
+        1.5238831043243408,
+        -3.0391321182250977,
+        -2.026029586791992,
+        -4.339162826538086,
+        0.6650978326797485,
+        0.44367173314094543,
+        -2.6311073303222656,
+        -2.219625949859619,
+        -4.17794942855835,
+        0.17194096744060516,
+        -3.058753490447998,
+        -0.5148585438728333,
+        -4.6990203857421875,
+        -3.8678345680236816,
+        -1.6115188598632812,
+        -6.804418087005615,
+        -3.236358880996704,
+        -9.490219116210938
+      ],
+      "p_end": 0.0009403175241524911,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    }
+  },
+  "contrasts": [
+    {
+      "a": "mask_on_none",
+      "b": "mask_off_none",
+      "max_abs_logit": 9.711416244506836,
+      "js_nats": 0.4636995990225755,
+      "p_end_delta": 0.00012956907517180515
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_keys",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_values",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_keys",
+      "max_abs_logit": 3.6197383403778076,
+      "js_nats": 0.21940677721098173,
+      "p_end_delta": 0.0010572671263311554
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_values",
+      "max_abs_logit": 5.297392845153809,
+      "js_nats": 0.5227154402293259,
+      "p_end_delta": 0.0008104617773679403
+    }
+  ],
+  "live_episodes": 0,
+  "gpu_count": 0,
+  "warmup_forwards": 4,
+  "independent_boundary_forwards": 6,
+  "device": "cpu",
+  "torch_version": "2.4.1+cu121",
+  "python": "/home/amax/.conda/envs/safevla/bin/python",
+  "host": "amax",
+  "utc": "2026-10-28T08:47:44.036138+00:00",
+  "command": [
+    "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py",
+    "--checkpoint",
+    "/home/amax/public/datasets/qyy/checkpoints/safe_objnav.pt",
+    "--output",
+    "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay2"
+  ],
+  "module_paths": {
+    "fixture": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/cpu_model.py",
+    "decoder": "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/training/online/third_party_models/llama/model.py"
+  },
+  "inputs_sha256": "829d65f0f45baad2a012309663a2af3bec9b44a587729b277b7794332db78279",
+  "warm_cache_sha256": "51ca282663e7607d60377eef02ae47849490a23c1412cdad3bb0a6d8c5dc2959"
+}

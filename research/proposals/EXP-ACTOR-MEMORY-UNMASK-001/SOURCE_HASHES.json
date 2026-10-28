@@ -1,0 +1,8 @@
+{
+  "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504",
+  "diagnostics/actor_memory_unmask/configure.py": "c7720f66e4e89387bb85730f7173a6a6d0565c1932585bb2a5c639d5ed686615",
+  "diagnostics/actor_memory_unmask/cpu_model.py": "f2894c26fc85bf9b1714060eb9bc605dafe82ddb642a50b2947845fbce38588f",
+  "diagnostics/actor_memory_unmask/preflight.py": "42c010930d637a53f60dc4c89ec80831b65572b42995dcb19e4a189d0ccf5c3a",
+  "diagnostics/actor_memory_unmask/replay.py": "486924871735e21ddeb2d0d1f7a30ba1574351a95096626e3916e1538ddc3a1e",
+  "diagnostics/actor_memory_unmask/test_cpu.py": "b78a3bd8edf4e484a0602441e2a5bd8977b2bbb6261089e4cf4c69587d50eb26"
+}

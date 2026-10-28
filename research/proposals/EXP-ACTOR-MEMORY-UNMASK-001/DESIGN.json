@@ -1,0 +1,62 @@
+{
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "cycle_id": "actor-memory-unmask-001-20261028",
+  "status": "DRAFT_FOR_PI_REVIEW",
+  "next_actor": "PI",
+  "authorization": {
+    "cpu_preparation": "USER_AUTHORIZED",
+    "online": "NOT_AUTHORIZED",
+    "claim_id": null,
+    "instruction_commit": null
+  },
+  "source_commit": "0d0ec865de555c2d13d591d666730b45e7b1e20f",
+  "base_commit": "06cde9adeb91d47c062a11e72e90c7edf56fb398",
+  "unique_variable": "root Actor cross-Episode attention mask",
+  "groups": [
+    {
+      "name": "MASK_ON200",
+      "actor_cross_episode_attention_mask": true,
+      "actor_reset": "off",
+      "episodes": 200
+    },
+    {
+      "name": "MASK_OFF200",
+      "actor_cross_episode_attention_mask": false,
+      "actor_reset": "off",
+      "episodes": 200
+    }
+  ],
+  "resources": {
+    "proposed_max_gpu": 1,
+    "proposed_live_episode_starts": 400,
+    "max_decisions": 240000,
+    "proposed_execution_hours": 12,
+    "proposed_queue_hours": 12,
+    "output_limit_GiB": 90,
+    "minimum_free_GiB": 100
+  },
+  "fixed_conditions": {
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "test_augmentation": true,
+    "shuffle": true,
+    "horizon": 600,
+    "max_steps": 1000,
+    "end_action_index": 4,
+    "task_count_per_arm": 200,
+    "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301"
+  },
+  "cpu_scope": "checkpoint Actor component, source-extracted forward, fixed synthetic post-perception input; NOT full policy/online",
+  "online_entrypoint_status": "DESIGN_ONLY_REQUIRES_NEW_REVIEWED_BINDING_NO_OLD_P2_LAUNCHER",
+  "required_future_gates": [
+    "PI independently reviews exact source and evidence",
+    "fresh explicit GPU authorization",
+    "new unique approved control cycle and CI",
+    "fresh claim and distinct successful CI",
+    "new entrypoint binding and source pin review",
+    "GPU logger equivalence or new scoped PI decision",
+    "assets/version pin and live resources/source/task/import/network checks"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "note": "Attempt1 hook assertion failed; retained. Attempt2 PASS. Binary inputs/cache are optional server evidence; never upload to Git.",
+  "files": [
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay1/fixed_inputs.pt",
+      "sha256": "829d65f0f45baad2a012309663a2af3bec9b44a587729b277b7794332db78279",
+      "size": 11701,
+      "required_for_PI_review": false,
+      "git_shared": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay1/warm_cache.pt",
+      "sha256": "51ca282663e7607d60377eef02ae47849490a23c1412cdad3bb0a6d8c5dc2959",
+      "size": 12290662,
+      "required_for_PI_review": false,
+      "git_shared": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay2/REPLAY_RESULTS.json",
+      "sha256": "fdd0432d90eae2aa26ba699626e7ceebc9908e2b38ec833c31a963d67b7fbff2",
+      "size": 12550,
+      "required_for_PI_review": false,
+      "git_shared": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay2/fixed_inputs.pt",
+      "sha256": "829d65f0f45baad2a012309663a2af3bec9b44a587729b277b7794332db78279",
+      "size": 11701,
+      "required_for_PI_review": false,
+      "git_shared": false
+    },
+    {
+      "server_path": "/nvme2/user/qyy/SafeVLA_memory_unmask_cpu_20261028/replay2/warm_cache.pt",
+      "sha256": "51ca282663e7607d60377eef02ae47849490a23c1412cdad3bb0a6d8c5dc2959",
+      "size": 12290662,
+      "required_for_PI_review": false,
+      "git_shared": false
+    }
+  ]
+}

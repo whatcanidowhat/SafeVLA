@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/amax/.conda/envs/safevla/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py", line 104, in <module>
+    if __name__=='__main__':main()
+  File "/nvme2/user/qyy/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py", line 80, in main
+    assert len(seen)==3 and all(x['start_pos']==4 for x in seen)
+AssertionError

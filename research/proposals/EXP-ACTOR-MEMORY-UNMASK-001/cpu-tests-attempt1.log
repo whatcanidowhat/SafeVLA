@@ -1,0 +1,13 @@
+test_batch_unmask_is_causal (__main__.MemoryMaskTests) ... ok
+test_config_rejects_invalid_or_critic_drift (__main__.MemoryMaskTests) ... ok
+test_default_matches_original_forward_and_cache (__main__.MemoryMaskTests) ... ok
+test_history_mutation_blocked_on_accessible_off (__main__.MemoryMaskTests) ... ok
+test_prev_actions_null_token_unchanged (__main__.MemoryMaskTests) ... ok
+test_real_max_steps_rollover (__main__.MemoryMaskTests) ... ok
+test_separate_critic_outputs_and_forward_counts_unchanged (__main__.MemoryMaskTests) ... ok
+test_switch_preserves_all_cache_objects_counter_rng_and_critics (__main__.MemoryMaskTests) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.023s
+
+OK
