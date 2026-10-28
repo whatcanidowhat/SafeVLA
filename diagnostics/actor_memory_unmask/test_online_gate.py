@@ -18,6 +18,8 @@ class OnlineGateTests(unittest.TestCase):
                 'command':COMMAND,'resources':{'max_gpu':1,'max_episodes':400},'max_decisions':240000,
                 'max_runtime_seconds':43200,'gpu_logger_equivalence':'PI_WAIVED_FOR_THIS_EXPERIMENT',
                 'asset_inventory_sha256':'HASH','asset_inventory_path':'PATH','rendering_review':'PI_ACCEPTED_FOR_BOTH_ARMS'}
+        self.d['fixed_conditions']={'max_steps':500,'kv_cache_capacity':500,'episode_horizon':600,'actor_reset':'off'}
+        self.d['environment_review']='PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS'
 
     def validate(self):return validate_binding(self.s,self.d,'SOURCE',ROOT,'A',now=self.now)
 
@@ -51,6 +53,22 @@ class OnlineGateTests(unittest.TestCase):
         self.d['gpu_logger_equivalence']='NOT_RUN_PI_WAIVED'
         with self.assertRaises(ValueError):self.validate()
 
+    def test_fixture1000_is_not_online_baseline(self):
+        self.d['fixed_conditions']['max_steps']=1000
+        with self.assertRaises(ValueError):self.validate()
+
+    def test_cache1000_is_not_online_baseline(self):
+        self.d['fixed_conditions']['kv_cache_capacity']=1000
+        with self.assertRaises(ValueError):self.validate()
+
+    def test_horizon_must_remain600(self):
+        self.d['fixed_conditions']['episode_horizon']=500
+        with self.assertRaises(ValueError):self.validate()
+
+    def test_unreviewed_target_environment_rejected(self):
+        self.d['environment_review']='NOT_REVIEWED'
+        with self.assertRaises(ValueError):self.validate()
+
     def test_missing_asset_review_rejected(self):
         del self.d['asset_inventory_sha256']
         with self.assertRaises(ValueError):self.validate()
@@ -78,6 +96,7 @@ class OnlineGateTests(unittest.TestCase):
         self.assertNotIn('reset_root_actor',source)
         self.assertNotIn('CUDA_VISIBLE_DEVICES=',source)
         self.assertIn("configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')",source)
+        self.assertLess(source.index("assert_runtime_baseline(agent.actor_critic, REPO)"),source.index("configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')"))
 
     def test_decision_cap_uses_actual_validator_schema(self):
         source=(ROOT/'diagnostics/actor_memory_unmask/online_pair.py').read_text()

@@ -1,0 +1,549 @@
+{
+  "status": "PASS",
+  "scope": "checkpoint Actor component, source-extracted forward, fixed synthetic post-perception input; NOT full policy/online",
+  "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+  "strict_submodule_loads": [
+    {
+      "prefix": "decoder.",
+      "nkeys": 29,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "actor.",
+      "nkeys": 2,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "last_actions_embed.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "prefix": "time_encoder.",
+      "nkeys": 1,
+      "strict": true,
+      "missing": [],
+      "unexpected": []
+    }
+  ],
+  "variants": {
+    "mask_on_none": {
+      "logits": [
+        -3.213935136795044,
+        2.9897239208221436,
+        12.706847190856934,
+        -1.3211749792099,
+        -2.357952356338501,
+        1.8109683990478516,
+        -2.0557281970977783,
+        -1.0091514587402344,
+        2.143315315246582,
+        0.002380192279815674,
+        -4.53105354309082,
+        -1.0555825233459473,
+        -0.8019982576370239,
+        -3.0919599533081055,
+        -1.5093454122543335,
+        1.322128176689148,
+        -3.6912100315093994,
+        -1.1016194820404053,
+        -1.468719482421875,
+        -4.5998334884643555
+      ],
+      "p_end": 2.866722277737539e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_on_keys": {
+      "logits": [
+        -3.213935136795044,
+        2.9897239208221436,
+        12.706847190856934,
+        -1.3211749792099,
+        -2.357952356338501,
+        1.8109683990478516,
+        -2.0557281970977783,
+        -1.0091514587402344,
+        2.143315315246582,
+        0.002380192279815674,
+        -4.53105354309082,
+        -1.0555825233459473,
+        -0.8019982576370239,
+        -3.0919599533081055,
+        -1.5093454122543335,
+        1.322128176689148,
+        -3.6912100315093994,
+        -1.1016194820404053,
+        -1.468719482421875,
+        -4.5998334884643555
+      ],
+      "p_end": 2.866722277737539e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_on_values": {
+      "logits": [
+        -3.213935136795044,
+        2.9897239208221436,
+        12.706847190856934,
+        -1.3211749792099,
+        -2.357952356338501,
+        1.8109683990478516,
+        -2.0557281970977783,
+        -1.0091514587402344,
+        2.143315315246582,
+        0.002380192279815674,
+        -4.53105354309082,
+        -1.0555825233459473,
+        -0.8019982576370239,
+        -3.0919599533081055,
+        -1.5093454122543335,
+        1.322128176689148,
+        -3.6912100315093994,
+        -1.1016194820404053,
+        -1.468719482421875,
+        -4.5998334884643555
+      ],
+      "p_end": 2.866722277737539e-07,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              [
+                [
+                  false,
+                  false,
+                  false,
+                  false,
+                  true
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_none": {
+      "logits": [
+        0.9729377031326294,
+        4.24077033996582,
+        2.9954347610473633,
+        0.36370936036109924,
+        -4.097006320953369,
+        -2.6712605953216553,
+        -0.13004980981349945,
+        1.508834958076477,
+        2.1601428985595703,
+        -1.355417013168335,
+        -8.37026596069336,
+        2.6742923259735107,
+        -3.673130989074707,
+        -3.786151647567749,
+        -4.2523627281188965,
+        1.4295552968978882,
+        -0.9623746871948242,
+        -8.362112045288086,
+        -0.07731309533119202,
+        -6.361266613006592
+      ],
+      "p_end": 0.00012985584020449486,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_keys": {
+      "logits": [
+        -1.2175610065460205,
+        1.8424296379089355,
+        4.131068706512451,
+        -1.8318910598754883,
+        -1.9106223583221436,
+        -0.4860602021217346,
+        1.5249155759811401,
+        0.14087487757205963,
+        2.6137335300445557,
+        -0.45551830530166626,
+        -7.417261123657227,
+        2.747199535369873,
+        -0.053388722240924835,
+        -2.5471770763397217,
+        -1.407741904258728,
+        1.0573443174362183,
+        -0.8265410661697388,
+        -4.8550920486450195,
+        2.6839797496795654,
+        -3.9815425872802734
+      ],
+      "p_end": 0.00118711692838242,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    },
+    "mask_off_values": {
+      "logits": [
+        4.8474578857421875,
+        0.8006312847137451,
+        1.5238847732543945,
+        -3.0391311645507812,
+        -2.026031255722046,
+        -4.339163780212402,
+        0.6650983095169067,
+        0.44367143511772156,
+        -2.6311073303222656,
+        -2.2196266651153564,
+        -4.177948474884033,
+        0.17193903028964996,
+        -3.0587546825408936,
+        -0.5148579478263855,
+        -4.699019432067871,
+        -3.8678348064422607,
+        -1.6115204095840454,
+        -6.804417610168457,
+        -3.236360788345337,
+        -9.490220069885254
+      ],
+      "p_end": 0.0009403159268971605,
+      "counter_before": 4,
+      "counter_after": 5,
+      "attention_calls": 3,
+      "attention_inputs": [
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "start_pos": 4,
+          "mask": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "history_unchanged_during_forward": true,
+      "cache_objects_preserved": true,
+      "rng_unchanged": true
+    }
+  },
+  "contrasts": [
+    {
+      "a": "mask_on_none",
+      "b": "mask_off_none",
+      "max_abs_logit": 9.71141242980957,
+      "js_nats": 0.4636990753237164,
+      "p_end_delta": 0.0001295691679767211
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_keys",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_on_none",
+      "b": "mask_on_values",
+      "max_abs_logit": 0.0,
+      "js_nats": 0.0,
+      "p_end_delta": 0.0
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_keys",
+      "max_abs_logit": 3.6197421550750732,
+      "js_nats": 0.21940673722863113,
+      "p_end_delta": 0.0010572610881779251
+    },
+    {
+      "a": "mask_off_none",
+      "b": "mask_off_values",
+      "max_abs_logit": 5.297389984130859,
+      "js_nats": 0.5227153767002068,
+      "p_end_delta": 0.0008104600866926657
+    }
+  ],
+  "live_episodes": 0,
+  "gpu_count": 0,
+  "warmup_forwards": 4,
+  "independent_boundary_forwards": 6,
+  "max_steps": 500,
+  "kv_cache_capacity": 500,
+  "episode_horizon": 600,
+  "device": "cpu",
+  "torch_version": "2.4.1+cu121",
+  "python": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "host": "admin",
+  "utc": "2026-10-28T11:00:53.310077+00:00",
+  "command": [
+    "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py",
+    "--checkpoint",
+    "/public/home/zhangyh/QYY/data/checkpoints/safe_objnav.pt",
+    "--output",
+    "/public/home/zhangyh/QYY/SafeVLA_memory_unmask_cpu500_20261028/replay1"
+  ],
+  "module_paths": {
+    "fixture": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/cpu_model.py",
+    "decoder": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/training/online/third_party_models/llama/model.py"
+  },
+  "inputs_sha256": "d31537879ee4475c55558af9abded3f5a0b46c7b2f359370bd425007639cbc69",
+  "warm_cache_sha256": "1b320aa3c06f825c5ca26589d30de9987f7571675f8fe3a28e5930e2320e6b4d"
+}

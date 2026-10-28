@@ -1,0 +1,279 @@
+{
+  "self_excluded": true,
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "artifacts": [
+    {
+      "git_path": "diagnostics/actor_memory_unmask/baseline_contract.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/baseline_contract.py",
+      "sha256": "b8004ee9ffca679169cacf716b2ae7b52f2ddde571a7a9125c542c434a0c18e7",
+      "size": 3965,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/check_environment.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/check_environment.py",
+      "sha256": "82d55471c5406f04f93db5140391bb0a19480b723b72022f4858528be3c111b9",
+      "size": 2259,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/cpu_model.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/cpu_model.py",
+      "sha256": "1463f22a2003caa8edb5ce196daadd909205a3e2ed174be0af5b0a3fcc84afc7",
+      "size": 3906,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/evaluate_online.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/evaluate_online.py",
+      "sha256": "fab309cb770e61fded342bf5a9021d9be5d2394518e0591cd7bc9ec81ec07a86",
+      "size": 11400,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_gate.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_gate.py",
+      "sha256": "8f4470bd51769c6d0655a197f7099cfbdc7282cf881604a3a3575b5d441b15ed",
+      "size": 8562,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_results.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_results.py",
+      "sha256": "394028ed2fe51d03d3b9d7311ff0f10ec47cb6602715d772905f360b4040df1b",
+      "size": 7450,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/replay.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/replay.py",
+      "sha256": "805d590aed0d868dc823b6c52a30feb0f0bbaecf95e7390a8709eb9f9a97f62a",
+      "size": 6387,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/resource_inventory.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/resource_inventory.py",
+      "sha256": "008b25541c97a18ed1436d4e9df6c6567b4f979b72e1dbaad25e64cf4463997b",
+      "size": 4353,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/target_environment.sh",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/target_environment.sh",
+      "sha256": "1601dd045263e4706cdc8ad2f4349ef7a16fef636a23f7b91aa93ba9c8145afc",
+      "size": 1387,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/test_baseline_contract.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_baseline_contract.py",
+      "sha256": "c770161b48d42bad7a6412ad8f57014f9637aff4f9cb65989a9516ee4c2b4ee6",
+      "size": 4357,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/test_behavior_results.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_behavior_results.py",
+      "sha256": "79fd38ca05ffbcb150e4fb5aaa05040391fe243201f9a22acea49fc88cf26ad1",
+      "size": 4721,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/test_cpu.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_cpu.py",
+      "sha256": "cb7a4d1c70fbb3d349b97c0a67e285bb08fe2c0a63276f79b2d0e6e60a980f4e",
+      "size": 6298,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/test_online_gate.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_online_gate.py",
+      "sha256": "9bb0e7d1acbd2ffdfde167ea3e3f2cfbccde85ebad7b6a2282d05014240a72aa",
+      "size": 5008,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/unmask_pair.slurm",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/unmask_pair.slurm",
+      "sha256": "75fbcc02ff79ff35ea11e868c58e19927c41e16837c439554a12d1a341941725",
+      "size": 1448,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/verify_loaded_policy_cpu.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/verify_loaded_policy_cpu.py",
+      "sha256": "6af1e028b7a6d6076953feb6fff31bc9f5d2beb81a0c420cad920b487cbff512",
+      "size": 3547,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/CONTROL_NETWORK_FAILURE.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/CONTROL_NETWORK_FAILURE.json",
+      "sha256": "dbfce5965fd7e6e0d21eefd067edf4f0f2ca76784bc2e248752e7652bd944033",
+      "size": 515,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/DESIGN.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/DESIGN.md",
+      "sha256": "83682b9ccbd94e4a1bbd5b0ce9195d49c0482dcf2ea2f1ccef69c15f89a70e72",
+      "size": 7214,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/PI_REQUEST.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/PI_REQUEST.json",
+      "sha256": "79775eb9f783420d43f6ed8315f110a865942b03d72c438a7189b140fa622290",
+      "size": 3282,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/README.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/README.md",
+      "sha256": "cc512f49bca64db0a346baa0c59fcec3a4234944094adde877b3f2c2a574176a",
+      "size": 950,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/RENDERER_STATUS.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/RENDERER_STATUS.json",
+      "sha256": "29d3611f1b230ffd150fa230945578d16d9d19ae3e17f7aad8f1b4530d88aa1f",
+      "size": 995,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/REPLAY500_RESULTS.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/REPLAY500_RESULTS.json",
+      "sha256": "fd21f7bed13ab8903d4387a2e2dd4528d4c307559ca62e197ac9c549961a7b48",
+      "size": 12698,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/RESOURCE_SUMMARY.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/RESOURCE_SUMMARY.json",
+      "sha256": "8de764014ebab4cb0166aabd4b2c705a89686c0aae8cedf588e7cfdbcc783c06",
+      "size": 22570,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/RESULT_SUMMARY.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/RESULT_SUMMARY.md",
+      "sha256": "3e50c2257cc606cc8ba9b31227fcc2b49cf306b982b032f566d212f64d766b8e",
+      "size": 3028,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/RUN_MANIFEST.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/RUN_MANIFEST.json",
+      "sha256": "027ea9b92691818b3d402020af505415e2102bbd49654064736831b617caaec8",
+      "size": 4319,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/SERVER_ARTIFACT_INDEX.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/SERVER_ARTIFACT_INDEX.json",
+      "sha256": "fda2d907c81d134c452eab856eee509ec6845972fefa7c35721e23a7c116208b",
+      "size": 1703,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/SOURCE.patch",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/SOURCE.patch",
+      "sha256": "17b08e348396311a7a05b662e234ceac0857e7ed47b5af0f70ec1889c88e7ce6",
+      "size": 52984,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/SOURCE_HASHES.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/SOURCE_HASHES.json",
+      "sha256": "41999953ea5c11f4ae4f20db15f2bb0c1c376a70b972263710a88adcfdc2bf52",
+      "size": 1868,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/assets-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/assets-attempt1.log",
+      "sha256": "4331ea0e43da9a47f122cf9f31dd61ee6158e719f4162a90580c65d33d0a099b",
+      "size": 5552,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/cpu-tests-native-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/cpu-tests-native-attempt1.log",
+      "sha256": "dc287d0f6dd5df24f652223c9ad168ed1521f0f5e4928f12cbf01f3a33af469c",
+      "size": 136,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/cpu-tests-pinned-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/cpu-tests-pinned-attempt1.log",
+      "sha256": "d89bdc81730c07acc63093ae3db8b3e74e202d3361c0fc2a0d05e12952200c6e",
+      "size": 136,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/cpu-tests-pinned-final.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/cpu-tests-pinned-final.log",
+      "sha256": "d00ab52530b3331ac13f61b175989447a5c3a8675cfde1e077ac76a8c2fee01a",
+      "size": 137,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/environment-audio-align.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/environment-audio-align.log",
+      "sha256": "7b13a537e1c46a563c820f93a224b91b00de8db00d496d2b06460321e23ff545",
+      "size": 805,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/environment-check-attempt1.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/environment-check-attempt1.json",
+      "sha256": "a3fe06147cb4aa9652b6ba93e4587703bacd7a2296583f87207290feaf6adcda",
+      "size": 4513,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/environment-check-attempt2.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/environment-check-attempt2.json",
+      "sha256": "c6688b0a95f76f2c5e5fea9b3c1ce5dda8255025a04156dc7240ee2e21791e29",
+      "size": 2994,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/environment-install-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/environment-install-attempt1.log",
+      "sha256": "469941f549a96b505f023ae336c7e32841f24da6cf07dae317e2f80ace6be8ff",
+      "size": 3608,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/environment-install-attempt2.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/environment-install-attempt2.log",
+      "sha256": "dfa14f77c504b48012f7e9cb3a52059fa71dab926b69a6b190df5b505d64b279",
+      "size": 8576,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/loaded-policy-cpu-attempt1.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/loaded-policy-cpu-attempt1.json",
+      "sha256": "96c20ea2661054773ac33bf39350ed467db5b51ce67ab3d4162cb41cf836a951",
+      "size": 4827,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/plan500.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/plan500.log",
+      "sha256": "0d26ee961a7e325a2beb4e08dce9c7e1f3346ef118237916685e33cff7fe3eb4",
+      "size": 1674,
+      "required_for_PI_review": true
+    },
+    {
+      "git_path": "research/proposals/unmask-baseline500-20261028/replay500-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-baseline500-20261028/replay500-attempt1.log",
+      "sha256": "0b9ab8ad62a2d75debcccbb1e33a3b47153485daba0eb35d3c1dd0719d7cd3ae",
+      "size": 1454,
+      "required_for_PI_review": true
+    }
+  ]
+}

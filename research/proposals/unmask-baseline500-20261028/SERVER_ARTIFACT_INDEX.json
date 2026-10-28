@@ -1,0 +1,41 @@
+{
+  "scope": "Optional large raw/provisioning evidence; no weights uploaded",
+  "files": [
+    {
+      "path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/selected200-assets-attempt1.json",
+      "size": 4417524,
+      "sha256": "eb588ceae5d27e43037f1b9cc8811fd63fe52d07dcb6ce018bef4fbae788a3d1",
+      "required_for_PI_review": false
+    },
+    {
+      "path": "/public/home/zhangyh/QYY/SafeVLA_memory_unmask_cpu500_20261028/replay1/fixed_inputs.pt",
+      "size": 11701,
+      "sha256": "d31537879ee4475c55558af9abded3f5a0b46c7b2f359370bd425007639cbc69",
+      "required_for_PI_review": false
+    },
+    {
+      "path": "/public/home/zhangyh/QYY/SafeVLA_memory_unmask_cpu500_20261028/replay1/warm_cache.pt",
+      "size": 6146662,
+      "sha256": "1b320aa3c06f825c5ca26589d30de9987f7571675f8fe3a28e5930e2320e6b4d",
+      "required_for_PI_review": false
+    },
+    {
+      "path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/loaded-policy-cpu-attempt1.log",
+      "size": 66385,
+      "sha256": "0d0b5a1c924f7573c9beb00bb91185448e6af971bf7f458c12b3e88103e99f0c",
+      "required_for_PI_review": false
+    },
+    {
+      "path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/git-install-attempt1.log",
+      "size": 31210,
+      "sha256": "929b5065d718093ea70376a6e160c23eecbd6958d0d6add0a854de5db064e36f",
+      "required_for_PI_review": false
+    },
+    {
+      "path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/git-install-offline-attempt2.log",
+      "size": 4142,
+      "sha256": "0e142d6ed46dc8b4de901fcf2474af1461fa3682966e4dc65cb5f3227e469d50",
+      "required_for_PI_review": false
+    }
+  ]
+}

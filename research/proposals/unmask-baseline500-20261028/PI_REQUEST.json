@@ -1,0 +1,74 @@
+{
+  "status": "DRAFT_FOR_INDEPENDENT_PI_REVIEW",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "cycle_id": "actor-memory-unmask-001-20261028",
+  "server_code_snapshot": "61084ccdab9b674e914a6ffc07bde44543e363a7",
+  "code_sha": "PI must pin the exact shared corrected review commit after reading it; this draft does not self-approve.",
+  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028",
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "fixed_conditions": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "actor_reset": "off",
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "test_augmentation": true,
+    "shuffle": true,
+    "TaskSpecs": 200,
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0"
+  },
+  "order": [
+    "MASK_ON200",
+    "MASK_OFF200"
+  ],
+  "resources": {
+    "max_gpu": 1,
+    "max_episodes": 400
+  },
+  "max_decisions": 240000,
+  "max_runtime_seconds": 43200,
+  "python_executable": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "target_dependency_versions": {
+    "torch": "2.4.1+cu121",
+    "torchvision": "0.19.1+cu121",
+    "torchaudio": "2.4.1+cu121",
+    "numpy": "2.1.2",
+    "pandas": "2.2.3",
+    "Pillow": "12.2.0",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.7",
+    "transformers": "4.46.1",
+    "ai2thor": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+    "allenact": "0.5.5a0",
+    "jsonschema": "4.25.1",
+    "nltk": "3.9.1"
+  },
+  "asset_inventory_path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/selected200-assets-attempt1.json",
+  "asset_inventory_sha256": "eb588ceae5d27e43037f1b9cc8811fd63fe52d07dcb6ce018bef4fbae788a3d1",
+  "environment_review": "DECISION_REQUIRED",
+  "rendering_review": "DECISION_REQUIRED",
+  "renderer_file_sha256_proposed_partial": {
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec": "29d5f337ae9b7d7ce0b1b9fb81fc5e3b24d365b1847a1db492baa2327f252f43",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/UnityPlayer.so": "9cfaf68e03a165c4d94c4f3c955c5ea2bba5f9be840a7013157ce633eee3c166",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/metadata.json": "cc6a1ff20cff2bba1b1ebae6c80b284aa36a17b2aa27cd9a8a40a28bcb93d6a0"
+  },
+  "gpu_logger_equivalence": "NEW_SCOPED_PI_DECISION_REQUIRED; no repeated large logits study proposed",
+  "user_request": "Run the corrected performance comparison after genuine environment/asset/rendering/authority gates. General user execution intent already recorded; do not ask redundant broad GPU consent.",
+  "primary_question": {
+    "delta_SR": "SR_OFF-SR_ON >0",
+    "delta_cost": "mean_cost_OFF-mean_cost_ON <0"
+  },
+  "do_not_do": [
+    "No self-approval or old Claim",
+    "No cache extension to1000",
+    "No Actor/Critic reset or prev_actions mask edit",
+    "No reuse old OFF200",
+    "No extra live policy forward",
+    "No SR/Cost claim from logits"
+  ]
+}

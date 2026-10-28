@@ -1,0 +1,12 @@
+{
+  "status": "STATIC_BINARY_PINS_ONLY_GPU_RENDERING_NOT_RUN",
+  "files": {
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec": "29d5f337ae9b7d7ce0b1b9fb81fc5e3b24d365b1847a1db492baa2327f252f43",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/UnityPlayer.so": "9cfaf68e03a165c4d94c4f3c955c5ea2bba5f9be840a7013157ce633eee3c166",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/metadata.json": "cc6a1ff20cff2bba1b1ebae6c80b284aa36a17b2aa27cd9a8a40a28bcb93d6a0"
+  },
+  "builtin_resources_fully_pinned": false,
+  "renderer_choice": "PI_DECISION_REQUIRED",
+  "docker_daemon_access": "PERMISSION_DENIED_ON_LOGIN_NODE; no sudo or bypass attempted",
+  "historical_mesa_adaptation": "Not silently enabled by new source"
+}

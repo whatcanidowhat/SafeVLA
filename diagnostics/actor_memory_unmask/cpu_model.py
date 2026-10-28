@@ -57,7 +57,7 @@ class CriticHead(nn.Module):
         return self.fc(x)
 
 
-def make_model(dim=16, layers=3, heads=4, max_steps=1000, legacy=False):
+def make_model(dim=16, layers=3, heads=4, max_steps=500, legacy=False):
     source = (ROOT/MODEL_PATH).read_text()
     if legacy:
         source = subprocess.check_output(['git', 'show', '06cde9adeb91d47c062a11e72e90c7edf56fb398:'+MODEL_PATH], cwd=ROOT, text=True)

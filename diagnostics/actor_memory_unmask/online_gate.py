@@ -2,6 +2,7 @@
 import importlib.metadata
 import json
 import os
+import sys
 from pathlib import Path
 import subprocess
 import urllib.request
@@ -30,8 +31,11 @@ def validate_binding(state, design, source_sha, worktree, approval, now=None):
     require(design.get('gpu_logger_equivalence') in ['PASS_FOR_THIS_SOURCE','PI_WAIVED_FOR_THIS_EXPERIMENT'],'New experiment logger evidence/explicit PI decision required; old waiver forbidden')
     require(design.get('resources')=={'max_gpu':1,'max_episodes':400},'Design resource bounds mismatch')
     require(design.get('max_decisions')==240000 and design.get('max_runtime_seconds')==43200,'Design decision/runtime bounds mismatch')
+    fixed=design.get('fixed_conditions',{})
+    require(isinstance(fixed,dict) and fixed.get('max_steps')==500 and fixed.get('kv_cache_capacity')==500 and fixed.get('episode_horizon')==600 and fixed.get('actor_reset')=='off','Effective Baseline must be500/cache500/horizon600/resetOFF in both arms')
     require(design.get('asset_inventory_sha256') and design.get('asset_inventory_path'),'Missing reviewed target asset inventory')
     require(design.get('rendering_review')=='PI_ACCEPTED_FOR_BOTH_ARMS','Target rendering adaptation not reviewed')
+    require(design.get('environment_review')=='PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS','Full target dependency differences need explicit review')
     return auth
 
 
@@ -45,6 +49,9 @@ def authorize(args,repo):
     from diagnostics.actor_logits.storage import sha256
     require(args.control_root and args.approval_reference and args.claim_reference,'Missing independent PI approval, new Claim and control checkout')
     control=args.control_root.resolve()
+    # Compute-side commands below are read-only and support the target Git1.8.
+    # The independent claim writer must use the protocol's modern Git client;
+    # do not invent an atomic-push requirement for this read-only runtime gate.
     def git(root,*argv):return subprocess.check_output(['git',*argv],cwd=root,text=True,timeout=30).strip()
     require(git(control,'symbolic-ref','--short','HEAD')=='research-loop','Wrong control branch')
     require(not git(control,'status','--porcelain'),'Dirty control checkout')
@@ -55,6 +62,7 @@ def authorize(args,repo):
     design=json.loads((control/'research/NEXT_EXPERIMENT.json').read_text())
     source=git(repo,'rev-parse','HEAD')
     auth=validate_binding(state,design,source,repo.resolve(),args.approval_reference)
+    require(design.get('python_executable')==sys.executable,'Python path differs from reviewed target environment')
     render_keys=['VK_ICD_FILENAMES','LD_LIBRARY_PATH','DISPLAY','XDG_RUNTIME_DIR']
     require(design.get('rendering_environment')=={k:os.environ.get(k) for k in render_keys},'Actual renderer environment differs from reviewed design')
     require(not git(repo,'status','--porcelain'),'Dirty source tree')
@@ -63,11 +71,19 @@ def authorize(args,repo):
     reference=json.loads((repo/'diagnostics/actor_logits/reference_identity.json').read_text())
     for name,expected in reference['dependencies'].items():
         require(importlib.metadata.version(name)==expected,'Dependency drift: '+name+'; target migration is not equivalence approval')
+    target_versions=design.get('target_dependency_versions',{})
+    require(target_versions and 'pandas' in target_versions and 'Pillow' in target_versions,'Reviewed target dependency versions missing')
+    for name,expected in target_versions.items():require(importlib.metadata.version(name)==expected,'Target dependency differs from reviewed version: '+name)
     inventory=Path(design['asset_inventory_path'])
     require(sha256(inventory)==design['asset_inventory_sha256'],'Reviewed asset inventory identity mismatch')
-    entries=json.loads(inventory.read_text())['files']
+    inventory_record=json.loads(inventory.read_text())
+    require(inventory_record.get('status')=='COMPLETE_EXTERNAL_CLOSURE_REQUIRES_BUILTIN_RENDERER_PIN' and inventory_record.get('task_count')==200 and not inventory_record.get('missing_external_assets'),'Selected200 asset closure inventory incomplete')
+    entries=inventory_record['files']
     require(entries,'Empty target asset inventory')
     for item in entries:require(sha256(Path(item['path']))==item['sha256'],'Asset content drift: '+item['path'])
+    renderer_files=design.get('renderer_file_sha256',{})
+    require(renderer_files,'Simulator build and renderer binary/resource pins missing')
+    for path,digest in renderer_files.items():require(sha256(Path(path))==digest,'Simulator/renderer file drift: '+path)
     # Preserve scheduler CUDA mapping. Never replace it with logical GPU 0.
     require(os.environ.get('SLURM_JOB_ID'),'Requires separately authorized Slurm allocation')
     allocated=os.environ.get('SLURM_JOB_GPUS','').split(',')

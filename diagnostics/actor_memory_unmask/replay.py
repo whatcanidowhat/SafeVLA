@@ -37,7 +37,7 @@ def main():
     checkpoint=torch.load(a.checkpoint,map_location='cpu',weights_only=False)
     state=checkpoint.get('model_state_dict',checkpoint.get('state_dict',checkpoint))
     state={k.removeprefix('model.'):v for k,v in state.items()}
-    model=make_model(dim=512,layers=3,heads=8,max_steps=1000)
+    model=make_model(dim=512,layers=3,heads=8,max_steps=500)
     loads=[]
     for prefix,module in [('decoder.',model.decoder),('actor.',model.actor),('last_actions_embed.',model.last_actions_embed),('time_encoder.',model.time_encoder)]:
         subset={k[len(prefix):]:v for k,v in state.items() if k.startswith(prefix)}
@@ -94,6 +94,7 @@ def main():
     result=dict(status='PASS',scope='checkpoint Actor component, source-extracted forward, fixed synthetic post-perception input; NOT full policy/online',
                 checkpoint_sha256=digest,strict_submodule_loads=loads,variants=variants,contrasts=contrasts,
                 live_episodes=0,gpu_count=0,warmup_forwards=4,independent_boundary_forwards=6,
+                max_steps=500,kv_cache_capacity=500,episode_horizon=600,
                 device='cpu',torch_version=torch.__version__,python=sys.executable,host=socket.gethostname(),
                 utc=datetime.now(timezone.utc).isoformat(),command=sys.argv,
                 module_paths={'fixture':str(Path(__file__).with_name('cpu_model.py')),

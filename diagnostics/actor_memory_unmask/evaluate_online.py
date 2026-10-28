@@ -17,6 +17,7 @@ import sys
 
 from diagnostics.actor_logits.manifest import MANIFEST_SHA, check_actual_loader, regenerate
 from diagnostics.actor_logits.storage import read_json, require, sha256, write_json
+from .baseline_contract import source_baseline
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -55,7 +56,7 @@ def code_identity():
     require(not git('status','--porcelain'),'Source tree dirty')
     baseline='b0ab97ef7e3b16a284d0acbb8e7985b063fd4c80'
     changed=git('diff','--name-only',baseline,'HEAD').splitlines()
-    require(all(p.startswith(('diagnostics/actor_memory_unmask/','research/proposals/unmask-online-slurm-20261028/')) for p in changed),'Unexpected science/source edit since accepted CPU candidate')
+    require(all(p.startswith(('diagnostics/actor_memory_unmask/','research/proposals/unmask-online-slurm-20261028/','research/proposals/unmask-baseline500-20261028/')) for p in changed),'Unexpected science/source edit since accepted CPU candidate')
     hashes=read_json(REPO/'research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE_HASHES.json')
     actor='architecture/models/allenact_transformer_models/allenact_dino_transformer.py'
     require(sha256(REPO/actor)==hashes[actor],'Actor switch drift since CPU replay')
@@ -138,6 +139,8 @@ def execute(args, tasks, manifest_bytes):
         for name, path in identity['runtime_modules'].items():
             expected_root = dino_repo if name.startswith('dinov2') else REPO
             require(Path(path).resolve().is_relative_to(expected_root.resolve()), 'Unexpected import: '+path)
+        from .baseline_contract import assert_runtime_baseline
+        identity['runtime_baseline'] = assert_runtime_baseline(agent.actor_critic, REPO)
         configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')
         logger = ActorLogitsLogger(agent.actor_critic, args.output, tasks, names, identity)
         state['logger'] = logger
@@ -176,6 +179,7 @@ def main(argv=None):
         print(json.dumps({'status':'PLAN_ONLY_NOT_EXECUTED', 'actor_attention_mask':args.actor_mask, 'actor_reset':'off',
                           'tasks':len(tasks), 'manifest_sha256':MANIFEST_SHA,
                           'official_arguments':original_arguments(args),
+                          'expected_effective_baseline':source_baseline(REPO),
                           'GPU_EQUIVALENCE':'REQUIRES_NEW_PI_DECISION'}, indent=2))
         return
     execute(args, tasks, content)

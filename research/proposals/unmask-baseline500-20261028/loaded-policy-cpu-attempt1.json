@@ -1,0 +1,211 @@
+{
+  "status": "PASS",
+  "scope": "Actual full original evaluator policy loaded on CPU, no policy forward/simulator/Episode/GPU allocation",
+  "actual_model_class": "SafeDinoLLAMATxNavActorCriticSeparate",
+  "runtime_baseline": {
+    "source_baseline": {
+      "max_steps": 500,
+      "kv_cache_capacity": 500,
+      "episode_horizon": 600,
+      "model_class_default_not_effective_config": 1000,
+      "model_binding": "self.params.max_steps",
+      "cache_capacity_binding": "self.params.max_steps",
+      "sources": {
+        "training/online/base.py": "05a1ee412d48936c5a54244482a88df26f640c6ad0b3ee6c5782a45d2e644bd6",
+        "training/online/dinov2_vits_tsfm_base.py": "175eeb444eaee32e55b212ca331ec3a882477e75445a4e22a7c1971e0cbead51",
+        "online_evaluation/max_episode_configs.py": "6b7088383c26dcc8c8b3dd0617b3931e40fd572091984d91204a667eab2fa8f2",
+        "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504"
+      }
+    },
+    "loaded_branches": {
+      "actor": {
+        "max_steps": 500,
+        "decoder_max_seq_len": 500,
+        "time_encoder_max_len": 500,
+        "counter": 0,
+        "layers": [
+          {
+            "layer": 0,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 1,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 2,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          }
+        ]
+      },
+      "reward_critic": {
+        "max_steps": 500,
+        "decoder_max_seq_len": 500,
+        "time_encoder_max_len": 500,
+        "counter": 0,
+        "layers": [
+          {
+            "layer": 0,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 1,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 2,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          }
+        ]
+      },
+      "cost_critic": {
+        "max_steps": 500,
+        "decoder_max_seq_len": 500,
+        "time_encoder_max_len": 500,
+        "counter": 0,
+        "layers": [
+          {
+            "layer": 0,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 1,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          },
+          {
+            "layer": 2,
+            "cache_k_shape": [
+              0,
+              500,
+              8,
+              64
+            ],
+            "cache_v_shape": [
+              0,
+              500,
+              8,
+              64
+            ]
+          }
+        ]
+      }
+    },
+    "read_only": true
+  },
+  "load_events": [
+    {
+      "class": "DinoVisionTransformer",
+      "strict": true,
+      "nkeys": 175,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "class": "DinoVisionTransformer",
+      "strict": true,
+      "nkeys": 175,
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "class": "SafeDinoLLAMATxNavActorCriticSeparate",
+      "strict": false,
+      "nkeys": 417,
+      "missing": [],
+      "unexpected": []
+    }
+  ],
+  "policy_forwards": 0,
+  "cuda_initialized": false,
+  "python": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "torch_version": "2.4.1+cu121",
+  "parameter_max_steps_not_overridden": true
+}

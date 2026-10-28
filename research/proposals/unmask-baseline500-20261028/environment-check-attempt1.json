@@ -1,0 +1,88 @@
+{
+  "status": "BLOCKED",
+  "python": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "python_version": "3.10.20 | packaged by conda-forge | (main, Jun 11 2026, 03:31:56) [GCC 14.3.0]",
+  "versions": {
+    "torch": {
+      "expected": "2.4.1+cu121",
+      "actual": "2.4.1+cu121",
+      "match": true
+    },
+    "torchvision": {
+      "expected": "0.19.1+cu121",
+      "actual": "0.19.1+cu121",
+      "match": true
+    },
+    "torchaudio": {
+      "expected": "2.4.1+cu121",
+      "actual": "2.4.1+cu121",
+      "match": true
+    },
+    "numpy": {
+      "expected": "2.1.2",
+      "actual": "2.1.2",
+      "match": true
+    },
+    "transformers": {
+      "expected": "4.46.1",
+      "actual": "4.46.1",
+      "match": true
+    },
+    "ai2thor": {
+      "expected": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "actual": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "match": true
+    },
+    "jsonschema": {
+      "expected": "4.25.1",
+      "actual": "4.25.1",
+      "match": true
+    }
+  },
+  "imports": {
+    "torch": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/python3.10/site-packages/torch/__init__.py",
+      "version": "2.4.1+cu121"
+    },
+    "torchvision": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/python3.10/site-packages/torchvision/__init__.py",
+      "version": "0.19.1+cu121"
+    },
+    "torchaudio": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/python3.10/site-packages/torchaudio/__init__.py",
+      "version": "2.4.1+cu121"
+    },
+    "numpy": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/python3.10/site-packages/numpy/__init__.py",
+      "version": "2.1.2"
+    },
+    "pandas": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/site-packages/pandas/__init__.py",
+      "version": "2.2.3"
+    },
+    "cv2": {
+      "status": "PASS",
+      "path": "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/site-packages/cv2/__init__.py",
+      "version": "4.11.0"
+    },
+    "architecture.models.allenact_transformer_models.separate_actor_critic": {
+      "status": "FAIL",
+      "error": "LookupError: \n**********************************************************************\n  Resource \u001b[93mwordnet2022\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('wordnet2022')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93mcorpora/wordnet2022\u001b[0m\n\n  Searched in:\n    - '/public/home/zhangyh/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/share/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n**********************************************************************\n"
+    },
+    "training.online.online_eval": {
+      "status": "FAIL",
+      "error": "LookupError: \n**********************************************************************\n  Resource \u001b[93mwordnet2022\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('wordnet2022')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93mcorpora/wordnet2022\u001b[0m\n\n  Searched in:\n    - '/public/home/zhangyh/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/share/nltk_data'\n    - '/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n**********************************************************************\n"
+    }
+  },
+  "cuda_initialized": false,
+  "model_constructed": false,
+  "simulator_started": false,
+  "pandas_legacy_version": "2.3.3",
+  "pandas_target_version": "2.2.3",
+  "full_environment_equivalence": "NOT_ESTABLISHED; retain dependency resolver conflicts and Pandas difference for PI review"
+}

@@ -1,0 +1,830 @@
+diff --git a/diagnostics/actor_memory_unmask/baseline_contract.py b/diagnostics/actor_memory_unmask/baseline_contract.py
+new file mode 100644
+index 0000000..c99ba86
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/baseline_contract.py
+@@ -0,0 +1,56 @@
++"""Read-only effective evaluation configuration and model/cache assertions."""
++import ast
++import hashlib
++from pathlib import Path
++
++
++def source_baseline(repo):
++    repo=Path(repo)
++    paths={
++        'params':'training/online/base.py',
++        'factory':'training/online/dinov2_vits_tsfm_base.py',
++        'horizon':'online_evaluation/max_episode_configs.py',
++        'model':'architecture/models/allenact_transformer_models/allenact_dino_transformer.py'}
++    trees={k:ast.parse((repo/p).read_text()) for k,p in paths.items()}
++    params=next(n for n in trees['params'].body if isinstance(n,ast.ClassDef) and n.name=='BaseConfigParams')
++    max_steps=next(ast.literal_eval(n.value) for n in params.body if isinstance(n,ast.AnnAssign) and isinstance(n.target,ast.Name) and n.target.id=='max_steps')
++    horizon=next(ast.literal_eval(n.value)['ObjectNavType'] for n in trees['horizon'].body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='MAX_EPISODE_LEN_PER_TASK' for t in n.targets))
++    factory=next(n for n in ast.walk(trees['factory']) if isinstance(n,ast.FunctionDef) and n.name=='create_model')
++    call=next(n for n in ast.walk(factory) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='model_init_func')
++    kwargs={k.arg:k.value for k in call.keywords}
++    assert ast.unparse(kwargs['max_steps'])=='self.params.max_steps','Model max_steps binding changed'
++    assert isinstance(kwargs['initial_tgt_cache_shape'],ast.Tuple)
++    assert ast.unparse(kwargs['initial_tgt_cache_shape'].elts[0])=='self.params.max_steps','Cache capacity binding changed'
++    assert max_steps==500 and horizon==600,'Effective Baseline differs; never repair it to satisfy experiment'
++    model=next(n for n in trees['model'].body if isinstance(n,ast.ClassDef) and n.name=='DinoLLAMATxNavActorCritic')
++    init=next(n for n in model.body if isinstance(n,ast.FunctionDef) and n.name=='__init__')
++    defaults=dict(zip([a.arg for a in init.args.args][-len(init.args.defaults):],init.args.defaults))
++    return {'max_steps':max_steps,'kv_cache_capacity':max_steps,'episode_horizon':horizon,
++            'model_class_default_not_effective_config':ast.literal_eval(defaults['max_steps']),
++            'model_binding':ast.unparse(kwargs['max_steps']),
++            'cache_capacity_binding':ast.unparse(kwargs['initial_tgt_cache_shape'].elts[0]),
++            'sources':{p:hashlib.sha256((repo/p).read_bytes()).hexdigest() for p in paths.values()}}
++
++
++def assert_branch(branch,name,expected=500):
++    assert branch.max_steps==expected,f'{name}.max_steps={branch.max_steps}, Baseline={expected}'
++    assert branch.decoder.params.max_seq_len==expected,f'{name} decoder capacity differs'
++    assert branch.time_encoder.max_len==expected,f'{name} positional encoder configuration differs'
++    layers=[]
++    for i,layer in enumerate(branch.decoder.layers):
++        attention=layer.attention
++        kshape=tuple(attention.cache_k.shape);vshape=tuple(attention.cache_v.shape)
++        assert len(kshape)==len(vshape)==4,f'{name} layer{i} invalid cache rank'
++        assert kshape==vshape and kshape[1]==expected,f'{name} layer{i} K/V capacity mismatch: {kshape}, {vshape}'
++        layers.append({'layer':i,'cache_k_shape':list(kshape),'cache_v_shape':list(vshape)})
++    assert layers,f'{name} decoder has no layers'
++    return {'max_steps':branch.max_steps,'decoder_max_seq_len':branch.decoder.params.max_seq_len,
++            'time_encoder_max_len':branch.time_encoder.max_len,'counter':branch.time_step_counter,'layers':layers}
++
++
++def assert_runtime_baseline(root,repo):
++    baseline=source_baseline(repo)
++    branches={name:assert_branch(branch,name,baseline['max_steps']) for name,branch in [
++        ('actor',root),('reward_critic',root.critic_tsfm),('cost_critic',root.c_critic_tsfm)]}
++    # Inspect metadata only. No forward, reset, tensor write, resize or RNG call.
++    return {'source_baseline':baseline,'loaded_branches':branches,'read_only':True}
+diff --git a/diagnostics/actor_memory_unmask/check_environment.py b/diagnostics/actor_memory_unmask/check_environment.py
+new file mode 100644
+index 0000000..482bea3
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/check_environment.py
+@@ -0,0 +1,38 @@
++"""CPU-only import/dependency provenance; never constructs policy or simulator."""
++import argparse
++import importlib
++import importlib.metadata
++import json
++import os
++from pathlib import Path
++import sys
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args()
++    assert not a.output.exists()
++    assert os.environ.get('CUDA_VISIBLE_DEVICES')=='','CPU import check requires hidden CUDA devices'
++    expected={'torch':'2.4.1+cu121','torchvision':'0.19.1+cu121','torchaudio':'2.4.1+cu121','numpy':'2.1.2','transformers':'4.46.1','ai2thor':'0+966bd7758586e05d18f6181f459c0e90ba318bec','jsonschema':'4.25.1'}
++    versions={}
++    for name,target in expected.items():
++        try:actual=importlib.metadata.version(name)
++        except importlib.metadata.PackageNotFoundError:actual=None
++        versions[name]={'expected':target,'actual':actual,'match':actual==target}
++    imports={}
++    for name in ['torch','torchvision','torchaudio','numpy','pandas','cv2','architecture.models.allenact_transformer_models.separate_actor_critic','training.online.online_eval']:
++        try:
++            module=importlib.import_module(name)
++            imports[name]={'status':'PASS','path':getattr(module,'__file__',None),'version':getattr(module,'__version__',None)}
++        except Exception as exc:imports[name]={'status':'FAIL','error':type(exc).__name__+': '+str(exc)}
++    import torch
++    initialized=torch.cuda.is_initialized()
++    result={'status':'PASS' if all(v['match'] for v in versions.values()) and all(v['status']=='PASS' for v in imports.values()) and not initialized else 'BLOCKED',
++            'python':sys.executable,'python_version':sys.version,'versions':versions,'imports':imports,
++            'cuda_initialized':initialized,'model_constructed':False,'simulator_started':False,
++            'pandas_legacy_version':'2.3.3','pandas_target_version':importlib.metadata.version('pandas'),
++            'full_environment_equivalence':'NOT_ESTABLISHED; retain dependency resolver conflicts and Pandas difference for PI review'}
++    a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
++    raise SystemExit(0 if result['status']=='PASS' else 2)
++
++
++if __name__=='__main__':main()
+diff --git a/diagnostics/actor_memory_unmask/cpu_model.py b/diagnostics/actor_memory_unmask/cpu_model.py
+index ea4f957..eb4fcb5 100644
+--- a/diagnostics/actor_memory_unmask/cpu_model.py
++++ b/diagnostics/actor_memory_unmask/cpu_model.py
+@@ -57,7 +57,7 @@ class CriticHead(nn.Module):
+         return self.fc(x)
+ 
+ 
+-def make_model(dim=16, layers=3, heads=4, max_steps=1000, legacy=False):
++def make_model(dim=16, layers=3, heads=4, max_steps=500, legacy=False):
+     source = (ROOT/MODEL_PATH).read_text()
+     if legacy:
+         source = subprocess.check_output(['git', 'show', '06cde9adeb91d47c062a11e72e90c7edf56fb398:'+MODEL_PATH], cwd=ROOT, text=True)
+diff --git a/diagnostics/actor_memory_unmask/evaluate_online.py b/diagnostics/actor_memory_unmask/evaluate_online.py
+index f02b710..6946a76 100644
+--- a/diagnostics/actor_memory_unmask/evaluate_online.py
++++ b/diagnostics/actor_memory_unmask/evaluate_online.py
+@@ -17,6 +17,7 @@ import sys
+ 
+ from diagnostics.actor_logits.manifest import MANIFEST_SHA, check_actual_loader, regenerate
+ from diagnostics.actor_logits.storage import read_json, require, sha256, write_json
++from .baseline_contract import source_baseline
+ 
+ REPO = Path(__file__).resolve().parents[2]
+ 
+@@ -55,7 +56,7 @@ def code_identity():
+     require(not git('status','--porcelain'),'Source tree dirty')
+     baseline='b0ab97ef7e3b16a284d0acbb8e7985b063fd4c80'
+     changed=git('diff','--name-only',baseline,'HEAD').splitlines()
+-    require(all(p.startswith(('diagnostics/actor_memory_unmask/','research/proposals/unmask-online-slurm-20261028/')) for p in changed),'Unexpected science/source edit since accepted CPU candidate')
++    require(all(p.startswith(('diagnostics/actor_memory_unmask/','research/proposals/unmask-online-slurm-20261028/','research/proposals/unmask-baseline500-20261028/')) for p in changed),'Unexpected science/source edit since accepted CPU candidate')
+     hashes=read_json(REPO/'research/proposals/EXP-ACTOR-MEMORY-UNMASK-001/SOURCE_HASHES.json')
+     actor='architecture/models/allenact_transformer_models/allenact_dino_transformer.py'
+     require(sha256(REPO/actor)==hashes[actor],'Actor switch drift since CPU replay')
+@@ -138,6 +139,8 @@ def execute(args, tasks, manifest_bytes):
+         for name, path in identity['runtime_modules'].items():
+             expected_root = dino_repo if name.startswith('dinov2') else REPO
+             require(Path(path).resolve().is_relative_to(expected_root.resolve()), 'Unexpected import: '+path)
++        from .baseline_contract import assert_runtime_baseline
++        identity['runtime_baseline'] = assert_runtime_baseline(agent.actor_critic, REPO)
+         configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')
+         logger = ActorLogitsLogger(agent.actor_critic, args.output, tasks, names, identity)
+         state['logger'] = logger
+@@ -176,6 +179,7 @@ def main(argv=None):
+         print(json.dumps({'status':'PLAN_ONLY_NOT_EXECUTED', 'actor_attention_mask':args.actor_mask, 'actor_reset':'off',
+                           'tasks':len(tasks), 'manifest_sha256':MANIFEST_SHA,
+                           'official_arguments':original_arguments(args),
++                          'expected_effective_baseline':source_baseline(REPO),
+                           'GPU_EQUIVALENCE':'REQUIRES_NEW_PI_DECISION'}, indent=2))
+         return
+     execute(args, tasks, content)
+diff --git a/diagnostics/actor_memory_unmask/online_gate.py b/diagnostics/actor_memory_unmask/online_gate.py
+index be189e4..88e2182 100644
+--- a/diagnostics/actor_memory_unmask/online_gate.py
++++ b/diagnostics/actor_memory_unmask/online_gate.py
+@@ -2,6 +2,7 @@
+ import importlib.metadata
+ import json
+ import os
++import sys
+ from pathlib import Path
+ import subprocess
+ import urllib.request
+@@ -30,8 +31,11 @@ def validate_binding(state, design, source_sha, worktree, approval, now=None):
+     require(design.get('gpu_logger_equivalence') in ['PASS_FOR_THIS_SOURCE','PI_WAIVED_FOR_THIS_EXPERIMENT'],'New experiment logger evidence/explicit PI decision required; old waiver forbidden')
+     require(design.get('resources')=={'max_gpu':1,'max_episodes':400},'Design resource bounds mismatch')
+     require(design.get('max_decisions')==240000 and design.get('max_runtime_seconds')==43200,'Design decision/runtime bounds mismatch')
++    fixed=design.get('fixed_conditions',{})
++    require(isinstance(fixed,dict) and fixed.get('max_steps')==500 and fixed.get('kv_cache_capacity')==500 and fixed.get('episode_horizon')==600 and fixed.get('actor_reset')=='off','Effective Baseline must be500/cache500/horizon600/resetOFF in both arms')
+     require(design.get('asset_inventory_sha256') and design.get('asset_inventory_path'),'Missing reviewed target asset inventory')
+     require(design.get('rendering_review')=='PI_ACCEPTED_FOR_BOTH_ARMS','Target rendering adaptation not reviewed')
++    require(design.get('environment_review')=='PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS','Full target dependency differences need explicit review')
+     return auth
+ 
+ 
+@@ -45,6 +49,9 @@ def authorize(args,repo):
+     from diagnostics.actor_logits.storage import sha256
+     require(args.control_root and args.approval_reference and args.claim_reference,'Missing independent PI approval, new Claim and control checkout')
+     control=args.control_root.resolve()
++    # Compute-side commands below are read-only and support the target Git1.8.
++    # The independent claim writer must use the protocol's modern Git client;
++    # do not invent an atomic-push requirement for this read-only runtime gate.
+     def git(root,*argv):return subprocess.check_output(['git',*argv],cwd=root,text=True,timeout=30).strip()
+     require(git(control,'symbolic-ref','--short','HEAD')=='research-loop','Wrong control branch')
+     require(not git(control,'status','--porcelain'),'Dirty control checkout')
+@@ -55,6 +62,7 @@ def authorize(args,repo):
+     design=json.loads((control/'research/NEXT_EXPERIMENT.json').read_text())
+     source=git(repo,'rev-parse','HEAD')
+     auth=validate_binding(state,design,source,repo.resolve(),args.approval_reference)
++    require(design.get('python_executable')==sys.executable,'Python path differs from reviewed target environment')
+     render_keys=['VK_ICD_FILENAMES','LD_LIBRARY_PATH','DISPLAY','XDG_RUNTIME_DIR']
+     require(design.get('rendering_environment')=={k:os.environ.get(k) for k in render_keys},'Actual renderer environment differs from reviewed design')
+     require(not git(repo,'status','--porcelain'),'Dirty source tree')
+@@ -63,11 +71,19 @@ def authorize(args,repo):
+     reference=json.loads((repo/'diagnostics/actor_logits/reference_identity.json').read_text())
+     for name,expected in reference['dependencies'].items():
+         require(importlib.metadata.version(name)==expected,'Dependency drift: '+name+'; target migration is not equivalence approval')
++    target_versions=design.get('target_dependency_versions',{})
++    require(target_versions and 'pandas' in target_versions and 'Pillow' in target_versions,'Reviewed target dependency versions missing')
++    for name,expected in target_versions.items():require(importlib.metadata.version(name)==expected,'Target dependency differs from reviewed version: '+name)
+     inventory=Path(design['asset_inventory_path'])
+     require(sha256(inventory)==design['asset_inventory_sha256'],'Reviewed asset inventory identity mismatch')
+-    entries=json.loads(inventory.read_text())['files']
++    inventory_record=json.loads(inventory.read_text())
++    require(inventory_record.get('status')=='COMPLETE_EXTERNAL_CLOSURE_REQUIRES_BUILTIN_RENDERER_PIN' and inventory_record.get('task_count')==200 and not inventory_record.get('missing_external_assets'),'Selected200 asset closure inventory incomplete')
++    entries=inventory_record['files']
+     require(entries,'Empty target asset inventory')
+     for item in entries:require(sha256(Path(item['path']))==item['sha256'],'Asset content drift: '+item['path'])
++    renderer_files=design.get('renderer_file_sha256',{})
++    require(renderer_files,'Simulator build and renderer binary/resource pins missing')
++    for path,digest in renderer_files.items():require(sha256(Path(path))==digest,'Simulator/renderer file drift: '+path)
+     # Preserve scheduler CUDA mapping. Never replace it with logical GPU 0.
+     require(os.environ.get('SLURM_JOB_ID'),'Requires separately authorized Slurm allocation')
+     allocated=os.environ.get('SLURM_JOB_GPUS','').split(',')
+diff --git a/diagnostics/actor_memory_unmask/online_results.py b/diagnostics/actor_memory_unmask/online_results.py
+index 4e550c0..542c20d 100644
+--- a/diagnostics/actor_memory_unmask/online_results.py
++++ b/diagnostics/actor_memory_unmask/online_results.py
+@@ -2,7 +2,7 @@
+ import math
+ from pathlib import Path
+ import random
+-from diagnostics.actor_logits.storage import read_json, require
++from diagnostics.actor_logits.storage import read_json, read_jsonl, require
+ from diagnostics.actor_logits.validate import validate_run
+ from diagnostics.actor_logits.logger import COST_KEYS
+ 
+@@ -21,16 +21,60 @@ def summarize(outcomes):
+             'cost_distribution':costs,'components':{k:sum(e[k] for e in outcomes) for k in COST_KEYS}}
+ 
+ 
++def behavior(rows,official):
++    require(rows,'Empty episode behavior trace')
++    actions=[r['executed_action_name'] for r in rows]
++    success=bool(official['success']>.1)
++    terminal_end=actions[-1]=='end'
++    coverage=official.get('percentage_rooms_visited')
++    target_room=official.get('for_video_table/has_agent_been_in_room')
++    if coverage is not None:
++        coverage=float(coverage)
++        require(math.isfinite(coverage) and 0<=coverage<=1.000001,'Invalid official room coverage')
++    if target_room is not None:require(type(target_room) is bool,'Invalid target-room metric')
++    return {'success':success,'eps_len':len(rows),'terminal_action':actions[-1],
++            'subhorizon_end':terminal_end and len(rows)<600,
++            'failed_early_end':not success and terminal_end and len(rows)<600,
++            'failed_horizon_exhaustion':not success and len(rows)>=600,
++            'official_percentage_rooms_visited':coverage,
++            'official_total_rooms_visited':official.get('total_rooms_visited'),
++            'official_visited_target_room':target_room,
++            'failed_without_target_room_visit_proxy':None if target_room is None else (not success and not target_room),
++            'adjacent_repeat_fraction':sum(a==b for a,b in zip(actions,actions[1:]))/max(1,len(rows)-1),
++            'aba_oscillations':sum(actions[i]==actions[i-2]!=actions[i-1] for i in range(2,len(actions))),
++            'scope':'Early END is failure+end before600. Official room coverage/target-room visits and action repetition are descriptive exploration proxies, not a causal diagnosis of insufficient exploration. No new environment queries.'}
++
++
++def aggregate_behavior(episodes):
++    failures=[e for e in episodes if not e['success']]
++    coverage=[e['official_percentage_rooms_visited'] for e in failures if e['official_percentage_rooms_visited'] is not None]
++    target=[e['failed_without_target_room_visit_proxy'] for e in episodes if e['failed_without_target_room_visit_proxy'] is not None]
++    return {'episodes':len(episodes),'failures':len(failures),
++            'failed_early_end':sum(e['failed_early_end'] for e in episodes),
++            'failed_horizon_exhaustion':sum(e['failed_horizon_exhaustion'] for e in episodes),
++            'failure_room_coverage_n':len(coverage),
++            'failure_room_coverage_mean':sum(coverage)/len(coverage) if coverage else None,
++            'failure_room_coverage_median':percentile(coverage,.5) if coverage else None,
++            'target_room_metric_n':len(target),'failed_without_target_room_visit_proxy':sum(target) if target else None,
++            'insufficient_exploration_causal_conclusion':'NOT_IDENTIFIED_FROM_THESE_PROXIES'}
++
++
+ def analyze(mask_on,mask_off):
+     l,r=validate_run(mask_on,200),validate_run(mask_off,200)
+     require(l['status']==r['status']=='PASS','Both200 integrity gates must pass')
+     lm,rm=read_json(Path(mask_on)/'RUN_MANIFEST.json'),read_json(Path(mask_off)/'RUN_MANIFEST.json')
+     require(lm['tasks']==rm['tasks'] and lm['action_names']==rm['action_names'],'Task/worker/order/action identity mismatch')
+     lp,rp=lm['provenance'],rm['provenance']
+-    for k in ['git_commit','source_sha256','checkpoint_sha256','dino_sha256','manifest_sha256','seed','num_workers','shuffle','greedy','test_augmentation','physical_gpu','control_evidence']:
++    for k in ['git_commit','source_sha256','checkpoint_sha256','dino_sha256','manifest_sha256','seed','num_workers','shuffle','greedy','test_augmentation','physical_gpu','control_evidence','runtime_baseline']:
+         require(k in lp and k in rp and lp[k]==rp[k],'Provenance mismatch: '+k)
+     require(lp['actor_reset']==rp['actor_reset']=='off','Counter/KV reset treatment forbidden')
+     require(lp['actor_attention_mask']=='on' and rp['actor_attention_mask']=='off','Expected MASK_ON then MASK_OFF')
++    for provenance in [lp,rp]:
++        baseline=provenance['runtime_baseline']
++        require(baseline['source_baseline']['max_steps']==500 and baseline['source_baseline']['episode_horizon']==600,'Runtime Baseline not500/horizon600')
++        for branch in baseline['loaded_branches'].values():
++            require(branch['max_steps']==500 and branch['decoder_max_seq_len']==500,'Runtime branch configuration drift')
++            require(all(layer['cache_k_shape'][1]==layer['cache_v_shape'][1]==500 for layer in branch['layers']),'Runtime K/V capacity drift')
+     lo,ro=l['outcomes'],r['outcomes']
+     ds=[int(b['success'])-int(a['success']) for a,b in zip(lo,ro)]
+     dc=[float(b['cost'])-float(a['cost']) for a,b in zip(lo,ro)]
+@@ -40,10 +84,20 @@ def analyze(mask_on,mask_off):
+         bs.append(sum(ds[i] for i in indices)/200);bc.append(sum(dc[i] for i in indices)/200)
+     improve=sum(x==1 for x in ds);worse=sum(x==-1 for x in ds);n=improve+worse
+     exact=min(1.,2*sum(math.comb(n,i) for i in range(min(improve,worse)+1))/2**n) if n else 1.
++    left_paths=sorted((Path(mask_on)/'episodes').glob('*.complete'))
++    right_paths=sorted((Path(mask_off)/'episodes').glob('*.complete'))
++    require(len(left_paths)==len(right_paths)==200,'Missing complete behavior traces')
++    on_behavior=[behavior(read_jsonl(p/'actions.jsonl'),read_json(p/'metrics.json')['official']) for p in left_paths]
++    off_behavior=[behavior(read_jsonl(p/'actions.jsonl'),read_json(p/'metrics.json')['official']) for p in right_paths]
+     return {'status':'COMPLETE','direction':'MASK_OFF minus MASK_ON','mask_on':summarize(lo),'mask_off':summarize(ro),
+             'delta_SR':sum(ds)/200,'delta_mean_cost':sum(dc)/200,
+             'paired_bootstrap_95_SR':[percentile(bs,.025),percentile(bs,.975)],
+             'paired_bootstrap_95_cost':[percentile(bc,.025),percentile(bc,.975)],
+             'success_discordance':{'improved':improve,'worsened':worse,'exact_mcnemar_p':exact},
+-            'paired_tasks':[{'sample_id':t['sample_id'],'delta_success':s,'delta_cost':c} for t,s,c in zip(lm['tasks'],ds,dc)],
++            'behavior':{'mask_on':aggregate_behavior(on_behavior),'mask_off':aggregate_behavior(off_behavior)},
++            'joint_directional_criterion':sum(ds)>0 and sum(dc)<0,
++            'paired_tasks':[{'sample_id':t['sample_id'],'delta_success':s,'delta_cost':c,
++                             'delta_cost_components':{k:b[k]-a[k] for k in COST_KEYS},
++                             'mask_on_behavior':ab,'mask_off_behavior':bb}
++                            for t,s,c,a,b,ab,bb in zip(lm['tasks'],ds,dc,lo,ro,on_behavior,off_behavior)],
+             'scope':'Exploratory task-aligned comparison; sequential episode histories and stochastic trajectories violate independence assumptions. Bootstrap/McNemar are descriptive uncertainty, not full causal identification. No nonsignificance-as-equivalence claim.'}
+diff --git a/diagnostics/actor_memory_unmask/replay.py b/diagnostics/actor_memory_unmask/replay.py
+index 2b0bc3a..5187cab 100644
+--- a/diagnostics/actor_memory_unmask/replay.py
++++ b/diagnostics/actor_memory_unmask/replay.py
+@@ -37,7 +37,7 @@ def main():
+     checkpoint=torch.load(a.checkpoint,map_location='cpu',weights_only=False)
+     state=checkpoint.get('model_state_dict',checkpoint.get('state_dict',checkpoint))
+     state={k.removeprefix('model.'):v for k,v in state.items()}
+-    model=make_model(dim=512,layers=3,heads=8,max_steps=1000)
++    model=make_model(dim=512,layers=3,heads=8,max_steps=500)
+     loads=[]
+     for prefix,module in [('decoder.',model.decoder),('actor.',model.actor),('last_actions_embed.',model.last_actions_embed),('time_encoder.',model.time_encoder)]:
+         subset={k[len(prefix):]:v for k,v in state.items() if k.startswith(prefix)}
+@@ -94,6 +94,7 @@ def main():
+     result=dict(status='PASS',scope='checkpoint Actor component, source-extracted forward, fixed synthetic post-perception input; NOT full policy/online',
+                 checkpoint_sha256=digest,strict_submodule_loads=loads,variants=variants,contrasts=contrasts,
+                 live_episodes=0,gpu_count=0,warmup_forwards=4,independent_boundary_forwards=6,
++                max_steps=500,kv_cache_capacity=500,episode_horizon=600,
+                 device='cpu',torch_version=torch.__version__,python=sys.executable,host=socket.gethostname(),
+                 utc=datetime.now(timezone.utc).isoformat(),command=sys.argv,
+                 module_paths={'fixture':str(Path(__file__).with_name('cpu_model.py')),
+diff --git a/diagnostics/actor_memory_unmask/resource_inventory.py b/diagnostics/actor_memory_unmask/resource_inventory.py
+new file mode 100644
+index 0000000..056cd4e
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/resource_inventory.py
+@@ -0,0 +1,81 @@
++"""Bounded CPU-only inventory of selected200 houses and referenced asset files."""
++import argparse
++import gzip
++import hashlib
++import json
++from pathlib import Path
++import re
++import time
++
++
++def main():
++    p=argparse.ArgumentParser()
++    p.add_argument('--repo',type=Path,required=True)
++    p.add_argument('--data',type=Path,required=True)
++    p.add_argument('--output',type=Path,required=True)
++    p.add_argument('--seconds',type=int,default=180)
++    a=p.parse_args();assert not a.output.exists(),'Never overwrite inventory'
++    deadline=time.monotonic()+a.seconds
++    files=[];missing=[];unknown=[];asset_ids=set();selected={};status='INCOMPLETE'
++    def check():
++        if time.monotonic()>deadline:raise TimeoutError('Inventory time budget reached')
++    def digest(path):
++        h=hashlib.sha256()
++        with path.open('rb') as f:
++            for chunk in iter(lambda:f.read(8*1024*1024),b''):check();h.update(chunk)
++        return h.hexdigest()
++    def add(path,kind):
++        files.append({'path':str(path),'sha256':digest(path),'size':path.stat().st_size,'kind':kind})
++        if len(files)%100==0:print('hashed_files',len(files),'asset_ids',len(asset_ids),flush=True)
++    try:
++        tasks=[json.loads(line) for line in gzip.decompress((a.repo/'benchmark/objectnavtype_val.jsonl.gz').read_bytes()).splitlines() if line]
++        assert len(tasks)==200
++        indices={int(t['house_index']) for t in tasks}
++        houses=a.data/'objaverse_houses/houses_2023_07_28/val.jsonl.gz'
++        annotations=a.data/'objaverse_assets/2023_07_28/annotations.json.gz'
++        add(houses,'house_dataset');add(annotations,'asset_annotations')
++        ann=json.loads(gzip.decompress(annotations.read_bytes()))
++        assert isinstance(ann,dict)
++        with gzip.open(houses,'rt') as stream:
++            for i,line in enumerate(stream):
++                check()
++                if i in indices:selected[i]=json.loads(line)
++                if i>=max(indices):break
++        assert set(selected)==indices,'Required house indices missing'
++        def visit(value):
++            if isinstance(value,dict):
++                if isinstance(value.get('assetId'),str):asset_ids.add(value['assetId'])
++                for child in value.values():visit(child)
++            elif isinstance(value,list):
++                for child in value:visit(child)
++        for house in selected.values():visit(house)
++        asset_root=a.data/'objaverse_assets/2023_07_28/assets'
++        external=[]
++        for asset_id in sorted(asset_ids):
++            check();directory=asset_root/asset_id
++            assert directory.resolve().is_relative_to(asset_root.resolve()),'Asset path escapes root'
++            if directory.is_dir():
++                before=len(files)
++                for path in sorted(directory.rglob('*')):
++                    check()
++                    if path.is_file():add(path,'selected_scene_asset')
++                if len(files)==before:missing.append(asset_id)
++                external.append(asset_id)
++            elif asset_id in ann or re.fullmatch(r'[a-fA-F0-9]{32}|[a-fA-F0-9-]{36}',asset_id):missing.append(asset_id)
++            else:unknown.append(asset_id)
++        status='COMPLETE_EXTERNAL_CLOSURE_REQUIRES_BUILTIN_RENDERER_PIN' if not missing else 'MISSING_ASSETS'
++    except Exception as exc:
++        error=type(exc).__name__+': '+str(exc)
++    else:error=None
++    record={'status':status,'error':error,'scope':'All files under external asset directories referenced by every object in the selected200 task houses. Built-in/non-external asset IDs remain subject to simulator build/renderer review; this inventory alone is not full simulator identity proof.',
++            'task_count':len(tasks) if 'tasks' in locals() else None,'house_indices':sorted(selected),
++            'referenced_asset_count':len(asset_ids),'missing_external_assets':missing,
++            'builtin_or_unresolved_asset_ids':unknown,'files':files,
++            'hashed_files':len(files),'hashed_bytes':sum(x['size'] for x in files)}
++    a.output.parent.mkdir(parents=True,exist_ok=True)
++    a.output.write_text(json.dumps(record,indent=2)+'\n')
++    print(json.dumps({k:v for k,v in record.items() if k not in ['files','house_indices','builtin_or_unresolved_asset_ids']},indent=2),flush=True)
++    raise SystemExit(0 if status.startswith('COMPLETE') else 2)
++
++
++if __name__=='__main__':main()
+diff --git a/diagnostics/actor_memory_unmask/target_environment.sh b/diagnostics/actor_memory_unmask/target_environment.sh
+new file mode 100644
+index 0000000..8adae3e
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/target_environment.sh
+@@ -0,0 +1,19 @@
++# Frozen target paths; source only. No job/model/simulator or GPU initialization.
++export SAFEVLA_ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028
++export SAFEVLA_CONTROL_ROOT=/public/home/zhangyh/QYY/SafeVLA_research_control_20261028
++export SAFEVLA_DATA_ROOT=/public/home/zhangyh/QYY/data
++export SAFEVLA_TARGET_PYTHON=/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python
++export PATH=/public/home/zhangyh/QYY/envs/git_unmask_20261028/bin:$PATH
++export DINOV2_REPO=/public/home/zhangyh/QYY/cache/torch/hub/facebookresearch_dinov2_main
++export DINOV2_CKPT=/public/home/zhangyh/QYY/cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth
++export OBJAVERSE_HOUSES_DIR=/public/home/zhangyh/QYY/data/objaverse_houses/houses_2023_07_28
++export OBJAVERSE_DATA_DIR=/public/home/zhangyh/QYY/data/objaverse_assets
++export NLTK_DATA=/public/home/zhangyh/QYY/data/nltk_data
++export TORCH_HOME=/public/home/zhangyh/QYY/cache/torch
++export HF_HOME=/public/home/zhangyh/QYY/cache/huggingface
++export HF_HUB_CACHE=/public/home/zhangyh/QYY/cache/huggingface
++export HUGGINGFACE_HUB_CACHE=/public/home/zhangyh/QYY/cache/huggingface
++export TRANSFORMERS_CACHE=/public/home/zhangyh/QYY/cache/huggingface
++export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 WANDB_MODE=offline
++export TOKENIZERS_PARALLELISM=False
++# Keep scheduler CUDA mapping and HOME. Renderer variables require PI review.
+diff --git a/diagnostics/actor_memory_unmask/test_baseline_contract.py b/diagnostics/actor_memory_unmask/test_baseline_contract.py
+new file mode 100644
+index 0000000..495b332
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/test_baseline_contract.py
+@@ -0,0 +1,85 @@
++import copy
++import unittest
++import torch
++from .baseline_contract import source_baseline,assert_runtime_baseline
++from .cpu_model import ROOT,make_model,fixed_input,cache
++
++torch.set_num_threads(1)
++
++
++class BaselineContractTests(unittest.TestCase):
++    def setUp(self):
++        torch.manual_seed(123)
++        self.root=make_model()
++        self.root.critic_tsfm=make_model()
++        self.root.c_critic_tsfm=make_model()
++        for m in self.branches():
++            with torch.no_grad():m(**fixed_input(torch.ones(1,1,16),0))
++
++    def branches(self):return [self.root,self.root.critic_tsfm,self.root.c_critic_tsfm]
++
++    def test_source_configuration_chain(self):
++        result=source_baseline(ROOT)
++        self.assertEqual(result['max_steps'],500)
++        self.assertEqual(result['kv_cache_capacity'],500)
++        self.assertEqual(result['episode_horizon'],600)
++        self.assertEqual(result['model_class_default_not_effective_config'],1000)
++
++    def test_actual_three_branches_pass_without_mutation(self):
++        before=[cache(m) for m in self.branches()]
++        counters=[m.time_step_counter for m in self.branches()]
++        identities=[(id(l.attention.cache_k),id(l.attention.cache_v)) for m in self.branches() for l in m.decoder.layers]
++        rng=torch.get_rng_state().clone();calls=[];handles=[]
++        for m in self.branches():handles.append(m.decoder.register_forward_pre_hook(lambda *args:calls.append(1)))
++        result=assert_runtime_baseline(self.root,ROOT)
++        self.assertEqual(set(result['loaded_branches']),{'actor','reward_critic','cost_critic'})
++        self.assertFalse(calls)
++        self.assertEqual(counters,[m.time_step_counter for m in self.branches()])
++        self.assertTrue(torch.equal(rng,torch.get_rng_state()))
++        self.assertEqual(identities,[(id(l.attention.cache_k),id(l.attention.cache_v)) for m in self.branches() for l in m.decoder.layers])
++        for previous,m in zip(before,self.branches()):
++            for (ka,va),(kb,vb) in zip(previous,cache(m)):
++                self.assertTrue(torch.equal(ka,kb));self.assertTrue(torch.equal(va,vb))
++        for h in handles:h.remove()
++
++    def test_wrong_actor_configuration_rejected_not_repaired(self):
++        self.root.max_steps=1000
++        with self.assertRaises(AssertionError):assert_runtime_baseline(self.root,ROOT)
++        self.assertEqual(self.root.max_steps,1000)
++
++    def test_empty_batch_cache_retains_valid_capacity500(self):
++        root=make_model();root.critic_tsfm=make_model();root.c_critic_tsfm=make_model()
++        for branch in [root,root.critic_tsfm,root.c_critic_tsfm]:branch.decoder.sampler_select([])
++        result=assert_runtime_baseline(root,ROOT)
++        for branch in result['loaded_branches'].values():
++            self.assertEqual(branch['counter'],0)
++            self.assertTrue(all(layer['cache_k_shape'][0]==0 and layer['cache_k_shape'][1]==500 for layer in branch['layers']))
++
++    def test_reward_critic_mismatch_rejected_not_repaired(self):
++        self.root.critic_tsfm.decoder.params.max_seq_len=1000
++        with self.assertRaises(AssertionError):assert_runtime_baseline(self.root,ROOT)
++        self.assertEqual(self.root.critic_tsfm.decoder.params.max_seq_len,1000)
++
++    def test_cost_critic_cache_mismatch_rejected_not_repaired(self):
++        attention=self.root.c_critic_tsfm.decoder.layers[0].attention
++        attention.cache_v=attention.cache_v[:,:499]
++        with self.assertRaises(AssertionError):assert_runtime_baseline(self.root,ROOT)
++        self.assertEqual(attention.cache_v.shape[1],499)
++
++    def test_rollover_matches_legacy_at500(self):
++        new=make_model();old=make_model(legacy=True)
++        old.load_state_dict(new.state_dict(),strict=True)
++        x=torch.ones(1,1,16)
++        for step in range(501):
++            with torch.no_grad():
++                a=new(**fixed_input(x,step,0))[0].distributions.logits
++                b=old(**fixed_input(x,step,0))[0].distributions.logits
++            self.assertTrue(torch.equal(a,b))
++            self.assertEqual(new.time_step_counter,old.time_step_counter)
++            if step in [498,499,500]:
++                for (ka,va),(kb,vb) in zip(cache(new),cache(old)):
++                    self.assertTrue(torch.equal(ka,kb));self.assertTrue(torch.equal(va,vb))
++        self.assertEqual(new.time_step_counter,1)
++
++
++if __name__=='__main__':unittest.main(verbosity=2)
+diff --git a/diagnostics/actor_memory_unmask/test_behavior_results.py b/diagnostics/actor_memory_unmask/test_behavior_results.py
+new file mode 100644
+index 0000000..4ac294d
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/test_behavior_results.py
+@@ -0,0 +1,67 @@
++from pathlib import Path
++import tempfile
++import unittest
++from unittest.mock import patch
++from .online_results import behavior,aggregate_behavior,summarize,analyze
++from diagnostics.actor_logits.logger import COST_KEYS
++
++
++class BehaviorResultsTests(unittest.TestCase):
++    def test_failed_early_end_separate_from_successful_end(self):
++        rows=[{'executed_action_name':'end'}]
++        self.assertTrue(behavior(rows,{'success':0})['failed_early_end'])
++        self.assertFalse(behavior(rows,{'success':1})['failed_early_end'])
++
++    def test_horizon600_not_early_end_and_short_non_end_not_early_end(self):
++        self.assertFalse(behavior([{'executed_action_name':'end'}]*600,{'success':0})['failed_early_end'])
++        self.assertTrue(behavior([{'executed_action_name':'end'}]*600,{'success':0})['failed_horizon_exhaustion'])
++        self.assertFalse(behavior([{'executed_action_name':'move'}],{'success':0})['failed_early_end'])
++
++    def test_missing_exploration_metrics_stay_unavailable(self):
++        item=behavior([{'executed_action_name':'end'}],{'success':0})
++        self.assertIsNone(item['official_percentage_rooms_visited'])
++        summary=aggregate_behavior([item])
++        self.assertEqual(summary['failure_room_coverage_n'],0)
++        self.assertIsNone(summary['failure_room_coverage_mean'])
++        self.assertIsNone(summary['failed_without_target_room_visit_proxy'])
++
++    def test_official_exploration_fields_are_preserved_as_proxies(self):
++        item=behavior([{'executed_action_name':'end'}],{'success':0,'percentage_rooms_visited':.25,'total_rooms_visited':1,'for_video_table/has_agent_been_in_room':False})
++        self.assertEqual(item['official_percentage_rooms_visited'],.25)
++        self.assertTrue(item['failed_without_target_room_visit_proxy'])
++        self.assertEqual(aggregate_behavior([item])['insufficient_exploration_causal_conclusion'],'NOT_IDENTIFIED_FROM_THESE_PROXIES')
++
++    def test_200_pair_direction_and_five_cost_components(self):
++        baseline={'source_baseline':{'max_steps':500,'episode_horizon':600},'loaded_branches':{name:{'max_steps':500,'decoder_max_seq_len':500,'layers':[{'cache_k_shape':[1,500,4,4],'cache_v_shape':[1,500,4,4]}]} for name in ['actor','reward_critic','cost_critic']}}
++        common={k:'same' for k in ['git_commit','source_sha256','checkpoint_sha256','dino_sha256','manifest_sha256','seed','num_workers','shuffle','greedy','test_augmentation','physical_gpu','control_evidence']}
++        common.update(actor_reset='off',runtime_baseline=baseline)
++        tasks=[{'sample_id':str(i)} for i in range(200)]
++        manifests={name:{'tasks':tasks,'action_names':['move','end'],'provenance':dict(common,actor_attention_mask=mode)} for name,mode in [('ON','on'),('OFF','off')]}
++        outcomes={}
++        for name in ['ON','OFF']:
++            cost=2 if name=='ON' else 1
++            outcomes[name]=[{'success':name=='OFF','cost':cost,**{k:(cost if k=='corner' else 0) for k in COST_KEYS}} for _ in range(200)]
++        def validation(directory,expected):return {'status':'PASS','outcomes':outcomes[Path(directory).name]}
++        def read(path):
++            path=Path(path)
++            if path.name=='RUN_MANIFEST.json':return manifests[path.parent.name]
++            name=path.parent.parent.parent.name
++            return {'official':{'success':1 if name=='OFF' else 0,'percentage_rooms_visited':.5 if name=='OFF' else .1,'for_video_table/has_agent_been_in_room':name=='OFF'}}
++        with tempfile.TemporaryDirectory() as tmp:
++            on,off=Path(tmp)/'ON',Path(tmp)/'OFF'
++            for group in [on,off]:
++                for i in range(200):(group/'episodes'/f'{i:04d}.complete').mkdir(parents=True)
++            with patch('diagnostics.actor_memory_unmask.online_results.validate_run',side_effect=validation),patch('diagnostics.actor_memory_unmask.online_results.read_json',side_effect=read),patch('diagnostics.actor_memory_unmask.online_results.read_jsonl',return_value=[{'executed_action_name':'end'}]):
++                result=analyze(on,off)
++        self.assertEqual(result['delta_SR'],1)
++        self.assertEqual(result['delta_mean_cost'],-1)
++        self.assertEqual(result['paired_bootstrap_95_SR'],[1.,1.])
++        self.assertEqual(result['paired_bootstrap_95_cost'],[-1.,-1.])
++        self.assertTrue(result['joint_directional_criterion'])
++        self.assertEqual(result['behavior']['mask_on']['failed_early_end'],200)
++        self.assertEqual(result['behavior']['mask_off']['failed_early_end'],0)
++        self.assertEqual(set(result['paired_tasks'][0]['delta_cost_components']),set(COST_KEYS))
++        self.assertEqual(result['paired_tasks'][0]['delta_cost_components']['corner'],-1)
++
++
++if __name__=='__main__':unittest.main(verbosity=2)
+diff --git a/diagnostics/actor_memory_unmask/test_cpu.py b/diagnostics/actor_memory_unmask/test_cpu.py
+index 377bd5a..9b2e4ae 100644
+--- a/diagnostics/actor_memory_unmask/test_cpu.py
++++ b/diagnostics/actor_memory_unmask/test_cpu.py
+@@ -11,7 +11,7 @@ torch.set_num_threads(1)
+ class MemoryMaskTests(unittest.TestCase):
+     def setUp(self):
+         torch.manual_seed(123)
+-        self.model = make_model(max_steps=8)
++        self.model = make_model(max_steps=500)
+         self.x = torch.randn(1, 1, 16)
+ 
+     def call(self, model, t, e=0, x=None):
+@@ -23,7 +23,7 @@ class MemoryMaskTests(unittest.TestCase):
+             self.call(self.model, t, x=self.x + t)
+ 
+     def test_default_matches_original_forward_and_cache(self):
+-        old = make_model(max_steps=8, legacy=True)
++        old = make_model(max_steps=500, legacy=True)
+         old.load_state_dict(self.model.state_dict(), strict=True)
+         for e,t in [(0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(1,4),(1,5),(2,0)]:
+             a,b = self.call(self.model,t,e),self.call(old,t,e)
+@@ -43,8 +43,8 @@ class MemoryMaskTests(unittest.TestCase):
+ 
+     def test_switch_preserves_all_cache_objects_counter_rng_and_critics(self):
+         self.warm()
+-        self.model.critic_tsfm=make_model(max_steps=8)
+-        self.model.c_critic_tsfm=make_model(max_steps=8)
++        self.model.critic_tsfm=make_model(max_steps=500)
++        self.model.c_critic_tsfm=make_model(max_steps=500)
+         before=cache(self.model); counter=self.model.time_step_counter; rng=torch.get_rng_state().clone()
+         ids=[id(l.attention.cache_k) for l in self.model.decoder.layers]
+         configure_root_actor(self.model,mask_enabled=False)
+@@ -81,13 +81,13 @@ class MemoryMaskTests(unittest.TestCase):
+         self.assertEqual(m.time_step_counter,0)
+ 
+     def test_real_max_steps_rollover(self):
+-        m=make_model(dim=16, max_steps=1000); m.actor_cross_episode_attention_mask=False
+-        for i in range(1001): self.call(m,i%600,i//600)
++        m=make_model(dim=16, max_steps=500); m.actor_cross_episode_attention_mask=False
++        for i in range(501): self.call(m,i%600,i//600)
+         self.assertEqual(m.time_step_counter,1)
+         # Old allocated slots remain, but access prefix after rollover is length 1.
+         a,b=copy.deepcopy(m),copy.deepcopy(m)
+         for l in b.decoder.layers: l.attention.cache_v[:,2:] += 100
+-        self.assertTrue(torch.equal(self.call(a,401,1).distributions.logits,self.call(b,401,1).distributions.logits))
++        self.assertTrue(torch.equal(self.call(a,501,0).distributions.logits,self.call(b,501,0).distributions.logits))
+ 
+     def test_separate_critic_outputs_and_forward_counts_unchanged(self):
+         source=(ROOT/'architecture/models/allenact_transformer_models/separate_actor_critic.py').read_text()
+@@ -95,7 +95,7 @@ class MemoryMaskTests(unittest.TestCase):
+         reward=extract(source,'DinoLLAMATxNavActorCriticSeparate',namespace={'DinoLLAMATxNavActorCritic':base})
+         safe=extract(source,'SafeDinoLLAMATxNavActorCriticSeparate',namespace={'DinoLLAMATxNavActorCriticSeparate':reward,'SafeActorCriticOutput':NS})
+         root=safe.__new__(safe); root.__dict__=copy.deepcopy(self.model.__dict__)
+-        root.critic_tsfm=make_model(max_steps=8); root.c_critic_tsfm=make_model(max_steps=8)
++        root.critic_tsfm=make_model(max_steps=500); root.c_critic_tsfm=make_model(max_steps=500)
+         for t in range(3): self.call(root,t)
+         a,b=copy.deepcopy(root),copy.deepcopy(root); configure_root_actor(b,mask_enabled=False)
+         counts=[0,0,0]
+diff --git a/diagnostics/actor_memory_unmask/test_online_gate.py b/diagnostics/actor_memory_unmask/test_online_gate.py
+index bcae712..16edbd7 100644
+--- a/diagnostics/actor_memory_unmask/test_online_gate.py
++++ b/diagnostics/actor_memory_unmask/test_online_gate.py
+@@ -18,6 +18,8 @@ class OnlineGateTests(unittest.TestCase):
+                 'command':COMMAND,'resources':{'max_gpu':1,'max_episodes':400},'max_decisions':240000,
+                 'max_runtime_seconds':43200,'gpu_logger_equivalence':'PI_WAIVED_FOR_THIS_EXPERIMENT',
+                 'asset_inventory_sha256':'HASH','asset_inventory_path':'PATH','rendering_review':'PI_ACCEPTED_FOR_BOTH_ARMS'}
++        self.d['fixed_conditions']={'max_steps':500,'kv_cache_capacity':500,'episode_horizon':600,'actor_reset':'off'}
++        self.d['environment_review']='PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS'
+ 
+     def validate(self):return validate_binding(self.s,self.d,'SOURCE',ROOT,'A',now=self.now)
+ 
+@@ -51,6 +53,22 @@ class OnlineGateTests(unittest.TestCase):
+         self.d['gpu_logger_equivalence']='NOT_RUN_PI_WAIVED'
+         with self.assertRaises(ValueError):self.validate()
+ 
++    def test_fixture1000_is_not_online_baseline(self):
++        self.d['fixed_conditions']['max_steps']=1000
++        with self.assertRaises(ValueError):self.validate()
++
++    def test_cache1000_is_not_online_baseline(self):
++        self.d['fixed_conditions']['kv_cache_capacity']=1000
++        with self.assertRaises(ValueError):self.validate()
++
++    def test_horizon_must_remain600(self):
++        self.d['fixed_conditions']['episode_horizon']=500
++        with self.assertRaises(ValueError):self.validate()
++
++    def test_unreviewed_target_environment_rejected(self):
++        self.d['environment_review']='NOT_REVIEWED'
++        with self.assertRaises(ValueError):self.validate()
++
+     def test_missing_asset_review_rejected(self):
+         del self.d['asset_inventory_sha256']
+         with self.assertRaises(ValueError):self.validate()
+@@ -78,6 +96,7 @@ class OnlineGateTests(unittest.TestCase):
+         self.assertNotIn('reset_root_actor',source)
+         self.assertNotIn('CUDA_VISIBLE_DEVICES=',source)
+         self.assertIn("configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')",source)
++        self.assertLess(source.index("assert_runtime_baseline(agent.actor_critic, REPO)"),source.index("configure_root_actor(agent.actor_critic, mask_enabled=args.actor_mask=='on')"))
+ 
+     def test_decision_cap_uses_actual_validator_schema(self):
+         source=(ROOT/'diagnostics/actor_memory_unmask/online_pair.py').read_text()
+diff --git a/diagnostics/actor_memory_unmask/unmask_pair.slurm b/diagnostics/actor_memory_unmask/unmask_pair.slurm
+index cbc16b3..b9b032a 100644
+--- a/diagnostics/actor_memory_unmask/unmask_pair.slurm
++++ b/diagnostics/actor_memory_unmask/unmask_pair.slurm
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ # DRAFT executable: sbatch only after independent PI approval + unique Claim CI.
+-#SBATCH --job-name=unmask-pair
++#SBATCH --job-name=unmask-pair500
+ #SBATCH --account=zhangyh
+ #SBATCH --qos=user_zhangyh
+ #SBATCH --partition=v100
+@@ -10,25 +10,24 @@
+ #SBATCH --gres=gpu:1
+ #SBATCH --mem=64G
+ #SBATCH --time=12:00:00
+-#SBATCH --output=/public/home/zhangyh/QYY/migration_logs/unmask-pair-%j.out
+-#SBATCH --error=/public/home/zhangyh/QYY/migration_logs/unmask-pair-%j.err
++#SBATCH --output=/public/home/zhangyh/QYY/migration_logs/unmask-pair500-%j.out
++#SBATCH --error=/public/home/zhangyh/QYY/migration_logs/unmask-pair500-%j.err
+ set -Eeuo pipefail
+ umask 077
+ ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028
+-source /public/home/zhangyh/QYY/migration_logs/SafeVLA-research-20261028/target_paths.sh
+-: "${UNMASK_PYTHON:?PI-reviewed environment Python required}"
++source "$ROOT/diagnostics/actor_memory_unmask/target_environment.sh"
++UNMASK_PYTHON="${UNMASK_PYTHON:-$SAFEVLA_TARGET_PYTHON}"
+ : "${UNMASK_APPROVAL_SHA:?New PI approval SHA required}"
+ : "${UNMASK_CLAIM_SHA:?New unique Claim SHA required}"
+ : "${UNMASK_OUTPUT:?New absent output root required}"
+ export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
+ export PYTHONPATH="$ROOT"
+-export TOKENIZERS_PARALLELISM=False
+-# Renderer variables must come from the independently reviewed Slurm environment.
+-# Do not silently enable the historical Mesa/lavapipe adaptation or change HOME.
++# Renderer environment must match the independently reviewed design exactly.
++# No silent Mesa/lavapipe switch, scheduler CUDA remapping or HOME override.
+ cd "$ROOT"
+ "$UNMASK_PYTHON" -B -m diagnostics.actor_memory_unmask.online_pair \
+   --output "$UNMASK_OUTPUT" \
+   --checkpoint /public/home/zhangyh/QYY/data/checkpoints/safe_objnav.pt \
+-  --control-root /public/home/zhangyh/QYY/SafeVLA_research_control_20261028 \
++  --control-root "$SAFEVLA_CONTROL_ROOT" \
+   --approval-reference "$UNMASK_APPROVAL_SHA" --claim-reference "$UNMASK_CLAIM_SHA" \
+   --execute-authorized
+diff --git a/diagnostics/actor_memory_unmask/verify_loaded_policy_cpu.py b/diagnostics/actor_memory_unmask/verify_loaded_policy_cpu.py
+new file mode 100644
+index 0000000..71a53f0
+--- /dev/null
++++ b/diagnostics/actor_memory_unmask/verify_loaded_policy_cpu.py
+@@ -0,0 +1,62 @@
++"""Load original evaluator's full CPU policy, inspect500-slot state, NO forward."""
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import sys
++import torch
++from .baseline_contract import assert_runtime_baseline
++
++
++def digest(path):
++    h=hashlib.sha256()
++    with path.open('rb') as stream:
++        for chunk in iter(lambda:stream.read(8*1024*1024),b''):h.update(chunk)
++    return h.hexdigest()
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--checkpoint',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
++    assert os.environ.get('CUDA_VISIBLE_DEVICES')=='' and not a.output.exists()
++    assert digest(a.checkpoint)=='05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301'
++    torch.set_num_threads(1)
++    from training.online import online_eval as entry
++    key='InferenceDINOv2ViTSLLAMATxTxBaseDist'
++    params=entry.model_config_params[key]()
++    # Exact original online_eval.main adjustments for the registered sensors.
++    params.num_train_processes=0
++    params.use_bbox=False
++    # Deliberately DO NOT assign params.max_steps or alter model/cache config.
++    assert params.max_steps==500
++    loads=[];calls=[]
++    def profile(frame,event,result):
++        if event=='return' and frame.f_code.co_name=='load_state_dict' and frame.f_code.co_filename.endswith('/torch/nn/modules/module.py') and hasattr(result,'missing_keys'):
++            loads.append({'class':type(frame.f_locals['self']).__name__,'strict':frame.f_locals['strict'],
++                          'nkeys':len(frame.f_locals['state_dict']),'missing':list(result.missing_keys),'unexpected':list(result.unexpected_keys)})
++    def forbid_policy_forward(module,args):
++        if type(module).__name__ in ['DinoLLAMATxNavActorCritic','DinoLLAMATxNavActorCriticSeparate','SafeDinoLLAMATxNavActorCriticSeparate']:
++            calls.append(type(module).__name__)
++            raise AssertionError('CPU load verification must not forward the policy')
++    hook=torch.nn.modules.module.register_module_forward_pre_hook(forbid_policy_forward)
++    assert sys.getprofile() is None
++    try:
++        sys.setprofile(profile)
++        agent=entry.InferenceAgentVIDA.build_agent(
++            exp_config_type=entry.model_config_type[key],params=params,device=torch.device('cpu'),
++            img_encoder_rgb_mean=entry.DINO_RGB_MEANS,img_encoder_rgb_std=entry.DINO_RGB_STDS,
++            greedy_sampling=False,test_augmentation=True,ckpt_path=str(a.checkpoint))
++    finally:
++        sys.setprofile(None);hook.remove()
++    assert not calls and not torch.cuda.is_initialized()
++    assert any(x['class']=='SafeDinoLLAMATxNavActorCriticSeparate' and x['nkeys']==417 and not x['missing'] and not x['unexpected'] for x in loads),'Full policy load not417/417'
++    assert all(not x['missing'] and not x['unexpected'] for x in loads)
++    baseline=assert_runtime_baseline(agent.actor_critic,Path(__file__).resolve().parents[2])
++    result={'status':'PASS','scope':'Actual full original evaluator policy loaded on CPU, no policy forward/simulator/Episode/GPU allocation',
++            'actual_model_class':type(agent.actor_critic).__name__,'runtime_baseline':baseline,
++            'load_events':loads,'policy_forwards':len(calls),'cuda_initialized':torch.cuda.is_initialized(),
++            'python':sys.executable,'torch_version':torch.__version__,'parameter_max_steps_not_overridden':True}
++    a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
++
++
++if __name__=='__main__':main()

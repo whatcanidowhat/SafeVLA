@@ -11,7 +11,7 @@ torch.set_num_threads(1)
 class MemoryMaskTests(unittest.TestCase):
     def setUp(self):
         torch.manual_seed(123)
-        self.model = make_model(max_steps=8)
+        self.model = make_model(max_steps=500)
         self.x = torch.randn(1, 1, 16)
 
     def call(self, model, t, e=0, x=None):
@@ -23,7 +23,7 @@ class MemoryMaskTests(unittest.TestCase):
             self.call(self.model, t, x=self.x + t)
 
     def test_default_matches_original_forward_and_cache(self):
-        old = make_model(max_steps=8, legacy=True)
+        old = make_model(max_steps=500, legacy=True)
         old.load_state_dict(self.model.state_dict(), strict=True)
         for e,t in [(0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(1,4),(1,5),(2,0)]:
             a,b = self.call(self.model,t,e),self.call(old,t,e)
@@ -43,8 +43,8 @@ class MemoryMaskTests(unittest.TestCase):
 
     def test_switch_preserves_all_cache_objects_counter_rng_and_critics(self):
         self.warm()
-        self.model.critic_tsfm=make_model(max_steps=8)
-        self.model.c_critic_tsfm=make_model(max_steps=8)
+        self.model.critic_tsfm=make_model(max_steps=500)
+        self.model.c_critic_tsfm=make_model(max_steps=500)
         before=cache(self.model); counter=self.model.time_step_counter; rng=torch.get_rng_state().clone()
         ids=[id(l.attention.cache_k) for l in self.model.decoder.layers]
         configure_root_actor(self.model,mask_enabled=False)
@@ -81,13 +81,13 @@ class MemoryMaskTests(unittest.TestCase):
         self.assertEqual(m.time_step_counter,0)
 
     def test_real_max_steps_rollover(self):
-        m=make_model(dim=16, max_steps=1000); m.actor_cross_episode_attention_mask=False
-        for i in range(1001): self.call(m,i%600,i//600)
+        m=make_model(dim=16, max_steps=500); m.actor_cross_episode_attention_mask=False
+        for i in range(501): self.call(m,i%600,i//600)
         self.assertEqual(m.time_step_counter,1)
         # Old allocated slots remain, but access prefix after rollover is length 1.
         a,b=copy.deepcopy(m),copy.deepcopy(m)
         for l in b.decoder.layers: l.attention.cache_v[:,2:] += 100
-        self.assertTrue(torch.equal(self.call(a,401,1).distributions.logits,self.call(b,401,1).distributions.logits))
+        self.assertTrue(torch.equal(self.call(a,501,0).distributions.logits,self.call(b,501,0).distributions.logits))
 
     def test_separate_critic_outputs_and_forward_counts_unchanged(self):
         source=(ROOT/'architecture/models/allenact_transformer_models/separate_actor_critic.py').read_text()
@@ -95,7 +95,7 @@ class MemoryMaskTests(unittest.TestCase):
         reward=extract(source,'DinoLLAMATxNavActorCriticSeparate',namespace={'DinoLLAMATxNavActorCritic':base})
         safe=extract(source,'SafeDinoLLAMATxNavActorCriticSeparate',namespace={'DinoLLAMATxNavActorCriticSeparate':reward,'SafeActorCriticOutput':NS})
         root=safe.__new__(safe); root.__dict__=copy.deepcopy(self.model.__dict__)
-        root.critic_tsfm=make_model(max_steps=8); root.c_critic_tsfm=make_model(max_steps=8)
+        root.critic_tsfm=make_model(max_steps=500); root.c_critic_tsfm=make_model(max_steps=500)
         for t in range(3): self.call(root,t)
         a,b=copy.deepcopy(root),copy.deepcopy(root); configure_root_actor(b,mask_enabled=False)
         counts=[0,0,0]

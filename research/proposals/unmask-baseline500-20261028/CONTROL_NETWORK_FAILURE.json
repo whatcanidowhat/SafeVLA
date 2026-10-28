@@ -1,0 +1,16 @@
+{
+  "status": "FAILED_TARGET_NETWORK_NO_RETRY",
+  "command": [
+    "/usr/bin/git",
+    "ls-remote",
+    "--heads",
+    "origin",
+    "refs/heads/research-loop"
+  ],
+  "return_code": 128,
+  "stderr_excerpt": "Failed connect to github.com:443; Connection timed out",
+  "source": "Observed package-attempt1 tool result; this is a preserved failure record, not a new probe.",
+  "target_control_head_status": "REMOTE_UNVERIFIED",
+  "cached_head": "2b3491b474c79685f54ff884b57bdd551f7b2629",
+  "claim_attempted": false
+}

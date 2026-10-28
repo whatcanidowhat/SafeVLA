@@ -1,0 +1,90 @@
+{
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "revision": "EFFECTIVE_BASELINE500",
+  "status": "CPU_VALIDATED_ONLINE_NOT_RUN",
+  "utc": "2026-10-28T11:46:54.101560+00:00",
+  "server_code_snapshot": "61084ccdab9b674e914a6ffc07bde44543e363a7",
+  "shared_review_commit": "Determined after publication; final shared SHA must be independently pinned by PI, never inferred from this server-only development SHA.",
+  "effective_baseline": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "model_class_default_not_effective_config": 1000,
+    "model_binding": "self.params.max_steps",
+    "cache_capacity_binding": "self.params.max_steps",
+    "sources": {
+      "training/online/base.py": "05a1ee412d48936c5a54244482a88df26f640c6ad0b3ee6c5782a45d2e644bd6",
+      "training/online/dinov2_vits_tsfm_base.py": "175eeb444eaee32e55b212ca331ec3a882477e75445a4e22a7c1971e0cbead51",
+      "online_evaluation/max_episode_configs.py": "6b7088383c26dcc8c8b3dd0617b3931e40fd572091984d91204a667eab2fa8f2",
+      "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504"
+    }
+  },
+  "protected_baseline_sources_unchanged": {
+    "training/online/base.py": true,
+    "training/online/dinov2_vits_tsfm_base.py": true,
+    "online_evaluation/max_episode_configs.py": true,
+    "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": true,
+    "architecture/models/allenact_transformer_models/separate_actor_critic.py": true,
+    "architecture/models/allenact_transformer_models/inference_agent.py": true,
+    "training/online/third_party_models/llama/model.py": true,
+    "online_evaluation/online_evaluator_worker.py": true
+  },
+  "python": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "target_dependency_versions": {
+    "torch": "2.4.1+cu121",
+    "torchvision": "0.19.1+cu121",
+    "torchaudio": "2.4.1+cu121",
+    "numpy": "2.1.2",
+    "pandas": "2.2.3",
+    "Pillow": "12.2.0",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.7",
+    "transformers": "4.46.1",
+    "ai2thor": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+    "allenact": "0.5.5a0",
+    "jsonschema": "4.25.1",
+    "nltk": "3.9.1"
+  },
+  "core_pins_and_cpu_policy_imports": "PASS",
+  "pandas_difference": {
+    "legacy": "2.3.3",
+    "target": "2.2.3",
+    "scope": "Declared target infrastructure difference; explicit PI review required, not silently equivalent."
+  },
+  "tests": {
+    "cpu_checks": 38,
+    "status": "PASS",
+    "full_checkpoint_tensors": "417/417, missing/unexpected empty",
+    "full_policy_cpu_forwards": 0,
+    "small_component_replay": {
+      "warmup_forwards": 4,
+      "independent_boundary_forwards": 6,
+      "max_steps": 500,
+      "cache_capacity": 500,
+      "scope": "Regenerated minimal validity evidence only, not scientific performance endpoint"
+    }
+  },
+  "control_remote_head_on_target": null,
+  "control_cached_head": "2b3491b474c79685f54ff884b57bdd551f7b2629",
+  "target_control_head_status": "REMOTE_UNVERIFIED",
+  "cached_control_status": "BLOCKED",
+  "cached_next_actor": "PI",
+  "new_claim": null,
+  "gpu_jobs_submitted": 0,
+  "online_episodes_started": 0,
+  "online_policy_forwards": 0,
+  "primary_results": {
+    "delta_SR": null,
+    "delta_mean_cost": null,
+    "official_SR": "NOT_MEASURED",
+    "official_cost": "NOT_MEASURED"
+  },
+  "remaining_gates": [
+    "Independent exact corrected source PI approval, approval CI, fresh Claim and Claim CI",
+    "Target real-time GitHub/TLS/Claim/CI transport; observed read-only probe timed out, no retry/Claim",
+    "Explicit review of target dependency differences and GPU logger noninterference decision",
+    "Simulator built-in resource/renderer identity and actual GPU functional admission"
+  ],
+  "tooling_note": "Compute-side Git1.8 read-only gate is supported. Modern authenticated Git is needed at the independent Claim-writer client; failed optional target Git2.43 provisioning is retained in server logs and is not misrepresented as a scientific requirement.",
+  "history_note": "Earlier1000 fixture/design statements are superseded for this experiment; historical source/results remain preserved. No1000 evidence or old OFF200 is relabeled/reused as corrected online Baseline."
+}

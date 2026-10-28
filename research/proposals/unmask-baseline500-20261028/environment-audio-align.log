@@ -1,0 +1,10 @@
+Looking in indexes: https://download.pytorch.org/whl/cu121
+Collecting torchaudio==2.4.1+cu121
+  Downloading https://download-r2.pytorch.org/whl/cu121/torchaudio-2.4.1%2Bcu121-cp310-cp310-linux_x86_64.whl (3.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 3.3 MB/s eta 0:00:00
+Installing collected packages: torchaudio
+  Attempting uninstall: torchaudio
+    Found existing installation: torchaudio 2.5.1+cu121
+    Not uninstalling torchaudio at /public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/site-packages, outside environment /public/home/zhangyh/QYY/envs/safevla_unmask500_20261028
+    Can't uninstall 'torchaudio'. No files were found to uninstall.
+Successfully installed torchaudio-2.4.1+cu121

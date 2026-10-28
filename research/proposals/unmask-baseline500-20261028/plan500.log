@@ -1,0 +1,51 @@
+{
+  "status": "PLAN_ONLY_NOT_EXECUTED",
+  "actor_attention_mask": "on",
+  "actor_reset": "off",
+  "tasks": 200,
+  "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+  "official_arguments": [
+    "--task_type",
+    "ObjectNavType",
+    "--eval_subset",
+    "minival",
+    "--eval_set_size",
+    "200",
+    "--shuffle",
+    "--num_workers",
+    "1",
+    "--seed",
+    "123",
+    "--test_augmentation",
+    "--max_eps_len",
+    "-1",
+    "--gpu_devices",
+    "0",
+    "--house_set",
+    "objaverse",
+    "--input_sensors",
+    "raw_navigation_camera",
+    "raw_manipulation_camera",
+    "last_actions",
+    "an_object_is_in_hand",
+    "--ckpt_path",
+    "/public/home/zhangyh/QYY/data/checkpoints/safe_objnav.pt",
+    "--output_basedir",
+    "/public/home/zhangyh/QYY/UNMASK500_PLAN_ONLY_official"
+  ],
+  "expected_effective_baseline": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "model_class_default_not_effective_config": 1000,
+    "model_binding": "self.params.max_steps",
+    "cache_capacity_binding": "self.params.max_steps",
+    "sources": {
+      "training/online/base.py": "05a1ee412d48936c5a54244482a88df26f640c6ad0b3ee6c5782a45d2e644bd6",
+      "training/online/dinov2_vits_tsfm_base.py": "175eeb444eaee32e55b212ca331ec3a882477e75445a4e22a7c1971e0cbead51",
+      "online_evaluation/max_episode_configs.py": "6b7088383c26dcc8c8b3dd0617b3931e40fd572091984d91204a667eab2fa8f2",
+      "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": "9c03c499efc93792dde1929304ca02e1b67b304d50d1f927ba839fbe695d2504"
+    }
+  },
+  "GPU_EQUIVALENCE": "REQUIRES_NEW_PI_DECISION"
+}

@@ -1,0 +1,53 @@
+Looking in indexes: https://pypi.org/simple, https://download.pytorch.org/whl/cu121
+Collecting torch==2.4.1+cu121
+  Downloading https://download-r2.pytorch.org/whl/cu121/torch-2.4.1%2Bcu121-cp310-cp310-linux_x86_64.whl (798.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 798.9/798.9 MB 2.3 MB/s eta 0:00:00
+Collecting torchvision==0.19.1+cu121
+  Downloading https://download-r2.pytorch.org/whl/cu121/torchvision-0.19.1%2Bcu121-cp310-cp310-linux_x86_64.whl (7.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 5.4 MB/s eta 0:00:00
+Collecting numpy==2.1.2
+  Obtaining dependency information for numpy==2.1.2 from https://files.pythonhosted.org/packages/fb/25/ba023652a39a2c127200e85aed975fc6119b421e2c348e5d0171e2046edb/numpy-2.1.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+  Downloading numpy-2.1.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.9/60.9 kB 341.6 kB/s eta 0:00:00
+Collecting pandas==2.3.3
+  Downloading pandas-2.3.3.tar.gz (4.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 6.3 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [16 lines of output]
+      + meson setup /tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c /tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c/.mesonpy-8mwg3uam -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --vsenv --native-file=/tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c/.mesonpy-8mwg3uam/meson-python-native-file.ini
+      The Meson build system
+      Version: 1.12.1
+      Source dir: /tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c
+      Build dir: /tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c/.mesonpy-8mwg3uam
+      Build type: native build
+      Project name: pandas
+      Project version: 2.3.3
+      C compiler for the host machine: cc (gcc 4.8.5 "cc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-39)")
+      C linker for the host machine: cc ld.bfd 4.8.5
+      C++ compiler for the host machine: c++ (gcc 4.8.5 "c++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-39)")
+      C++ linker for the host machine: c++ ld.bfd 4.8.5
+      
+      ../meson.build:2:0: ERROR: Compiler cython cannot compile programs.
+      
+      A full log can be found at /tmp/pip-install-hft6i9e6/pandas_3d16449e056f404d8a0e22c0688b377c/.mesonpy-8mwg3uam/meson-logs/meson-log.txt
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
