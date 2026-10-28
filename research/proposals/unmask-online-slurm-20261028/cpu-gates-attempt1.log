@@ -1,0 +1,19 @@
+test_current_blocked_state_rejected (__main__.OnlineGateTests) ... ok
+test_decision_cap_uses_actual_validator_schema (__main__.OnlineGateTests) ... ok
+test_expired_rejected (__main__.OnlineGateTests) ... ok
+test_historical_waiver_rejected (__main__.OnlineGateTests) ... ok
+test_missing_asset_review_rejected (__main__.OnlineGateTests) ... ok
+test_missing_render_review_rejected (__main__.OnlineGateTests) ... ok
+test_new_evaluator_static_isolation (__main__.OnlineGateTests) ... ok
+test_no_claim_rejected (__main__.OnlineGateTests) ... ok
+test_old_reset_claim_rejected (__main__.OnlineGateTests) ... ok
+test_only200_budget_rejected (__main__.OnlineGateTests) ... ok
+test_valid_binding (__main__.OnlineGateTests) ... ok
+test_wrong_cycle_rejected (__main__.OnlineGateTests) ... ok
+test_wrong_source_rejected (__main__.OnlineGateTests) ... ok
+test_wrong_worktree_rejected (__main__.OnlineGateTests) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.010s
+
+OK

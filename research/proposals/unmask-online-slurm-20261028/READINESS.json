@@ -1,0 +1,71 @@
+{
+  "status": "ONLINE_NOT_STARTED_BLOCKED",
+  "utc": "2026-10-28T10:02:05.163524+00:00",
+  "source_commit": "a7eff2da4278ef73bdc5ddffcf7752485fac35fe",
+  "source_branch": "codex/unmask-online-slurm-20261028",
+  "control_remote_head": "2b3491b474c79685f54ff884b57bdd551f7b2629",
+  "control_checkout_matches_remote": true,
+  "control_status": "BLOCKED",
+  "next_actor": "PI",
+  "current_control_rejection": "No current CODEX_RUNNING claim",
+  "user_intent": "User requested running the unmask comparison; no redundant general GPU consent requested. Independent PI control approval remains absent.",
+  "protected_source_byte_identical": {
+    "architecture/models/allenact_transformer_models/allenact_dino_transformer.py": true,
+    "architecture/models/allenact_transformer_models/separate_actor_critic.py": true,
+    "architecture/models/allenact_transformer_models/inference_agent.py": true,
+    "training/online/third_party_models/llama/model.py": true,
+    "diagnostics/actor_logits/evaluate.py": true,
+    "online_evaluation/online_evaluator_worker.py": true
+  },
+  "dependencies": {
+    "torch": {
+      "expected": "2.4.1+cu121",
+      "actual": "2.5.1+cu121",
+      "match": false
+    },
+    "numpy": {
+      "expected": "2.1.2",
+      "actual": "1.23.5",
+      "match": false
+    },
+    "transformers": {
+      "expected": "4.46.1",
+      "actual": "4.46.1",
+      "match": true
+    },
+    "ai2thor": {
+      "expected": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "actual": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+      "match": true
+    },
+    "jsonschema": {
+      "expected": "4.25.1",
+      "actual": null,
+      "match": false
+    }
+  },
+  "tests": {
+    "CPU_gate_tests": 14,
+    "passed": 14,
+    "slurm_bash_syntax": "PASS",
+    "default_plan": "200 TaskSpecs; no output created"
+  },
+  "new_gpu_jobs_submitted": 0,
+  "new_model_loads": 0,
+  "new_simulators": 0,
+  "new_episodes": 0,
+  "new_claims": 0,
+  "blockers": [
+    "Control is old terminal BLOCKED, not a new approved unmask cycle",
+    "Exact target environment differs in torch/numpy/jsonschema",
+    "Target selected asset content inventory absent",
+    "Slurm renderer adaptation not independently reviewed",
+    "New source pin/approval CI and unique Claim CI absent",
+    "New logger equivalence decision absent"
+  ],
+  "artifacts_scope": "CPU/static candidate preparation only; no GPU/logger/online equivalence assertion",
+  "proposal_command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ]
+}

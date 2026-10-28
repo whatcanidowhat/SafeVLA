@@ -1,0 +1,77 @@
+{
+  "self_excluded": true,
+  "artifacts": [
+    {
+      "git_path": "diagnostics/actor_memory_unmask/evaluate_online.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/evaluate_online.py",
+      "sha256": "e04b5d962be456b9e1e93fe7e4bf4a9e36a9ea2149e553ec18e80d2c5b788a6d",
+      "size": 11072
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_gate.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_gate.py",
+      "sha256": "ac9f9fe0509ced7a4b7a080d222f63ae99f77ab69514e2de7d58e5a95c7095b3",
+      "size": 6829
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_logger.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_logger.py",
+      "sha256": "a006fa02ebb145118be335cff3ebae0f0f45ff79171dcfbfd46b77d1ee0ee24c",
+      "size": 1173
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_pair.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_pair.py",
+      "sha256": "e90f91b233bf39e16d9bce449a01c4f52b7551eb14e0ce25d63e71fec515c2cb",
+      "size": 4181
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/online_results.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/online_results.py",
+      "sha256": "34432810c303f3e43048f960dbb700851377d170538b65c71508dc0d582b033d",
+      "size": 3295
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/test_online_gate.py",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/test_online_gate.py",
+      "sha256": "abe57f915965718f3dd7df6527eb66ef16a45e0573f2a4ddf4a73c811a2d939e",
+      "size": 3947
+    },
+    {
+      "git_path": "diagnostics/actor_memory_unmask/unmask_pair.slurm",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/diagnostics/actor_memory_unmask/unmask_pair.slurm",
+      "sha256": "28bfd93c05e9e9b39a533fce0ada4deeacb574ca33392f2cdf55e6f5fca045f3",
+      "size": 1544
+    },
+    {
+      "git_path": "research/proposals/unmask-online-slurm-20261028/PI_REQUEST.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-online-slurm-20261028/PI_REQUEST.json",
+      "sha256": "d29c5aa24ca356e6d8283e613ac49c283910f21542b7aa16ec100aff713fedc4",
+      "size": 1428
+    },
+    {
+      "git_path": "research/proposals/unmask-online-slurm-20261028/READINESS.json",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-online-slurm-20261028/READINESS.json",
+      "sha256": "e3be843c11dfd8345f098ec6a04f474e7808a75e5662ceccafa4464943e7a23e",
+      "size": 2518
+    },
+    {
+      "git_path": "research/proposals/unmask-online-slurm-20261028/README.md",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-online-slurm-20261028/README.md",
+      "sha256": "3ceff71f593dac388bbbc702d9a4188427ccab3be838cc33e1a8d669e8e5f4a8",
+      "size": 2986
+    },
+    {
+      "git_path": "research/proposals/unmask-online-slurm-20261028/cpu-gates-attempt1.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-online-slurm-20261028/cpu-gates-attempt1.log",
+      "sha256": "dbdceeb68a6b1e0bee335c55125accc18f25f1619753e011cf296b76f98a6cd4",
+      "size": 1002
+    },
+    {
+      "git_path": "research/proposals/unmask-online-slurm-20261028/plan-only.log",
+      "server_path": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028/research/proposals/unmask-online-slurm-20261028/plan-only.log",
+      "sha256": "ed8a5ac18e4771313bf267379019eeb458958e8897eff5ab3a68bb3add0f64e5",
+      "size": 895
+    }
+  ]
+}

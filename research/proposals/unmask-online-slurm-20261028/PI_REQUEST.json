@@ -1,0 +1,37 @@
+{
+  "status": "DRAFT_FOR_PI_REVIEW_NOT_AUTHORIZATION",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "cycle_id": "actor-memory-unmask-001-20261028",
+  "code_sha_candidate": "a7eff2da4278ef73bdc5ddffcf7752485fac35fe",
+  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028",
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "resources": {
+    "max_gpu": 1,
+    "max_episodes": 400
+  },
+  "max_decisions": 240000,
+  "max_runtime_seconds": 43200,
+  "order": [
+    "MASK_ON200",
+    "MASK_OFF200"
+  ],
+  "actor_reset": "off",
+  "seed": 123,
+  "num_workers": 1,
+  "greedy": false,
+  "test_augmentation": true,
+  "manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+  "fields_PI_must_complete_after_review": [
+    "acknowledge terminal prior cycle according to HANDOFF_PROTOCOL",
+    "code_sha (exact shared final source pin)",
+    "new approval expiry",
+    "GPU logger equivalence PASS_FOR_THIS_SOURCE or explicit PI_WAIVED_FOR_THIS_EXPERIMENT",
+    "asset_inventory_path and asset_inventory_sha256 plus completeness review",
+    "rendering_review and exact rendering_environment",
+    "approved control cycle and its CI before unique Claim + its CI"
+  ],
+  "environment_action_required": "Align isolated target environment to original dependency pins before authorization; no silent baseline version upgrade."
+}
