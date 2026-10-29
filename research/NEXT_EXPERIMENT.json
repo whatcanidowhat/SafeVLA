@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
   "cycle_id": "actor-memory-unmask-002-20261029",
-  "status": "DRAFT",
+  "status": "APPROVED",
   "policy": "FAST_TRACK",
   "code_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
   "research_question": "On the same ordered200 tasks, does removing only root Actor cross-Episode attention mask increase official SR and lower official Safety Cost? Delta is MASK_OFF minus MASK_ON.",
@@ -98,9 +98,9 @@
     "/public/home/zhangyh/QYY/envs/mesa_probe/share/vulkan/icd.d/lvp_icd.x86_64.json": "c45309de801414a3f377997d1eb0e0f92f76673ff94f52e2e9d784e7d083284b",
     "/public/home/zhangyh/QYY/envs/mesa_probe/lib/libvulkan_lvp.so": "4437c3632923f7b461486c329a969ecd2649f1951685c28c24b04af8597de95d"
   },
-  "environment_review": "PI_DECISION_REQUIRED",
-  "rendering_review": "PI_DECISION_REQUIRED",
-  "gpu_logger_equivalence": "PI_DECISION_REQUIRED",
+  "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
+  "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
+  "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT",
   "review_boundary": "All three executable review flags are PI_DECISION_REQUIRED in this DRAFT. The new PI approval must explicitly reaffirm target software/rendering acceptance and a scoped logger waiver for this new experiment; no old waiver is automatically reused and no GPU equivalence PASS is asserted.",
   "deferred_reviews": [
     "No new broad CPU/logits study or standalone600-pair GPU logger study",
@@ -118,13 +118,16 @@
   "claims_created_by_this_packet": 0,
   "gpu_jobs_submitted_by_this_packet": 0,
   "pi_review_decisions": {
-    "status": "PENDING_FRESH_PI_APPROVAL",
-    "previous_acceptance_is_not_new_execution_authority": true,
-    "proposed_scoped_flags": {
-      "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
-      "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
-      "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT"
-    }
+    "status": "APPROVED_SCOPED_PI_REVIEW",
+    "decision_at_utc": "2026-10-29T09:09:51Z",
+    "approved_code_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+    "reviewed_prior_terminal": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+    "reviewed_prior_ack": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+    "environment": "Both new arms same accepted software",
+    "rendering": "Same reviewed renderer binary pins; real functionality not yet verified",
+    "logger": "PI_WAIVED_FOR_THIS_EXPERIMENT; not PASS",
+    "scheduler": "batch/zhangyh/user_zhangyh; require fresh resource and ACL check",
+    "approval_note": "Delegated PI role by user, not an independent human signature; A/B CI and runtime gates still required"
   },
   "resource_schedule": {
     "account": "zhangyh",
