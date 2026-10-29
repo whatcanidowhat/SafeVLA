@@ -1,0 +1,26 @@
+{
+  "lane": "V4_topology_plus_language",
+  "status": "BLOCKED_NO_PAIRED_ROLLOUTS",
+  "checks": {
+    "historic_OFF200_as_control_only": true,
+    "historical_ON200_exists": false,
+    "did_not_use_oracle_target_room_for_planning": true
+  },
+  "blockers": [
+    "baseline_rollouts missing",
+    "treatment_rollouts missing",
+    "baseline_manifest missing",
+    "treatment_manifest missing",
+    "No treatment rollout, so intervention SR/Cost, paired effects and official improvement claims cannot be estimated.",
+    "Need B0 manifest equivalence: checkpoint/seed/worker/task order/horizon/action semantics/dataset/augmentation."
+  ],
+  "observations": {},
+  "evidence": [
+    "historical_16_review.csv",
+    "baseline-contract provenance from research-loop"
+  ],
+  "completed_at_utc": "2026-10-23T06:41:06.517464+00:00",
+  "policy_loads": 0,
+  "gpu_experiments": 0,
+  "simulator_episodes": 0
+}

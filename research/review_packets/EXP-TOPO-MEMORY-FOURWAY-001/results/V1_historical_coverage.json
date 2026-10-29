@@ -1,0 +1,41 @@
+{
+  "lane": "V1_historical_coverage",
+  "status": "PASS_COHORT_AUDIT__BLOCKED_STEPWISE_TOPOLOGY",
+  "checks": {
+    "16_source_rows_unique": true,
+    "9_candidate_join": true,
+    "8_STRICT_cohort": true,
+    "cross_period_identity_consistent": true
+  },
+  "blockers": [
+    "No historical per-decision room ID or robot pose + room floor polygons were present in the GitHub record; cannot reconstruct room sequence.",
+    "Room-not-visited is observational association, not proved failure causation."
+  ],
+  "observations": {
+    "historical_confirmed_invalid_END": 16,
+    "historical_unvisited_narrow_room": 9,
+    "unvisited_STRICT": 8,
+    "unvisited_AMBIGUOUS": 1,
+    "visited_STRICT_negative_controls": [
+      "3",
+      "46",
+      "68",
+      "87"
+    ],
+    "core_later_OFF200_success": 2,
+    "core_later_OFF200_failure": 6,
+    "core_later_OFF200_cost14_ids": [
+      "117"
+    ],
+    "historical_16_sha256": "a3f5ecc5e6aeefced529fd101729669515873ebc36d498ff91ff5ce4fdd474ff",
+    "candidates_sha256": "35d084ed94f88519e4c8af5f4ea3d47e387b65bd7bbe9a6ef83095e6776143b6"
+  },
+  "evidence": [
+    "historical_16_review.csv (extracted/adjudicated from original GitHub cases)",
+    "exploration_candidates.csv (extracted) "
+  ],
+  "completed_at_utc": "2026-10-23T06:41:06.517599+00:00",
+  "policy_loads": 0,
+  "gpu_experiments": 0,
+  "simulator_episodes": 0
+}
