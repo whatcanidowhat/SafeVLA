@@ -1,0 +1,90 @@
+{
+  "p1_budget_proposal": {
+    "max_gpu": 1,
+    "max_episodes": 10
+  },
+  "note": "The four Markdown files are byte-preserved actual prior P0 outputs. Statements about no GitHub writes refer to the original audit; this commit archives them under the subsequent explicit user authorization. No actual 001D task manifest exists. No P1/P2 execution or 001C state mutation is authorized.",
+  "files": [
+    {
+      "name": "P0_READ_ONLY_AUDIT.md",
+      "size": 14891,
+      "sha256": "3373595f7e3698c0c7cc051f6123ad82948e3c938f72ddca80c57770e8abca29"
+    },
+    {
+      "name": "DRAFT_IMPLEMENTATION_PLAN.md",
+      "size": 6200,
+      "sha256": "2447adc4e2175c8d52436819b15a3f1730c3da36726f03ddc364a4cbb792801e"
+    },
+    {
+      "name": "FROZEN_PROTOCOL_DRAFT.md",
+      "size": 3375,
+      "sha256": "de3d92f4dffcbf52450d6fef6cc626c078bbc355e21c77c2893d1a0d3a2c5359"
+    },
+    {
+      "name": "TASK_MANIFEST_GENERATION_SPEC.md",
+      "size": 3525,
+      "sha256": "2a4da120ad8ab17c58e208835c8dd8359f8a7a8d4be5161ce08b2aa2f4397d5b"
+    }
+  ],
+  "reviewed_pr_head": "a6c31432109c02af9abc42522b48ddb7c194099d",
+  "archive_state_check": {
+    "checked_at_utc": "2026-10-09T22:51:32.727887+08:00",
+    "github_head": "0a152f88e8eaf78b32ea6b09124782db25e2c436",
+    "github_state": {
+      "schema_version": "1.0",
+      "state_version": 47,
+      "cycle_id": "counter-drift-earlyend-001c-20261009",
+      "experiment_id": "EXP-COUNTER-DRIFT-EARLYEND-001C",
+      "status": "APPROVED_FOR_CODEX",
+      "next_actor": "CODEX",
+      "control_branch": "research-loop",
+      "execution_worktree": "/nvme2/user/qyy/SafeVLA",
+      "instruction_commit": null,
+      "reviewed_result_commit": "8acdb18f12a83d3e9ca3711313337f4ca232ae21",
+      "claim_id": null,
+      "authorization": {
+        "status": "APPROVED",
+        "approved_by": "PI",
+        "approved_at_utc": "2026-10-09T11:41:00+08:00",
+        "expires_at_utc": "2026-10-10T11:41:00+08:00",
+        "scope": "RESEARCH_EXPERIMENT",
+        "max_gpu": 1,
+        "max_episodes": 32
+      },
+      "required_outputs": [
+        "research/handoffs/counter-drift-earlyend-001c-20261009/RESULT_SUMMARY.md",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/RUN_MANIFEST.json",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/ARTIFACT_INDEX.json",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/REVIEW_NOTES.md",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/donor_state_manifest.json",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/target_case_manifest.csv",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/paired_episode_results.csv",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/divergence_summary.csv",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/trace_index.json",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/analysis.md",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/run_counter_drift_earlyend_001c.py",
+        "research/handoffs/counter-drift-earlyend-001c-20261009/validate_outputs.py"
+      ],
+      "updated_by": "PI",
+      "updated_at_utc": "2026-10-09T11:41:00+08:00"
+    },
+    "local_head": "8acdb18f12a83d3e9ca3711313337f4ca232ae21",
+    "local_status": "",
+    "worktrees": "worktree /nvme2/user/qyy/SafeVLA\nHEAD 60bc54fbdedaf5745d0476c25321e808708273aa\nbranch refs/heads/baseline-experiment\n\nworktree /nvme2/user/qyy/SafeVLA_baseline_clean\nHEAD 2aa82559d272b5f888e53433e258914057f15bed\nbranch refs/heads/codex/b0-candidate-audit\n\nworktree /nvme2/user/qyy/SafeVLA_evidence_alignment_20260919\nHEAD fed5d8fe282bff0d3c119033ccb565f1574753d9\nbranch refs/heads/codex/historical-evidence-20260919\n\nworktree /nvme2/user/qyy/SafeVLA_loop_control\nHEAD 8acdb18f12a83d3e9ca3711313337f4ca232ae21\nbranch refs/heads/research-loop",
+    "local_branches": "refs/heads/baseline-experiment 60bc54fbdedaf5745d0476c25321e808708273aa\nrefs/heads/codex/b0-candidate-audit 2aa82559d272b5f888e53433e258914057f15bed\nrefs/heads/codex/historical-evidence-20260919 fed5d8fe282bff0d3c119033ccb565f1574753d9\nrefs/heads/main 6464cbdc0ef4d2948157c43f90304e1261d4209f\nrefs/heads/research-loop 8acdb18f12a83d3e9ca3711313337f4ca232ae21",
+    "001c_artifacts": [],
+    "candidate_processes": []
+  },
+  "revocation_assessment": "GitHub 001C is unclaimed and no activity was found in the inspected registered server worktrees, known 001C artifact paths, or matching processes. Eligible for PI-only unclaimed-approval revocation, conditional on an immediate recheck and race-safe publication; not proof of inactivity outside that scope. Executor did not revoke.",
+  "p1_blockers": [
+    "001C remains the active approved control experiment; PI must resolve it separately",
+    "001D P1 remains NOT_AUTHORIZED",
+    "Real task manifest and live import/load identity remain unverified",
+    "Logger non-invasiveness and ON Actor-only/critic invariants await bounded P1 verification",
+    "Raw logits, official Cost timing, RNG/augmentation policy and gates must be frozen"
+  ],
+  "execution_authorization": "NOT_AUTHORIZED",
+  "pr_number": 1,
+  "experiment_id": "EXP-ACTOR-RESET-FULL200-001D",
+  "archive_type": "P0_READ_ONLY_AUDIT"
+}
