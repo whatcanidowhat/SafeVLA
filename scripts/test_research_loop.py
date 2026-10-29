@@ -619,12 +619,42 @@ class ProtocolTests(unittest.TestCase):
             clones.append(target)
         return clones
 
+    def test_claim_verifies_exact_approval_ci_before_mutation(self):
+        good_sha = "a" * 40
+        record = {"head_sha":good_sha, "head_branch":"research-loop",
+                  "event":"push", "name":"research-loop-validate",
+                  "path":".github/workflows/research-loop-validate.yml",
+                  "status":"completed", "conclusion":"success",
+                  "id":100, "run_attempt":1}
+        for variant, should_pass in [
+            ([record], True),
+            ([dict(record, conclusion="failure")], False),
+            ([dict(record, head_branch="other")], False),
+            ([dict(record, event="pull_request")], False),
+            ([dict(record, path=".github/workflows/other.yml")], False),
+            ([dict(record, conclusion="success", run_attempt=1),
+              dict(record, conclusion="failure", run_attempt=2)], False),
+            ([], False),
+        ]:
+            with self.subTest(runs=variant):
+                response = io.BytesIO(json.dumps({"workflow_runs":variant}).encode())
+                with patch.object(claim_module.urllib.request, "urlopen", return_value=response):
+                    if should_pass:
+                        claim_module.verify_approval_ci(good_sha)
+                    else:
+                        with self.assertRaises(Invalid):
+                            claim_module.verify_approval_ci(good_sha)
+        with patch.object(claim_module.urllib.request, "urlopen", side_effect=OSError("offline")):
+            with self.assertRaisesRegex(Invalid, "APPROVAL_CI_UNVERIFIED"):
+                claim_module.verify_approval_ci(good_sha)
+
     def test_claim_and_second_executor_stops(self):
         a, b = self.clones()
-        with contextlib.redirect_stdout(io.StringIO()):
-            claim_module.claim(a)
-        with self.assertRaisesRegex(Invalid, "STALE_LOCAL_HEAD"):
-            claim_module.claim(b)
+        with patch.object(claim_module, "verify_approval_ci"):
+            with contextlib.redirect_stdout(io.StringIO()):
+                claim_module.claim(a)
+            with self.assertRaisesRegex(Invalid, "STALE_LOCAL_HEAD"):
+                claim_module.claim(b)
         self.assertEqual(View(a).data(STATE)["instruction_commit"], self.a)
 
     def test_push_race_stops_without_overwrite(self):
@@ -637,9 +667,10 @@ class ProtocolTests(unittest.TestCase):
                 with contextlib.redirect_stdout(io.StringIO()):
                     claim_module.claim(b)
             return real(root, *args)
-        with patch.object(claim_module, "command", side_effect=race):
-            with self.assertRaisesRegex(Invalid, "STALE_CLAIM"):
-                claim_module.claim(a)
+        with patch.object(claim_module, "verify_approval_ci"):
+            with patch.object(claim_module, "command", side_effect=race):
+                with self.assertRaisesRegex(Invalid, "STALE_CLAIM"):
+                    claim_module.claim(a)
         self.assertEqual(claim_module.remote_head(b), git(b, "rev-parse", "HEAD"))
 
 

@@ -83,8 +83,7 @@ Use Python 3.10+ with jsonschema==4.25.1. On this server the existing interprete
 /home/amax/.conda/envs/safevla/bin/python has that control dependency; this tool imports no model code.
 The command never executes a design command, model, simulator or episode.
 
-The tool fetches origin/research-loop, requires local HEAD == fetched HEAD, checks approved state,
-next_actor, design identity, expiry and history, then creates a claim under an exclusive local lock.
+The tool fetches origin/research-loop and requires local HEAD == fetched HEAD. The exact approval HEAD must have a successful latest push-triggered research-loop-validate CI (which fully validates historical commits). The claim tool then checks the current state, design, expiry, working-tree whitelist and the single new Claim state transition, rather than repeating two full local history scans. If the CI query fails, stop; no Claim is created. No relaxation of CI's history validation or the post-Claim B CI is permitted. The exclusive local lock remains mandatory.
 Claim commit B has instruction_commit=A (the full pre-claim remote HEAD), a unique claim_id,
 status=CODEX_RUNNING, next_actor=CODEX, updated_by=CODEX, incremented state_version.
 Only LOOP_STATE is staged by the claim command.
