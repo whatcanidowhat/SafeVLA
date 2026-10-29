@@ -1,7 +1,7 @@
 # FAST-TRACK Actor memory unmask successor
 
 Experiment ID: EXP-ACTOR-MEMORY-UNMASK-002
-Status: APPROVED
+Status: DRAFT
 Cycle: actor-memory-unmask-002-20261029
 Frozen candidate source: 2689081ec324c67a35f2a4692cfa009826fcf9d4
 
