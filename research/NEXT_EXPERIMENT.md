@@ -1,20 +1,18 @@
-# FAST-TRACK unmask performance experiment
+# FAST-TRACK Actor memory unmask successor
 
-Experiment ID: EXP-ACTOR-MEMORY-UNMASK-001
+Experiment ID: EXP-ACTOR-MEMORY-UNMASK-002
 Status: DRAFT
-Cycle: actor-memory-unmask-001-20261028
-Frozen code: 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8
+Cycle: actor-memory-unmask-002-20261029
+Frozen candidate source: 2689081ec324c67a35f2a4692cfa009826fcf9d4
 
-Primary question: delta_SR=SR_OFF−SR_ON>0 and delta_mean_cost=Cost_OFF−Cost_ON<0. Run MASK_ON200→MASK_OFF200 with the same ordered200 TaskSpecs, weights, max_steps500/cache500/horizon600,seed123,worker1, original stochastic sample+mode and test augmentation. Root reset OFF in both; Critic/prev_actions/cache/counter/rollover and official success/cost unchanged.400 total Episode starts; one GPU;240000 decisions;12h execution;90GiB output ceiling.
+Measure delta_SR=SR_OFF−SR_ON and delta_mean_cost=Cost_OFF−Cost_ON on the same ordered200 tasks. Run MASK_ON200→MASK_OFF200, one worker,seed123, stochastic sampling/test augmentation, same checkpoint and allocated GPU UUID. Both Actor reset OFF; max_steps500/cache500/horizon600. Keep Actor/Critic/prev_actions/cache/counter/rollover and official success/five-cost rules unchanged. Limits:1 GPU,400 starts,240000 decisions,12h runtime,90GiB output.
 
-Priority: time > tokens > GPU resources. Reuse frozen38-check/full417 CPU evidence. No added CPU/logits study, debug Episode or broad legacy-equivalence audit. PI may explicitly accept declared common target environment and the proposed Mesa renderer, and scope a new logger-equivalence waiver. A waiver is not PASS; no old waiver or control data reuse. Exact proposed environment and file pins are in the JSON draft.
+Only execution bindings differ from base 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8: batch replaces inaccessiblev100; fresh experiment/cycle/worktree/output/log names. All205 other source Git entries are byte-identical, including scientific code. Reuse existing38-check/417-load CPU evidence; no new CPU/logits or standalone GPU logger study.
 
-Execute only after PI approval A and successful exact control CI, unique Claim B published by protocol tool, B exact CI success, real remote HEAD=B and valid expiry. Model/simulator/Slurm start never follows merely from this draft. The existing frozen executable's hard checks remain mandatory; noncritical technical review is deferred.
+Old001 terminal d670852bf08ed3d14d55dc1e4c631ccf678c6eeb, original Claim81219671 and its artifacts remain historical. Human-authorized PI acknowledgement e6d2b20a152a760b78d30549178f3f51378c0a63 clears old authorization; no old Claim/job/output/waiver is reusable.
 
-Any rendering/serialization/identity/permission/network/CI/integrity failure stops immediately with evidence; no retry, configuration change or second-arm continuation. Complete both200 integrity gates before reporting a full contrast.
+New PI approval A must explicitly accept the common target dependencies/rendering and scoped logger waiver for this experiment. Proposed flags are in JSON; current executable flags remain PI_DECISION_REQUIRED. No execution is authorized by this DRAFT, source publication or CI.
 
-First report SR_ON/SR_OFF/delta_SR; official Cost_ON/Cost_OFF/delta_cost; five cost components; episode-paired differences and failed earlyEND/room coverage/target-room/repetition proxies; comparability and limitations. Missing or partial metrics remain unavailable, not fabricated as zero. See JSON for competing explanations, falsification, fixed identities, limits and required outputs.
+After actual A and its CI, obtain one unique B with the original complete Claim tool, verify B CI/true remote HEAD/expiry, then re-read actual batch/account/QOS permissions, resource inventory and time limits. No unverified --test-only flag, debug Episode or extra policy forward. Submit only sbatch diagnostics/actor_memory_unmask/unmask_pair.slurm. Actual allocated GPU and loaded three-branch500 guards remain mandatory.
 
-## Scoped PI decisions
-
-Scoped acceptance for one new ON200→OFF200 pair: common target dependencies (including Pandas2.2.3), reviewed fixed renderer environment and hashes for both arms, and `PI_WAIVED_FOR_THIS_EXPERIMENT` for dedicated logger-equivalence work. No GPU/pixel bitwise equivalence is claimed. Any real rendering, serialization or official metric error stops the formal run. Approval A must pass its own CI before the executor can obtain a unique Claim B. Neither approval nor CI starts the GPU.
+Any scheduler/access, rendering, loading, serialization, source, authorization, network/CI or data-integrity error means immediate STOP and evidence; no automatic retry or configuration change. Never run OFF after ON failure. Report SR/Cost deltas, all five cost components, episode-paired differences, failed earlyEND/exploration proxies and comparability limitations; missing data stays unavailable.

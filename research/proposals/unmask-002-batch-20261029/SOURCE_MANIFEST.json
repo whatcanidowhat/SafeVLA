@@ -1,0 +1,49 @@
+{
+  "status": "SOURCE_PREPARED_NOT_EXECUTION_APPROVAL",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
+  "cycle_id": "actor-memory-unmask-002-20261029",
+  "base_sha": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+  "source_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+  "branch": "codex/unmask-002-batch-20261029",
+  "source_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
+  "output_parent": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-002",
+  "output_policy": "Fresh absent child directory bound to the future new Claim B; no old output reuse",
+  "changed_files": [
+    "diagnostics/actor_memory_unmask/online_gate.py",
+    "diagnostics/actor_memory_unmask/target_environment.sh",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "stat": "diagnostics/actor_memory_unmask/online_gate.py        |  4 ++--\n diagnostics/actor_memory_unmask/target_environment.sh |  2 +-\n diagnostics/actor_memory_unmask/unmask_pair.slurm     | 10 +++++-----\n 3 files changed, 8 insertions(+), 8 deletions(-)",
+  "numstat": "2\t2\tdiagnostics/actor_memory_unmask/online_gate.py\n1\t1\tdiagnostics/actor_memory_unmask/target_environment.sh\n5\t5\tdiagnostics/actor_memory_unmask/unmask_pair.slurm",
+  "file_identity_proof": [
+    {
+      "path": "diagnostics/actor_memory_unmask/online_gate.py",
+      "before_sha256": "8f4470bd51769c6d0655a197f7099cfbdc7282cf881604a3a3575b5d441b15ed",
+      "after_sha256": "fcc13874c1000b3310f364a71ce5a89fb3ceb8405844b4a25717ba24e66122d3",
+      "only_declared_binding_substitutions": true
+    },
+    {
+      "path": "diagnostics/actor_memory_unmask/target_environment.sh",
+      "before_sha256": "1601dd045263e4706cdc8ad2f4349ef7a16fef636a23f7b91aa93ba9c8145afc",
+      "after_sha256": "b9f42988ce980a5ff62839be6d5ea26e7f5c3ac56a6d05befa1bdcabea9f09b9",
+      "only_declared_binding_substitutions": true
+    },
+    {
+      "path": "diagnostics/actor_memory_unmask/unmask_pair.slurm",
+      "before_sha256": "75fbcc02ff79ff35ea11e868c58e19927c41e16837c439554a12d1a341941725",
+      "after_sha256": "7cbe667684f940508684a7e8f6d8a6432907790c2da727c07d7b4d60bc80263f",
+      "only_declared_binding_substitutions": true
+    }
+  ],
+  "all_other_git_entries_byte_identical": true,
+  "unchanged_entry_count": 205,
+  "original_source_clean_at_base": true,
+  "model_constructions": 0,
+  "policy_forwards": 0,
+  "cpu_or_logits_experiments": 0,
+  "gpu_jobs": 0,
+  "claims": 0,
+  "checks": "Exact replacement inversion, complete Git tree/mode/blob comparison, AST parse and bash syntax only; no policy/model imports",
+  "historical_reference_note": "evaluate_online.py retains the immutable EXP001 SOURCE_HASHES reference; unused historical preflight/docs and historical experiment files are unchanged.",
+  "publication": "PUBLISHED"
+}

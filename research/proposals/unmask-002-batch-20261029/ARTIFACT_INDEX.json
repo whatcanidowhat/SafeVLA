@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "ACK_CI_RECEIPT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/ACK_CI_RECEIPT.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/ACK_CI_RECEIPT.json",
+      "sha256": "b09a78ad054271690f8f4e35fecb7f6ceef0478d5a2152cc753196169f9ae1ba",
+      "size": 630,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "ACK_PUBLICATION.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/ACK_PUBLICATION.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/ACK_PUBLICATION.json",
+      "sha256": "9351fb02fa560871c1382d930697c0ac7ff363273c5643973c5413be320d15c2",
+      "size": 349,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "APPROVAL_A_TEMPLATE.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/APPROVAL_A_TEMPLATE.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/APPROVAL_A_TEMPLATE.json",
+      "sha256": "c04b276ee045905d9f841bd8a61d031d138dc4a72ad270ed2f7b565a81ee4530",
+      "size": 2255,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "DESIGN_INVARIANTS.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/DESIGN_INVARIANTS.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/DESIGN_INVARIANTS.json",
+      "sha256": "a869eee10b5dbc1fa3e0005498d8b641a78cc0a77f3b6f4670a20d031cc1a5d6",
+      "size": 787,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "HUMAN_DIRECTIVE_RECORD.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/HUMAN_DIRECTIVE_RECORD.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/HUMAN_DIRECTIVE_RECORD.json",
+      "sha256": "e969b1a0623a7591d397e80f24f2b940c5ea2dd51b133df21a53536e59bee83e",
+      "size": 442,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NEXT_EXPERIMENT.DRAFT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/NEXT_EXPERIMENT.DRAFT.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/NEXT_EXPERIMENT.DRAFT.json",
+      "sha256": "ff522386f3c6a0983f11f2f41a37c5e2f0cd16f4c40728dcef512ddb4c250511",
+      "size": 11603,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "NEXT_EXPERIMENT.DRAFT.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/NEXT_EXPERIMENT.DRAFT.md",
+      "git_path": "research/proposals/unmask-002-batch-20261029/NEXT_EXPERIMENT.DRAFT.md",
+      "sha256": "e91a258c35e63e9adc76fa49c143c77a9e671b148614c01cb735d8171bddf28d",
+      "size": 2378,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "PI_APPLY_STEPS.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/PI_APPLY_STEPS.md",
+      "git_path": "research/proposals/unmask-002-batch-20261029/PI_APPLY_STEPS.md",
+      "sha256": "69cf32a55bae1735d413da690a7def97dcbfda696f12aa2ec28898d0fd31319c",
+      "size": 2016,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "PREPARATION_SUMMARY.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/PREPARATION_SUMMARY.md",
+      "git_path": "research/proposals/unmask-002-batch-20261029/PREPARATION_SUMMARY.md",
+      "sha256": "a979ec31fc3f2aed161c57bf54b067bdc84bc60bc21ea1e855c1f14341c0d41e",
+      "size": 1177,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESOURCE_PREFLIGHT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/RESOURCE_PREFLIGHT.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/RESOURCE_PREFLIGHT.json",
+      "sha256": "c143060f7fce6f924989194ac327da5e1980df78fc2f19cab76158a65816d14b",
+      "size": 1695,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SOURCE_MANIFEST.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/SOURCE_MANIFEST.json",
+      "git_path": "research/proposals/unmask-002-batch-20261029/SOURCE_MANIFEST.json",
+      "sha256": "fccf30ba80164cbd8cf639f94620ed8435b01e7201abd8b7014449397fa5c2fb",
+      "size": 2805,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SOURCE_VS_1A.patch",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-preparation-20261029/pi-review-packet/SOURCE_VS_1A.patch",
+      "git_path": "research/proposals/unmask-002-batch-20261029/SOURCE_VS_1A.patch",
+      "sha256": "81557a2950b436706107f2a7259aa78350c00a6302eff27cc105ffc47d4212d8",
+      "size": 2745,
+      "required_for_PI_review": true
+    }
+  ],
+  "note": "Index excludes its own hash; no credentials, weights, tensors or raw manual uploaded."
+}

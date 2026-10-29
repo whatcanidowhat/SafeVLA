@@ -1,0 +1,50 @@
+{
+  "status": "UNSIGNED_PROPOSAL_ONLY_DO_NOT_APPLY_AS_IS",
+  "expected_review_state_version": 94,
+  "authorization_window_hours_proposed": 48,
+  "required_design_status": "APPROVED",
+  "required_design_flags": {
+    "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
+    "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
+    "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT"
+  },
+  "proposed_loop_state": {
+    "schema_version": "1.0",
+    "state_version": 95,
+    "cycle_id": "actor-memory-unmask-002-20261029",
+    "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
+    "status": "APPROVED_FOR_CODEX",
+    "next_actor": "CODEX",
+    "control_branch": "research-loop",
+    "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
+    "instruction_commit": null,
+    "reviewed_result_commit": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+    "claim_id": null,
+    "authorization": {
+      "status": "APPROVED",
+      "approved_by": "PI",
+      "approved_at_utc": "PI_SET_AT_ACTUAL_SIGNING_UTC",
+      "expires_at_utc": "PI_SET_NEW_FUTURE_EXPIRY_UTC",
+      "scope": "RESEARCH_EXPERIMENT",
+      "max_gpu": 1,
+      "max_episodes": 400
+    },
+    "required_outputs": [
+      "research/handoffs/actor-memory-unmask-002-20261029/RESULT_SUMMARY.md",
+      "research/handoffs/actor-memory-unmask-002-20261029/RUN_MANIFEST.json",
+      "research/handoffs/actor-memory-unmask-002-20261029/ARTIFACT_INDEX.json",
+      "research/handoffs/actor-memory-unmask-002-20261029/REVIEW_NOTES.md",
+      "research/handoffs/actor-memory-unmask-002-20261029/FROZEN_PROTOCOL.md",
+      "research/handoffs/actor-memory-unmask-002-20261029/TASK_MANIFEST.csv",
+      "research/handoffs/actor-memory-unmask-002-20261029/MASK_ON200_VALIDATION.json",
+      "research/handoffs/actor-memory-unmask-002-20261029/MASK_OFF200_VALIDATION.json",
+      "research/handoffs/actor-memory-unmask-002-20261029/OFF_ON_RESULTS.md",
+      "research/handoffs/actor-memory-unmask-002-20261029/EXECUTION_STATUS.json"
+    ],
+    "updated_by": "PI",
+    "updated_at_utc": "PI_SET_AT_ACTUAL_SIGNING_UTC"
+  },
+  "instruction_commit_must_remain_null_until_Claim": true,
+  "claim_id_must_remain_null_until_Claim": true,
+  "actual_signer": "PI_ONLY"
+}

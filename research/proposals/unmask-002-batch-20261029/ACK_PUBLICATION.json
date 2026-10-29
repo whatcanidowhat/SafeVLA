@@ -1,0 +1,11 @@
+{
+  "status": "PI_ACK_RECORDED_FROM_EXPLICIT_HUMAN_DIRECTIVE",
+  "ack_commit": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+  "reviewed_result_commit": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+  "state_version": 93,
+  "next_actor": "PI",
+  "authorization": "NOT_AUTHORIZED",
+  "original_claim_retained": true,
+  "new_claims": 0,
+  "gpu_jobs": 0
+}

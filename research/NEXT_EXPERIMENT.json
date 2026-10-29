@@ -1,13 +1,13 @@
 {
-  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
-  "cycle_id": "actor-memory-unmask-001-20261028",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
+  "cycle_id": "actor-memory-unmask-002-20261029",
   "status": "DRAFT",
   "policy": "FAST_TRACK",
-  "code_sha": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+  "code_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
   "research_question": "On the same ordered200 tasks, does removing only root Actor cross-Episode attention mask increase official SR and lower official Safety Cost? Delta is MASK_OFF minus MASK_ON.",
   "hypothesis": "Useful retained history may produce delta_SR>0 and delta_mean_cost<0; no directional benefit assumed.",
   "competing_explanation": "Wrong-goal/scene interference, sequential history/rollover phase and stochastic trajectory/augmentation divergence can worsen or obscure effects. Same seed is not identical trajectory proof.",
-  "reference": "Frozen source1a77276 and its unmask-baseline500 packet:38 CPU checks, full417/417 CPU checkpoint load/all three branches500 without overriding max_steps, existing minimal500 component replay. Reuse this evidence; do not repeat large CPU/logits validation. Old reset-cycle evidence is control recovery only, never the new control.",
+  "reference": "Base 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8 frozen scientific evidence, including38 CPU checks and strict417/417 full-policy CPU load, reused without repetition. Successor 2689081ec324c67a35f2a4692cfa009826fcf9d4 changes only3 execution-binding files/8 substitutions; all205 other Git entries are identical. Prior001 Slurm rejection is scheduling provenance only, never a performance control.",
   "repeat_or_treatment": "Exactly one new persistent-worker MASK_ON200 process followed by a fresh MASK_OFF200 process; same one Slurm GPU/UUID. Both Actor reset OFF. No old OFF result reuse, warm-up/debug Episode, added live policy forward or automatic retry.",
   "unique_variable": "Root Actor cross-Episode attention mask ON versus OFF; retain original K/V,counter and500-slot rollover, prev_actions masks, reward/cost Critic and official rules.",
   "fixed_conditions": {
@@ -41,28 +41,29 @@
     "Rendering, serialization, source identity, authorization, network/CI or data-integrity failure: immediately STOP and preserve evidence, no retry/configuration change.",
     "Fresh source/output, exact current A/B CI+HEAD+expiry, checkpoint/TaskSpec and baseline500/cache500/horizon600 must pass.",
     "One GPU,400 starts/240000 decisions,12h frozen runtime,90GiB output; protect other users/processes.",
-    "Never use old Claim/waiver or old OFF200; never continue second arm after first-arm failure."
+    "Never use old Claim/waiver or old OFF200; never continue second arm after first-arm failure.",
+    "Scheduler account/QOS/partition rejection or resource identity error: stop once, preserve proof, do not switch partition/identity or retry."
   ],
   "command": [
     "sbatch",
     "diagnostics/actor_memory_unmask/unmask_pair.slurm"
   ],
-  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028",
+  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
   "resources": {
     "max_gpu": 1,
     "max_episodes": 400
   },
   "required_outputs": [
-    "research/handoffs/actor-memory-unmask-001-20261028/RESULT_SUMMARY.md",
-    "research/handoffs/actor-memory-unmask-001-20261028/RUN_MANIFEST.json",
-    "research/handoffs/actor-memory-unmask-001-20261028/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-memory-unmask-001-20261028/REVIEW_NOTES.md",
-    "research/handoffs/actor-memory-unmask-001-20261028/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-memory-unmask-001-20261028/TASK_MANIFEST.csv",
-    "research/handoffs/actor-memory-unmask-001-20261028/MASK_ON200_VALIDATION.json",
-    "research/handoffs/actor-memory-unmask-001-20261028/MASK_OFF200_VALIDATION.json",
-    "research/handoffs/actor-memory-unmask-001-20261028/OFF_ON_RESULTS.md",
-    "research/handoffs/actor-memory-unmask-001-20261028/EXECUTION_STATUS.json"
+    "research/handoffs/actor-memory-unmask-002-20261029/RESULT_SUMMARY.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/RUN_MANIFEST.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/REVIEW_NOTES.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/TASK_MANIFEST.csv",
+    "research/handoffs/actor-memory-unmask-002-20261029/MASK_ON200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/MASK_OFF200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/EXECUTION_STATUS.json"
   ],
   "max_decisions": 240000,
   "max_runtime_seconds": 43200,
@@ -97,10 +98,10 @@
     "/public/home/zhangyh/QYY/envs/mesa_probe/share/vulkan/icd.d/lvp_icd.x86_64.json": "c45309de801414a3f377997d1eb0e0f92f76673ff94f52e2e9d784e7d083284b",
     "/public/home/zhangyh/QYY/envs/mesa_probe/lib/libvulkan_lvp.so": "4437c3632923f7b461486c329a969ecd2649f1951685c28c24b04af8597de95d"
   },
-  "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
-  "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
-  "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT",
-  "review_boundary": "Accepted flags can be written only by PI after independent review in actual approved design. They are not set by this draft. Accept common target environment/Pandas2.2.3 and proposed historical-working Mesa configuration for this new A/B only; defer noncritical deep/legacy/pixel-equivalence audits. No claim of proven renderer/logging GPU equivalence.",
+  "environment_review": "PI_DECISION_REQUIRED",
+  "rendering_review": "PI_DECISION_REQUIRED",
+  "gpu_logger_equivalence": "PI_DECISION_REQUIRED",
+  "review_boundary": "All three executable review flags are PI_DECISION_REQUIRED in this DRAFT. The new PI approval must explicitly reaffirm target software/rendering acceptance and a scoped logger waiver for this new experiment; no old waiver is automatically reused and no GPU equivalence PASS is asserted.",
   "deferred_reviews": [
     "No new broad CPU/logits study or standalone600-pair GPU logger study",
     "No full legacy software equivalence/Pandas rebuild required for within-run comparison after scoped PI acceptance",
@@ -117,9 +118,57 @@
   "claims_created_by_this_packet": 0,
   "gpu_jobs_submitted_by_this_packet": 0,
   "pi_review_decisions": {
-    "approval_type": "SCOPED_ACCEPTANCE_NOT_EQUIVALENCE_PASS",
-    "scope": "Same target environment and Mesa/AI2-THOR renderer for both independently launched arms, with frozen runtime hash checks and immediate stop on rendering, metrics, or logger errors",
-    "evidence": "research/proposals/unmask-baseline500-20261028 and research/proposals/unmask-fast-track-20261029",
-    "deferred": "No legacy pixel or complete dependency equivalence claim; no GPU logger equivalence PASS"
+    "status": "PENDING_FRESH_PI_APPROVAL",
+    "previous_acceptance_is_not_new_execution_authority": true,
+    "proposed_scoped_flags": {
+      "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
+      "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
+      "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT"
+    }
+  },
+  "resource_schedule": {
+    "account": "zhangyh",
+    "qos": "user_zhangyh",
+    "partition": "batch",
+    "nodes": 1,
+    "tasks": 1,
+    "cpus_per_task": 8,
+    "gres": "gpu:1",
+    "memory": "64G",
+    "walltime": "12:00:00",
+    "gpu_policy": "One Slurm-selected NVIDIA GPU, same physical UUID for ON200 and OFF200; record model/UUID. Batch access is newly reviewed execution metadata, not a scientific intervention."
+  },
+  "output_root_parent": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-002",
+  "output_directory_policy": "Fresh absent claim-<new full Claim B SHA>; no old output/job/Claim reuse",
+  "prior_terminal_result": {
+    "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+    "cycle_id": "actor-memory-unmask-001-20261028",
+    "result_commit": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+    "original_claim_commit": "81219671d89762437d576e6daf20f38f87fc1271",
+    "original_claim_id": "5a47f4ccc53a432ebb93e9c969575210",
+    "pi_ack_commit": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+    "use": "Preserved terminal scheduling evidence only"
+  },
+  "scientific_invariance": {
+    "base": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+    "complete_diff": "research/proposals/unmask-002-batch-20261029/SOURCE_VS_1A.patch",
+    "identity_proof": "research/proposals/unmask-002-batch-20261029/SOURCE_MANIFEST.json",
+    "all_other_git_entries_byte_identical": true,
+    "unchanged_entries": 205,
+    "new_cpu_model_or_logits_validation_runs": 0
+  },
+  "post_claim_pre_submission_checks": [
+    "Exact A/B independent successful push CI, true remote HEAD=B, current scope and expiry; original full Claim tool only.",
+    "Re-read batch account/QOS ACL, zhangyh association and current QOS/occupancy; reject changed permissions/limits before submission.",
+    "Read batch GPU inventory and12h/64G/8CPU/1GPU compatibility. Do not assume a free physical GPU from this snapshot.",
+    "This vendor sbatch does not advertise --test-only; do not invoke an unverified test flag or create a debug allocation.",
+    "Submit the approved frozen sbatch command once. In the allocation run the unchanged actual GPU UUID/free-memory/no-preexisting-process guards and three-branch500/cache500 assertions, then formal ON200→OFF200 without extra Episode."
+  ],
+  "fixed_input_identities": {
+    "checkpoint_path": "/public/home/zhangyh/QYY/data/checkpoints/safe_objnav.pt",
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+    "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "identity_role": "Unchanged expected frozen inputs; actual runtime checks remain mandatory, no new load claimed."
   }
 }

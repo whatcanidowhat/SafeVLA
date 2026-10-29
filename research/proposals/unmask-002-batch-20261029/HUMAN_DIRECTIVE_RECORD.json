@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-10-29T08:43:33.354625+00:00",
+  "source": "Explicit human user instruction in this chat",
+  "scope": "Record PI acknowledgement of reviewed formal001 terminal; create fresh002 execution source and prepare PI approval files/CI.",
+  "recorder": "CODEX",
+  "PI_ack_decision_reported_by_human": true,
+  "successor_execution_approved_by_this_record": false,
+  "Claim_or_GPU_permission_granted_by_preparation": false
+}

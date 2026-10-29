@@ -1,0 +1,27 @@
+{
+  "fixed_conditions_exactly_equal_to_001": true,
+  "fixed_conditions": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "actor_reset": "off",
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "test_augmentation": true,
+    "shuffle": true,
+    "TaskSpecs": 200,
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0"
+  },
+  "target_dependency_versions_equal": true,
+  "rendering_environment_equal": true,
+  "renderer_pins_equal": true,
+  "source_changes_only_bindings": true,
+  "all_other_git_entries_identical": 205,
+  "model_constructions": 0,
+  "policy_forwards": 0,
+  "cpu_or_logits_experiments": 0,
+  "new_claims": 0,
+  "gpu_jobs": 0,
+  "historical_source_hash_reference_retained": true
+}

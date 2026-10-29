@@ -1,0 +1,20 @@
+{
+  "VERDICT": "SUCCESS",
+  "EVIDENCE": {
+    "sha": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+    "branch": "research-loop",
+    "event": "push",
+    "workflow_id": 357129468,
+    "workflow": "research-loop-validate",
+    "workflow_path": ".github/workflows/research-loop-validate.yml",
+    "polls": 1,
+    "run_id": 40842613085,
+    "attempt": 1,
+    "run_url": "https://github.com/whatcanidowhat/SafeVLA/actions/runs/40842613085",
+    "status": "completed",
+    "conclusion": "success",
+    "CAN_EXECUTE": false
+  },
+  "BLOCKER": null,
+  "NEXT_AUTHORIZED_ACTION": "Report CI evidence only; execution gates remain separate"
+}
