@@ -1,20 +1,20 @@
 #!/bin/bash
 # DRAFT executable: sbatch only after independent PI approval + unique Claim CI.
-#SBATCH --job-name=unmask-pair500
+#SBATCH --job-name=unmask002-pair500
 #SBATCH --account=zhangyh
 #SBATCH --qos=user_zhangyh
-#SBATCH --partition=v100
+#SBATCH --partition=batch
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
 #SBATCH --mem=64G
 #SBATCH --time=12:00:00
-#SBATCH --output=/public/home/zhangyh/QYY/migration_logs/unmask-pair500-%j.out
-#SBATCH --error=/public/home/zhangyh/QYY/migration_logs/unmask-pair500-%j.err
+#SBATCH --output=/public/home/zhangyh/QYY/migration_logs/unmask002-pair500-%j.out
+#SBATCH --error=/public/home/zhangyh/QYY/migration_logs/unmask002-pair500-%j.err
 set -Eeuo pipefail
 umask 077
-ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028
+ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029
 source "$ROOT/diagnostics/actor_memory_unmask/target_environment.sh"
 UNMASK_PYTHON="${UNMASK_PYTHON:-$SAFEVLA_TARGET_PYTHON}"
 : "${UNMASK_APPROVAL_SHA:?New PI approval SHA required}"

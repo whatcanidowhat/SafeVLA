@@ -8,8 +8,8 @@ import subprocess
 import urllib.request
 from datetime import datetime, timezone
 
-EXPERIMENT='EXP-ACTOR-MEMORY-UNMASK-001'
-CYCLE='actor-memory-unmask-001-20261028'
+EXPERIMENT='EXP-ACTOR-MEMORY-UNMASK-002'
+CYCLE='actor-memory-unmask-002-20261029'
 COMMAND=['sbatch','diagnostics/actor_memory_unmask/unmask_pair.slurm']
 
 

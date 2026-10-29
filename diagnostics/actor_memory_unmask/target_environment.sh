@@ -1,5 +1,5 @@
 # Frozen target paths; source only. No job/model/simulator or GPU initialization.
-export SAFEVLA_ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028
+export SAFEVLA_ROOT=/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029
 export SAFEVLA_CONTROL_ROOT=/public/home/zhangyh/QYY/SafeVLA_research_control_20261028
 export SAFEVLA_DATA_ROOT=/public/home/zhangyh/QYY/data
 export SAFEVLA_TARGET_PYTHON=/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python
