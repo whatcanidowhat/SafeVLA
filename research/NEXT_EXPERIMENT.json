@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-RESET-ON200-004",
   "cycle_id": "actor-reset-on200-off002-reuse-004-20261015",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "research_question": "Using independently verified, immutable P2-002 OFF200 on the same 200 ObjectNavType TaskSpecs, how does the one-and-only root Actor episode-boundary counter and decoder KV reset ON treatment change official SR, five-part Safety Cost and complete Actor output traces in a fresh P2-004 ON200-only execution?",
   "hypothesis": "Root Actor episode-boundary counter+KV reset may alter actions, premature END, oscillation, SR and Safety Cost with no assumed directional improvement. Cross-cycle observations may diverge; no same-input causal claim is made.",
   "competing_explanation": "Earlier OFF and later ON execute in different wall time, possible GPU/simulator state and sampled augmented observations. Even with matched TaskSpecs and seed, online divergence and stochasticity limit causal interpretation.",

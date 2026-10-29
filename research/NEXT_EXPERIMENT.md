@@ -1,10 +1,10 @@
 # P2-004 — authorized ON200-only recovery using TLS-verified user proxy
 
 Experiment ID: EXP-ACTOR-RESET-ON200-004
-Status: APPROVED
+Status: DRAFT
 Cycle ID: actor-reset-on200-off002-reuse-004-20261015
 
-## Formal human / PI authorization
+## Historical PI authorization (expired; no execution permission)
 
 **APPROVED_FOR_CODEX, NOT YET CLAIMED.** User explicitly confirmed final P2-004 GPU authorization on 2026-10-15. This PI approval is bound to the exact scientific executable [`67c7051ed4287968897282f915b8b076851562a1`](https://github.com/whatcanidowhat/SafeVLA/commit/67c7051ed4287968897282f915b8b076851562a1), staged at `research/P2_CODE_SHA.txt`. The code-stage control CI [#38690170141](https://github.com/whatcanidowhat/SafeVLA/actions/runs/38690170141) succeeded prior to authorization.
 
