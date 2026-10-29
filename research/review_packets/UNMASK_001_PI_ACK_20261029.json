@@ -1,0 +1,14 @@
+{
+  "decision": "ACKNOWLEDGE_TERMINAL_BLOCKED",
+  "reviewed_terminal_commit": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+  "reviewed_experiment": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "original_claim_commit": "81219671d89762437d576e6daf20f38f87fc1271",
+  "original_claim_id": "5a47f4ccc53a432ebb93e9c969575210",
+  "recorded_at_utc": "2026-10-29T08:30:08.769103+00:00",
+  "decision_source": "Explicit human user instruction: PI has reviewed formal Result C and accepts the Slurm partition access diagnosis; record acknowledgement.",
+  "decision_authority": "PI decision reported and expressly authorized by the human user",
+  "recorded_by": "CODEX acting as recorder of the human-authorized PI decision",
+  "independent_PI_review_performed_by_assistant": false,
+  "approval_of_successor_execution": false,
+  "preserve_original_terminal_artifacts": true
+}

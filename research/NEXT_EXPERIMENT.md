@@ -1,7 +1,7 @@
 # FAST-TRACK unmask performance experiment
 
 Experiment ID: EXP-ACTOR-MEMORY-UNMASK-001
-Status: APPROVED
+Status: DRAFT
 Cycle: actor-memory-unmask-001-20261028
 Frozen code: 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8
 

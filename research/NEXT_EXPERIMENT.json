@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
   "cycle_id": "actor-memory-unmask-001-20261028",
-  "status": "APPROVED",
+  "status": "DRAFT",
   "policy": "FAST_TRACK",
   "code_sha": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
   "research_question": "On the same ordered200 tasks, does removing only root Actor cross-Episode attention mask increase official SR and lower official Safety Cost? Delta is MASK_OFF minus MASK_ON.",
