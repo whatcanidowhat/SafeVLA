@@ -1,7 +1,7 @@
 # FAST-TRACK unmask performance experiment
 
 Experiment ID: EXP-ACTOR-MEMORY-UNMASK-001
-Status: DRAFT
+Status: APPROVED
 Cycle: actor-memory-unmask-001-20261028
 Frozen code: 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8
 
@@ -15,6 +15,6 @@ Any rendering/serialization/identity/permission/network/CI/integrity failure sto
 
 First report SR_ON/SR_OFF/delta_SR; official Cost_ON/Cost_OFF/delta_cost; five cost components; episode-paired differences and failed earlyEND/room coverage/target-room/repetition proxies; comparability and limitations. Missing or partial metrics remain unavailable, not fabricated as zero. See JSON for competing explanations, falsification, fixed identities, limits and required outputs.
 
-## PI-scoped review decisions (staged, not authorized)
+## Scoped PI decisions
 
-Scoped acceptance for one new ON200→OFF200 pair: common target dependencies (including Pandas2.2.3), reviewed fixed renderer environment and hashes for both arms, and `PI_WAIVED_FOR_THIS_EXPERIMENT` for dedicated logger-equivalence work. No GPU/pixel bitwise equivalence is claimed. Any real rendering, serialization or official metric error stops the formal run. This draft is **NOT_AUTHORIZED** until a distinct approved state commit A passes CI.
+Scoped acceptance for one new ON200→OFF200 pair: common target dependencies (including Pandas2.2.3), reviewed fixed renderer environment and hashes for both arms, and `PI_WAIVED_FOR_THIS_EXPERIMENT` for dedicated logger-equivalence work. No GPU/pixel bitwise equivalence is claimed. Any real rendering, serialization or official metric error stops the formal run. Approval A must pass its own CI before the executor can obtain a unique Claim B. Neither approval nor CI starts the GPU.
