@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "state_version": 88,
-  "cycle_id": "actor-reset-on200-off002-reuse-004-20261015",
-  "experiment_id": "EXP-ACTOR-RESET-ON200-004",
+  "state_version": 89,
+  "cycle_id": "actor-memory-unmask-001-20261028",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
   "status": "PI_REVIEW",
   "next_actor": "PI",
   "control_branch": "research-loop",
-  "execution_worktree": "/nvme2/user/qyy/SafeVLA_actor_logits_p2_on200_004_20261015",
-  "instruction_commit": "500f7ba22151a7a62880199d737f0683558b91f0",
+  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028",
+  "instruction_commit": null,
   "reviewed_result_commit": "d478be22efea7b1fc94d5dbe8750d09fd903e44a",
-  "claim_id": "1c50b223da0a49d09fdbfe160ed780b4",
+  "claim_id": null,
   "authorization": {
     "status": "NOT_AUTHORIZED",
     "approved_by": null,
@@ -17,23 +17,20 @@
     "expires_at_utc": null,
     "scope": "RESEARCH_EXPERIMENT",
     "max_gpu": 1,
-    "max_episodes": 200
+    "max_episodes": 400
   },
   "required_outputs": [
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/RUN_MANIFEST.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/ARTIFACT_INDEX.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/REVIEW_NOTES.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/FROZEN_PROTOCOL.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/LOGGER_WAIVER.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/TASK_MANIFEST.csv",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_ON_RESULTS.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/VALIDATION_SUMMARY.md",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/GPU_QUEUE_REPORT.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/OFF_REUSE_VERIFICATION.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/NETWORK_PREFLIGHT.json",
-    "research/handoffs/actor-reset-on200-off002-reuse-004-20261015/CROSS_CYCLE_COMPARISON.json"
+    "research/handoffs/actor-memory-unmask-001-20261028/RESULT_SUMMARY.md",
+    "research/handoffs/actor-memory-unmask-001-20261028/RUN_MANIFEST.json",
+    "research/handoffs/actor-memory-unmask-001-20261028/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-memory-unmask-001-20261028/REVIEW_NOTES.md",
+    "research/handoffs/actor-memory-unmask-001-20261028/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-memory-unmask-001-20261028/TASK_MANIFEST.csv",
+    "research/handoffs/actor-memory-unmask-001-20261028/MASK_ON200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-001-20261028/MASK_OFF200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-001-20261028/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-memory-unmask-001-20261028/EXECUTION_STATUS.json"
   ],
   "updated_by": "PI",
-  "updated_at_utc": "2026-10-29T03:42:26Z"
+  "updated_at_utc": "2026-10-29T03:44:20Z"
 }
