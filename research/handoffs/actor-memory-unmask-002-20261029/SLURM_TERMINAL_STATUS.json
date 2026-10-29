@@ -1,0 +1,25 @@
+{
+  "observed_at_utc": "2026-10-29T10:19:39.907809+00:00",
+  "job_id": "246512",
+  "slurm": {
+    "JobState": "FAILED",
+    "Reason": "NonZeroExitCode",
+    "ExitCode": "1:0",
+    "NodeList": "gpu06",
+    "BatchHost": "gpu06",
+    "RunTime": "00:00:03",
+    "TimeLimit": "12:00:00",
+    "TRES": "cpu=8,mem=64G,node=1,billing=8,gres/gpu=1",
+    "StartTime": "2026-10-29T18:16:59",
+    "EndTime": "2026-10-29T18:17:02",
+    "Command": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/unmask_pair.slurm",
+    "WorkDir": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
+    "StdOut": "/public/home/zhangyh/QYY/migration_logs/unmask002-pair500-246512.out",
+    "StdErr": "/public/home/zhangyh/QYY/migration_logs/unmask002-pair500-246512.err"
+  },
+  "formal_output_exists": false,
+  "episodes_started": 0,
+  "policy_forwards": 0,
+  "gpu_uuid": null,
+  "no_retry": true
+}

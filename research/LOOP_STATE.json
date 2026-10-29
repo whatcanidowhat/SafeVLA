@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "state_version": 96,
+  "state_version": 97,
   "cycle_id": "actor-memory-unmask-002-20261029",
   "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
-  "status": "CODEX_RUNNING",
-  "next_actor": "CODEX",
+  "status": "BLOCKED",
+  "next_actor": "PI",
   "control_branch": "research-loop",
   "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
   "instruction_commit": "6d860c00a5f3183f1aea8453f1721e47af54c255",
@@ -32,5 +32,5 @@
     "research/handoffs/actor-memory-unmask-002-20261029/EXECUTION_STATUS.json"
   ],
   "updated_by": "CODEX",
-  "updated_at_utc": "2026-10-29T09:54:33.771563+00:00"
+  "updated_at_utc": "2026-10-29T10:26:01.988713+00:00"
 }

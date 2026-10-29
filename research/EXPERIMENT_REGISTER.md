@@ -439,3 +439,8 @@ Claim 89b3607c03448223484202ee9aabd3bd79b06f7f passed CI; mandatory proxy-networ
 ## 2026-10-29T07:24:21.732126+00:00 — EXP-ACTOR-MEMORY-UNMASK-001 terminal BLOCKED
 
 Approval A `077edc718e1a6eddfd3850e0d264461dad8f555f`; unique Claim B `81219671d89762437d576e6daf20f38f87fc1271` (`5a47f4ccc53a432ebb93e9c969575210`), both exact CIs SUCCESS. One frozen sbatch attempt failed with exit1 before allocation: partitionv100 allows slurmtest/root, excluding accountzhangyh.0 experiment GPU allocations,0 model/simulator/forward/Episodes; all SR/Cost contrasts unavailable. No retry/source/config change. Evidence: `research/handoffs/actor-memory-unmask-001-20261028/RESULT_SUMMARY.md`, RUN_MANIFEST and ARTIFACT_INDEX. Next actor PI; current Claim cannot resume.
+
+
+## 2026-10-29T10:26:01.988713+00:00 — EXP-ACTOR-MEMORY-UNMASK-002 BLOCKED
+
+A `6d860c00a5f3183f1aea8453f1721e47af54c255`, new B `4d027f816139b218191fbbc22ae2ab6f744ef318` (Claim `edcdeee852bd4dddb43e3cb8d5be765b`), both exact CIs SUCCESS. Fresh scheduler/access/capacity/time checks passed; the only frozen submission produced Job246512 on gpu06,1GPU/8CPU/64GiB,3seconds,FAILED1:0. Compute-node live HEAD check failed with github.com DNS resolution/Git128 before model/simulator/Episode startup. ON0/200,OFF0/200; all SR/Cost/END metrics unavailable. No retry/configuration change. Evidence `research/handoffs/actor-memory-unmask-002-20261029/RESULT_SUMMARY.md`, RUN_MANIFEST and ARTIFACT_INDEX. Next actor PI; no Claim reuse.

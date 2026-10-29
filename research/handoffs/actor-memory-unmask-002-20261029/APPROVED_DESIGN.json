@@ -1,0 +1,177 @@
+{
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002",
+  "cycle_id": "actor-memory-unmask-002-20261029",
+  "status": "APPROVED",
+  "policy": "FAST_TRACK",
+  "code_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+  "research_question": "On the same ordered200 tasks, does removing only root Actor cross-Episode attention mask increase official SR and lower official Safety Cost? Delta is MASK_OFF minus MASK_ON.",
+  "hypothesis": "Useful retained history may produce delta_SR>0 and delta_mean_cost<0; no directional benefit assumed.",
+  "competing_explanation": "Wrong-goal/scene interference, sequential history/rollover phase and stochastic trajectory/augmentation divergence can worsen or obscure effects. Same seed is not identical trajectory proof.",
+  "reference": "Base 1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8 frozen scientific evidence, including38 CPU checks and strict417/417 full-policy CPU load, reused without repetition. Successor 2689081ec324c67a35f2a4692cfa009826fcf9d4 changes only3 execution-binding files/8 substitutions; all205 other Git entries are identical. Prior001 Slurm rejection is scheduling provenance only, never a performance control.",
+  "repeat_or_treatment": "Exactly one new persistent-worker MASK_ON200 process followed by a fresh MASK_OFF200 process; same one Slurm GPU/UUID. Both Actor reset OFF. No old OFF result reuse, warm-up/debug Episode, added live policy forward or automatic retry.",
+  "unique_variable": "Root Actor cross-Episode attention mask ON versus OFF; retain original K/V,counter and500-slot rollover, prev_actions masks, reward/cost Critic and official rules.",
+  "fixed_conditions": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "actor_reset": "off",
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "test_augmentation": true,
+    "shuffle": true,
+    "TaskSpecs": 200,
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0"
+  },
+  "metrics": [
+    "SR_ON,SR_OFF,delta_SR(OFF-ON),n=200/arm",
+    "Official Safety Cost sum and mean,delta_mean_cost(OFF-ON)",
+    "danger,corner,blind,fragile,critical totals and episode-paired deltas",
+    "Failed early END before600, horizon exhaustion, official room coverage/target-room visit and action repetition/oscillation proxies",
+    "Completeness, source/weight/task/GPU comparability and statistical/sequence-history limitations"
+  ],
+  "expected_result": "Two integrity-PASS200 arms, joint desired direction delta_SR>0 and delta_mean_cost<0; report all endpoints even if worse.",
+  "falsifying_result": "No SR gain or no Cost reduction/worsening falsifies the joint directional prediction in this cohort. No full benchmark contrast for incomplete or identity-mismatched arms.",
+  "alternative_explanations": [
+    "History dependence violates naive independent-task inference assumptions.",
+    "Target rendering and declared package versions are common to both fresh arms; legacy bitwise equivalence is not asserted.",
+    "Scoped logger noninterference waiver is not a GPU equivalence PASS."
+  ],
+  "stop_conditions": [
+    "Rendering, serialization, source identity, authorization, network/CI or data-integrity failure: immediately STOP and preserve evidence, no retry/configuration change.",
+    "Fresh source/output, exact current A/B CI+HEAD+expiry, checkpoint/TaskSpec and baseline500/cache500/horizon600 must pass.",
+    "One GPU,400 starts/240000 decisions,12h frozen runtime,90GiB output; protect other users/processes.",
+    "Never use old Claim/waiver or old OFF200; never continue second arm after first-arm failure.",
+    "Scheduler account/QOS/partition rejection or resource identity error: stop once, preserve proof, do not switch partition/identity or retry."
+  ],
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "execution_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029",
+  "resources": {
+    "max_gpu": 1,
+    "max_episodes": 400
+  },
+  "required_outputs": [
+    "research/handoffs/actor-memory-unmask-002-20261029/RESULT_SUMMARY.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/RUN_MANIFEST.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/ARTIFACT_INDEX.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/REVIEW_NOTES.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/FROZEN_PROTOCOL.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/TASK_MANIFEST.csv",
+    "research/handoffs/actor-memory-unmask-002-20261029/MASK_ON200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/MASK_OFF200_VALIDATION.json",
+    "research/handoffs/actor-memory-unmask-002-20261029/OFF_ON_RESULTS.md",
+    "research/handoffs/actor-memory-unmask-002-20261029/EXECUTION_STATUS.json"
+  ],
+  "max_decisions": 240000,
+  "max_runtime_seconds": 43200,
+  "python_executable": "/public/home/zhangyh/QYY/envs/safevla_unmask500_20261028/bin/python",
+  "target_dependency_versions": {
+    "torch": "2.4.1+cu121",
+    "torchvision": "0.19.1+cu121",
+    "torchaudio": "2.4.1+cu121",
+    "numpy": "2.1.2",
+    "pandas": "2.2.3",
+    "Pillow": "12.2.0",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.7",
+    "transformers": "4.46.1",
+    "ai2thor": "0+966bd7758586e05d18f6181f459c0e90ba318bec",
+    "allenact": "0.5.5a0",
+    "jsonschema": "4.25.1",
+    "nltk": "3.9.1"
+  },
+  "asset_inventory_path": "/public/home/zhangyh/QYY/migration_logs/unmask-baseline500-20261028/selected200-assets-attempt1.json",
+  "asset_inventory_sha256": "eb588ceae5d27e43037f1b9cc8811fd63fe52d07dcb6ce018bef4fbae788a3d1",
+  "rendering_environment": {
+    "VK_ICD_FILENAMES": "/public/home/zhangyh/QYY/envs/mesa_probe/share/vulkan/icd.d/lvp_icd.x86_64.json",
+    "LD_LIBRARY_PATH": "/public/home/zhangyh/QYY/envs/mesa_probe/lib:/public/home/zhangyh/QYY/envs/safevla_native/lib",
+    "DISPLAY": null,
+    "XDG_RUNTIME_DIR": "/public/home/zhangyh/QYY/runtime_home/xdg-runtime"
+  },
+  "renderer_file_sha256": {
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec": "29d5f337ae9b7d7ce0b1b9fb81fc5e3b24d365b1847a1db492baa2327f252f43",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/UnityPlayer.so": "9cfaf68e03a165c4d94c4f3c955c5ea2bba5f9be840a7013157ce633eee3c166",
+    "/public/home/zhangyh/QYY/runtime_home/.ai2thor/releases/thor-CloudRendering-966bd7758586e05d18f6181f459c0e90ba318bec/metadata.json": "cc6a1ff20cff2bba1b1ebae6c80b284aa36a17b2aa27cd9a8a40a28bcb93d6a0",
+    "/public/home/zhangyh/QYY/envs/mesa_probe/share/vulkan/icd.d/lvp_icd.x86_64.json": "c45309de801414a3f377997d1eb0e0f92f76673ff94f52e2e9d784e7d083284b",
+    "/public/home/zhangyh/QYY/envs/mesa_probe/lib/libvulkan_lvp.so": "4437c3632923f7b461486c329a969ecd2649f1951685c28c24b04af8597de95d"
+  },
+  "environment_review": "PI_ACCEPTED_TARGET_ENVIRONMENT_FOR_BOTH_ARMS",
+  "rendering_review": "PI_ACCEPTED_FOR_BOTH_ARMS",
+  "gpu_logger_equivalence": "PI_WAIVED_FOR_THIS_EXPERIMENT",
+  "review_boundary": "All three executable review flags are PI_DECISION_REQUIRED in this DRAFT. The new PI approval must explicitly reaffirm target software/rendering acceptance and a scoped logger waiver for this new experiment; no old waiver is automatically reused and no GPU equivalence PASS is asserted.",
+  "deferred_reviews": [
+    "No new broad CPU/logits study or standalone600-pair GPU logger study",
+    "No full legacy software equivalence/Pandas rebuild required for within-run comparison after scoped PI acceptance",
+    "No historical OFF1203-file revalidation",
+    "No extra-seed,A/A,performance or renderer pixel-equivalence study before these400 tasks"
+  ],
+  "startup_scope": "Use only frozen executable checks: live permission/identity/expiry/CI, fixed source/resources/tasks/deps/assets/renderer pins, one allocated GPU/disk and loaded three-branch500 assertions, then actual formal rendering/logging. Frozen code-enforced checks cannot be skipped without changing SHA, which is forbidden here.",
+  "authorization_window_proposal": {
+    "hours": 48,
+    "approved_at_utc": null,
+    "expires_at_utc": null,
+    "note": "PI fills actual approval time and future expiry at signing; do not reuse October16 expiry."
+  },
+  "claims_created_by_this_packet": 0,
+  "gpu_jobs_submitted_by_this_packet": 0,
+  "pi_review_decisions": {
+    "status": "APPROVED_SCOPED_PI_REVIEW",
+    "decision_at_utc": "2026-10-29T09:09:51Z",
+    "approved_code_sha": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+    "reviewed_prior_terminal": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+    "reviewed_prior_ack": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+    "environment": "Both new arms same accepted software",
+    "rendering": "Same reviewed renderer binary pins; real functionality not yet verified",
+    "logger": "PI_WAIVED_FOR_THIS_EXPERIMENT; not PASS",
+    "scheduler": "batch/zhangyh/user_zhangyh; require fresh resource and ACL check",
+    "approval_note": "Delegated PI role by user, not an independent human signature; A/B CI and runtime gates still required"
+  },
+  "resource_schedule": {
+    "account": "zhangyh",
+    "qos": "user_zhangyh",
+    "partition": "batch",
+    "nodes": 1,
+    "tasks": 1,
+    "cpus_per_task": 8,
+    "gres": "gpu:1",
+    "memory": "64G",
+    "walltime": "12:00:00",
+    "gpu_policy": "One Slurm-selected NVIDIA GPU, same physical UUID for ON200 and OFF200; record model/UUID. Batch access is newly reviewed execution metadata, not a scientific intervention."
+  },
+  "output_root_parent": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-002",
+  "output_directory_policy": "Fresh absent claim-<new full Claim B SHA>; no old output/job/Claim reuse",
+  "prior_terminal_result": {
+    "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+    "cycle_id": "actor-memory-unmask-001-20261028",
+    "result_commit": "d670852bf08ed3d14d55dc1e4c631ccf678c6eeb",
+    "original_claim_commit": "81219671d89762437d576e6daf20f38f87fc1271",
+    "original_claim_id": "5a47f4ccc53a432ebb93e9c969575210",
+    "pi_ack_commit": "e6d2b20a152a760b78d30549178f3f51378c0a63",
+    "use": "Preserved terminal scheduling evidence only"
+  },
+  "scientific_invariance": {
+    "base": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+    "complete_diff": "research/proposals/unmask-002-batch-20261029/SOURCE_VS_1A.patch",
+    "identity_proof": "research/proposals/unmask-002-batch-20261029/SOURCE_MANIFEST.json",
+    "all_other_git_entries_byte_identical": true,
+    "unchanged_entries": 205,
+    "new_cpu_model_or_logits_validation_runs": 0
+  },
+  "post_claim_pre_submission_checks": [
+    "Exact A/B independent successful push CI, true remote HEAD=B, current scope and expiry; original full Claim tool only.",
+    "Re-read batch account/QOS ACL, zhangyh association and current QOS/occupancy; reject changed permissions/limits before submission.",
+    "Read batch GPU inventory and12h/64G/8CPU/1GPU compatibility. Do not assume a free physical GPU from this snapshot.",
+    "This vendor sbatch does not advertise --test-only; do not invoke an unverified test flag or create a debug allocation.",
+    "Submit the approved frozen sbatch command once. In the allocation run the unchanged actual GPU UUID/free-memory/no-preexisting-process guards and three-branch500/cache500 assertions, then formal ON200→OFF200 without extra Episode."
+  ],
+  "fixed_input_identities": {
+    "checkpoint_path": "/public/home/zhangyh/QYY/data/checkpoints/safe_objnav.pt",
+    "checkpoint_sha256": "05b3f7f4db356a24999cd2177b59634b4c9d8f0a4f581af613dcadc5fec6a301",
+    "dino_sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9",
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+    "identity_role": "Unchanged expected frozen inputs; actual runtime checks remain mandatory, no new load claimed."
+  }
+}

@@ -1,0 +1,19 @@
+fatal: unable to access 'https://github.com/whatcanidowhat/SafeVLA.git/': Could not resolve host: github.com; Unknown error
+Traceback (most recent call last):
+  File "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/online_pair.py", line 72, in <module>
+    if __name__=='__main__':main()
+  File "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/online_pair.py", line 28, in main
+    evidence=authorize(a,ROOT)
+  File "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/online_gate.py", line 59, in authorize
+    remote=git(control,'ls-remote','--heads','origin','refs/heads/research-loop').split()
+  File "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/online_gate.py", line 55, in git
+    def git(root,*argv):return subprocess.check_output(['git',*argv],cwd=root,text=True,timeout=30).strip()
+  File "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/subprocess.py", line 421, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'ls-remote', '--heads', 'origin', 'refs/heads/research-loop']' returned non-zero exit status 128.

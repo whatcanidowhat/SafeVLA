@@ -1,0 +1,1 @@
+{"status": "CLAIM_PUBLISHED", "claim_commit": "4d027f816139b218191fbbc22ae2ab6f744ef318", "instruction_commit": "6d860c00a5f3183f1aea8453f1721e47af54c255", "cycle_id": "actor-memory-unmask-002-20261029", "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-002", "next": "Wait for this commit's control CI, verify remote is still this claim, then only execute the approved task."}

@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "artifacts": [
+    {
+      "name": "APPROVED_DESIGN.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/APPROVED_DESIGN.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/APPROVED_DESIGN.json",
+      "sha256": "7b4200fd21fa5eee2b99c2cdd5392e8e480d9cc9c273b7a85c2fcbed8eeadfba",
+      "size": 12028,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CLAIM_B_CI_WAIT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/CLAIM_B_CI_WAIT.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/CLAIM_B_CI_WAIT.json",
+      "sha256": "f39309736fa4f65a8a92469a8a2a292b1d76469cc65cb6437c6bac58c48b3af9",
+      "size": 532,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "CLAIM_PUBLICATION.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/CLAIM_PUBLICATION.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/CLAIM_PUBLICATION.txt",
+      "sha256": "490a201c84c6b736fea9fdf193c90fb26b63728224c8e21cdd0f049f5eeaa7a1",
+      "size": 370,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "EXECUTION_STATUS.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/EXECUTION_STATUS.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/EXECUTION_STATUS.json",
+      "sha256": "db86ed891cb039ce798a97af7da9dff42c78f47ffee49f8ac6e6a16aa7e9ab4e",
+      "size": 716,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_PROTOCOL.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/FROZEN_PROTOCOL.md",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/FROZEN_PROTOCOL.md",
+      "sha256": "12980c76daf09e578c89da239cf93a1b5d1f3c2986c21d9e9771af7c287e6f97",
+      "size": 3283,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "FROZEN_SLURM_SCRIPT.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/FROZEN_SLURM_SCRIPT.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/FROZEN_SLURM_SCRIPT.txt",
+      "sha256": "7cbe667684f940508684a7e8f6d8a6432907790c2da727c07d7b4d60bc80263f",
+      "size": 1458,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "MASK_OFF200_VALIDATION.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/MASK_OFF200_VALIDATION.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/MASK_OFF200_VALIDATION.json",
+      "sha256": "261f3163d64f6e883a857a6fa76cde58fd566e29303d7b13d5437178177d948b",
+      "size": 252,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "MASK_ON200_VALIDATION.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/MASK_ON200_VALIDATION.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/MASK_ON200_VALIDATION.json",
+      "sha256": "f0f36a60102a70251ca49734f712aede265509a871667d0428625c26c9f65d30",
+      "size": 251,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "OFF_ON_RESULTS.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/OFF_ON_RESULTS.md",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/OFF_ON_RESULTS.md",
+      "sha256": "430568168869ad4db9945af1f238ace4aafa01c7793e3be40c2aa989d23f5afb",
+      "size": 461,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "PRE_SUBMISSION_GATE.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/PRE_SUBMISSION_GATE.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/PRE_SUBMISSION_GATE.json",
+      "sha256": "a74aece5dade3dc454acbed5134a2311de2e447abe5a5a4036dd73d78849f529",
+      "size": 6518,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RESULT_SUMMARY.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/RESULT_SUMMARY.md",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/RESULT_SUMMARY.md",
+      "sha256": "dae8fc72781726b1987f1d4c12e3748384ac0b16a93366ccc64e5e3c393e418c",
+      "size": 1570,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "REVIEW_NOTES.md",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/REVIEW_NOTES.md",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/REVIEW_NOTES.md",
+      "sha256": "1446be548062f9e8f04b57527f836efe733c086d1fc77e121eca4ae3171c6517",
+      "size": 1329,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "RUN_MANIFEST.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/RUN_MANIFEST.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/RUN_MANIFEST.json",
+      "sha256": "2937e408fd881ef3004f2b9f76065b96e9f76f11b8cb1a9f7e4281a40aee0b73",
+      "size": 4162,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SBATCH_ATTEMPT_MARKER.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SBATCH_ATTEMPT_MARKER.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SBATCH_ATTEMPT_MARKER.json",
+      "sha256": "40d6f94ff2a2530c8d97b3f6f108a7c9728227e00a7991ea6f0d3a4b64364513",
+      "size": 198,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SBATCH_STDERR.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SBATCH_STDERR.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SBATCH_STDERR.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SBATCH_STDOUT.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SBATCH_STDOUT.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SBATCH_STDOUT.txt",
+      "sha256": "4164fc421affb56c546c4819ae982968c5b2baa5ab2a0f104394525e10d2faa6",
+      "size": 27,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SBATCH_SUBMISSION_RECEIPT.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SBATCH_SUBMISSION_RECEIPT.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SBATCH_SUBMISSION_RECEIPT.json",
+      "sha256": "75d22c1d40b99acf8b5806c1fa096adc3a82312368c520dd2d22df2e29117f7c",
+      "size": 542,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SLURM_JOB.stderr.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SLURM_JOB.stderr.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SLURM_JOB.stderr.txt",
+      "sha256": "7db142e9e82f33eda51e606537178c705ad4db8b6da6db68f1a386d47788751d",
+      "size": 1757,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SLURM_JOB.stdout.txt",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SLURM_JOB.stdout.txt",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SLURM_JOB.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "SLURM_TERMINAL_STATUS.json",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/SLURM_TERMINAL_STATUS.json",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/SLURM_TERMINAL_STATUS.json",
+      "sha256": "48c7f7c3948652981ec0cb017ca8704fc0fd9088997672d3a3a55a0e2f545770",
+      "size": 935,
+      "required_for_PI_review": true
+    },
+    {
+      "name": "TASK_MANIFEST.csv",
+      "server_path": "/public/home/zhangyh/QYY/migration_logs/unmask002-execution-20261029/result-C-handoff/TASK_MANIFEST.csv",
+      "git_path": "research/handoffs/actor-memory-unmask-002-20261029/TASK_MANIFEST.csv",
+      "sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+      "size": 53334,
+      "required_for_PI_review": true
+    }
+  ],
+  "scope": "Small original scheduler/job logs and explicit not-started outcomes; index excludes self hash. No weights, tensors, private credential files or environment dumps."
+}

@@ -1,0 +1,17 @@
+{
+  "status": "SUBMITTED",
+  "utc": "2026-10-29T10:16:59.275895+00:00",
+  "claim": "4d027f816139b218191fbbc22ae2ab6f744ef318",
+  "source": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+  "submission_attempts": 1,
+  "exit_code": 0,
+  "job_id": "246512",
+  "output": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-002/claim-4d027f816139b218191fbbc22ae2ab6f744ef318",
+  "stdout": "Submitted batch job 246512\n",
+  "stderr": "",
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "no_retry": true
+}

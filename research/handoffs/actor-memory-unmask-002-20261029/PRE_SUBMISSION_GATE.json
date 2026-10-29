@@ -1,0 +1,256 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-29T10:16:55.358099+00:00",
+  "approval": "6d860c00a5f3183f1aea8453f1721e47af54c255",
+  "claim": "4d027f816139b218191fbbc22ae2ab6f744ef318",
+  "claim_id": "edcdeee852bd4dddb43e3cb8d5be765b",
+  "source": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+  "authorization_expiry": "2026-10-31T09:09:51Z",
+  "ci": [
+    {
+      "id": 40847710232,
+      "head_sha": "6d860c00a5f3183f1aea8453f1721e47af54c255",
+      "event": "push",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 40855443923,
+      "head_sha": "4d027f816139b218191fbbc22ae2ab6f744ef318",
+      "event": "push",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "partition": {
+    "PartitionName": "batch",
+    "AllowGroups": "ALL",
+    "AllowAccounts": "ALL",
+    "AllowQos": "ALL",
+    "AllocNodes": "ALL",
+    "Default": "YES",
+    "QoS": "partition_batch",
+    "DefaultTime": "1-00:00:00",
+    "DisableRootJobs": "YES",
+    "ExclusiveUser": "NO",
+    "GraceTime": "0",
+    "Hidden": "NO",
+    "MaxNodes": "UNLIMITED",
+    "MaxTime": "3-00:00:00",
+    "MinNodes": "0",
+    "LLN": "NO",
+    "MaxCPUsPerNode": "UNLIMITED",
+    "LLS": "NO",
+    "Nodes": "gpu[01-03,05-06,101-102,111-120]",
+    "PriorityJobFactor": "1",
+    "PriorityTier": "6000",
+    "RootOnly": "NO",
+    "ReqResv": "NO",
+    "OverSubscribe": "NO",
+    "OverTimeLimit": "NONE",
+    "PreemptMode": "OFF",
+    "State": "UP",
+    "TotalCPUs": "936",
+    "TotalNodes": "17",
+    "SelectTypeParameters": "NONE",
+    "JobDefaults": "(null)",
+    "SuspendKeepIdle": "n/a",
+    "DefMemPerNode": "UNLIMITED",
+    "MaxMemPerNode": "UNLIMITED"
+  },
+  "association": [
+    {
+      "Cluster": "cluster_admin",
+      "Account": "zhangyh",
+      "User": "zhangyh",
+      "Partition": "",
+      "Share": "1",
+      "Priority": "",
+      "GrpJobs": "",
+      "GrpTRES": "",
+      "GrpSubmit": "",
+      "GrpWall": "",
+      "GrpTRESMins": "",
+      "MaxJobs": "",
+      "MaxTRES": "",
+      "MaxTRESPerNode": "",
+      "MaxSubmit": "",
+      "MaxWall": "",
+      "MaxTRESMins": "",
+      "QOS": "user_zhangyh",
+      "Def QOS": "",
+      "GrpTRESRunMins": ""
+    }
+  ],
+  "qos": {
+    "Name": "user_zhangyh",
+    "Priority": "100",
+    "GraceTime": "00:00:00",
+    "Preempt": "",
+    "PreemptExemptTime": "",
+    "PreemptMode": "cluster",
+    "Flags": "",
+    "UsageThres": "",
+    "UsageFactor": "1.000000",
+    "GrpTRES": "",
+    "GrpTRESMins": "",
+    "GrpTRESRunMins": "",
+    "GrpJobs": "",
+    "GrpSubmit": "",
+    "GrpWall": "",
+    "MaxTRES": "",
+    "MaxTRESPerNode": "",
+    "MaxTRESMins": "",
+    "MaxWall": "",
+    "MaxTRESPU": "cpu=24,gres/gpu=4",
+    "MaxJobsPU": "5",
+    "MaxSubmitPU": "5",
+    "MaxTRESPA": "",
+    "MaxJobsPA": "",
+    "MaxSubmitPA": "",
+    "MinTRES": ""
+  },
+  "current_jobs": [
+    "246255|safevla_eval_0727_2_0|R|batch",
+    "244887|Instances_2507251294_78_0|R|long"
+  ],
+  "configured_eligible_gpu_nodes": [
+    {
+      "node": "gpu01",
+      "state": "alloc",
+      "gres": "gpu:NVIDIAA100-PCIE-40GB:8",
+      "memory_mb": 514639,
+      "cpus": 48,
+      "cpu_state": "48/0/0/48"
+    },
+    {
+      "node": "gpu02",
+      "state": "mix",
+      "gres": "gpu:NVIDIAA100-PCIE-40GB:8",
+      "memory_mb": 514447,
+      "cpus": 48,
+      "cpu_state": "38/10/0/48"
+    },
+    {
+      "node": "gpu03",
+      "state": "mix",
+      "gres": "gpu:NVIDIAA100-PCIE-40GB:8",
+      "memory_mb": 514447,
+      "cpus": 48,
+      "cpu_state": "40/8/0/48"
+    },
+    {
+      "node": "gpu05",
+      "state": "alloc",
+      "gres": "gpu:NVIDIAA100-PCIE-40GB:8",
+      "memory_mb": 514447,
+      "cpus": 48,
+      "cpu_state": "48/0/0/48"
+    },
+    {
+      "node": "gpu06",
+      "state": "mix",
+      "gres": "gpu:NVIDIAA100-PCIE-40GB:8",
+      "memory_mb": 514447,
+      "cpus": 48,
+      "cpu_state": "40/8/0/48"
+    },
+    {
+      "node": "gpu102",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 514393,
+      "cpus": 56,
+      "cpu_state": "46/10/0/56"
+    },
+    {
+      "node": "gpu111",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 515451,
+      "cpus": 36,
+      "cpu_state": "34/2/0/36"
+    },
+    {
+      "node": "gpu112",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 515451,
+      "cpus": 36,
+      "cpu_state": "35/1/0/36"
+    },
+    {
+      "node": "gpu113",
+      "state": "mix",
+      "gres": "gpu:TeslaV100S-PCIE-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "40/24/0/64"
+    },
+    {
+      "node": "gpu115",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "42/22/0/64"
+    },
+    {
+      "node": "gpu116",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "40/24/0/64"
+    },
+    {
+      "node": "gpu117",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "46/18/0/64"
+    },
+    {
+      "node": "gpu118",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "14/50/0/64"
+    },
+    {
+      "node": "gpu119",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772484,
+      "cpus": 64,
+      "cpu_state": "48/16/0/64"
+    },
+    {
+      "node": "gpu120",
+      "state": "mix",
+      "gres": "gpu:TeslaV100-SXM2-32GB:8",
+      "memory_mb": 772691,
+      "cpus": 64,
+      "cpu_state": "46/18/0/64"
+    }
+  ],
+  "capacity_is_not_a_free_GPU_guarantee": true,
+  "allocated_gpu_guard": "Unchanged frozen nvidia-smi guard must pass after Slurm allocation",
+  "output": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-002/claim-4d027f816139b218191fbbc22ae2ab6f744ef318",
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "control_only_git_paths_and_loopback_proxies_removed_from_job_environment": true,
+  "rendering_environment": {
+    "VK_ICD_FILENAMES": "/public/home/zhangyh/QYY/envs/mesa_probe/share/vulkan/icd.d/lvp_icd.x86_64.json",
+    "LD_LIBRARY_PATH": "/public/home/zhangyh/QYY/envs/mesa_probe/lib:/public/home/zhangyh/QYY/envs/safevla_native/lib",
+    "DISPLAY": null,
+    "XDG_RUNTIME_DIR": "/public/home/zhangyh/QYY/runtime_home/xdg-runtime"
+  },
+  "cpu_or_logits_experiments": 0
+}

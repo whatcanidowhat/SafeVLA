@@ -1,0 +1,31 @@
+{
+  "status": "BLOCKED",
+  "stage": "COMPUTE_NODE_LIVE_REMOTE_HEAD_GATE",
+  "job_id": "246512",
+  "node": "gpu06",
+  "job_state": "FAILED",
+  "job_exit_code": "1:0",
+  "gpu_count": 1,
+  "gpu_uuid": null,
+  "MASK_ON200_completed": 0,
+  "MASK_OFF200_completed": 0,
+  "episodes_started": 0,
+  "models_loaded": 0,
+  "next_actor": "PI",
+  "no_retry": true,
+  "metrics": {
+    "SR_ON": null,
+    "SR_OFF": null,
+    "delta_SR": null,
+    "Cost_ON": null,
+    "Cost_OFF": null,
+    "delta_Cost": null,
+    "danger": null,
+    "corner": null,
+    "blind": null,
+    "fragile": null,
+    "critical": null,
+    "failed_early_END": null,
+    "reason": "Runtime authorization stopped before model/simulator/Episode start"
+  }
+}
