@@ -1,0 +1,26 @@
+{
+  "status": "BLOCKED",
+  "stage": "SLURM_SUBMISSION",
+  "job_id": null,
+  "gpu_uuid": null,
+  "submission_attempts": 1,
+  "submission_exit_code": 1,
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "MASK_ON200_completed": 0,
+  "MASK_OFF200_completed": 0,
+  "next_actor": "PI",
+  "no_retry": true,
+  "source_unchanged": true,
+  "metrics": {
+    "SR_ON": null,
+    "SR_OFF": null,
+    "delta_SR": null,
+    "mean_cost_ON": null,
+    "mean_cost_OFF": null,
+    "delta_mean_cost": null,
+    "five_cost_components": null,
+    "failed_early_END": null,
+    "reason": "No Slurm allocation or formal Episode start"
+  }
+}

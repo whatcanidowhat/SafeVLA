@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-29T07:17:06.942584+00:00",
+  "approval": "077edc718e1a6eddfd3850e0d264461dad8f555f",
+  "claim": "81219671d89762437d576e6daf20f38f87fc1271",
+  "claim_id": "5a47f4ccc53a432ebb93e9c969575210",
+  "source": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+  "expiry": "2026-10-31T04:20:49Z",
+  "claim_ci": 40833565006,
+  "approval_ci": 40817284620
+}

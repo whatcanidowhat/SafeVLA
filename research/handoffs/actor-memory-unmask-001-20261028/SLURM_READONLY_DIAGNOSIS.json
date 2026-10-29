@@ -1,0 +1,21 @@
+{
+  "mode": "READ_ONLY_NO_RESUBMISSION",
+  "partition": {
+    "PartitionName": "v100",
+    "AllowAccounts": "slurmtest,root",
+    "DenyAccounts": null,
+    "AllowQos": "ALL",
+    "DenyQos": null,
+    "AllowGroups": "ALL",
+    "DefaultQOS": null,
+    "State": "UP"
+  },
+  "cluster_name": "cluster_admin",
+  "existing_job_246255": {
+    "Account": "zhangyh",
+    "Partition": "batch",
+    "QOS": "user_zhangyh",
+    "JobState": "RUNNING",
+    "UserId": "zhangyh(2091)"
+  }
+}

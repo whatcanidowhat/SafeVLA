@@ -1,0 +1,9 @@
+{
+  "status": "NOT_STARTED",
+  "group": "MASK_OFF200",
+  "expected_episodes": 200,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "valid_completed_episodes": 0,
+  "reason": "Single frozen sbatch submission was rejected before allocation; no validation PASS claimed"
+}

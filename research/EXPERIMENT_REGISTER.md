@@ -434,3 +434,8 @@ Claim fa4877c4550be75e9726172421d76468bcc920c5 passed CI; mandatory direct-netwo
 ## P2-004 terminal BLOCKED before GPU (2026-10-15)
 
 Claim 89b3607c03448223484202ee9aabd3bd79b06f7f passed CI; mandatory proxy-network witness failed. No launcher/GPU/model/simulator/ON Episode, no retry; old OFF unchanged. Actual evidence: [handoff](handoffs/actor-reset-on200-off002-reuse-004-20261015/RESULT_SUMMARY.md). Next actor PI; executor STOP.
+
+
+## 2026-10-29T07:24:21.732126+00:00 — EXP-ACTOR-MEMORY-UNMASK-001 terminal BLOCKED
+
+Approval A `077edc718e1a6eddfd3850e0d264461dad8f555f`; unique Claim B `81219671d89762437d576e6daf20f38f87fc1271` (`5a47f4ccc53a432ebb93e9c969575210`), both exact CIs SUCCESS. One frozen sbatch attempt failed with exit1 before allocation: partitionv100 allows slurmtest/root, excluding accountzhangyh.0 experiment GPU allocations,0 model/simulator/forward/Episodes; all SR/Cost contrasts unavailable. No retry/source/config change. Evidence: `research/handoffs/actor-memory-unmask-001-20261028/RESULT_SUMMARY.md`, RUN_MANIFEST and ARTIFACT_INDEX. Next actor PI; current Claim cannot resume.

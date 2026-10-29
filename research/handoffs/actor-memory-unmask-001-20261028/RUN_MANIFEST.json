@@ -1,0 +1,106 @@
+{
+  "cycle_id": "actor-memory-unmask-001-20261028",
+  "experiment_id": "EXP-ACTOR-MEMORY-UNMASK-001",
+  "instruction_commit": "077edc718e1a6eddfd3850e0d264461dad8f555f",
+  "claim_commit": "81219671d89762437d576e6daf20f38f87fc1271",
+  "claim_id": "5a47f4ccc53a432ebb93e9c969575210",
+  "status": "BLOCKED",
+  "handoff_actor": "CODEX",
+  "observed_at_utc": "2026-10-29T07:24:21.732126+00:00",
+  "command": [
+    "sbatch",
+    "diagnostics/actor_memory_unmask/unmask_pair.slurm"
+  ],
+  "gpu_count": 0,
+  "episodes_started": 0,
+  "episodes_completed": 0,
+  "mask_on_completed": 0,
+  "mask_off_completed": 0,
+  "slurm_submission_attempts": 1,
+  "submission_exit_code": 1,
+  "job_id": null,
+  "gpu_uuid": null,
+  "model_loads": 0,
+  "simulator_starts": 0,
+  "policy_forwards": 0,
+  "online_decisions": 0,
+  "source_sha": "1a77276ae8ee08cb34c67492a2a77c9a8c2cc0d8",
+  "source_worktree": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_001_20261028",
+  "source_identity_evidence": "PRE_SUBMISSION_GATE.json: exact clean source checked immediately before submission",
+  "approval_ci": {
+    "run_id": 40817284620,
+    "attempt": 1,
+    "event": "push",
+    "conclusion": "success"
+  },
+  "claim_ci": {
+    "run_id": 40833565006,
+    "attempt": 1,
+    "event": "push",
+    "conclusion": "success"
+  },
+  "fixed_conditions": {
+    "max_steps": 500,
+    "kv_cache_capacity": 500,
+    "episode_horizon": 600,
+    "actor_reset": "off",
+    "seed": 123,
+    "num_workers": 1,
+    "greedy": false,
+    "test_augmentation": true,
+    "shuffle": true,
+    "TaskSpecs": 200,
+    "task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0"
+  },
+  "planned_task_manifest_sha256": "8ca476af1250460a3cd8a5101bb20e24b22c635358367b15bf1da7264d567bd0",
+  "task_manifest_role": "Planned frozen input only; no task was executed",
+  "failure_type": "SlurmSubmissionRejected",
+  "failure_message": "Invalid account or account/partition combination specified",
+  "failure_location": "sbatch submission before allocation",
+  "scheduler_diagnosis": {
+    "mode": "READ_ONLY_NO_RESUBMISSION",
+    "partition": {
+      "PartitionName": "v100",
+      "AllowAccounts": "slurmtest,root",
+      "DenyAccounts": null,
+      "AllowQos": "ALL",
+      "DenyQos": null,
+      "AllowGroups": "ALL",
+      "DefaultQOS": null,
+      "State": "UP"
+    },
+    "cluster_name": "cluster_admin",
+    "existing_job_246255": {
+      "Account": "zhangyh",
+      "Partition": "batch",
+      "QOS": "user_zhangyh",
+      "JobState": "RUNNING",
+      "UserId": "zhangyh(2091)"
+    }
+  },
+  "metrics": {
+    "SR_ON": null,
+    "SR_OFF": null,
+    "delta_SR": null,
+    "mean_cost_ON": null,
+    "mean_cost_OFF": null,
+    "delta_mean_cost": null,
+    "five_cost_components": null,
+    "failed_early_END": null,
+    "reason": "No Slurm allocation or formal Episode start"
+  },
+  "no_retry": true,
+  "no_configuration_change": true,
+  "runtime_checks_not_reached": [
+    "allocated GPU guards",
+    "compute-node network and exact-CI gate",
+    "runtime asset/renderer pins",
+    "checkpoint/model load and three-branch cache assertions",
+    "simulator rendering and episode logging"
+  ],
+  "evidence_limits": [
+    "GPU/render/model checks were not run. Historical CPU PASS is not a new GPU PASS.",
+    "stderr text was transcribed verbatim from the captured submission terminal; stdout is the original empty tee file.",
+    "Existing jobs are unrelated to this experiment and were not modified."
+  ]
+}

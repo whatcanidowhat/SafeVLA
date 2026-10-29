@@ -456,3 +456,8 @@ Claim e27a5d25bba4e6a991960a733d64fd295480b7b9 (CI38341600763 SUCCESS), approval
 ## 2026-10-14 human PI acceptance of P2 INVALID
 
 Human PI explicitly accepted `19dcb30e4858be81be25620ebe151860f7720b2c` (research-loop-validate SUCCESS, run 38364890217). CODEX transcribed this decision at PI direction: INVALID -> PI_REVIEW, reviewed_result_commit binds the terminal entry, prior instruction/claim retained, authorization cleared. Old evidence and results are unchanged. PI accepted `55ecae3ba6e1fc834ea1976adab91640f15fcdd8` and 27 CPU regressions; no further Debug requested. A separate fresh cycle design and final PI authorization are required before any new claim or execution. No execution was performed by this acknowledgement.
+
+
+## 2026-10-29T07:24:21.732126+00:00 — EXP-ACTOR-MEMORY-UNMASK-001 terminal BLOCKED
+
+Approval A `077edc718e1a6eddfd3850e0d264461dad8f555f`; unique Claim B `81219671d89762437d576e6daf20f38f87fc1271` (`5a47f4ccc53a432ebb93e9c969575210`), both exact CIs SUCCESS. One frozen sbatch attempt failed with exit1 before allocation: partitionv100 allows slurmtest/root, excluding accountzhangyh.0 experiment GPU allocations,0 model/simulator/forward/Episodes; all SR/Cost contrasts unavailable. No retry/source/config change. Evidence: `research/handoffs/actor-memory-unmask-001-20261028/RESULT_SUMMARY.md`, RUN_MANIFEST and ARTIFACT_INDEX. Next actor PI; current Claim cannot resume.
