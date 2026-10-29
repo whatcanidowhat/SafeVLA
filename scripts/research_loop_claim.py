@@ -8,9 +8,10 @@ from pathlib import Path
 import subprocess
 import sys
 import uuid
+import urllib.request
 
 from validate_research_loop import (Invalid, STATE, View, audit_tree, require, utc,
-                                    validate_history, validate_snapshot, validate_transition)
+                                    validate_snapshot, validate_transition)
 
 
 def command(root, *args):
@@ -36,6 +37,36 @@ def remote_head(root):
     return output.split()[0]
 
 
+def verify_approval_ci(approval):
+    """Trust history only when GitHub's exact approved-source push CI passed.
+
+    The CI runs validate_history(root) on the entire control history. This read-only
+    check must fail closed on network errors or an unsuccessful latest attempt.
+    """
+    require(len(approval) == 40 and all(c in "0123456789abcdef" for c in approval),
+            "INVALID_APPROVAL_SHA")
+    url = ("https://api.github.com/repos/whatcanidowhat/SafeVLA/actions/runs"
+           "?head_sha=" + approval + "&per_page=100")
+    req = urllib.request.Request(
+        url, headers={"User-Agent": "SafeVLA-research-loop-claim",
+                      "Accept": "application/vnd.github+json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as response:
+            runs = json.load(response).get("workflow_runs", [])
+    except (OSError, ValueError, TypeError) as exc:
+        raise Invalid("APPROVAL_CI_UNVERIFIED; STOP before Claim") from exc
+    matching = [r for r in runs
+                if r.get("head_sha") == approval
+                and r.get("head_branch") == "research-loop"
+                and r.get("event") == "push"
+                and r.get("name") == "research-loop-validate"
+                and r.get("path") == ".github/workflows/research-loop-validate.yml"]
+    require(matching, "APPROVAL_CI_NOT_FOUND_FOR_EXACT_SHA")
+    latest = max(matching, key=lambda r: (r.get("id", 0), r.get("run_attempt", 0)))
+    require(latest.get("status") == "completed" and latest.get("conclusion") == "success",
+            "APPROVAL_CI_NOT_SUCCESS_FOR_LATEST_ATTEMPT")
+
+
 def claim(root):
     root = Path(root).resolve()
     require(command(root, "branch", "--show-current") == "research-loop", "WRONG_CONTROL_BRANCH")
@@ -51,7 +82,8 @@ def claim(root):
             f.write(str(os.getpid()) + "\n")
         approval = fetch(root)
         require(command(root, "rev-parse", "HEAD") == approval, "STALE_LOCAL_HEAD; stop, review and update separately")
-        validate_history(root)
+        # Full history already passed on GitHub for this exact SHA.
+        verify_approval_ci(approval)
         v = View(root)
         audit_tree(v)
         old = validate_snapshot(v)
@@ -69,7 +101,9 @@ def claim(root):
         command(root, "add", "--", STATE)
         command(root, "commit", "-m", "Claim " + state["experiment_id"] + " for cycle " + state["cycle_id"])
         claimed = command(root, "rev-parse", "HEAD")
-        validate_history(root)
+        changed = command(root, "diff-tree", "--no-commit-id", "--name-only", "-r", claimed).splitlines()
+        require(changed == [STATE], "CLAIM_MUST_CHANGE_ONLY_LOOP_STATE")
+        # Claim B itself gets a new *full-history* CI before any execution.
         try:
             # Sibling claims cannot both fast-forward the same remote branch.
             command(root, "push", "--atomic", "origin", "HEAD:refs/heads/research-loop")

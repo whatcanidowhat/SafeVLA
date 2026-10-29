@@ -26,7 +26,7 @@ STATUS/GATE 的只读查询可使用 scripts/research_loop_status.py 和 scripts
 ## Policy：授权与停止条件
 
 - GitHub research-loop 的实时 HEAD + LOOP_STATE + 对应 exact-SHA CI 共同判定当前控制状态；历史 001A/001B、bootstrap、protocol-only、dry-run 或草案描述都不是现时授权。终止周期不可自动重跑。
-- CODEX 只在 APPROVED_FOR_CODEX + next_actor=CODEX 及有效 PI 授权下领取；先验证批准 A 的 CI，再用 scripts/research_loop_claim.py 原子发布唯一 Claim B，确认远端 HEAD=B 和 B 的独立 CI 成功。不能用另一 SHA、PR CI 或本地 Claim 代替。保持完整历史校验。
+- CODEX 只在 APPROVED_FOR_CODEX + next_actor=CODEX 及有效 PI 授权下领取；先验证批准 A 的 CI，再用 scripts/research_loop_claim.py 原子发布唯一 Claim B，确认远端 HEAD=B 和 B 的独立 CI 成功。不能用另一 SHA、PR CI 或本地 Claim 代替。完整历史校验由 A/B 的 exact-SHA 控制 CI 执行；本地 Claim 校验当前快照与本次状态转换。
 - 人工 OPERATOR 只能使用协议中明确的 APPROVED_FOR_OPERATOR 路线和 scripts/research_loop_manual_claim.py；不能借用 CODEX 批准或冒充 PI。角色字符串不是身份认证。已领取周期不得转换角色或恢复运行。
 - 执行前仍须核实 deadline、源码/TaskSpec/checkpoint、frozen OFF 只读哈希、实际环境/TLS/代理 witness、资源和预算；CI 成功不替代运行门禁。显式选择 SSH repo、Python、依赖/import paths；另一 CMD 会话的环境不会自动继承。控制 worktree 不得作为 SafeVLA runtime。
 - Claim/push/CI/TLS/网络失败或结果不确定即 STOP；按协议保留本地 Claim 和证据，不自动重试、补领、force push、reset 或恢复中断实验。不扩大样本、参数或预算。
