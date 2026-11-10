@@ -1,0 +1,18 @@
+{
+  "status": "READY",
+  "run_id": "20261103T163308Z-live-3148",
+  "source_commit": "2689081ec324c67a35f2a4692cfa009826fcf9d4",
+  "archives": 17,
+  "original_file_count": 3215,
+  "original_bytes": 602777826,
+  "archive_bytes": 400102222,
+  "source_and_deployment_files": true,
+  "not_packaged": [
+    "policy/DINO weights",
+    "Conda environments",
+    "Objaverse datasets/assets",
+    "NVIDIA driver binaries"
+  ],
+  "source_root": "/public/home/zhangyh/QYY/runs/EXP-ACTOR-MEMORY-UNMASK-NVIDIA/20261103T163308Z-live-3148",
+  "export_root": "/public/home/zhangyh/QYY/migration_exports/github-unmask-20261106"
+}
