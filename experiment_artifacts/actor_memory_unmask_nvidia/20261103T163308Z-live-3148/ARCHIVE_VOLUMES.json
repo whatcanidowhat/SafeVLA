@@ -1,0 +1,69 @@
+{
+  "format": "independent ZIP volumes; extract all into the same empty directory",
+  "volumes": [
+    {
+      "path": "archives/MASK_ON200.raw.part01.zip",
+      "bytes": 5316299,
+      "sha256": "f41750d51f6d521b1292ddf93da13fa8e7b352ba4d5b5fe8de6c0045ab3b161b",
+      "members": 615,
+      "group": "MASK_ON200.raw"
+    },
+    {
+      "path": "archives/MASK_ON200.raw.part02.zip",
+      "bytes": 5264811,
+      "sha256": "2b0e157838ef88356fc6b466f9aa8adc4686c45e29aea6ba487bba202cfba881",
+      "members": 464,
+      "group": "MASK_ON200.raw"
+    },
+    {
+      "path": "archives/MASK_ON200.raw.part03.zip",
+      "bytes": 1228245,
+      "sha256": "55bf5e68a982d419c47e5f34e2fb3433868d86a2d27d3e16289658cba32ae0da",
+      "members": 125,
+      "group": "MASK_ON200.raw"
+    },
+    {
+      "path": "archives/MASK_OFF200.raw.part01.zip",
+      "bytes": 5229992,
+      "sha256": "fd6dde634f9b36f8664cc9fbd3eb732c2705df55ac809ee69123e76f7c7ec060",
+      "members": 381,
+      "group": "MASK_OFF200.raw"
+    },
+    {
+      "path": "archives/MASK_OFF200.raw.part02.zip",
+      "bytes": 5140245,
+      "sha256": "e8919c3a65fcbc8725cbc2ca6c0adc581d844022c68c7fcfef8c5fadd018ce4b",
+      "members": 344,
+      "group": "MASK_OFF200.raw"
+    },
+    {
+      "path": "archives/MASK_OFF200.raw.part03.zip",
+      "bytes": 5065668,
+      "sha256": "71d4a65cb5009703ea2c60d01aa5c25f8cad550dc2611a342a4281c1ac3b124c",
+      "members": 316,
+      "group": "MASK_OFF200.raw"
+    },
+    {
+      "path": "archives/MASK_OFF200.raw.part04.zip",
+      "bytes": 1927850,
+      "sha256": "471330165b67401db8b51f00417c2fbe064a48de4c1a7f58f95721974a5250a8",
+      "members": 163,
+      "group": "MASK_OFF200.raw"
+    },
+    {
+      "path": "archives/MASK_ON200.images.zip",
+      "bytes": 7524914,
+      "sha256": "b40b9b3be051e8647fe4456e000d2e2ce8d09b9e61571c60de8df0294104ef5d",
+      "members": 200,
+      "group": "MASK_ON200.images"
+    },
+    {
+      "path": "archives/MASK_OFF200.images.zip",
+      "bytes": 7535487,
+      "sha256": "4afd0589d615832e041f0d24659f1c08f2b101931f4e1451cf88151f36a739e4",
+      "members": 200,
+      "group": "MASK_OFF200.images"
+    }
+  ],
+  "packaging_note": "Videos excluded at user request; raw episode files and 400 PNG top-down images retain their original bytes and SHA256. Server export inventory describes the initial unfiltered export."
+}

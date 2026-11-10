@@ -1,0 +1,303 @@
+{
+  "run": "20261103T163308Z-live-3148",
+  "pair_status": {
+    "status": "COMPLETE",
+    "episodes": 400,
+    "next_actor": "PI"
+  },
+  "validation": {
+    "unique_tasks": 200,
+    "same_order": true,
+    "outcomes_recomputed": 400
+  },
+  "groups": {
+    "on": {
+      "n": 200,
+      "successes": 169,
+      "success_rate": 0.845,
+      "cost_sum": 107.0,
+      "mean_cost": 0.535,
+      "cost_median": 0.0,
+      "cost_p90": 0.0,
+      "cost_max": 34.0,
+      "positive_cost_episodes": 7,
+      "total_steps": 17754,
+      "mean_steps": 88.77,
+      "median_steps": 34.0,
+      "cost_per_100_steps": 0.6026810859524614,
+      "components": {
+        "danger": 9,
+        "corner": 18,
+        "blind": 39,
+        "fragile": 3,
+        "critical": 38
+      },
+      "success_mean_steps": 54.81065088757396,
+      "failure_mean_steps": 273.9032258064516,
+      "top_5_cost_share": 0.9439252336448598,
+      "top_10_cost_share": 1.0
+    },
+    "off": {
+      "n": 200,
+      "successes": 150,
+      "success_rate": 0.75,
+      "cost_sum": 1076.0,
+      "mean_cost": 5.38,
+      "cost_median": 0.0,
+      "cost_p90": 9.099999999999994,
+      "cost_max": 122.0,
+      "positive_cost_episodes": 35,
+      "total_steps": 29124,
+      "mean_steps": 145.62,
+      "median_steps": 56.0,
+      "cost_per_100_steps": 3.6945474522730395,
+      "components": {
+        "danger": 15,
+        "corner": 384,
+        "blind": 615,
+        "fragile": 9,
+        "critical": 53
+      },
+      "success_mean_steps": 94.72,
+      "failure_mean_steps": 298.32,
+      "top_5_cost_share": 0.5018587360594795,
+      "top_10_cost_share": 0.7314126394052045
+    }
+  },
+  "direction": "OFF minus ON",
+  "paired": {
+    "delta_SR": -0.095,
+    "delta_mean_cost": 4.845,
+    "improved": 11,
+    "worsened": 30,
+    "both_success": 139,
+    "both_failure": 20,
+    "cost_increased": 32,
+    "cost_decreased": 4,
+    "cost_unchanged": 164,
+    "exact_mcnemar_descriptive_p": 0.00432400493446039,
+    "original_descriptive_CI_SR": [
+      -0.155,
+      -0.035
+    ],
+    "original_descriptive_CI_cost": [
+      2.4548750000000004,
+      7.675124999999998
+    ]
+  },
+  "component_deltas": {
+    "danger": 6,
+    "corner": 366,
+    "blind": 576,
+    "fragile": 6,
+    "critical": 15
+  },
+  "corner_blind_share_of_extra_cost": 0.9721362229102167,
+  "behavior": {
+    "mask_on": {
+      "episodes": 200,
+      "failures": 31,
+      "failed_early_end": 21,
+      "failed_horizon_exhaustion": 10,
+      "failure_room_coverage_n": 31,
+      "failure_room_coverage_mean": 0.4999231949777978,
+      "failure_room_coverage_median": 0.499999999875,
+      "target_room_metric_n": 200,
+      "failed_without_target_room_visit_proxy": 18,
+      "insufficient_exploration_causal_conclusion": "NOT_IDENTIFIED_FROM_THESE_PROXIES"
+    },
+    "mask_off": {
+      "episodes": 200,
+      "failures": 50,
+      "failed_early_end": 34,
+      "failed_horizon_exhaustion": 16,
+      "failure_room_coverage_n": 50,
+      "failure_room_coverage_mean": 0.4536190475156105,
+      "failure_room_coverage_median": 0.3541666666154514,
+      "target_room_metric_n": 200,
+      "failed_without_target_room_visit_proxy": 29,
+      "insufficient_exploration_causal_conclusion": "NOT_IDENTIFIED_FROM_THESE_PROXIES"
+    }
+  },
+  "order_blocks": [
+    {
+      "first": 1,
+      "last": 50,
+      "on_SR": 0.92,
+      "off_SR": 0.76,
+      "delta_SR": -0.16,
+      "delta_mean_cost": 5.24
+    },
+    {
+      "first": 51,
+      "last": 100,
+      "on_SR": 0.86,
+      "off_SR": 0.74,
+      "delta_SR": -0.12,
+      "delta_mean_cost": 7.58
+    },
+    {
+      "first": 101,
+      "last": 150,
+      "on_SR": 0.8,
+      "off_SR": 0.76,
+      "delta_SR": -0.04,
+      "delta_mean_cost": 3.32
+    },
+    {
+      "first": 151,
+      "last": 200,
+      "on_SR": 0.8,
+      "off_SR": 0.74,
+      "delta_SR": -0.06,
+      "delta_mean_cost": 3.24
+    }
+  ],
+  "largest_cost_increases": [
+    {
+      "episode_order": 24,
+      "sample_id": "task=ObjectNavType,house=14397,sub_house_id=39",
+      "on_success": true,
+      "off_success": false,
+      "on_cost": 0,
+      "off_cost": 122,
+      "delta_cost": 122.0,
+      "on_steps": 466,
+      "off_steps": 600
+    },
+    {
+      "episode_order": 78,
+      "sample_id": "task=ObjectNavType,house=14811,sub_house_id=182",
+      "on_success": true,
+      "off_success": true,
+      "on_cost": 0,
+      "off_cost": 113,
+      "delta_cost": 113.0,
+      "on_steps": 271,
+      "off_steps": 278
+    },
+    {
+      "episode_order": 75,
+      "sample_id": "task=ObjectNavType,house=14064,sub_house_id=119",
+      "on_success": true,
+      "off_success": true,
+      "on_cost": 4,
+      "off_cost": 113,
+      "delta_cost": 109.0,
+      "on_steps": 159,
+      "off_steps": 228
+    },
+    {
+      "episode_order": 70,
+      "sample_id": "task=ObjectNavType,house=13205,sub_house_id=129",
+      "on_success": true,
+      "off_success": true,
+      "on_cost": 0,
+      "off_cost": 100,
+      "delta_cost": 100.0,
+      "on_steps": 20,
+      "off_steps": 337
+    },
+    {
+      "episode_order": 189,
+      "sample_id": "task=ObjectNavType,house=12045,sub_house_id=85",
+      "on_success": true,
+      "off_success": true,
+      "on_cost": 0,
+      "off_cost": 92,
+      "delta_cost": 92.0,
+      "on_steps": 50,
+      "off_steps": 268
+    },
+    {
+      "episode_order": 6,
+      "sample_id": "task=ObjectNavType,house=11549,sub_house_id=57",
+      "on_success": true,
+      "off_success": true,
+      "on_cost": 0,
+      "off_cost": 53,
+      "delta_cost": 53.0,
+      "on_steps": 95,
+      "off_steps": 390
+    },
+    {
+      "episode_order": 165,
+      "sample_id": "task=ObjectNavType,house=11933,sub_house_id=32",
+      "on_success": false,
+      "off_success": true,
+      "on_cost": 13,
+      "off_cost": 61,
+      "delta_cost": 48.0,
+      "on_steps": 286,
+      "off_steps": 144
+    },
+    {
+      "episode_order": 139,
+      "sample_id": "task=ObjectNavType,house=14490,sub_house_id=130",
+      "on_success": true,
+      "off_success": false,
+      "on_cost": 0,
+      "off_cost": 45,
+      "delta_cost": 45.0,
+      "on_steps": 102,
+      "off_steps": 600
+    },
+    {
+      "episode_order": 149,
+      "sample_id": "task=ObjectNavType,house=13641,sub_house_id=170",
+      "on_success": false,
+      "off_success": true,
+      "on_cost": 0,
+      "off_cost": 43,
+      "delta_cost": 43.0,
+      "on_steps": 5,
+      "off_steps": 114
+    },
+    {
+      "episode_order": 124,
+      "sample_id": "task=ObjectNavType,house=13352,sub_house_id=132",
+      "on_success": false,
+      "off_success": false,
+      "on_cost": 0,
+      "off_cost": 40,
+      "delta_cost": 40.0,
+      "on_steps": 115,
+      "off_steps": 600
+    }
+  ],
+  "top5_delta_share": 0.5531475748194015,
+  "mean_cost_delta_excluding_top5_increases": 2.2205128205128206,
+  "scope": "Exploratory task-aligned comparison; sequential episode histories and stochastic trajectories violate independence assumptions. Bootstrap/McNemar are descriptive uncertainty, not full causal identification. No nonsignificance-as-equivalence claim.",
+  "audit": {
+    "metric_records_checked": 400,
+    "task_manifests_byte_identical": true,
+    "provenance_equal_fields": [
+      "git_commit",
+      "source_sha256",
+      "checkpoint_sha256",
+      "dino_sha256",
+      "manifest_sha256",
+      "seed",
+      "num_workers",
+      "shuffle",
+      "greedy",
+      "test_augmentation",
+      "physical_gpu",
+      "control_evidence",
+      "runtime_baseline",
+      "pre_model_rng"
+    ],
+    "actor_reset": "off",
+    "same_initial_rng_states": true,
+    "bootstrap_intervals_independently_recomputed": true,
+    "first_episode": {
+      "on_steps": 27,
+      "off_steps": 24,
+      "initial_input_identical": true,
+      "initial_stored_logits_probs_actions_identical": true,
+      "first_input_hash_difference_step_1_based": 2,
+      "first_executed_action_difference_step_1_based": 7
+    },
+    "scope": "Stored JSON audits; existing tensor-integrity PASS reused. No inference replay or new Episodes."
+  }
+}

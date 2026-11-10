@@ -1,0 +1,76 @@
+===REGRESSION-TESTS===
+test_old_failure_and_fixed_scan_during_atomic_episode_rename (test_output_scan.OutputScanTests) ... ok
+test_real_concurrent_writer_and_repeated_scans (test_output_scan.OutputScanTests) ... ok
+test_removed_file_between_enumeration_and_stat (test_output_scan.OutputScanTests) ... ok
+test_storage_errors_and_missing_root_are_not_hidden (test_output_scan.OutputScanTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.113s
+
+OK
+===PATCHED-PAIR-PLAN-ONLY===
+Output guard: tolerate disappearing descendants during atomic episode completion.
+{"status": "PLAN_ONLY", "experiment": "EXP-ACTOR-MEMORY-UNMASK-002", "cycle": "actor-memory-unmask-002-20261029", "groups": ["MASK_ON200", "MASK_OFF200"], "starts": 400, "GPU": "NOT_ALLOCATED_BY_THIS_COMMAND"}
+===FROZEN-SOURCE-CHECK===
+2689081ec324c67a35f2a4692cfa009826fcf9d4
+===FULL-PREFLIGHT===
+Checking frozen asset hashes (15237 files)...
+'DISPLAY' environment variable not set... skipping surface info
+{
+  "status": "PASS",
+  "model_constructions": 0,
+  "policy_forwards": 0,
+  "simulator_launches": 0,
+  "episodes_started": 0,
+  "cuda_device_count": 1,
+  "cuda_device_name": "Tesla V100-SXM2-32GB",
+  "sequence": [
+    "MASK_ON200",
+    "MASK_OFF200"
+  ],
+  "evidence": {
+    "mode": "MANUAL_OFFLINE_NVIDIA",
+    "formal_control_authorized": false,
+    "github_ci_verified": false,
+    "claim_id": null,
+    "approval_commit": null,
+    "claim_commit": null,
+    "approval_expires_at_utc": "2026-11-04T03:14:48Z",
+    "deadline_field_role": "MANUAL_WALLTIME_ONLY",
+    "physical_gpu": 5,
+    "container_nvml_index": 0,
+    "gpu_uuid": "GPU-fe794406-164a-f699-4c8b-9d20826bf925",
+    "cuda_logical_index": 0,
+    "vulkan_index": 0,
+    "slurm_job_id": "248913",
+    "slurm_node": "gpu117",
+    "container_id": "a700d3bfb27dcf215fcbc6d89be883e515a58ff4ab17489560aa20061d4cb0a2",
+    "cuda_visible_devices": "GPU-fe794406-164a-f699-4c8b-9d20826bf925",
+    "renderer": "NVIDIA 535.104.05",
+    "renderer_changed_from_legacy_mesa": true,
+    "orchestration_patch": {
+      "name": "atomic-episode-output-scan-v1",
+      "original_module": "/public/home/zhangyh/QYY/SafeVLA_actor_memory_unmask_002_20261029/diagnostics/actor_memory_unmask/online_pair.py",
+      "original_module_sha256": "e90f91b233bf39e16d9bce449a01c4f52b7551eb14e0ce25d63e71fec515c2cb",
+      "entrypoint": "/public/home/zhangyh/QYY/unmask_nvidia_20261103/pair_entry.py",
+      "replacement": "/public/home/zhangyh/QYY/unmask_nvidia_20261103/output_scan.py",
+      "scope": "replace only nested used_bytes() body in memory; frozen source unchanged",
+      "output_limit_bytes": 96636764160,
+      "minimum_free_bytes": 10737418240,
+      "initial_minimum_free_bytes": 107374182400,
+      "poll_seconds": 15,
+      "missing_descendants": "skip; observed on later snapshot",
+      "other_IO_errors": "raise",
+      "source_backup": "backups/output-scan-fix-20261103T151804Z"
+    },
+    "renderer_manifest_sha256": "64c85232b3503b88022e3fd632afdb600cbc43af4ab044366797fb8a55ee1e7e",
+    "rendering_environment": {
+      "HOME": "/public/home/zhangyh/QYY/unmask_nvidia_20261103/runtime/a700d3bfb27d/gpu-0",
+      "VK_ICD_FILENAMES": "/public/home/zhangyh/QYY/vulkan_repair_20261031/share/vulkan/icd.d/nvidia_icd.json",
+      "LD_LIBRARY_PATH": "/public/home/zhangyh/QYY/vulkan_repair_20261031/lib:/public/home/zhangyh/QYY/envs/safevla_native/lib:/public/home/zhangyh/QYY/envs/vulkan_tools_probe/lib:/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/site-packages/nvidia/cudnn/lib:/public/home/zhangyh/QYY/envs/safevla_native/lib/python3.10/site-packages/nvidia/cuda_cupti/lib",
+      "XDG_DATA_DIRS": "/public/home/zhangyh/QYY/vulkan_repair_20261031/share:/usr/local/share:/usr/share",
+      "XDG_RUNTIME_DIR": "/public/home/zhangyh/QYY/unmask_nvidia_20261103/runtime/a700d3bfb27d/gpu-0/xdg-runtime",
+      "__EGL_VENDOR_LIBRARY_FILENAMES": "/public/home/zhangyh/QYY/vulkan_repair_20261031/share/glvnd/egl_vendor.d/10_nvidia.json"
+    }
+  }
+}
