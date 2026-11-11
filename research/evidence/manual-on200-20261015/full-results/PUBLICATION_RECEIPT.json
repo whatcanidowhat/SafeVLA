@@ -1,0 +1,38 @@
+{
+  "repository": "whatcanidowhat/SafeVLA",
+  "branch": "codex/manual-on200-evidence-20261015",
+  "release_tag": "actor-reset-off200-on200-20261015-no-video",
+  "release_id": 442043657,
+  "assets": [
+    {
+      "name": "SafeVLA_p2_002_results_20261014-no-video.tar.gz",
+      "bytes": 20768127,
+      "sha256": "ffe11ef0c8cb27e67edaa9f16efff8fbb554515ae7313bd6201a824ae4837d8b",
+      "url": "https://github.com/whatcanidowhat/SafeVLA/releases/download/untagged-818d02308357e72cdbf9/SafeVLA_p2_002_results_20261014-no-video.tar.gz",
+      "remote_digest_verified": true
+    },
+    {
+      "name": "SafeVLA_manual_on200_20261015-no-video.tar.gz",
+      "bytes": 20258930,
+      "sha256": "aecb4982479d4a1e580c8d6bfc923f327f16ae2f1235af4e4f00f611c60fa3ee",
+      "url": "https://github.com/whatcanidowhat/SafeVLA/releases/download/untagged-818d02308357e72cdbf9/SafeVLA_manual_on200_20261015-no-video.tar.gz",
+      "remote_digest_verified": true
+    },
+    {
+      "name": "FILE_MANIFEST.json",
+      "bytes": 871004,
+      "sha256": "43c1101af7593b1bae914b6253d05a214cb2edac7fbf11030d38e0d3a925032e",
+      "url": "https://github.com/whatcanidowhat/SafeVLA/releases/download/untagged-818d02308357e72cdbf9/FILE_MANIFEST.json",
+      "remote_digest_verified": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 311,
+      "sha256": "1b2cf131763dacbc9f0ec4aec5cfa8ae6735d4604f410a4bef44f989a1e70998",
+      "url": "https://github.com/whatcanidowhat/SafeVLA/releases/download/untagged-818d02308357e72cdbf9/SHA256SUMS",
+      "remote_digest_verified": true
+    }
+  ],
+  "excluded_videos": 400,
+  "status": "ASSETS_VERIFIED"
+}
